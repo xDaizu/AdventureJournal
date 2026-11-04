@@ -125,10 +125,10 @@ local function BuildUI()
     if body.SetSpacing then body:SetSpacing(5) end
     f.contentChild, f.contentScroll, f.body = contentChild, contentScroll, body
 
-    local previous = CreateBookButton(f, "◀ Anterior", 120, 24, function() ns.SelectDay(ns.selectedDay - 1) end)
+    local previous = CreateBookButton(f, "< Anterior", 120, 24, function() ns.SelectDay(ns.selectedDay - 1) end)
     previous:SetPoint("BOTTOMLEFT", 35, 20)
     f.prevButton = previous
-    local nextButton = CreateBookButton(f, "Siguiente ▶", 120, 24, function() ns.SelectDay(ns.selectedDay + 1) end)
+    local nextButton = CreateBookButton(f, "Siguiente >", 120, 24, function() ns.SelectDay(ns.selectedDay + 1) end)
     nextButton:SetPoint("BOTTOMRIGHT", -35, 20)
     f.nextButton = nextButton
     local pageNumber = CreateText(f, "GameFontHighlightSmall", "", 180)
@@ -138,6 +138,17 @@ local function BuildUI()
     f.pageNumber = pageNumber
 
     f:SetScript("OnShow", function() ns.RefreshUI() end)
+
+    -- Escape closes the book (bug #7).
+    local alreadyRegistered = false
+    for _, name in ipairs(UISpecialFrames) do
+        if name == "AdventureJournalBookFrame" then alreadyRegistered = true end
+    end
+    if not alreadyRegistered then tinsert(UISpecialFrames, "AdventureJournalBookFrame") end
+
+    -- CreateFrame returns a shown frame. Hide it so that ToggleUI's first call shows
+    -- it instead of hiding it again (bug #8). OnShow refreshes the content.
+    f:Hide()
 end
 
 function ns.SelectDay(dayNumber)

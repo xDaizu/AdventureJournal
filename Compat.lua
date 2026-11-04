@@ -151,6 +151,49 @@ function ns.RequestItemData(itemID)
     end
 end
 
+-- Own loot ------------------------------------------------------------------------
+-- The game's own loot strings, which differ per locale (esES: "Recibes botín: %s.").
+-- Only the "you receive" forms are used, so other players' loot is ignored (bug #6).
+local OWN_LOOT_GLOBALS = { "LOOT_ITEM_SELF", "LOOT_ITEM_SELF_MULTIPLE",
+    "LOOT_ITEM_PUSHED_SELF", "LOOT_ITEM_PUSHED_SELF_MULTIPLE" }
+local ownLootPatterns
+
+-- "Recibes botín: %s." -> "^Recibes botín: (.+)%.$". Also handles positional
+-- formats such as "%1$s" and "%2$d".
+local function FormatToPattern(format)
+    local pattern = string.gsub(format, "([%^%$%(%)%%%.%[%]%*%+%-%?])", "%%%1")
+    pattern = string.gsub(pattern, "%%%%%d%$s", "(.+)")
+    pattern = string.gsub(pattern, "%%%%%d%$d", "(%%d+)")
+    pattern = string.gsub(pattern, "%%%%s", "(.+)")
+    pattern = string.gsub(pattern, "%%%%d", "(%%d+)")
+    return "^" .. pattern .. "$"
+end
+
+function ns.GetOwnLootPatterns()
+    if not ownLootPatterns then
+        ownLootPatterns = {}
+        for _, name in ipairs(OWN_LOOT_GLOBALS) do
+            local format = _G[name]
+            if type(format) == "string" and format ~= "" then
+                table.insert(ownLootPatterns, FormatToPattern(format))
+            end
+        end
+    end
+    return ownLootPatterns
+end
+
+-- True when a CHAT_MSG_LOOT message (never secret here) is the player's own loot.
+-- If this client has none of the strings, everything counts as own loot (the
+-- behaviour before M4) so loot is never lost to a missing string.
+function ns.IsOwnLootMessage(message)
+    local patterns = ns.GetOwnLootPatterns()
+    if #patterns == 0 then return true end
+    for _, pattern in ipairs(patterns) do
+        if string.find(message, pattern) then return true end
+    end
+    return false
+end
+
 -- Events -------------------------------------------------------------------------
 -- Registers an event only if this client knows it. MINIMAP_ZONE_CHANGED, for
 -- example, does not exist on Classic Era (observed).

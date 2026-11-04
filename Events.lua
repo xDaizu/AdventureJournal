@@ -10,6 +10,17 @@ local lastBossName, lastBossAt
 local lastNPCName, lastNPCTime
 local pendingLoot = {}   -- [itemID] = itemLink, waiting for GET_ITEM_INFO_RECEIVED
 
+-- Chat echo policy (bug: spam). settings.chat: "all", "important" (default) or "off".
+-- Important = boss kills, deaths and epic (or better) loot.
+function ns.ShouldEchoToChat(entry)
+    local settings = ns.DB and ns.DB.settings
+    local mode = settings and settings.chat or ns.DEFAULT_SETTINGS.chat
+    if mode == "all" then return true end
+    if mode == "off" then return false end
+    return entry.type == "BOSS" or entry.type == "DEATH"
+        or (entry.type == "LOOT" and (tonumber(entry.itemQuality) or 0) >= 4)
+end
+
 function ns.AddEntry(eventType, description, extra)
     local DB = ns.DB
     if not DB then return end
@@ -43,15 +54,30 @@ function ns.AddEntry(eventType, description, extra)
     day.events = day.events or {}
     table.insert(day.events, entry)
     ns.RefreshIfVisible()
-    print(string.format("|cFF00FF00[Diario]|r %s", entry.text))
+    if ns.ShouldEchoToChat(entry) then
+        print(string.format("|cFF00FF00[Diario]|r %s", entry.text))
+    end
 end
 
-local function StartSession()
+-- A real login starts a new jornada. A /reload continues the current one: the
+-- game fires PLAYER_LOGOUT on a reload, so `endedAt` is cleared again.
+-- PLAYER_ENTERING_WORLD(isInitialLogin, isReloadingUi) tells them apart; it also
+-- fires on every loading screen, hence the sessionStarted guard.
+local function StartSession(isReloadingUi)
     if sessionStarted then return end
     sessionStarted = true
     local DB = ns.EnsureDatabase()
 
-    -- Se conserva deliberadamente el criterio solicitado: cada inicio de sesión crea una jornada.
+    local resumable = DB.days[DB.currentDay]
+    if isReloadingUi and DB.currentDay >= 1 and type(resumable) == "table" then
+        resumable.endedAt = nil
+        ns.selectedDay = DB.currentDay
+        currentPlace = ns.GetPlace()
+        if ns.GetZoneText() and not ns.IsSecret(ns.GetZoneText()) then DB.visited[currentPlace] = true end
+        print(string.format("|cFFFFD700[Diario]|r Continúas la jornada %d.", DB.currentDay))
+        return
+    end
+
     DB.currentDay = DB.currentDay + 1
     local n = DB.currentDay
     DB.days[n] = {
@@ -64,9 +90,12 @@ local function StartSession()
     print(string.format("|cFFFFD700[Diario]|r Comienza la jornada %d. Tu historia continúa.", n))
 end
 
+-- Returns false only while the item is not cached yet (keep it pending). Returns
+-- true once it is settled: logged, or dropped for being below rare quality (bug #11).
 local function TryLogLoot(itemLink, itemID)
     local _, _, quality = ns.GetItemInfoSafe(itemLink or itemID)
-    if quality and quality >= 3 then
+    if not quality then return false end
+    if quality >= 3 then
         local displayLink = itemLink
         if not displayLink then
             local _, link = ns.GetItemInfoSafe(itemID)
@@ -77,9 +106,8 @@ local function TryLogLoot(itemLink, itemID)
             itemLink = displayLink,
             itemID = itemID,
         })
-        return true
     end
-    return false
+    return true
 end
 
 local handlers = {}
@@ -88,8 +116,8 @@ handlers.ADDON_LOADED = function(loadedName)
     if loadedName == addonName then ns.EnsureDatabase() end
 end
 
-handlers.PLAYER_LOGIN = function()
-    StartSession()
+handlers.PLAYER_ENTERING_WORLD = function(_, isReloadingUi)
+    StartSession(isReloadingUi == true)
 end
 
 handlers.PLAYER_LOGOUT = function()
@@ -151,6 +179,10 @@ handlers.CHAT_MSG_LOOT = function(message)
         return
     end
     if type(message) == "string" then
+        if not ns.IsOwnLootMessage(message) then
+            ns.Debug("CHAT_MSG_LOOT: botín de otro jugador, se omite")
+            return
+        end
         -- Any colour prefix: |cffRRGGBB (Classic Era) or |cnIQ<n>: (possibly Forever).
         local itemLink = string.match(message, "|c[^|]*|Hitem:.-|h%[.-%]|h|r")
         if itemLink then
@@ -174,16 +206,24 @@ handlers.GET_ITEM_INFO_RECEIVED = function(itemID, success)
 end
 handlers.ITEM_DATA_LOAD_RESULT = handlers.GET_ITEM_INFO_RECEIVED
 
+-- A DISCOVERY is logged only the first time a place is seen (DB.visited).
 local function OnZoneChanged()
     -- An unreadable zone is not a discovery: skip it instead of logging "unknown lands".
-    if ns.IsSecret(ns.GetZoneText()) or ns.IsSecret(ns.GetSubZoneText()) then
+    local zone = ns.GetZoneText()
+    if ns.IsSecret(zone) or ns.IsSecret(ns.GetSubZoneText()) then
         ns.Debug("ZONE_CHANGED: nombre de zona secreto, se omite")
         return
     end
+    -- GetRealZoneText() can be nil right after a fresh login (observed).
+    if not zone or zone == "" then return end
     local newPlace = ns.GetPlace()
     if newPlace ~= currentPlace then
         currentPlace = newPlace
-        ns.AddEntry("DISCOVERY", newPlace)
+        local visited = ns.DB and ns.DB.visited
+        if visited and not visited[newPlace] then
+            visited[newPlace] = true
+            ns.AddEntry("DISCOVERY", newPlace)
+        end
     end
 end
 handlers.ZONE_CHANGED_NEW_AREA = OnZoneChanged
@@ -213,7 +253,7 @@ handlers.CHAT_MSG_WHISPER = function(_, sender)
 end
 
 local EVENTS = {
-    "ADDON_LOADED", "PLAYER_LOGIN", "PLAYER_LOGOUT",
+    "ADDON_LOADED", "PLAYER_ENTERING_WORLD", "PLAYER_LOGOUT",
     "QUEST_TURNED_IN", "BOSS_KILL", "ENCOUNTER_END", "PLAYER_DEAD",
     "CHAT_MSG_LOOT", "GET_ITEM_INFO_RECEIVED", "ITEM_DATA_LOAD_RESULT",
     "ZONE_CHANGED_NEW_AREA", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "MINIMAP_ZONE_CHANGED",

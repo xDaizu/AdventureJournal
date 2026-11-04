@@ -26,25 +26,32 @@ function ns.ChooseMood(eventType)
     return mood[1], mood[2]
 end
 
+-- Mood phrases start in lower case; capitalise one that opens a sentence (bug #13).
+-- Only an ASCII first letter is touched, so multi-byte UTF-8 text is never cut.
+local function Sentence(text)
+    return (string.gsub(text, "^%l", string.upper))
+end
+
 function ns.ComposeEntry(entry)
     local place = SafeString(entry.place, "algún lugar del mundo")
     local subject = SafeString(entry.text, "un acontecimiento inesperado")
     local tone = SafeString(entry.contextualTone, "con el ánimo sereno")
+    local sentenceTone = Sentence(tone)
     local variant = (entry.seed or 1) % 3
 
     if entry.type == "QUEST" then
         if variant == 1 then
-            return string.format("En %s terminé la tarea «%s». %s. No parece que las obligaciones vayan a darme tregua.", place, subject, tone)
+            return string.format("En %s terminé la tarea «%s». %s. No parece que las obligaciones vayan a darme tregua.", place, subject, sentenceTone)
         elseif variant == 2 then
-            return string.format("La jornada me llevó a resolver «%s» en %s. %s. Al menos hoy he cumplido con mi parte.", subject, place, tone)
+            return string.format("La jornada me llevó a resolver «%s» en %s. %s. Al menos hoy he cumplido con mi parte.", subject, place, sentenceTone)
         end
-        return string.format("Queda atrás una tarea más: «%s», completada en %s. %s.", subject, place, tone)
+        return string.format("Queda atrás una tarea más: «%s», completada en %s. %s.", subject, place, sentenceTone)
     elseif entry.type == "BOSS" then
         return string.format("En %s me enfrenté a %s. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: %s.", place, subject, tone)
     elseif entry.type == "DEATH" then
         return string.format("La aventura se detuvo en %s. Caí antes de poder continuar; %s. Tendré que regresar con más cuidado.", place, tone)
     elseif entry.type == "LOOT" then
-        return string.format("La fortuna se dejó notar en %s: apareció %s. %s.", place, subject, tone)
+        return string.format("La fortuna se dejó notar en %s: apareció %s. %s.", place, subject, sentenceTone)
     elseif entry.type == "DISCOVERY" then
         return string.format("Mis pasos me condujeron hasta %s. Me detuve un momento para observar el lugar; %s.", subject, tone)
     elseif entry.type == "NPC" then

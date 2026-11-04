@@ -39,6 +39,13 @@ local function PrintDiagnostics()
         Say("Base de datos: NO inicializada")
     end
 
+    if DB then
+        local visitedCount = 0
+        for _ in pairs(DB.visited) do visitedCount = visitedCount + 1 end
+        Say(string.format("Lugares visitados: %d. Mensajes en el chat: %s", visitedCount, tostring(DB.settings.chat)))
+    end
+    Say(string.format("Patrones de botín propio: %d (0 = se acepta todo el botín)", #ns.GetOwnLootPatterns()))
+
     for _, row in ipairs(ns.GetApiBranches()) do Say(row[1] .. ": " .. row[2]) end
 
     local registered, failed = {}, {}
@@ -87,6 +94,26 @@ local function SetDebug(arg1, arg2)
     end
 end
 
+-- /diario chat: what the diary echoes to the chat window (settings.chat).
+local CHAT_MODES = {
+    todo = "all", all = "all",
+    importante = "important", important = "important",
+    nada = "off", off = "off",
+}
+local CHAT_MODE_NAMES = { all = "todo", important = "importante", off = "nada" }
+
+local function SetChatMode(word)
+    local settings = ns.EnsureDatabase().settings
+    local mode = CHAT_MODES[word]
+    if mode then
+        settings.chat = mode
+        Say("Mensajes en el chat: " .. CHAT_MODE_NAMES[mode] .. ".")
+    else
+        Say("Mensajes en el chat: " .. (CHAT_MODE_NAMES[settings.chat] or "?")
+            .. ". Usa /diario chat todo, /diario chat importante (jefes, muertes y botín épico) o /diario chat nada.")
+    end
+end
+
 SLASH_ADVENTUREJOURNAL1 = "/diario"
 SLASH_ADVENTUREJOURNAL2 = "/journal"
 SlashCmdList["ADVENTUREJOURNAL"] = function(message)
@@ -102,7 +129,9 @@ SlashCmdList["ADVENTUREJOURNAL"] = function(message)
         PrintDiagnostics()
     elseif word == "debug" then
         SetDebug(arg1, arg2)
+    elseif word == "chat" then
+        SetChatMode(arg1)
     else
-        Say("Usa /diario, /diario hoy, /diario anterior, /diario diag o /diario debug.")
+        Say("Usa /diario, /diario hoy, /diario anterior, /diario chat, /diario diag o /diario debug.")
     end
 end
