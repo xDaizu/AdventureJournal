@@ -71,6 +71,11 @@ local function PrintDiagnostics()
             Say("AJProbe: no está cargado (/diario importar no tendría de dónde leer)")
         end
     end
+    do
+        local now = time()
+        Say(string.format("Lectura de fechas (time{...}, la usa /diario importar): %s",
+            ns.ParseDateTime(date("%Y-%m-%d %H:%M:%S", now)) == now and "OK" or "NO funciona (se usarán las marcas de tiempo)"))
+    end
     Say("Panel de opciones: " .. ns.GetOptionsStatus())
     Say("Índice del libro: " .. ns.GetIndexMode())
     local compartmentField = ns.GetAddonField("AddonCompartmentFunc")

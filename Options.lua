@@ -116,10 +116,11 @@ local function BuildPanel()
     -- players' words. /diario conversaciones on|off does the same.
     AddText(frame, "GameFontNormal", 16, y, "Conversaciones de rol")
     y = y - 24
-    controls.conversations = AddCheck(frame, y, "Guardar las conversaciones (susurros, grupo, y decir/gritar/emotes de amigos y del grupo)",
+    controls.conversations = AddCheck(frame, y, "Guardar las conversaciones de rol",
         function(enabled) ns.SetSetting("conversations", enabled) end)
     AddText(frame, "GameFontHighlightSmall", 20, y - 28,
-        "Guarda palabras de otros jugadores, por eso está desactivado por defecto. Con la casilla desmarcada no se guarda ni se muestra nada "
+        "Guarda susurros (también de Battle.net), chat de grupo y banda, y lo que digáis, gritéis o hagáis tú, tu grupo y tus amigos. "
+        .. "Son palabras de otros jugadores, por eso está desactivado por defecto. Con la casilla desmarcada no se guarda ni se muestra nada "
         .. "(lo ya guardado se conserva). Dentro de instancias el chat es secreto y no se guarda.", 520)
 
     frame:SetScript("OnShow", function() ns.RefreshOptionsPanel() end)

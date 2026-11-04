@@ -31,7 +31,8 @@ local SLACK = 3          -- seconds of tolerance when matching records to jornad
 local CHAT_WINDOW = 2    -- seconds: same channel, author and text is the same line
 -- Same windows as the live handlers (quest 3 s, boss 5 s, NPC 20 s), widened a little because
 -- the diary and AJProbe read the clock in different frames.
-local WINDOW = { QUEST = 5, BOSS = 5, NPC = 20, DEATH = 5, LOOT = 5 }
+-- A whisper has no live dedupe, so only clock skew counts as the same event.
+local WINDOW = { QUEST = 5, BOSS = 5, NPC = 20, DEATH = 5, LOOT = 5, CHAT = 1 }
 
 -- What AJProbe writes for values it could not or would not record (Snap in AJProbe.lua).
 local NOT_A_VALUE = {
@@ -128,6 +129,14 @@ end
 HANDLERS.GOSSIP_SHOW = function(record)
     local name, secret = Text(record.npc)
     return { type = "NPC", text = name or ns.NEUTRAL_TEXT.NPC, secret = name == nil and secret }
+end
+
+-- The CHAT entry (sender name only, never the text), as CHAT_MSG_WHISPER makes it live.
+HANDLERS.CHAT_MSG_WHISPER = function(record)
+    local from, secret = Text(record.from)
+    if from then return { type = "CHAT", text = ns.StripRealm(from) } end
+    if secret then return { type = "CHAT", text = ns.NEUTRAL_TEXT.SENDER, secret = true } end
+    return nil, "ignored"
 end
 
 HANDLERS.PLAYER_DEAD = function()
@@ -243,8 +252,10 @@ end
 -- A jornada's time range: its startedAt/endedAt and the timestamps of what it holds. The
 -- current jornada is still running, so it reaches up to now.
 local function RangeOfDay(day, isCurrent)
-    local low = ns.ParseDateTime(day.startedAt)
-    local high = ns.ParseDateTime(day.endedAt)
+    -- The strings are local times read back with time{...}; imported jornadas also keep the
+    -- epochs (startTs, endTs) for a client where that conversion does not work.
+    local low = ns.ParseDateTime(day.startedAt) or (type(day.startTs) == "number" and day.startTs or nil)
+    local high = ns.ParseDateTime(day.endedAt) or (type(day.endTs) == "number" and day.endTs or nil)
     local function Widen(stamp)
         if type(stamp) ~= "number" then return end
         if not low or stamp < low then low = stamp end
@@ -364,6 +375,7 @@ function ns.PlanImport()
         local day = {
             startedAt = DateText(session.firstRecord), endedAt = DateText(session.lastRecord),
             dateLabel = DateLabel(session.firstRecord), events = {}, source = "ajprobe",
+            startTs = session.first, endTs = session.last,
         }
         local range = { day = day, lo = session.first, hi = session.last, new = true, session = session, order = #ranges + 1 }
         ranges[#ranges + 1] = range
