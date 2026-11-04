@@ -2,7 +2,7 @@
 
 Milestone plan to finish the dual-client port (WoW Forever + Classic Era), then handle bug fixes and improvements. Background and design rules: [README.md](README.md).
 
-Last updated: 2026-11-04 (M2 code done, waiting for the Classic Era smoke test; M4b added earlier).
+Last updated: 2026-11-04 (M4 code done, M2 and M4 await the in-game Classic Era smoke test, M3 awaits the Forever launch).
 
 ## Constraints that shape the plan
 
@@ -115,14 +115,19 @@ Goal: make it work on Forever and replace assumptions with what the game actuall
 
 Can start in parallel with M3. Everything here can be tested on Classic Era. Re-check on Forever afterwards.
 
-- [ ] **One jornada per login, not per `/reload`.** Use the `isReload` argument of `PLAYER_ENTERING_WORLD`. Keep starting a new jornada on a real login (the original design).
-- [ ] **Real discoveries.** Keep a per-character `visited` set of zone/subzone keys in the DB. Log a `DISCOVERY` only the first time. Optionally, a lighter "travel" entry for moving between zones, without spam.
-- [ ] **Own loot only.** Build a pattern from `LOOT_ITEM_SELF` / `LOOT_ITEM_SELF_MULTIPLE` (these differ by locale; check them on esES and enUS). Ignore other players' loot.
-- [ ] **Close with Escape:** `tinsert(UISpecialFrames, "AdventureJournalBookFrame")`.
-- [ ] **Less chat spam.** Turn the chat print off by default, or limit it to important events (boss, death, epic loot).
-- [ ] **Schema v2.** Add a migration in `Database.lua` for `visited` and the settings table. Existing v1 diaries must load unchanged.
+Test split (user, 2026-11-04): **everything is tested on Classic Era now (harness, then in game); the Forever side waits for M3.** Status below: `[x]` = written and passing the harness; the in-game Classic Era smoke test is still pending (see the status line); items marked *Forever: verify in M3* depend on what Forever really sends.
+
+- [x] **One jornada per login, not per `/reload`.** The session now starts at `PLAYER_ENTERING_WORLD(isInitialLogin, isReloadingUi)`, no longer at `PLAYER_LOGIN`. A real login starts a new jornada. A reload continues the current one (clears the `endedAt` that the reload's `PLAYER_LOGOUT` set) and prints "Continúas la jornada N". A loading screen inside the game does nothing. If no jornada exists yet, one is created. *Forever: verify in M3* that the two flags arrive as on Classic Era.
+- [x] **Real discoveries.** `visited` (per character, keyed by the place text) in the DB. A `DISCOVERY` is logged only the first time. Not logged while the zone text is nil (right after a fresh login) or secret. On reload the current place is marked visited silently. The optional lighter "travel" entry is **not** done (backlog).
+- [x] **Own loot only.** Patterns built in `Compat.lua` from `LOOT_ITEM_SELF`, `LOOT_ITEM_SELF_MULTIPLE`, `LOOT_ITEM_PUSHED_SELF` and `LOOT_ITEM_PUSHED_SELF_MULTIPLE` (handles `%s`, `%d` and positional `%1$s`), so the locale doesn't matter. If a client has none of the strings, all loot is accepted as before. Checked against the real esES samples from AJProbe (9 of 9 own messages match). *Forever: verify in M3* with `tools/ajprobe_summary.py`, which reports how many real loot messages match; `/diario diag` shows the pattern count, and `/diario debug on` prints "botín de otro jugador" for every message ignored. A mismatch would silently drop own loot.
+- [x] **Close with Escape:** `UISpecialFrames` (once). Checked in the harness by hiding the registered frames, as the game does. *Verify in game.*
+- [x] **Less chat spam.** `settings.chat`: `important` (default: boss kills, deaths, epic or better loot), `all`, `off`. Command `/diario chat [todo|importante|nada]`. The "Comienza / Continúas la jornada" line stays.
+- [x] **Schema v2.** `Database.lua` migrates v1 diaries: adds `visited` (seeded from the DISCOVERY entries already in the diary, so upgrading does not log them again) and `settings`; jornadas are never touched. Idempotent. Tested on a hand-written v1 diary (`scenario_migration.lua`). *Test on your real diary: it is the in-game smoke test.*
+- [x] **Also fixed here (bug log):** the first `/diario` did nothing (#8), `◀`/`▶` rendered as squares (#9, now `< Anterior` / `Siguiente >`), `pendingLoot` grew without bound (#11), sentences started in lower case after a full stop (#13; only new entries, stored prose is not rewritten).
 
 **Done when:** `/reload` doesn't create a new jornada, walking back and forth produces no repeated entries, group loot is ignored, and old diaries still load.
+
+**Status (2026-11-04):** code done and passing `npm test` on both flavors (new third run `second login`, new `scenario_migration.lua`). **Pending:** the in-game smoke test on Classic Era (it also covers M2) and, after M3, the same checks on Forever. M3 testing is also still pending: it needs the Forever launch ([runbook](M3_RUNBOOK.md)).
 
 ## M4b: Backfill from AJProbe, and RP conversations 🟢 (M)
 
@@ -219,14 +224,14 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 | 1 | 2026-11-04 | Forever | P1 | No Forever TOC (interface 11509 only) | Workaround: provisional `AdventureJournal_Forever.toc`. Proper TOCs in M1 |
 | 2 | 2026-11-04 | Forever | P1 | Secret values cause errors in `GOSSIP_SHOW` / `CHAT_MSG_WHISPER` / `CHAT_MSG_LOOT` inside instances (from code analysis) | Guards and per-handler error isolation written in M2, tested with stub and simulated secrets on both flavors. **Verify in M3** inside a dungeon |
 | 3 | 2026-11-04 | Forever | P2 | Loot link pattern may miss `\|cnIQ` item links (unverified) | Pattern fixed 2026-11-04; exporter `clean()` fixed in M2; verify in M3 with a real Forever link |
-| 4 | 2026-11-04 | Both | P2 | `/reload` creates a new jornada. **Confirmed on Classic Era.** `PLAYER_ENTERING_WORLD` gives `true,false` on login and `false,true` on reload. | Planned: M4 |
-| 5 | 2026-11-04 | Both | P2 | Subzone changes spam `DISCOVERY` entries and chat. **Confirmed on Classic Era:** "Valle de los Retos" was logged twice in one jornada. Every fresh login also logs a `DISCOVERY` for the starting spot, because `GetRealZoneText()` is nil at `PLAYER_LOGIN`. | Planned: M4 |
-| 6 | 2026-11-04 | Both | P2 | Group members' loot is logged as the player's | Planned: M4 |
-| 7 | 2026-11-04 | Both | P3 | Escape does not close the book | Planned: M4 |
-| 8 | 2026-11-04 | Both | P2 | The first `/diario` (or key binding press) after login shows nothing. `BuildUI` creates the frame already shown, then `AdventureJournal_ToggleUI` sees `IsShown()` and hides it (`AdventureJournal.lua:342`, `:497-499`). **Confirmed on Classic Era** (second press works). | Planned: M4 |
-| 9 | 2026-11-04 | Both | P3 | `◀`/`▶` in the page buttons are probably not in the default font (Friz Quadrata), so they render as boxes or not at all. **Confirmed on Classic Era: empty squares.** Expect the same on Forever. | Planned: M4 |
+| 4 | 2026-11-04 | Both | P2 | `/reload` creates a new jornada. **Confirmed on Classic Era.** `PLAYER_ENTERING_WORLD` gives `true,false` on login and `false,true` on reload. | Fixed in M4 (harness); in-game check pending. Forever: verify in M3 |
+| 5 | 2026-11-04 | Both | P2 | Subzone changes spam `DISCOVERY` entries and chat. **Confirmed on Classic Era:** "Valle de los Retos" was logged twice in one jornada. Every fresh login also logs a `DISCOVERY` for the starting spot, because `GetRealZoneText()` is nil at `PLAYER_LOGIN`. | Fixed in M4 (harness); in-game check pending |
+| 6 | 2026-11-04 | Both | P2 | Group members' loot is logged as the player's | Fixed in M4 (own-loot patterns). Group loot never seen in game yet; Forever: verify in M3 |
+| 7 | 2026-11-04 | Both | P3 | Escape does not close the book | Fixed in M4; in-game check pending |
+| 8 | 2026-11-04 | Both | P2 | The first `/diario` (or key binding press) after login shows nothing. `BuildUI` creates the frame already shown, then `AdventureJournal_ToggleUI` sees `IsShown()` and hides it (`AdventureJournal.lua:342`, `:497-499`). **Confirmed on Classic Era** (second press works). | Fixed in M4 (the frame is hidden after creation); in-game check pending |
+| 9 | 2026-11-04 | Both | P3 | `◀`/`▶` in the page buttons are probably not in the default font (Friz Quadrata), so they render as boxes or not at all. **Confirmed on Classic Era: empty squares.** Expect the same on Forever. | Fixed in M4: buttons read `< Anterior` / `Siguiente >`. The `QuestBG` texture still needs an in-game look on both clients |
 | 10 | 2026-11-04 | Both | P3 | `Bindings.xml` is listed in the TOC. The client loads `Bindings.xml` by itself; listing it may log an XML error to `Logs\FrameXML.log`. **Confirmed:** `Bindings.xml:2 Unrecognized XML: Binding` warning on load. Fix: drop it from the TOC file list. | **Fixed** in M1: warning gone, key binding still works (confirmed in game) |
-| 11 | 2026-11-04 | Both | P3 | `pendingLoot` keeps every looted item that is cached but below rare quality, and never clears it (`AdventureJournal.lua:251`). Small, unbounded growth per session. From code analysis. | Planned: M4 |
+| 11 | 2026-11-04 | Both | P3 | `pendingLoot` keeps every looted item that is cached but below rare quality, and never clears it (`AdventureJournal.lua:251`). Small, unbounded growth per session. From code analysis. | Fixed in M4 (settled items are dropped) |
 | 12 | 2026-11-04 | Classic Era | P2 | If `C_QuestLog.GetTitleForQuestID` is missing on 1.15.9, quest entries fall back to "una misión (ID n)", because the quest has already left the log at `QUEST_TURNED_IN`. **Rejected:** the API is missing, but the quest is still in the log during the event, so the scan finds the title. It is gone 1 s later. Keep the lookup synchronous. | Not a bug |
-| 13 | 2026-11-04 | Both | P3 | Prose sentences start in lower case after a full stop: "«Tu lugar en el mundo». pensando en el largo camino...". This happens in `QUEST` (all three variants) and `LOOT`, because the mood phrases start in lower case. | Planned: M4 |
+| 13 | 2026-11-04 | Both | P3 | Prose sentences start in lower case after a full stop: "«Tu lugar en el mundo». pensando en el largo camino...". This happens in `QUEST` (all three variants) and `LOOT`, because the mood phrases start in lower case. | Fixed in M4 for new entries (old stored prose is unchanged) |
 | 14 | 2026-11-04 | Classic Era | P3 | `MINIMAP_ZONE_CHANGED` does not exist on Classic Era. Registering it fails silently inside `pcall`. Harmless; drop it in M1, or register it only if `C_EventUtils.IsEventValid` says it exists. | Fixed in M1 |

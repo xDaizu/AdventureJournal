@@ -44,8 +44,8 @@ All changes must keep both clients working. A change that fixes Forever and brea
 
 ### Lifecycle
 
-1. `ADDON_LOADED` (own name): `EnsureDatabase()` creates or normalises `AdventureJournalDB`.
-2. `PLAYER_LOGIN`: `StartSession()` increments `currentDay` and creates a new jornada. A `/reload` also fires `PLAYER_LOGIN`, so it also starts a new jornada (known issue).
+1. `ADDON_LOADED` (own name): `EnsureDatabase()` creates or normalises `AdventureJournalDB` and migrates older schemas.
+2. `PLAYER_ENTERING_WORLD(isInitialLogin, isReloadingUi)`: the first one of the session calls `StartSession()`. A real login increments `currentDay` and creates a new jornada. A `/reload` continues the current jornada (`endedAt` is cleared again). Later firings (loading screens) do nothing.
 3. Gameplay events: each one calls `AddEntry(type, text, extra)`. This builds an entry, generates its prose, adds it to the current jornada, refreshes the UI if it is open, and prints a line to chat.
 4. `PLAYER_LOGOUT`: stores `endedAt` on the current jornada.
 
@@ -56,8 +56,8 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `QUEST` | `QUEST_TURNED_IN` | Repeats of the same quest ID within 3 s are ignored. The title comes from `C_QuestLog.GetTitleForQuestID`, falling back to the quest log, then to the quest ID. |
 | `BOSS` | `BOSS_KILL`, `ENCOUNTER_END` (`success == 1`) | Repeats of the same name within 5 s are ignored, because both events can fire for one kill. |
 | `DEATH` | `PLAYER_DEAD` | |
-| `LOOT` | `CHAT_MSG_LOOT`, plus `GET_ITEM_INFO_RECEIVED` for items not yet cached | Only quality ≥ 3 (rare or better). Parses the first item link in the message. Currently also logs group members' loot. |
-| `DISCOVERY` | `ZONE_CHANGED*`, `MINIMAP_ZONE_CHANGED` | Fires whenever "subzone, zone" changes. This includes places the player has already visited. |
+| `LOOT` | `CHAT_MSG_LOOT`, plus `GET_ITEM_INFO_RECEIVED` / `ITEM_DATA_LOAD_RESULT` for items not yet cached | Only the player's own loot (messages matching the locale's `LOOT_ITEM_SELF*` / `LOOT_ITEM_PUSHED_SELF*` strings) and only quality ≥ 3 (rare or better). Parses the first item link in the message. |
+| `DISCOVERY` | `ZONE_CHANGED*`, `MINIMAP_ZONE_CHANGED` | Only the first time a "subzone, zone" is seen (`visited`). Ignored while the zone text is nil or secret. |
 | `NPC` | `GOSSIP_SHOW` | Uses `UnitName("npc")`. Repeats of the same NPC within 20 s are ignored. |
 | `CHAT` | `CHAT_MSG_WHISPER` | Stores the **sender name only**, never the message text. This stays the default. Storing conversation text is planned as an **opt-in, off by default** RP feature ([ROADMAP M4b](ROADMAP.md#m4b-backfill-from-ajprobe-and-rp-conversations--m)). |
 
@@ -92,8 +92,10 @@ One failing handler never stops the others. The first error per event name goes 
 
 ```lua
 AdventureJournalDB = {
-  version    = 1,
+  version    = 2,
   currentDay = <number>,          -- index of the latest jornada
+  visited    = { ["Subzone, Zone"] = true, ... },  -- v2: places already logged as a DISCOVERY
+  settings   = { chat = "important" },             -- v2: "all" | "important" | "off"
   days = {
     [n] = {
       startedAt = "YYYY-MM-DD HH:MM:SS",
@@ -115,12 +117,13 @@ AdventureJournalDB = {
 }
 ```
 
-Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\WTF\...`). Diaries are **not shared** between Forever and Classic Era characters. The schema itself must stay identical on both clients, so the exporter and any future migration code work on either one. If the schema changes, bump `version` and migrate in `EnsureDatabase()`.
+Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\WTF\...`). Diaries are **not shared** between Forever and Classic Era characters. The schema itself must stay identical on both clients, so the exporter and any future migration code work on either one. If the schema changes, bump `version` and migrate in `EnsureDatabase()`. **v1 → v2 (M4):** adds `visited` (seeded from the diary's existing DISCOVERY entries) and `settings`; existing jornadas are untouched.
 
 ### UI and commands
 
 - `AdventureJournalBookFrame` is an open book: the jornada index on the left (newest first), the selected jornada's prose on the right, and previous/next buttons. It is created on first use.
-- Slash commands: `/diario` or `/journal` (toggle), `/diario hoy` (latest jornada), `/diario anterior` (the one before it).
+- Slash commands: `/diario` or `/journal` (toggle), `/diario hoy` (latest jornada), `/diario anterior` (the one before it), `/diario chat [todo|importante|nada]` (what is echoed to the chat window; default `importante` = boss kills, deaths, epic loot).
+- Escape closes the book.
 - Developer commands:
   - `/diario diag`: client, interface, DB, API branches, registered events, handler errors. Run it first on a new client.
   - `/diario debug on` / `off`: print every handled event's payload (`[SECRET]` for secrets) and every fallback taken. Session only.
@@ -180,7 +183,7 @@ Entries marked "verify" have not been checked in game. Confirm them with `/dump`
 | Loot / whisper text | Plain strings. Links use `\|cffRRGGBB` (observed for loot) | **Secret inside instances** |
 | Zone text | `GetRealZoneText`, `GetSubZoneText`. `GetRealZoneText()` is nil at `PLAYER_LOGIN` on a fresh login (observed). `MINIMAP_ZONE_CHANGED` does not exist | Same |
 | Frames | `BackdropTemplate`, `UIPanel*Template` | Same |
-| Textures and glyphs | `Interface\QuestFrame\QuestBG` (not checked yet). `◀`/`▶` render as **empty squares** (observed) | Verify that both still render on the modern client |
+| Textures and glyphs | `Interface\QuestFrame\QuestBG` (not checked yet). `◀`/`▶` rendered as **empty squares** (observed); the buttons now read `< Anterior` / `Siguiente >` | Verify that the `QuestBG` texture renders on the modern client |
 | Options panel (future) | `Settings` API exists; `InterfaceOptions_AddCategory` is missing (observed) | `Settings` API |
 
 ## Development and testing
