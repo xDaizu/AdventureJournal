@@ -69,9 +69,9 @@ Goal: a code layout that can hold client-specific code cleanly. Same behaviour a
 - [x] Move every direct Classic or Mainline API call into `Compat.lua`. Keep what M0 observed ([REFERENCE_SAMPLES.md](REFERENCE_SAMPLES.md)): `ns.GetQuestTitle` must stay synchronous (the quest leaves the log within 1 s), and `GetRealZoneText()` can be nil at `PLAYER_LOGIN`.
 - [x] Register `MINIMAP_ZONE_CHANGED` only when `C_EventUtils.IsEventValid` confirms it exists (`ns.RegisterEventSafe`, bug #14).
 
-- [ ] **In-game smoke test on Classic Era** (needs a full client restart, since the TOCs changed).
+- [x] **In-game smoke test on Classic Era** (2026-11-04, Volgajin): the `_Vanilla` TOC is picked up, jornadas 1–5 from before M1 load and display, a new jornada and entry are created and saved, the key binding works without `Bindings.xml` in the TOC, and the `Unrecognized XML` warning is gone. NPC entries and `/reload` were not re-checked in game (the harness covers them); they get exercised in normal play.
 
-**Status (2026-11-04):** code done; the harness reproduces the pre-M1 behaviour exactly on both flavors. Waiting for the in-game smoke test, then tag `m1-done`.
+**Status (2026-11-04):** done, tagged `m1-done`.
 
 **Done when:** the harness output matches the pre-M1 baseline, the M0 smoke test passes on Classic Era with identical results, diaries from M0 still open in the UI, and the Forever TOC still loads.
 
@@ -220,7 +220,7 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 | 7 | 2026-11-04 | Both | P3 | Escape does not close the book | Planned: M4 |
 | 8 | 2026-11-04 | Both | P2 | The first `/diario` (or key binding press) after login shows nothing. `BuildUI` creates the frame already shown, then `AdventureJournal_ToggleUI` sees `IsShown()` and hides it (`AdventureJournal.lua:342`, `:497-499`). **Confirmed on Classic Era** (second press works). | Planned: M4 |
 | 9 | 2026-11-04 | Both | P3 | `◀`/`▶` in the page buttons are probably not in the default font (Friz Quadrata), so they render as boxes or not at all. **Confirmed on Classic Era: empty squares.** Expect the same on Forever. | Planned: M4 |
-| 10 | 2026-11-04 | Both | P3 | `Bindings.xml` is listed in the TOC. The client loads `Bindings.xml` by itself; listing it may log an XML error to `Logs\FrameXML.log`. **Confirmed:** `Bindings.xml:2 Unrecognized XML: Binding` warning on load. Fix: drop it from the TOC file list. | Fixed in M1 (not listed in the TOCs); confirm in game |
+| 10 | 2026-11-04 | Both | P3 | `Bindings.xml` is listed in the TOC. The client loads `Bindings.xml` by itself; listing it may log an XML error to `Logs\FrameXML.log`. **Confirmed:** `Bindings.xml:2 Unrecognized XML: Binding` warning on load. Fix: drop it from the TOC file list. | **Fixed** in M1: warning gone, key binding still works (confirmed in game) |
 | 11 | 2026-11-04 | Both | P3 | `pendingLoot` keeps every looted item that is cached but below rare quality, and never clears it (`AdventureJournal.lua:251`). Small, unbounded growth per session. From code analysis. | Planned: M4 |
 | 12 | 2026-11-04 | Classic Era | P2 | If `C_QuestLog.GetTitleForQuestID` is missing on 1.15.9, quest entries fall back to "una misión (ID n)", because the quest has already left the log at `QUEST_TURNED_IN`. **Rejected:** the API is missing, but the quest is still in the log during the event, so the scan finds the title. It is gone 1 s later. Keep the lookup synchronous. | Not a bug |
 | 13 | 2026-11-04 | Both | P3 | Prose sentences start in lower case after a full stop: "«Tu lugar en el mundo». pensando en el largo camino...". This happens in `QUEST` (all three variants) and `LOOT`, because the mood phrases start in lower case. | Planned: M4 |

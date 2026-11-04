@@ -14,7 +14,7 @@ AdventureJournal is a narrative diary that runs automatically. It listens to gam
 | Client | Version (local) | Interface | Game type | API family | Install folder | Status |
 |---|---|---|---|---|---|---|
 | **WoW Forever** | 1.60.1.70755 | `16001` | `forever` (alias `camelot`) | Mainline (Midnight 12.x), with secret values | `_forever_` | **Not ported yet.** Loads through a provisional TOC since 2026-11-04; expect errors inside dungeons (see [Roadmap](#roadmap)) |
-| **WoW Classic Era** | 1.15.9.70576 | `11509` | `vanilla` | Classic | `_classic_era_` | Works. Smoke-tested in game 2026-11-04; known bugs in the [bug log](ROADMAP.md#bug-log) |
+| **WoW Classic Era** | 1.15.9.70576 | `11509` | `vanilla` | Classic | `_classic_era_` | Works. Smoke-tested in game 2026-11-04 (M0, and again after the M1 restructure); known bugs in the [bug log](ROADMAP.md#bug-log) |
 
 Retail (Midnight), Anniversary/TBC and MoP Classic are **not** targets. The addon should not load on them.
 
