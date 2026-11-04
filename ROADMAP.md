@@ -2,7 +2,7 @@
 
 Milestone plan to finish the dual-client port (WoW Forever + Classic Era), then handle bug fixes and improvements. Background and design rules: [README.md](README.md).
 
-Last updated: 2026-11-04 (added M4b: backfill from AJProbe, RP conversations).
+Last updated: 2026-11-04 (M2 code done, waiting for the Classic Era smoke test; M4b added earlier).
 
 ## Constraints that shape the plan
 
@@ -79,15 +79,18 @@ Goal: a code layout that can hold client-specific code cleanly. Same behaviour a
 
 Goal: code that should run on Forever on day one, with tools to diagnose it quickly when it doesn't.
 
-- [ ] **Secret guards.** Check `ns.IsSecret` before any comparison, match or `tonumber` in `SafeString` and in the `GOSSIP_SHOW`, `CHAT_MSG_WHISPER`, `CHAT_MSG_LOOT` and `ENCOUNTER_END`/`BOSS_KILL` handlers. When a value is secret, use a neutral fallback ("un habitante de la zona", "alguien") or skip the entry. Never pass a secret to `AddEntry`.
-- [ ] **Item links.** Done in game code (any colour prefix, see the day-one safety net). Still to do: update the exporter's `clean()` to also strip `|cnIQ<n>:`.
-- [ ] **Item data.** Prefer `C_Item.GetItemInfo`. Keep `GET_ITEM_INFO_RECEIVED`, and also listen to `ITEM_DATA_LOAD_RESULT` when it exists.
-- [ ] **Diagnostics command `/diario diag`.** Prints the client (project ID, interface), the DB version, which API branches `Compat` chose, whether `issecretvalue` exists, and which events registered successfully. This is the first thing to run on Forever.
-- [ ] **Debug mode `/diario debug [on|off]`.** Prints the raw payload of each handled event, with `[SECRET]` markers, to help confirm what Forever sends.
-- [ ] **Simulated secrets `/diario debug secrets`.** On Classic Era, makes `ns.IsSecret` return true for event payload strings, so every fallback branch can be run and checked without Forever.
-- [ ] **Error isolation.** Wrap each handler so one failing handler doesn't stop the others, and so the error is reported once with the event name (in debug mode).
+- [x] **Secret guards.** `ns.IsSecret` is checked before any comparison, match, `tonumber`, `#` or table-key use in `ns.SafeString` and in the `GOSSIP_SHOW`, `CHAT_MSG_WHISPER`, `CHAT_MSG_LOOT`, `ENCOUNTER_END`, `BOSS_KILL`, `QUEST_TURNED_IN`, `GET_ITEM_INFO_RECEIVED` / `ITEM_DATA_LOAD_RESULT` and zone handlers. Fallbacks: NPC "un habitante de la zona", whisper sender "alguien", boss "una criatura temible", quest "una misión cuyo nombre no he podido recuperar". Skipped entirely: a secret loot message (the item cannot be read), an `ENCOUNTER_END` with a secret `success` flag (`BOSS_KILL` covers the kill), a zone change with secret zone text. `ns.AddEntry` also drops any secret field as a last line of defence. Same-kind secrets share one fallback, so the 20 s NPC and 5 s boss dedupe merges them (acceptable, noted).
+- [x] **Item links.** Game code accepts any colour prefix (day-one safety net). The exporter's `clean()` now also strips `|cnIQ<n>:` (checked with a sample string).
+- [x] **Item data.** `C_Item.GetItemInfo` is tried first, then the global `GetItemInfo`. `ITEM_DATA_LOAD_RESULT` is registered next to `GET_ITEM_INFO_RECEIVED` through `RegisterEventSafe` and shares its handler. Items not cached yet are also requested with `C_Item.RequestLoadItemDataByID`. *Verify in M3:* which of the two events Forever actually fires.
+- [x] **Diagnostics command `/diario diag`.** Prints the client (version, build, interface, project ID, detection result), instance state, zone, DB version and counts, which API branch each `Compat` wrapper takes, whether `issecretvalue` exists, which events registered (and why one did not), handler errors, and the debug state. First thing to run on Forever.
+- [x] **Debug mode `/diario debug on|off`.** Prints the payload of each handled event with `[SECRET]` markers, plus a line whenever a fallback is taken. Session only (never saved).
+- [x] **Simulated secrets `/diario debug secrets [off]`.** Event payload strings and `UnitName` results become proxies that error on everything a real secret forbids; `ns.IsSecret` recognises them. It also turns debug on; `/diario debug off` or `/reload` turns it off.
+- [x] **Error isolation.** Every handler runs under `pcall`. The first error per event name goes to the game's error handler (so `scriptErrors` / BugSack show it, tagged with the event name); repeats are only counted. `/diario diag` lists them.
+- [x] **Harness.** Third scenario `scenario_secrets.lua` (secret NPC name, whisper sender, loot message, boss names, quest ID, zone text, in an instance), a stub secret that errors like a real one, a DB scan that fails the run if a secret reaches SavedVariables. Limits are in [tools/README.md](../tools/README.md).
 
 **Done when:** on Classic Era the M0 checklist passes in normal mode, and also with simulated secrets: no errors, and fallback text appears in the entries. The Forever TOC is in place, ready for launch.
+
+**Status (2026-11-04):** code done, `npm test` passes. Waiting for the in-game Classic Era smoke test; then tag `m2-done`. The Forever behaviour of all of this is **unverified until M3**. Open questions for M3: are `ENCOUNTER_END` / `BOSS_KILL` payloads really secret, what does `UnitName("npc")` return in a dungeon, is `CHAT_MSG_LOOT` / `CHAT_MSG_WHISPER` text secret there, is the zone text ever secret, which item-cache event fires, and does a secret really pass `type()` as `"string"`.
 
 ## M3: First Forever session 🔵 (M) (from 2026-11-05)
 
@@ -212,8 +215,8 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 | # | Found | Client | Priority | Description | Status |
 |---|---|---|---|---|---|
 | 1 | 2026-11-04 | Forever | P1 | No Forever TOC (interface 11509 only) | Workaround: provisional `AdventureJournal_Forever.toc`. Proper TOCs in M1 |
-| 2 | 2026-11-04 | Forever | P1 | Secret values cause errors in `GOSSIP_SHOW` / `CHAT_MSG_WHISPER` / `CHAT_MSG_LOOT` inside instances (from code analysis) | Planned: M2 |
-| 3 | 2026-11-04 | Forever | P2 | Loot link pattern may miss `\|cnIQ` item links (unverified) | Pattern fixed 2026-11-04; exporter in M2; verify in M3 |
+| 2 | 2026-11-04 | Forever | P1 | Secret values cause errors in `GOSSIP_SHOW` / `CHAT_MSG_WHISPER` / `CHAT_MSG_LOOT` inside instances (from code analysis) | Guards and per-handler error isolation written in M2, tested with stub and simulated secrets on both flavors. **Verify in M3** inside a dungeon |
+| 3 | 2026-11-04 | Forever | P2 | Loot link pattern may miss `\|cnIQ` item links (unverified) | Pattern fixed 2026-11-04; exporter `clean()` fixed in M2; verify in M3 with a real Forever link |
 | 4 | 2026-11-04 | Both | P2 | `/reload` creates a new jornada. **Confirmed on Classic Era.** `PLAYER_ENTERING_WORLD` gives `true,false` on login and `false,true` on reload. | Planned: M4 |
 | 5 | 2026-11-04 | Both | P2 | Subzone changes spam `DISCOVERY` entries and chat. **Confirmed on Classic Era:** "Valle de los Retos" was logged twice in one jornada. Every fresh login also logs a `DISCOVERY` for the starting spot, because `GetRealZoneText()` is nil at `PLAYER_LOGIN`. | Planned: M4 |
 | 6 | 2026-11-04 | Both | P2 | Group members' loot is logged as the player's | Planned: M4 |

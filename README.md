@@ -13,7 +13,7 @@ AdventureJournal is a narrative diary that runs automatically. It listens to gam
 
 | Client | Version (local) | Interface | Game type | API family | Install folder | Status |
 |---|---|---|---|---|---|---|
-| **WoW Forever** | 1.60.1.70755 | `16001` | `forever` (alias `camelot`) | Mainline (Midnight 12.x), with secret values | `_forever_` | **Not ported yet.** Loads through a provisional TOC since 2026-11-04; expect errors inside dungeons (see [Roadmap](#roadmap)) |
+| **WoW Forever** | 1.60.1.70755 | `16001` | `forever` (alias `camelot`) | Mainline (Midnight 12.x), with secret values | `_forever_` | Secret guards written in M2 but **not verified in game** (launch is 2026-11-05; checked in M3). First thing to run there: `/diario diag` |
 | **WoW Classic Era** | 1.15.9.70576 | `11509` | `vanilla` | Classic | `_classic_era_` | Works. Smoke-tested in game 2026-11-04 (M0, and again after the M1 restructure); known bugs in the [bug log](ROADMAP.md#bug-log) |
 
 Retail (Midnight), Anniversary/TBC and MoP Classic are **not** targets. The addon should not load on them.
@@ -26,12 +26,12 @@ All changes must keep both clients working. A change that fixes Forever and brea
 |---|---|
 | `AdventureJournal_Vanilla.toc` | Manifest for Classic Era (`## Interface: 11509`). See [TOC strategy](#toc-strategy). |
 | `AdventureJournal_Forever.toc` | Manifest for Forever (`16001`), same file list, plus `IconTexture` and `Category`. |
-| `Compat.lua` | Client detection (`ns.IS_FOREVER`, `ns.IS_CLASSIC_ERA`), `ns.IsSecret`, `ns.SafeString`, and **every** API call that differs between clients (`ns.GetPlace`, `ns.GetQuestTitle`, `ns.GetItemInfoSafe`, `ns.UnitNameSafe`, `ns.RegisterEventSafe`, ...). Other files only call these wrappers. |
+| `Compat.lua` | Client detection (`ns.IS_FOREVER`, `ns.IS_CLASSIC_ERA`), `ns.IsSecret`, `ns.SafeString`, the debug state (`ns.debug`, `ns.Debug`, `ns.Describe`, simulated secrets via `ns.Taint`), and **every** API call that differs between clients (`ns.GetPlace`, `ns.GetQuestTitle`, `ns.GetItemInfoSafe`, `ns.UnitNameSafe`, `ns.RegisterEventSafe`, ...). Other files only call these wrappers. |
 | `Database.lua` | `ns.EnsureDatabase()`, `ns.SCHEMA_VERSION`, and (from M4) migrations. Caches the table as `ns.DB`. |
 | `Narrative.lua` | Moods and Spanish prose templates: `ns.ChooseMood`, `ns.ComposeEntry`. |
-| `Events.lua` | Event registration and handlers (one function per event), `ns.AddEntry`, session start/end. |
+| `Events.lua` | Event registration and handlers (one function per event), `ns.AddEntry`, session start/end, and the dispatcher that runs each handler under `pcall` (error isolation, debug output). |
 | `UI.lua` | The book window: `ns.ToggleUI`, `ns.OpenAtDay`, `ns.SelectDay`, `ns.RefreshUI`. |
-| `Commands.lua` | Slash commands, the key-binding globals, `AdventureJournal_ToggleUI`. |
+| `Commands.lua` | Slash commands (including `/diario diag` and `/diario debug`), the key-binding globals, `AdventureJournal_ToggleUI`. |
 | `Bindings.xml` | Key binding action `ADVENTUREJOURNAL_TOGGLE`, which calls the global `AdventureJournal_ToggleUI()`. |
 | `ExportarDiario.py` / `.bat` | Out-of-game exporter: parses the SavedVariables file and writes `Diario_<Character>.txt`. |
 | `LEEME.txt` | Player guide in Spanish (install, commands, export). Still describes Classic Era only. |
@@ -60,7 +60,28 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `NPC` | `GOSSIP_SHOW` | Uses `UnitName("npc")`. Repeats of the same NPC within 20 s are ignored. |
 | `CHAT` | `CHAT_MSG_WHISPER` | Stores the **sender name only**, never the message text. This stays the default. Storing conversation text is planned as an **opt-in, off by default** RP feature ([ROADMAP M4b](ROADMAP.md#m4b-backfill-from-ajprobe-and-rp-conversations--m)). |
 
-Events are registered through `pcall`, so a missing event on one client does not stop the addon from loading.
+Events are registered through `pcall`, so a missing event on one client does not stop the addon from loading. Each handler also runs under `pcall` (see [Error isolation](#error-isolation)).
+
+### Secret values (M2, written blind)
+
+Inside instances Forever may hand the handlers secret values. Every handler checks `ns.IsSecret` before touching a payload, and a secret never reaches `AddEntry` or SavedVariables:
+
+| Handler | When the value is secret |
+|---|---|
+| `GOSSIP_SHOW` | NPC name becomes "un habitante de la zona" (so NPCs seen within 20 s collapse into one entry) |
+| `CHAT_MSG_WHISPER` | Sender becomes "alguien" |
+| `CHAT_MSG_LOOT` | Message skipped: the item cannot be read |
+| `BOSS_KILL` | Name becomes "una criatura temible" |
+| `ENCOUNTER_END` | Secret `success`: skipped (`BOSS_KILL` covers kills). Secret name with a readable `success == 1`: "una criatura temible" |
+| `QUEST_TURNED_IN` | Secret quest ID: neutral title |
+| `GET_ITEM_INFO_RECEIVED`, `ITEM_DATA_LOAD_RESULT` | Ignored |
+| `ZONE_CHANGED*` | Secret zone text: no `DISCOVERY` entry |
+
+Whether Forever really makes each of these secret is **verify in M3**; the guards only make the addon safe if it does.
+
+### Error isolation
+
+One failing handler never stops the others. The first error per event name goes to the game's error handler (visible with `/console scriptErrors 1` or BugSack, text starts with `AdventureJournal: error en el manejador de <EVENT>`). Repeats are only counted. `/diario diag` lists them.
 
 ### Prose
 
@@ -99,6 +120,10 @@ Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\W
 
 - `AdventureJournalBookFrame` is an open book: the jornada index on the left (newest first), the selected jornada's prose on the right, and previous/next buttons. It is created on first use.
 - Slash commands: `/diario` or `/journal` (toggle), `/diario hoy` (latest jornada), `/diario anterior` (the one before it).
+- Developer commands:
+  - `/diario diag`: client, interface, DB, API branches, registered events, handler errors. Run it first on a new client.
+  - `/diario debug on` / `off`: print every handled event's payload (`[SECRET]` for secrets) and every fallback taken. Session only.
+  - `/diario debug secrets` (`off` to stop): simulate secret values, mainly for Classic Era. Also turns debug on. `/diario debug off` or `/reload` turns everything off.
 - Key binding: "Diario de Aventuras → Abrir / cerrar el diario". There is no default key.
 
 ## Dual-client compatibility
@@ -146,8 +171,8 @@ Entries marked "verify" have not been checked in game. Confirm them with `/dump`
 
 | Need | Classic Era 1.15.9 | Forever 1.60.1 |
 |---|---|---|
-| Item quality / link | Both `C_Item.GetItemInfo` and `GetItemInfo` exist and agree (observed) | `C_Item.GetItemInfo` (the global `GetItemInfo` may be missing) |
-| Item cache callback | `GET_ITEM_INFO_RECEIVED`; `ITEM_DATA_LOAD_RESULT` also exists (observed) | `GET_ITEM_INFO_RECEIVED` or `ITEM_DATA_LOAD_RESULT` (verify) |
+| Item quality / link | Both `C_Item.GetItemInfo` and `GetItemInfo` exist and agree (observed). `C_Item` is tried first | `C_Item.GetItemInfo` (the global `GetItemInfo` may be missing; verify) |
+| Item cache callback | `GET_ITEM_INFO_RECEIVED`; `ITEM_DATA_LOAD_RESULT` also exists (observed). Both are registered; the first to arrive wins | Both registered when the client knows them; **verify in M3** which one fires |
 | Quest title | `C_QuestLog.GetTitleForQuestID` is **missing**. `GetQuestLogTitle` loop works, but only synchronously inside `QUEST_TURNED_IN` (observed) | `C_QuestLog.GetTitleForQuestID` |
 | Boss kill | `BOSS_KILL`, `ENCOUNTER_END` | Same. Payload may be secret during encounters (verify) |
 | NPC name | `UnitName("npc")` | Same. **Can be secret in instances** |
@@ -175,7 +200,7 @@ Before any in-game test, run the local checks (Lua 5.1 syntax, and a scripted se
 cd tools && npm test
 ```
 
-A deliberate behaviour change needs `npm run update-expected`, and the diff of `tools/expected/` should show exactly that change.
+A deliberate behaviour change needs `npm run update-expected`, and the diff of `tools/expected/` should show exactly that change. There are two scenarios per client: normal play, and a session with secret values in an instance (`scenario_secrets.lua`). The stub cannot reproduce everything about real secrets; see the limits in [tools/README.md](../tools/README.md).
 
 Test checklist before calling a change done:
 
@@ -183,6 +208,7 @@ Test checklist before calling a change done:
 - [ ] Not shown as "out of date" on either client.
 - [ ] On each client: turn in a quest, open an NPC gossip window, change subzone, die, and loot a blue item. Each one produces an entry.
 - [ ] On Forever, **inside a dungeon**: talk to an NPC, receive a whisper, see loot messages, and kill a boss. No errors, and no `nil` entries after `/reload`.
+- [ ] On Classic Era, with `/diario debug secrets`: talk to an NPC, whisper yourself or have a friend whisper you, loot something, kill something. No errors, fallback text in the entries, nothing saved as `nil`. Then `/diario debug off`.
 - [ ] The book UI opens, scrolls and pages on both clients. Textures and arrows render.
 - [ ] The exporter reads SavedVariables from both `WTF` folders.
 
