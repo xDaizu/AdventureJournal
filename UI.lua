@@ -50,6 +50,129 @@ local function SetPageBackdrop(frame, backgroundColor)
     )
 end
 
+-- Jornada index (left page) ----------------------------------------------------------
+-- Preferred: a ScrollBox, which only creates frames for the rows on screen, so 250+
+-- jornadas cost the same as 10. Fallback: the original ScrollFrame with one Button per
+-- jornada. The ScrollBox is used only if the functions AND the templates exist and the
+-- whole build succeeds (M5: "the function exists" does not mean "the template exists").
+local ROW_HEIGHT = 27
+
+local function DayLabel(dayNumber)
+    local day = ns.DB and ns.DB.days[dayNumber]
+    local count = day and type(day.events) == "table" and #day.events or 0
+    return string.format("Jornada %d  ·  %d", dayNumber, count)
+end
+
+-- Raises if anything is missing; the half-built frames are hidden first.
+local function BuildScrollBoxIndex(f, leftPage)
+    if not (CreateScrollBoxListLinearView and CreateDataProvider and ScrollUtil
+            and ScrollUtil.InitScrollBoxListWithScrollBar) then
+        error("faltan las funciones de ScrollBox", 0)
+    end
+    local holder = CreateFrame("Frame", nil, leftPage)
+    holder:SetPoint("TOPLEFT", 10, -45)
+    holder:SetPoint("BOTTOMRIGHT", -10, 12)
+    local box
+    local ok, err = pcall(function()
+        box = CreateFrame("Frame", nil, holder, "WowScrollBoxList")
+        box:SetPoint("TOPLEFT", 0, 0)
+        box:SetPoint("BOTTOMRIGHT", -18, 0)
+        local bar = CreateFrame("EventFrame", nil, holder, "MinimalScrollBar")
+        bar:SetPoint("TOPLEFT", box, "TOPRIGHT", 4, 0)
+        bar:SetPoint("BOTTOMLEFT", box, "BOTTOMRIGHT", 4, 0)
+        local view = CreateScrollBoxListLinearView()
+        view:SetElementExtent(ROW_HEIGHT)
+        view:SetElementInitializer("UIPanelButtonTemplate", function(button, dayNumber)
+            button:SetText(DayLabel(dayNumber))
+            button:SetScript("OnClick", function() ns.SelectDay(dayNumber) end)
+        end)
+        ScrollUtil.InitScrollBoxListWithScrollBar(box, bar, view)
+    end)
+    if not ok then
+        holder:Hide()
+        error(err, 0)
+    end
+    f.indexBox, f.indexMode = box, "scrollbox"
+end
+
+-- The original index: a ScrollFrame whose child holds one Button per jornada.
+local function BuildButtonIndex(f, leftPage)
+    local indexScroll = CreateFrame("ScrollFrame", nil, leftPage, "UIPanelScrollFrameTemplate")
+    indexScroll:SetPoint("TOPLEFT", 10, -45)
+    indexScroll:SetPoint("BOTTOMRIGHT", -27, 12)
+    local indexChild = CreateFrame("Frame", nil, indexScroll)
+    indexChild:SetSize(165, 1)
+    indexScroll:SetScrollChild(indexChild)
+    f.indexChild, f.indexScroll, f.indexMode = indexChild, indexScroll, "buttons"
+end
+
+local function BuildIndex(f, leftPage)
+    if ns.debug.buttons then
+        f.indexFallbackReason = "forzado con /diario debug buttons"
+    else
+        local ok, err = pcall(BuildScrollBoxIndex, f, leftPage)
+        if ok then return end
+        f.indexFallbackReason = string.sub(ns.StripPosition(err), 1, 120)
+        ns.Debug("índice: sin ScrollBox (%s), se usan botones", f.indexFallbackReason)
+    end
+    BuildButtonIndex(f, leftPage)
+end
+
+local function RefreshScrollBoxIndex(f, total)
+    local list = {}
+    for dayNumber = total, 1, -1 do list[#list + 1] = dayNumber end
+    local retain = ScrollBoxConstants and ScrollBoxConstants.RetainScrollPosition
+    f.indexBox:SetDataProvider(CreateDataProvider(list), retain)
+end
+
+local function RefreshButtonIndex(f, total)
+    local buttons = f.dayButtons or {}
+    for _, button in pairs(buttons) do button:Hide() end
+    local y = -2
+    for dayNumber = total, 1, -1 do
+        local button = buttons[dayNumber]
+        if not button then
+            button = CreateFrame("Button", nil, f.indexChild, "UIPanelButtonTemplate")
+            button:SetSize(160, 24)
+            buttons[dayNumber] = button
+        end
+        button:ClearAllPoints()
+        button:SetPoint("TOPLEFT", 0, y)
+        button:SetText(DayLabel(dayNumber))
+        local chosenDay = dayNumber
+        button:SetScript("OnClick", function() ns.SelectDay(chosenDay) end)
+        button:Show()
+        y = y - 27
+    end
+    f.dayButtons = buttons
+    f.indexChild:SetHeight(math.max(1, -y + 4))
+end
+
+-- A broken index must not take the right page with it: report the first error to
+-- the game's error handler and carry on.
+local indexErrorReported
+local function RefreshIndex(f, total)
+    local ok, err
+    if f.indexMode == "scrollbox" then
+        ok, err = pcall(RefreshScrollBoxIndex, f, total)
+    else
+        ok, err = pcall(RefreshButtonIndex, f, total)
+    end
+    if ok then return end
+    ns.Debug("índice: %s", tostring(err))
+    if indexErrorReported then return end
+    indexErrorReported = true
+    local handler = geterrorhandler and geterrorhandler()
+    if handler then handler("AdventureJournal: error al actualizar el índice: " .. tostring(err)) end
+end
+
+-- "ScrollBox" or "botones (reason)", for /diario diag.
+function ns.GetIndexMode()
+    if not journalFrame then return "el libro aún no se ha abierto" end
+    if journalFrame.indexMode == "scrollbox" then return "ScrollBox" end
+    return "botones (" .. tostring(journalFrame.indexFallbackReason) .. ")"
+end
+
 local function BuildUI()
     if journalFrame then return end
 
@@ -96,13 +219,7 @@ local function BuildUI()
     indexTitle:SetPoint("TOPLEFT", 13, -14)
     indexTitle:SetTextColor(0.25, 0.16, 0.08)
 
-    local indexScroll = CreateFrame("ScrollFrame", nil, leftPage, "UIPanelScrollFrameTemplate")
-    indexScroll:SetPoint("TOPLEFT", 10, -45)
-    indexScroll:SetPoint("BOTTOMRIGHT", -27, 12)
-    local indexChild = CreateFrame("Frame", nil, indexScroll)
-    indexChild:SetSize(165, 1)
-    indexScroll:SetScrollChild(indexChild)
-    f.indexChild, f.indexScroll = indexChild, indexScroll
+    BuildIndex(f, leftPage)
 
     local dayTitle = CreateText(rightPage, "GameFontNormalLarge", "Jornada", 470)
     dayTitle:SetPoint("TOPLEFT", 20, -17)
@@ -163,28 +280,7 @@ function ns.RefreshUI()
     if not journalFrame then return end
     local DB = ns.EnsureDatabase()
     local total = DB.currentDay or 0
-    local buttons = journalFrame.dayButtons or {}
-    for _, button in pairs(buttons) do button:Hide() end
-    local y = -2
-    for dayNumber = total, 1, -1 do
-        local day = DB.days[dayNumber] or { events = {} }
-        local count = day.events and #day.events or 0
-        local button = buttons[dayNumber]
-        if not button then
-            button = CreateFrame("Button", nil, journalFrame.indexChild, "UIPanelButtonTemplate")
-            button:SetSize(160, 24)
-            buttons[dayNumber] = button
-        end
-        button:ClearAllPoints()
-        button:SetPoint("TOPLEFT", 0, y)
-        button:SetText(string.format("Jornada %d  ·  %d", dayNumber, count))
-        local chosenDay = dayNumber
-        button:SetScript("OnClick", function() ns.SelectDay(chosenDay) end)
-        button:Show()
-        y = y - 27
-    end
-    journalFrame.dayButtons = buttons
-    journalFrame.indexChild:SetHeight(math.max(1, -y + 4))
+    RefreshIndex(journalFrame, total)
 
     if total < 1 then
         journalFrame.dayTitle:SetText("Aún no hay jornadas")
@@ -207,8 +303,15 @@ function ns.RefreshUI()
     if #events == 0 then
         paragraphs[1] = "No dejé constancia de grandes gestas durante esta jornada. Quizá fue un día de descanso, preparativos o caminos tranquilos. Incluso las pausas forman parte de una aventura."
     else
+        -- The header is the time, plus the mood when the player turned that option on.
+        -- Entries saved before the mood existed simply have no profile: header unchanged.
+        local showProfile = ns.GetSetting("showProfile") == true
         for _, entry in ipairs(events) do
-            table.insert(paragraphs, string.format("|cFF8A5A24%s|r\n%s", entry.time or "", entry.prose or ns.ComposeEntry(entry)))
+            local header = entry.time or ""
+            if showProfile and type(entry.characterProfile) == "string" and entry.characterProfile ~= "" then
+                header = header == "" and entry.characterProfile or (header .. "  ·  " .. entry.characterProfile)
+            end
+            table.insert(paragraphs, string.format("|cFF8A5A24%s|r\n%s", header, entry.prose or ns.ComposeEntry(entry)))
         end
     end
     journalFrame.body:SetText(table.concat(paragraphs, "\n\n"))

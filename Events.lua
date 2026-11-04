@@ -27,6 +27,14 @@ function ns.AddEntry(eventType, description, extra)
     local day = DB.days[DB.currentDay]
     if not day then return end
 
+    -- A type the player switched off is not logged. The handlers have already updated
+    -- their dedupe state and the visited places by now, so switching a type on again
+    -- does not replay what happened while it was off.
+    if not ns.IsTypeEnabled(eventType) then
+        ns.Debug("AddEntry: tipo %s desactivado en las opciones, no se anota", tostring(eventType))
+        return
+    end
+
     local profile, tone = ns.ChooseMood(eventType)
     local entry = {
         type = eventType,
@@ -176,6 +184,11 @@ handlers.CHAT_MSG_LOOT = function(message)
     if ns.IsSecret(message) then
         -- The item cannot be read, so there is nothing to log.
         ns.Debug("CHAT_MSG_LOOT: mensaje secreto, se omite")
+        return
+    end
+    -- Loot switched off: skip the item lookups (and the pending list) as well.
+    if not ns.IsTypeEnabled("LOOT") then
+        ns.Debug("CHAT_MSG_LOOT: botín desactivado en las opciones, se omite")
         return
     end
     if type(message) == "string" then

@@ -11,4 +11,5 @@ Database.lua
 Narrative.lua
 Events.lua
 UI.lua
+Options.lua
 Commands.lua

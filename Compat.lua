@@ -13,7 +13,9 @@ ns.IS_FOREVER = (WOW_PROJECT_CAMELOT ~= nil and WOW_PROJECT_ID == WOW_PROJECT_CA
 -- Debug state. Session only: never saved, so a /reload resets it.
 --   on      print the payload of every handled event and every fallback taken
 --   secrets simulate secret values on Classic Era (see ns.Taint)
-ns.debug = { on = false, secrets = false }
+--   buttons force the old one-Button-per-jornada index (the ScrollBox fallback path);
+--           only read when the book is first built, so set it before the first /diario
+ns.debug = { on = false, secrets = false, buttons = false }
 
 -- Simulated secrets ----------------------------------------------------------------
 -- Classic Era never produces secrets, so `/diario debug secrets` wraps event
@@ -76,9 +78,22 @@ function ns.SafeString(value, fallback)
     return fallback or DEFAULT_TEXT
 end
 
-function ns.GetAddonVersion()
+-- An error message without its "path\File.lua:123: " prefix, for diagnostics.
+function ns.StripPosition(err)
+    return (string.gsub(tostring(err), "^.-:%d+: ", ""))
+end
+
+-- A TOC field of this addon ("Version", "AddonCompartmentFunc", ...), or nil.
+function ns.GetAddonField(field)
     local getMetadata = (C_AddOns and C_AddOns.GetAddOnMetadata) or GetAddOnMetadata
-    return getMetadata and getMetadata(addonName, "Version") or nil
+    if not getMetadata then return nil end
+    local ok, value = pcall(getMetadata, addonName, field)
+    if ok then return value end
+    return nil
+end
+
+function ns.GetAddonVersion()
+    return ns.GetAddonField("Version")
 end
 
 -- Zone ---------------------------------------------------------------------------
