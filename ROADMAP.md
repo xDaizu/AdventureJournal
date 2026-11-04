@@ -10,6 +10,8 @@ Last updated: 2026-11-04 (added M4b: backfill from AJProbe, RP conversations).
 - So we do everything Classic Era can verify first. Forever-only code (secret guards, Mainline item links, the Forever TOC) is written "blind" before launch, using defensive coding and diagnostics. It gets verified in M3, the first session after launch.
 - Classic Era cannot produce secret values. Secret-handling code paths are checked on Classic Era with a **simulated-secret debug mode** (M2), and on Forever inside a dungeon (M3).
 - Raids on Forever open on 2026-12-09. Until then, use 5-player dungeons to test boss behaviour during encounters.
+- **The game always runs what is on `main`.** The junctions point at the main working folder, and the user plays every day. So do each milestone on its own branch (or git worktree), for example `m1-restructure`. Merge into `main` only after a Classic Era smoke test passes, and tag it (`m1-done`, ...).
+- **Never lose AJProbe data.** `AJProbeDB.log` and `AJProbeDB.chat` hold the only complete record of the first Forever days (see M4b). Changes to AJProbe must keep existing records readable.
 
 Legend: 🟢 testable on Classic Era now · 🔵 needs Forever · Size S/M/L = relative effort.
 
@@ -50,10 +52,12 @@ So no events are lost on Forever while M1–M3 are in progress:
 
 Goal: a code layout that can hold client-specific code cleanly. Same behaviour as M0.
 
-- [ ] Replace `AdventureJournal.toc` with:
+- [ ] **Test harness first** (`tools/`): a `package.json` with `luaparse` (Lua 5.1 syntax check of every `.lua` file) and `fengari` (runs the addon against stubbed WoW globals). Add a script that loads the addon, fires a scripted event sequence (login, zone changes, gossip, quest, loot, death, reload) and prints the resulting `AdventureJournalDB`. Run it on the `m0-done` code and save the output as the expected result: M1 must produce the same output, apart from timestamps and the random mood. `node_modules/` stays out of git.
+- [ ] Replace the current `AdventureJournal.toc` (Classic Era) and the provisional `AdventureJournal_Forever.toc` with:
   - `AdventureJournal_Vanilla.toc`: `## Interface: 11509`
   - `AdventureJournal_Forever.toc`: `## Interface: 16001`, plus `IconTexture`, `Category`
   - Both: same file list, `## SavedVariablesPerCharacter: AdventureJournalDB`, `## Version: 1.2.0-dev`
+  - Do **not** list `Bindings.xml` (the client loads it by itself; bug #10). Check that the key binding still works afterwards.
 - [ ] Split `AdventureJournal.lua` into:
   - `Compat.lua`: client detection (`ns.IS_FOREVER`, `ns.IS_CLASSIC_ERA`), `ns.IsSecret`, and the API wrappers (`ns.GetItemInfoSafe`, `ns.GetQuestTitle`, `ns.GetPlace`, `ns.UnitNameSafe`)
   - `Database.lua`: `EnsureDatabase`, schema version, migrations
@@ -62,16 +66,17 @@ Goal: a code layout that can hold client-specific code cleanly. Same behaviour a
   - `UI.lua`: the book frame, `RefreshUI`, `SelectDay`
   - `Commands.lua`: slash commands, binding globals, `AdventureJournal_ToggleUI`
 - [ ] Use `local addonName, ns = ...` in every file. Keep only the intended globals: `AdventureJournalDB`, `AdventureJournal_ToggleUI`, `SLASH_ADVENTUREJOURNAL*`, `BINDING_*`.
-- [ ] Move every direct Classic or Mainline API call into `Compat.lua`.
+- [ ] Move every direct Classic or Mainline API call into `Compat.lua`. Keep what M0 observed ([REFERENCE_SAMPLES.md](REFERENCE_SAMPLES.md)): `ns.GetQuestTitle` must stay synchronous (the quest leaves the log within 1 s), and `GetRealZoneText()` can be nil at `PLAYER_LOGIN`.
+- [ ] Drop `MINIMAP_ZONE_CHANGED`, or register it only when `C_EventUtils.IsEventValid` confirms it exists (bug #14).
 
-**Done when:** the full M0 checklist passes on Classic Era with identical results, and diaries from M0 still open in the UI.
+**Done when:** the harness output matches the `m0-done` baseline, the M0 smoke test passes on Classic Era with identical results, diaries from M0 still open in the UI, and the Forever TOC still loads.
 
 ## M2: Prepare for Forever before launch 🟢 + 🔵-blind (M)
 
 Goal: code that should run on Forever on day one, with tools to diagnose it quickly when it doesn't.
 
 - [ ] **Secret guards.** Check `ns.IsSecret` before any comparison, match or `tonumber` in `SafeString` and in the `GOSSIP_SHOW`, `CHAT_MSG_WHISPER`, `CHAT_MSG_LOOT` and `ENCOUNTER_END`/`BOSS_KILL` handlers. When a value is secret, use a neutral fallback ("un habitante de la zona", "alguien") or skip the entry. Never pass a secret to `AddEntry`.
-- [ ] **Item links.** Match `|Hitem:.-|h%[.-%]|h` with no colour prefix. Update the exporter's `clean()` to also strip `|cnIQ<n>:`.
+- [ ] **Item links.** Done in game code (any colour prefix, see the day-one safety net). Still to do: update the exporter's `clean()` to also strip `|cnIQ<n>:`.
 - [ ] **Item data.** Prefer `C_Item.GetItemInfo`. Keep `GET_ITEM_INFO_RECEIVED`, and also listen to `ITEM_DATA_LOAD_RESULT` when it exists.
 - [ ] **Diagnostics command `/diario diag`.** Prints the client (project ID, interface), the DB version, which API branches `Compat` chose, whether `issecretvalue` exists, and which events registered successfully. This is the first thing to run on Forever.
 - [ ] **Debug mode `/diario debug [on|off]`.** Prints the raw payload of each handled event, with `[SECRET]` markers, to help confirm what Forever sends.
@@ -84,7 +89,9 @@ Goal: code that should run on Forever on day one, with tools to diagnose it quic
 
 Goal: make it work on Forever and replace assumptions with what the game actually does.
 
-- [ ] Junction-link into `_forever_\Interface\AddOns\`. Check that the addon is listed and not "out of date".
+- [x] Junction-link into `_forever_\Interface\AddOns\` (done 2026-11-04). Check that the addon is listed and not "out of date".
+- [ ] Read AJProbe's Forever data (`_forever_\WTF\Account\<ACCOUNT>\SavedVariables\AJProbe.lua`) and fill the Forever section of [REFERENCE_SAMPLES.md](REFERENCE_SAMPLES.md): `env`, loot link format, quest titles, which values are `[SECRET]` and where.
+- [ ] Check that `/chatlog` works on Forever (writes `_forever_\Logs\WoWChatLog.txt`).
 - [ ] Run `/diario diag` and save the output in the README.
 - [ ] README checklist in the open world: quest, gossip, subzone change, death, blue loot, whisper, `/reload`, UI, binding.
 - [ ] README checklist **inside a dungeon**, with `/diario debug on`: NPC gossip, whisper received, group loot messages, boss kill. Check for errors and for `nil` or empty entries after `/reload`.
@@ -200,9 +207,9 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 
 | # | Found | Client | Priority | Description | Status |
 |---|---|---|---|---|---|
-| 1 | 2026-11-04 | Forever | P1 | No Forever TOC (interface 11509 only) | Planned: M1 |
+| 1 | 2026-11-04 | Forever | P1 | No Forever TOC (interface 11509 only) | Workaround: provisional `AdventureJournal_Forever.toc`. Proper TOCs in M1 |
 | 2 | 2026-11-04 | Forever | P1 | Secret values cause errors in `GOSSIP_SHOW` / `CHAT_MSG_WHISPER` / `CHAT_MSG_LOOT` inside instances (from code analysis) | Planned: M2 |
-| 3 | 2026-11-04 | Forever | P2 | Loot link pattern may miss `\|cnIQ` item links (unverified) | Planned: M2, verify in M3 |
+| 3 | 2026-11-04 | Forever | P2 | Loot link pattern may miss `\|cnIQ` item links (unverified) | Pattern fixed 2026-11-04; exporter in M2; verify in M3 |
 | 4 | 2026-11-04 | Both | P2 | `/reload` creates a new jornada. **Confirmed on Classic Era.** `PLAYER_ENTERING_WORLD` gives `true,false` on login and `false,true` on reload. | Planned: M4 |
 | 5 | 2026-11-04 | Both | P2 | Subzone changes spam `DISCOVERY` entries and chat. **Confirmed on Classic Era:** "Valle de los Retos" was logged twice in one jornada. Every fresh login also logs a `DISCOVERY` for the starting spot, because `GetRealZoneText()` is nil at `PLAYER_LOGIN`. | Planned: M4 |
 | 6 | 2026-11-04 | Both | P2 | Group members' loot is logged as the player's | Planned: M4 |

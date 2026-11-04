@@ -54,6 +54,13 @@ arg11 = line ID (increments)
 - `GOSSIP_SHOW`: arg1 nil. `UnitName("npc")` → `"Gornek"`, realm nil.
 - `PLAYER_DEAD`: no arguments. Fired while `InCombatLockdown()` was true.
 - `ZONE_CHANGED_NEW_AREA` fired once at login. `ZONE_CHANGED` fired on each subzone change. Neither has arguments.
+- `PLAYER_ALIVE` also fires at login, not only after a resurrection. The M4b importer must not read it as "came back to life".
+
+### Chat (`CHAT_MSG_SAY`, `CHAT_MSG_YELL`)
+
+- Author (arg 2) includes the realm with no spaces: `Volgajin-ZandalarTribe`. Strip the realm for display.
+- Language (arg 3) is localized: `Orco`.
+- arg 12 is the author's GUID; it matched `UnitGUID("player")` for own lines.
 
 ### Exporter
 
