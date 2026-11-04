@@ -10,7 +10,7 @@ Last updated: 2026-11-04 (added M4b: backfill from AJProbe, RP conversations).
 - So we do everything Classic Era can verify first. Forever-only code (secret guards, Mainline item links, the Forever TOC) is written "blind" before launch, using defensive coding and diagnostics. It gets verified in M3, the first session after launch.
 - Classic Era cannot produce secret values. Secret-handling code paths are checked on Classic Era with a **simulated-secret debug mode** (M2), and on Forever inside a dungeon (M3).
 - Raids on Forever open on 2026-12-09. Until then, use 5-player dungeons to test boss behaviour during encounters.
-- **The game always runs what is on `main`.** The junctions point at the main working folder, and the user plays every day. So do each milestone on its own branch (or git worktree), for example `m1-restructure`. Merge into `main` only after a Classic Era smoke test passes, and tag it (`m1-done`, ...).
+- **The game runs whatever is in the working folder.** The junctions point at it, and the user plays every day. Work directly on `main` in small commits, but **before the user plays, the folder must be in a smoke-tested state**: either the milestone is finished and tested, or check out the last tag (`m0-done`, `m1-done`, ...) first. Tag each milestone when its smoke test passes.
 - **Never lose AJProbe data.** `AJProbeDB.log` and `AJProbeDB.chat` hold the only complete record of the first Forever days (see M4b). Changes to AJProbe must keep existing records readable.
 
 Legend: 🟢 testable on Classic Era now · 🔵 needs Forever · Size S/M/L = relative effort.
