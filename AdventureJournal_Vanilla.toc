@@ -10,6 +10,8 @@ Compat.lua
 Database.lua
 Narrative.lua
 Events.lua
+Conversations.lua
+Import.lua
 UI.lua
 Options.lua
 Commands.lua

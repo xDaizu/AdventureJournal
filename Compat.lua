@@ -262,7 +262,7 @@ end
 -- nil. Every lookup is optional and runs under pcall: a client without C_FriendList or
 -- C_BattleNet (or one that returns secrets inside an instance) just yields nil.
 function ns.GetRelationship(guid)
-    if type(guid) ~= "string" or guid == "" or ns.IsSecret(guid) then return nil end
+    if ns.IsSecret(guid) or type(guid) ~= "string" or guid == "" then return nil end
     if UnitGUID then
         local own = UnitGUID("player")
         if not ns.IsSecret(own) and own == guid then return "me" end
@@ -302,14 +302,17 @@ end
 -- Registers an event only if this client knows it. MINIMAP_ZONE_CHANGED, for
 -- example, does not exist on Classic Era (observed).
 -- ns.eventStatus[event] = true (registered), or the reason it was not.
+-- A frame with its own list of events (the conversation log) passes its own `status` table, so
+-- that an event both frames use, such as CHAT_MSG_WHISPER, keeps one status per frame.
 ns.eventStatus = {}
-function ns.RegisterEventSafe(frame, event)
+function ns.RegisterEventSafe(frame, event, status)
+    status = status or ns.eventStatus
     if C_EventUtils and C_EventUtils.IsEventValid and not C_EventUtils.IsEventValid(event) then
-        ns.eventStatus[event] = "el cliente no conoce este evento"
+        status[event] = "el cliente no conoce este evento"
         return false
     end
     local ok = pcall(frame.RegisterEvent, frame, event)
-    ns.eventStatus[event] = ok or "RegisterEvent falló"
+    status[event] = ok or "RegisterEvent falló"
     return ok
 end
 

@@ -58,6 +58,19 @@ local function PrintDiagnostics()
         Say(string.format("Tipos desactivados: %s. Ánimo en el libro: %s",
             #off > 0 and table.concat(off, ", ") or "ninguno", ns.GetSetting("showProfile") and "sí" or "no"))
     end
+    do
+        local chatOK, chatFailed = ns.GetConversationStatus()
+        Say(string.format("Conversaciones: %s. Eventos de chat registrados: %d de %d%s",
+            ns.ConversationsEnabled() and "SÍ (se guardan)" or "no", chatOK, #ns.CONVERSATION_EVENTS,
+            #chatFailed > 0 and (" (no registrados: " .. table.concat(chatFailed, "; ") .. ")") or ""))
+        local probe = _G.AJProbeDB
+        if type(probe) == "table" then
+            Say(string.format("AJProbe: presente, %d registros de actividad y %d mensajes (/diario importar los lee, sin modificarlos)",
+                type(probe.log) == "table" and #probe.log or 0, type(probe.chat) == "table" and #probe.chat or 0))
+        else
+            Say("AJProbe: no está cargado (/diario importar no tendría de dónde leer)")
+        end
+    end
     Say("Panel de opciones: " .. ns.GetOptionsStatus())
     Say("Índice del libro: " .. ns.GetIndexMode())
     local compartmentField = ns.GetAddonField("AddonCompartmentFunc")
@@ -216,13 +229,30 @@ local function SetProfile(word)
     end
 end
 
+-- /diario conversaciones: record RP conversations (settings.conversations). Off by default.
+local function SetConversations(word)
+    ns.EnsureDatabase()
+    local enabled = SWITCH_WORDS[word]
+    if enabled == true then
+        ns.SetSetting("conversations", true)
+        Say("Conversaciones: sí. Desde ahora se guardan en el diario los susurros (también de Battle.net), el chat de grupo y banda, "
+            .. "y lo que digáis, gritéis o hagáis tú, tu grupo y tus amigos. Es texto de otros jugadores: /diario conversaciones off lo detiene. "
+            .. "Dentro de instancias el chat es secreto y no se guarda.")
+    elseif enabled == false then
+        ns.SetSetting("conversations", false)
+        Say("Conversaciones: no. Ya no se guarda ni se muestra nada de esto (lo ya guardado se conserva en el archivo, oculto).")
+    else
+        Say("Conversaciones: " .. YesNo(ns.ConversationsEnabled()) .. ". Usa /diario conversaciones on o /diario conversaciones off.")
+    end
+end
+
 -- /diario opciones: opens the panel, or lists the commands when it cannot.
 local function OpenOptions()
     local ok, reason = ns.OpenOptions()
     if ok then return end
     Say("No he podido abrir el panel de opciones (" .. tostring(reason) .. "). Si no aparece, búscalo en "
         .. "Esc > Opciones > AddOns > Diario de Aventuras. Mientras tanto, todo se puede cambiar con comandos:")
-    Say("/diario chat <todo|importante|nada>  ·  /diario tipos <tipo> <on|off>  ·  /diario animo <on|off>")
+    Say("/diario chat <todo|importante|nada>  ·  /diario tipos <tipo> <on|off>  ·  /diario animo <on|off>  ·  /diario conversaciones <on|off>")
     SetTypes("", "")
 end
 
@@ -249,7 +279,17 @@ SlashCmdList["ADVENTUREJOURNAL"] = function(message)
         SetTypes(arg1, arg2)
     elseif word == "animo" or word == "ánimo" or word == "mood" then
         SetProfile(arg1)
+    elseif word == "conversaciones" or word == "conversations" or word == "conv" then
+        SetConversations(arg1)
+    elseif (word == "importar" or word == "import") and arg2 == "" then
+        if arg1 == "" then
+            ns.RunImport(false)
+        elseif arg1 == "prueba" or arg1 == "test" then
+            ns.RunImport(true)
+        else
+            Say("Usa /diario importar (lee AJProbe y rellena el diario) o /diario importar prueba (solo cuenta, no guarda nada).")
+        end
     else
-        Say("Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario chat, /diario tipos, /diario animo, /diario diag o /diario debug.")
+        Say("Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario chat, /diario tipos, /diario animo, /diario conversaciones, /diario importar, /diario diag o /diario debug.")
     end
 end

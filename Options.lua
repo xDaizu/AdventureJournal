@@ -20,6 +20,8 @@ local controls = { types = {} } -- the widgets, so RefreshOptionsPanel can sync 
 
 -- Called by every setting write: keep the panel and the open book in step.
 function ns.OnSettingsChanged()
+    -- M4b: the chat events of the conversation log are registered only while it is on.
+    if ns.UpdateConversationEvents then ns.UpdateConversationEvents() end
     ns.RefreshOptionsPanel()
     ns.RefreshIfVisible()
 end
@@ -32,7 +34,7 @@ function ns.RefreshOptionsPanel()
         controls.types[info.key]:SetChecked(ns.IsTypeEnabled(info.key))
     end
     controls.profile:SetChecked(ns.GetSetting("showProfile") == true)
-    controls.conversations:SetChecked(false)
+    controls.conversations:SetChecked(ns.ConversationsEnabled())
 end
 
 -- Widgets ---------------------------------------------------------------------------
@@ -110,14 +112,15 @@ local function BuildPanel()
         function(enabled) ns.SetSetting("showProfile", enabled) end)
     y = y - 40
 
-    -- M4b placeholder: RP conversations (settings.conversations). Off by default and
-    -- disabled until M4b implements the recording; nothing reads the setting yet.
+    -- M4b: RP conversations (settings.conversations). Off by default, because it stores other
+    -- players' words. /diario conversaciones on|off does the same.
     AddText(frame, "GameFontNormal", 16, y, "Conversaciones de rol")
     y = y - 24
-    controls.conversations = AddCheck(frame, y, "Guardar las conversaciones (próximamente)")
-    controls.conversations:Disable()
+    controls.conversations = AddCheck(frame, y, "Guardar las conversaciones (susurros, grupo, y decir/gritar/emotes de amigos y del grupo)",
+        function(enabled) ns.SetSetting("conversations", enabled) end)
     AddText(frame, "GameFontHighlightSmall", 20, y - 28,
-        "Guardar conversaciones incluye palabras de otros jugadores, así que estará desactivado por defecto.", 520)
+        "Guarda palabras de otros jugadores, por eso está desactivado por defecto. Con la casilla desmarcada no se guarda ni se muestra nada "
+        .. "(lo ya guardado se conserva). Dentro de instancias el chat es secreto y no se guarda.", 520)
 
     frame:SetScript("OnShow", function() ns.RefreshOptionsPanel() end)
     return frame

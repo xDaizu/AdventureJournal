@@ -4,6 +4,17 @@ local addonName, ns = ...
 local journalFrame
 ns.selectedDay = 1
 
+-- M4b: the book shows either the events of a jornada or its conversations. The conversations
+-- view exists only while the option is on (ConversationsEnabled); with it off the book is the
+-- events view whatever was left selected, and no conversation text is ever put on screen.
+ns.bookView = "events"        -- "events" | "conversations"
+ns.conversationPage = 1
+
+local function CurrentView()
+    if ns.bookView == "conversations" and ns.ConversationsEnabled() then return "conversations" end
+    return "events"
+end
+
 -- The diary the book shows: the real one, unless `/diario debug demo` swapped in a generated
 -- one (ns.demoDB). The demo exists only in memory and is never written to SavedVariables;
 -- entries still go into the real diary. It lets the index be tried with 250 jornadas.
@@ -66,7 +77,12 @@ local ROW_HEIGHT = 27
 
 local function DayLabel(dayNumber)
     local day = ViewDB().days[dayNumber]
-    local count = day and type(day.events) == "table" and #day.events or 0
+    local count
+    if CurrentView() == "conversations" then
+        count = ns.CountConversations(day)
+    else
+        count = day and type(day.events) == "table" and #day.events or 0
+    end
     return string.format("Jornada %d  ·  %d", dayNumber, count)
 end
 
@@ -255,6 +271,22 @@ local function BuildUI()
     local nextButton = CreateBookButton(f, "Siguiente >", 120, 24, function() ns.SelectDay(ns.selectedDay + 1) end)
     nextButton:SetPoint("BOTTOMRIGHT", -35, 20)
     f.nextButton = nextButton
+    -- M4b: events <-> conversations, and the pages of a long conversation list. Shown only
+    -- while the conversations option is on (RefreshUI).
+    local viewButton = CreateBookButton(f, "Conversaciones", 110, 24, function()
+        ns.SetBookView(CurrentView() == "conversations" and "events" or "conversations")
+    end)
+    viewButton:SetPoint("BOTTOM", 170, 20)
+    viewButton:Hide()
+    f.viewButton = viewButton
+    local conversationPrev = CreateBookButton(f, "< Antes", 64, 24, function() ns.SetConversationPage(ns.conversationPage - 1) end)
+    conversationPrev:SetPoint("BOTTOM", -200, 20)
+    conversationPrev:Hide()
+    f.conversationPrev = conversationPrev
+    local conversationNext = CreateBookButton(f, "Después >", 64, 24, function() ns.SetConversationPage(ns.conversationPage + 1) end)
+    conversationNext:SetPoint("BOTTOM", -130, 20)
+    conversationNext:Hide()
+    f.conversationNext = conversationNext
     local pageNumber = CreateText(f, "GameFontHighlightSmall", "", 180)
     pageNumber:SetPoint("BOTTOM", 0, 25)
     pageNumber:SetJustifyH("CENTER")
@@ -278,7 +310,20 @@ end
 function ns.SelectDay(dayNumber)
     local total = ViewDB().currentDay or 0
     if total < 1 then return end
-    ns.selectedDay = math.max(1, math.min(total, tonumber(dayNumber) or total))
+    local chosen = math.max(1, math.min(total, tonumber(dayNumber) or total))
+    if chosen ~= ns.selectedDay then ns.conversationPage = 1 end
+    ns.selectedDay = chosen
+    if journalFrame then ns.RefreshUI() end
+end
+
+function ns.SetBookView(view)
+    ns.bookView = view == "conversations" and "conversations" or "events"
+    ns.conversationPage = 1
+    if journalFrame then ns.RefreshUI() end
+end
+
+function ns.SetConversationPage(page)
+    ns.conversationPage = math.max(1, tonumber(page) or 1)
     if journalFrame then ns.RefreshUI() end
 end
 
@@ -306,8 +351,20 @@ function ns.RefreshUI()
     journalFrame.dayMeta:SetText(string.format("%s     ·     %d acontecimientos%s", day.dateLabel or "Fecha desconocida", #events,
         ns.demoDB and "     ·     DATOS DE PRUEBA (no se guardan)" or ""))
 
+    local view = CurrentView()
     local paragraphs = {}
-    if #events == 0 then
+    local pages = 1
+    if view == "conversations" then
+        local page
+        paragraphs, pages, page = ns.ConversationParagraphs(day, ns.conversationPage)
+        ns.conversationPage = page
+        journalFrame.dayMeta:SetText(string.format("%s     ·     %d conversaciones%s%s", day.dateLabel or "Fecha desconocida",
+            ns.CountConversations(day), pages > 1 and string.format("     ·     página %d de %d", page, pages) or "",
+            ns.demoDB and "     ·     DATOS DE PRUEBA (no se guardan)" or ""))
+        if #paragraphs == 0 then
+            paragraphs[1] = "No hay conversaciones guardadas en esta jornada."
+        end
+    elseif #events == 0 then
         paragraphs[1] = "No dejé constancia de grandes gestas durante esta jornada. Quizá fue un día de descanso, preparativos o caminos tranquilos. Incluso las pausas forman parte de una aventura."
     else
         -- The header is the time, plus the mood when the player turned that option on.
@@ -320,6 +377,22 @@ function ns.RefreshUI()
             end
             table.insert(paragraphs, string.format("|cFF8A5A24%s|r\n%s", header, entry.prose or ns.ComposeEntry(entry)))
         end
+    end
+    -- The conversations view and its buttons exist only while the option is on.
+    if ns.ConversationsEnabled() then
+        journalFrame.viewButton:Show()
+        journalFrame.viewButton:SetText(view == "conversations" and "Acontecimientos" or "Conversaciones")
+    else
+        journalFrame.viewButton:Hide()
+    end
+    if view == "conversations" and pages > 1 then
+        journalFrame.conversationPrev:Show()
+        journalFrame.conversationNext:Show()
+        if ns.conversationPage <= 1 then journalFrame.conversationPrev:Disable() else journalFrame.conversationPrev:Enable() end
+        if ns.conversationPage >= pages then journalFrame.conversationNext:Disable() else journalFrame.conversationNext:Enable() end
+    else
+        journalFrame.conversationPrev:Hide()
+        journalFrame.conversationNext:Hide()
     end
     journalFrame.body:SetText(table.concat(paragraphs, "\n\n"))
     journalFrame.contentChild:SetHeight(math.max(100, journalFrame.body:GetStringHeight() + 20))
