@@ -21,17 +21,22 @@ Goal: know how the current code really behaves before changing it.
 
 - [x] `git init` the repo, then commit the current state as the baseline (commit `0fac3d3`, tag `m0-baseline`).
 - [x] Junction-link the folder into `_classic_era_\Interface\AddOns\` (see README, "Development and testing"). The dev probe [AJProbe](../AJProbe/README.md) is linked too.
-- [ ] `/console scriptErrors 1`. Install BugSack/BugGrabber if available.
-- [ ] Run the README test checklist on Classic Era: quest, gossip, subzone change, death, blue loot, whisper, boss kill (an easy dungeon boss), `/reload`, every slash command, the key binding.
-- [ ] Capture reference samples for later comparison. **AJProbe records all of these automatically** into `WTF\Account\<ACCOUNT>\SavedVariables\AJProbe.lua` (written on `/reload` or logout):
-  - [ ] the raw `CHAT_MSG_LOOT` message (own loot and group loot), with the link's colour prefix and whether the current pattern matches;
-  - [ ] the `BOSS_KILL` and `ENCOUNTER_END` payloads;
-  - [ ] whether `C_QuestLog.GetTitleForQuestID` exists and returns a title at `QUEST_TURNED_IN` (checked at the event and 1 s later);
-  - [ ] whether `C_Item.GetItemInfo`, `Settings` and `ITEM_DATA_LOAD_RESULT` exist (the probe's `env.api` and `env.events` tables).
-- [ ] Run the exporter on the resulting SavedVariables.
-- [ ] Record every bug found in the [Bug log](#bug-log). Bugs 8 to 12 were found by reading the code: confirm or reject each one in game.
+- [x] `/console scriptErrors 1`. (BugSack/BugGrabber skipped: optional.)
+- [ ] Run the README test checklist on Classic Era. Smoke test done 2026-11-04 (Volgajin, Zandalar Tribe):
+  - [x] quest, gossip, subzone change, death, `/reload`, `/diario`.
+  - [ ] **Deferred, check while playing normally** (AJProbe stays installed and keeps recording): blue loot, whisper, `/diario hoy` / `anterior`, the key binding.
+  - [ ] **Deferred, needs a group or dungeon:** group loot, boss kill.
+- [x] Capture reference samples: see [REFERENCE_SAMPLES.md](REFERENCE_SAMPLES.md). Group loot and boss payloads are still missing (deferred, as above).
+  - [x] the raw `CHAT_MSG_LOOT` message (own loot): `|cffRRGGBB` links, the current pattern matches;
+  - [ ] `BOSS_KILL` / `ENCOUNTER_END` payloads (deferred);
+  - [x] `C_QuestLog.GetTitleForQuestID` is **missing** on Classic Era. The quest-log scan works only at the event itself;
+  - [x] `C_Item.GetItemInfo`, `Settings` and `ITEM_DATA_LOAD_RESULT` all exist. So does `issecretvalue`, which always returns false.
+- [x] Run the exporter on the resulting SavedVariables: parses correctly, UTF-8 output.
+- [x] Record every bug found in the [Bug log](#bug-log).
 
 **Done when:** we have a list of actual Classic Era bugs, the reference samples, and an export generated from real data.
+
+**Status (2026-11-04):** done for open-world solo play. The deferred checks above get filled in during normal play, and they don't block M1.
 
 ## M1: Restructure for two clients, no behaviour change 🟢 (M)
 
@@ -167,13 +172,15 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 |---|---|---|---|---|---|
 | 1 | 2026-11-04 | Forever | P1 | No Forever TOC (interface 11509 only) | Planned: M1 |
 | 2 | 2026-11-04 | Forever | P1 | Secret values cause errors in `GOSSIP_SHOW` / `CHAT_MSG_WHISPER` / `CHAT_MSG_LOOT` inside instances (from code analysis) | Planned: M2 |
-| 3 | 2026-11-04 | Forever | P2 | Loot link pattern may miss `|cnIQ` item links (unverified) | Planned: M2, verify in M3 |
-| 4 | 2026-11-04 | Both | P2 | `/reload` creates a new jornada | Planned: M4 |
-| 5 | 2026-11-04 | Both | P2 | Subzone changes spam `DISCOVERY` entries and chat | Planned: M4 |
+| 3 | 2026-11-04 | Forever | P2 | Loot link pattern may miss `\|cnIQ` item links (unverified) | Planned: M2, verify in M3 |
+| 4 | 2026-11-04 | Both | P2 | `/reload` creates a new jornada. **Confirmed on Classic Era.** `PLAYER_ENTERING_WORLD` gives `true,false` on login and `false,true` on reload. | Planned: M4 |
+| 5 | 2026-11-04 | Both | P2 | Subzone changes spam `DISCOVERY` entries and chat. **Confirmed on Classic Era:** "Valle de los Retos" was logged twice in one jornada. Every fresh login also logs a `DISCOVERY` for the starting spot, because `GetRealZoneText()` is nil at `PLAYER_LOGIN`. | Planned: M4 |
 | 6 | 2026-11-04 | Both | P2 | Group members' loot is logged as the player's | Planned: M4 |
 | 7 | 2026-11-04 | Both | P3 | Escape does not close the book | Planned: M4 |
-| 8 | 2026-11-04 | Both | P2 | The first `/diario` (or key binding press) after login shows nothing. `BuildUI` creates the frame already shown, then `AdventureJournal_ToggleUI` sees `IsShown()` and hides it (`AdventureJournal.lua:342`, `:497-499`). From code analysis. | Confirm in M0 |
-| 9 | 2026-11-04 | Both | P3 | `◀`/`▶` in the page buttons are probably not in the default font (Friz Quadrata), so they render as boxes or not at all. This applies to Classic Era too, not only Forever. | Confirm in M0 |
-| 10 | 2026-11-04 | Both | P3 | `Bindings.xml` is listed in the TOC. The client loads `Bindings.xml` by itself; listing it may log an XML error to `Logs\FrameXML.log`. Unverified. | Confirm in M0 |
+| 8 | 2026-11-04 | Both | P2 | The first `/diario` (or key binding press) after login shows nothing. `BuildUI` creates the frame already shown, then `AdventureJournal_ToggleUI` sees `IsShown()` and hides it (`AdventureJournal.lua:342`, `:497-499`). **Confirmed on Classic Era** (second press works). | Planned: M4 |
+| 9 | 2026-11-04 | Both | P3 | `◀`/`▶` in the page buttons are probably not in the default font (Friz Quadrata), so they render as boxes or not at all. **Confirmed on Classic Era: empty squares.** Expect the same on Forever. | Planned: M4 |
+| 10 | 2026-11-04 | Both | P3 | `Bindings.xml` is listed in the TOC. The client loads `Bindings.xml` by itself; listing it may log an XML error to `Logs\FrameXML.log`. **Confirmed:** `Bindings.xml:2 Unrecognized XML: Binding` warning on load. Fix: drop it from the TOC file list. | Planned: M1 (new TOCs) |
 | 11 | 2026-11-04 | Both | P3 | `pendingLoot` keeps every looted item that is cached but below rare quality, and never clears it (`AdventureJournal.lua:251`). Small, unbounded growth per session. From code analysis. | Planned: M4 |
-| 12 | 2026-11-04 | Classic Era | P2 | If `C_QuestLog.GetTitleForQuestID` is missing on 1.15.9, quest entries fall back to "una misión (ID n)", because the quest has already left the log at `QUEST_TURNED_IN`. AJProbe answers this. | Confirm in M0 |
+| 12 | 2026-11-04 | Classic Era | P2 | If `C_QuestLog.GetTitleForQuestID` is missing on 1.15.9, quest entries fall back to "una misión (ID n)", because the quest has already left the log at `QUEST_TURNED_IN`. **Rejected:** the API is missing, but the quest is still in the log during the event, so the scan finds the title. It is gone 1 s later. Keep the lookup synchronous. | Not a bug |
+| 13 | 2026-11-04 | Both | P3 | Prose sentences start in lower case after a full stop: "«Tu lugar en el mundo». pensando en el largo camino...". This happens in `QUEST` (all three variants) and `LOOT`, because the mood phrases start in lower case. | Planned: M4 |
+| 14 | 2026-11-04 | Classic Era | P3 | `MINIMAP_ZONE_CHANGED` does not exist on Classic Era. Registering it fails silently inside `pcall`. Harmless; drop it in M1, or register it only if `C_EventUtils.IsEventValid` says it exists. | Planned: M1 |

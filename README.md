@@ -14,7 +14,7 @@ AdventureJournal is a narrative diary that runs automatically. It listens to gam
 | Client | Version (local) | Interface | Game type | API family | Install folder | Status |
 |---|---|---|---|---|---|---|
 | **WoW Forever** | 1.60.1.70755 | `16001` | `forever` (alias `camelot`) | Mainline (Midnight 12.x), with secret values | `_forever_` | **Not ported yet** (see [Roadmap](#roadmap)) |
-| **WoW Classic Era** | 1.15.9.70576 | `11509` | `vanilla` | Classic | `_classic_era_` | Written for this client, but never confirmed in game |
+| **WoW Classic Era** | 1.15.9.70576 | `11509` | `vanilla` | Classic | `_classic_era_` | Works. Smoke-tested in game 2026-11-04; known bugs in the [bug log](ROADMAP.md#bug-log) |
 
 Retail (Midnight), Anniversary/TBC and MoP Classic are **not** targets. The addon should not load on them.
 
@@ -31,6 +31,7 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `LEEME.txt` | Player guide in Spanish (install, commands, export). Still describes Classic Era only. |
 | `README.md` | This file. |
 | `ROADMAP.md` | Milestone plan, backlog, bug-fix process and bug log. |
+| `REFERENCE_SAMPLES.md` | Raw event payloads and API availability observed in game (captured with [AJProbe](../AJProbe/README.md)). |
 
 ## How it works
 
@@ -122,7 +123,7 @@ AdventureJournal/
    ns.IS_FOREVER = (WOW_PROJECT_CAMELOT ~= nil and WOW_PROJECT_ID == WOW_PROJECT_CAMELOT)
                    or (toc > 16000 and toc < 20000)
    ```
-2. **Guard every external value against secrets.** `issecretvalue` exists only on Forever. A wrapper makes the check a no-op on Classic Era:
+2. **Guard every external value against secrets.** `issecretvalue` exists on Forever, and also on Classic Era 1.15.9, where it always returns false (observed in M0). The wrapper below is still needed, in case a client lacks the function:
    ```lua
    local function IsSecret(v) return issecretvalue ~= nil and issecretvalue(v) end
    ```
@@ -134,20 +135,20 @@ AdventureJournal/
 
 ### APIs used, by client
 
-Entries marked "verify" have not been checked in game. Confirm them with `/dump` or `/api` and update this table.
+Entries marked "verify" have not been checked in game. Confirm them with `/dump` or `/api` and update this table. Classic Era entries marked "observed" were checked in M0 ([REFERENCE_SAMPLES.md](REFERENCE_SAMPLES.md)).
 
 | Need | Classic Era 1.15.9 | Forever 1.60.1 |
 |---|---|---|
-| Item quality / link | `C_Item.GetItemInfo` if present, otherwise `GetItemInfo` | `C_Item.GetItemInfo` (the global `GetItemInfo` may be missing) |
-| Item cache callback | `GET_ITEM_INFO_RECEIVED` | `GET_ITEM_INFO_RECEIVED` or `ITEM_DATA_LOAD_RESULT` (verify) |
-| Quest title | `C_QuestLog.GetTitleForQuestID` (verify), otherwise `GetQuestLogTitle` loop | `C_QuestLog.GetTitleForQuestID` |
+| Item quality / link | Both `C_Item.GetItemInfo` and `GetItemInfo` exist and agree (observed) | `C_Item.GetItemInfo` (the global `GetItemInfo` may be missing) |
+| Item cache callback | `GET_ITEM_INFO_RECEIVED`; `ITEM_DATA_LOAD_RESULT` also exists (observed) | `GET_ITEM_INFO_RECEIVED` or `ITEM_DATA_LOAD_RESULT` (verify) |
+| Quest title | `C_QuestLog.GetTitleForQuestID` is **missing**. `GetQuestLogTitle` loop works, but only synchronously inside `QUEST_TURNED_IN` (observed) | `C_QuestLog.GetTitleForQuestID` |
 | Boss kill | `BOSS_KILL`, `ENCOUNTER_END` | Same. Payload may be secret during encounters (verify) |
 | NPC name | `UnitName("npc")` | Same. **Can be secret in instances** |
-| Loot / whisper text | Plain strings | **Secret inside instances** |
-| Zone text | `GetRealZoneText`, `GetSubZoneText` | Same |
+| Loot / whisper text | Plain strings. Links use `\|cffRRGGBB` (observed for loot) | **Secret inside instances** |
+| Zone text | `GetRealZoneText`, `GetSubZoneText`. `GetRealZoneText()` is nil at `PLAYER_LOGIN` on a fresh login (observed). `MINIMAP_ZONE_CHANGED` does not exist | Same |
 | Frames | `BackdropTemplate`, `UIPanel*Template` | Same |
-| Textures and glyphs | `Interface\QuestFrame\QuestBG`; `◀`/`▶` in button labels | Verify that both still render on the modern client |
-| Options panel (future) | `Settings` API (verify) | `Settings` API |
+| Textures and glyphs | `Interface\QuestFrame\QuestBG` (not checked yet). `◀`/`▶` render as **empty squares** (observed) | Verify that both still render on the modern client |
+| Options panel (future) | `Settings` API exists; `InterfaceOptions_AddCategory` is missing (observed) | `Settings` API |
 
 ## Development and testing
 
