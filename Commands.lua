@@ -47,6 +47,8 @@ local function PrintDiagnostics()
     Say(string.format("Patrones de botín propio: %d (0 = se acepta todo el botín)", #ns.GetOwnLootPatterns()))
 
     for _, row in ipairs(ns.GetApiBranches()) do Say(row[1] .. ": " .. row[2]) end
+    Say("Interfaz (M5):")
+    for _, row in ipairs(ns.GetUiFeatures()) do Say("  " .. row[1] .. ": " .. row[2]) end
 
     local registered, failed = {}, {}
     for _, event in ipairs(ns.EVENTS) do

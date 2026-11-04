@@ -209,6 +209,93 @@ function ns.RegisterEventSafe(frame, event)
     return ok
 end
 
+-- UI feature detection (M5) ---------------------------------------------------------
+-- "The function exists" does not mean "the template exists", so templates are tested
+-- by creating a throwaway hidden frame under pcall. Results are cached: a frame
+-- cannot be deleted, so each probe creates at most one.
+
+-- Looks up a dotted global path ("Settings.OpenToCategory") without erroring.
+function ns.Resolve(path)
+    local value = _G
+    for part in string.gmatch(path, "[^.]+") do
+        if type(value) ~= "table" then return nil end
+        value = value[part]
+    end
+    return value
+end
+
+local templateResults = {}
+function ns.TemplateWorks(frameType, template)
+    local key = frameType .. ":" .. template
+    local cached = templateResults[key]
+    if cached then return cached.ok, cached.err end
+    local ok, result = pcall(CreateFrame, frameType, nil, UIParent, template)
+    if ok and type(result) == "table" and result.Hide then result:Hide() end
+    templateResults[key] = { ok = ok, err = not ok and tostring(result) or nil }
+    return ok, templateResults[key].err
+end
+
+-- Builds a real ScrollBox list (view, scroll bar, data provider) on a hidden frame,
+-- the way UI.lua will, and reports the step that failed. Cached.
+local scrollBoxProbe
+function ns.ProbeScrollBox()
+    if scrollBoxProbe then return scrollBoxProbe end
+    local step = "funciones"
+    local ok, err = pcall(function()
+        if not (CreateScrollBoxListLinearView and CreateDataProvider and ScrollUtil
+                and ScrollUtil.InitScrollBoxListWithScrollBar) then
+            error("faltan CreateScrollBoxListLinearView, CreateDataProvider o ScrollUtil.InitScrollBoxListWithScrollBar", 0)
+        end
+        local holder = CreateFrame("Frame", nil, UIParent)
+        holder:SetSize(10, 10)
+        holder:Hide()
+        step = "plantilla WowScrollBoxList"
+        local box = CreateFrame("Frame", nil, holder, "WowScrollBoxList")
+        step = "plantilla MinimalScrollBar"
+        local bar = CreateFrame("EventFrame", nil, holder, "MinimalScrollBar")
+        step = "CreateScrollBoxListLinearView"
+        local view = CreateScrollBoxListLinearView()
+        step = "view:SetElementExtent"
+        view:SetElementExtent(24)
+        step = "view:SetElementInitializer"
+        view:SetElementInitializer("UIPanelButtonTemplate", function(button, data) button:SetText(tostring(data)) end)
+        step = "ScrollUtil.InitScrollBoxListWithScrollBar"
+        ScrollUtil.InitScrollBoxListWithScrollBar(box, bar, view)
+        step = "box:SetDataProvider"
+        box:SetDataProvider(CreateDataProvider({ 1, 2, 3 }))
+    end)
+    scrollBoxProbe = { ok = ok, step = step, err = not ok and tostring(err) or nil }
+    return scrollBoxProbe
+end
+
+-- Rows { label, value } for /diario diag: what the options panel, the ScrollBox
+-- index and the addon compartment can rely on in this client.
+function ns.GetUiFeatures()
+    local rows = {}
+    local function add(label, value) table.insert(rows, { label, value }) end
+    local function has(path) return ns.Resolve(path) ~= nil and "sí" or "NO" end
+    for _, path in ipairs({
+        "Settings.RegisterCanvasLayoutCategory", "Settings.RegisterVerticalLayoutCategory",
+        "Settings.RegisterAddOnCategory", "Settings.OpenToCategory",
+        "Settings.RegisterAddOnSetting", "Settings.RegisterProxySetting",
+        "Settings.CreateCheckbox", "Settings.CreateDropdown", "Settings.VarType",
+        "SettingsPanel", "InterfaceOptions_AddCategory",
+        "CreateScrollBoxListLinearView", "CreateDataProvider", "ScrollUtil.InitScrollBoxListWithScrollBar",
+        "AddonCompartmentFrame",
+    }) do add(path, has(path)) end
+    for _, spec in ipairs({
+        { "CheckButton", "UICheckButtonTemplate" }, { "CheckButton", "InterfaceOptionsCheckButtonTemplate" },
+        { "Button", "UIPanelButtonTemplate" }, { "Frame", "WowScrollBoxList" },
+        { "EventFrame", "MinimalScrollBar" },
+    }) do
+        local ok, err = ns.TemplateWorks(spec[1], spec[2])
+        add("plantilla " .. spec[2], ok and "sí" or ("NO (" .. string.sub(tostring(err), 1, 80) .. ")"))
+    end
+    local probe = ns.ProbeScrollBox()
+    add("prueba de ScrollBox", probe.ok and "OK" or ("FALLA en " .. probe.step .. ": " .. string.sub(probe.err or "?", 1, 160)))
+    return rows
+end
+
 -- Diagnostics -----------------------------------------------------------------------
 -- Which API branch each wrapper above takes on this client. Used by /diario diag.
 function ns.GetApiBranches()
