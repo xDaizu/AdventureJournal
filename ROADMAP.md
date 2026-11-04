@@ -19,17 +19,17 @@ Legend: 🟢 testable on Classic Era now · 🔵 needs Forever · Size S/M/L = r
 
 Goal: know how the current code really behaves before changing it.
 
-- [ ] (Recommended) `git init` the repo, then commit the current state as the baseline, so each milestone can be diffed and tagged.
-- [ ] Junction-link the folder into `_classic_era_\Interface\AddOns\` (see README, "Development and testing").
+- [x] `git init` the repo, then commit the current state as the baseline (commit `0fac3d3`, tag `m0-baseline`).
+- [x] Junction-link the folder into `_classic_era_\Interface\AddOns\` (see README, "Development and testing"). The dev probe [AJProbe](../AJProbe/README.md) is linked too.
 - [ ] `/console scriptErrors 1`. Install BugSack/BugGrabber if available.
 - [ ] Run the README test checklist on Classic Era: quest, gossip, subzone change, death, blue loot, whisper, boss kill (an easy dungeon boss), `/reload`, every slash command, the key binding.
-- [ ] Capture reference samples for later comparison:
-  - [ ] the raw `CHAT_MSG_LOOT` message (own loot and group loot): `/dump` from a temporary print, or chat copy;
+- [ ] Capture reference samples for later comparison. **AJProbe records all of these automatically** into `WTF\Account\<ACCOUNT>\SavedVariables\AJProbe.lua` (written on `/reload` or logout):
+  - [ ] the raw `CHAT_MSG_LOOT` message (own loot and group loot), with the link's colour prefix and whether the current pattern matches;
   - [ ] the `BOSS_KILL` and `ENCOUNTER_END` payloads;
-  - [ ] whether `C_QuestLog.GetTitleForQuestID` exists and returns a title at `QUEST_TURNED_IN`;
-  - [ ] whether `C_Item.GetItemInfo`, `Settings` and `ITEM_DATA_LOAD_RESULT` exist (`/dump C_Item and C_Item.GetItemInfo ~= nil`, etc.).
+  - [ ] whether `C_QuestLog.GetTitleForQuestID` exists and returns a title at `QUEST_TURNED_IN` (checked at the event and 1 s later);
+  - [ ] whether `C_Item.GetItemInfo`, `Settings` and `ITEM_DATA_LOAD_RESULT` exist (the probe's `env.api` and `env.events` tables).
 - [ ] Run the exporter on the resulting SavedVariables.
-- [ ] Record every bug found in the [Bug log](#bug-log).
+- [ ] Record every bug found in the [Bug log](#bug-log). Bugs 8 to 12 were found by reading the code: confirm or reject each one in game.
 
 **Done when:** we have a list of actual Classic Era bugs, the reference samples, and an export generated from real data.
 
@@ -172,3 +172,8 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 | 5 | 2026-11-04 | Both | P2 | Subzone changes spam `DISCOVERY` entries and chat | Planned: M4 |
 | 6 | 2026-11-04 | Both | P2 | Group members' loot is logged as the player's | Planned: M4 |
 | 7 | 2026-11-04 | Both | P3 | Escape does not close the book | Planned: M4 |
+| 8 | 2026-11-04 | Both | P2 | The first `/diario` (or key binding press) after login shows nothing. `BuildUI` creates the frame already shown, then `AdventureJournal_ToggleUI` sees `IsShown()` and hides it (`AdventureJournal.lua:342`, `:497-499`). From code analysis. | Confirm in M0 |
+| 9 | 2026-11-04 | Both | P3 | `◀`/`▶` in the page buttons are probably not in the default font (Friz Quadrata), so they render as boxes or not at all. This applies to Classic Era too, not only Forever. | Confirm in M0 |
+| 10 | 2026-11-04 | Both | P3 | `Bindings.xml` is listed in the TOC. The client loads `Bindings.xml` by itself; listing it may log an XML error to `Logs\FrameXML.log`. Unverified. | Confirm in M0 |
+| 11 | 2026-11-04 | Both | P3 | `pendingLoot` keeps every looted item that is cached but below rare quality, and never clears it (`AdventureJournal.lua:251`). Small, unbounded growth per session. From code analysis. | Planned: M4 |
+| 12 | 2026-11-04 | Classic Era | P2 | If `C_QuestLog.GetTitleForQuestID` is missing on 1.15.9, quest entries fall back to "una misión (ID n)", because the quest has already left the log at `QUEST_TURNED_IN`. AJProbe answers this. | Confirm in M0 |
