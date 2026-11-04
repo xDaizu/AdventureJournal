@@ -106,11 +106,59 @@ function ns.GetSubZoneText()
     return GetSubZoneText and GetSubZoneText()
 end
 
-function ns.GetPlace()
-    local zone = ns.SafeString(ns.GetZoneText(), "tierras desconocidas")
-    local sub = ns.SafeString(ns.GetSubZoneText(), "")
+-- "Subzone, Zone" (or just the zone) from two texts that may be nil or secret. Also used by
+-- the AJProbe import, which has the texts of a past moment instead of the current ones.
+function ns.PlaceFrom(zoneText, subZoneText)
+    local zone = ns.SafeString(zoneText, "tierras desconocidas")
+    local sub = ns.SafeString(subZoneText, "")
     if sub ~= "" and sub ~= zone then return sub .. ", " .. zone end
     return zone
+end
+
+function ns.GetPlace()
+    return ns.PlaceFrom(ns.GetZoneText(), ns.GetSubZoneText())
+end
+
+-- The text an entry gets when the real name is unreadable (secret) or unknown. One
+-- table, so the live handlers and the AJProbe import say the same thing.
+ns.NEUTRAL_TEXT = {
+    NPC = "un habitante de la zona",
+    BOSS = "una criatura temible",
+    QUEST = "una misión cuyo nombre no he podido recuperar",
+    SENDER = "alguien",
+}
+
+-- "Name-Realm" -> "Name" (chat authors carry the realm, observed in M0).
+function ns.StripRealm(name)
+    if type(name) ~= "string" then return name end
+    return string.match(name, "^([^%-]+)") or name
+end
+
+-- The key AJProbe writes into every record's `c` field: "Name-GetRealmName()" (with the
+-- realm's spaces). Returns nil when the player's name is unreadable.
+function ns.GetPlayerKey()
+    if not (UnitName and GetRealmName) then return nil end
+    local ok, name = pcall(UnitName, "player")
+    local okRealm, realm = pcall(GetRealmName)
+    if not (ok and okRealm) or ns.IsSecret(name) or ns.IsSecret(realm)
+        or type(name) ~= "string" or type(realm) ~= "string" then
+        return nil
+    end
+    return name .. "-" .. realm
+end
+
+-- "2026-11-04 19:12:18" (a local time written by date()) -> epoch, or nil. time{...} is
+-- checked by converting back, so a client where it ignores the table is never trusted.
+function ns.ParseDateTime(text)
+    if type(text) ~= "string" then return nil end
+    local year, month, day, hour, minute, second =
+        string.match(text, "^(%d%d%d%d)-(%d%d)-(%d%d) (%d%d):(%d%d):(%d%d)$")
+    if not year then return nil end
+    local ok, result = pcall(time, { year = tonumber(year), month = tonumber(month), day = tonumber(day),
+        hour = tonumber(hour), min = tonumber(minute), sec = tonumber(second) })
+    if not ok or type(result) ~= "number" then return nil end
+    if date("%Y-%m-%d %H:%M:%S", result) ~= text then return nil end
+    return result
 end
 
 -- Units --------------------------------------------------------------------------
@@ -138,7 +186,7 @@ function ns.GetQuestTitle(questID)
         end
     end
     if questID then return "una misión (ID " .. tostring(questID) .. ")" end
-    return "una misión cuyo nombre no he podido recuperar"
+    return ns.NEUTRAL_TEXT.QUEST
 end
 
 -- Items --------------------------------------------------------------------------
@@ -207,6 +255,47 @@ function ns.IsOwnLootMessage(message)
         if string.find(message, pattern) then return true end
     end
     return false
+end
+
+-- Who wrote a chat line (M4b) ----------------------------------------------------------
+-- Ported from AJProbe's relationship filter. Returns "me", "group", "friend", "bnfriend" or
+-- nil. Every lookup is optional and runs under pcall: a client without C_FriendList or
+-- C_BattleNet (or one that returns secrets inside an instance) just yields nil.
+function ns.GetRelationship(guid)
+    if type(guid) ~= "string" or guid == "" or ns.IsSecret(guid) then return nil end
+    if UnitGUID then
+        local own = UnitGUID("player")
+        if not ns.IsSecret(own) and own == guid then return "me" end
+    end
+    if GetNumGroupMembers and UnitGUID and GetNumGroupMembers() > 0 then
+        local prefix, count = "party", 4
+        if IsInRaid and IsInRaid() then prefix, count = "raid", 40 end
+        for index = 1, count do
+            local unitGUID = UnitGUID(prefix .. index)
+            if unitGUID and not ns.IsSecret(unitGUID) and unitGUID == guid then return "group" end
+        end
+    end
+    if C_FriendList and C_FriendList.IsFriend then
+        local ok, isFriend = pcall(C_FriendList.IsFriend, guid)
+        if ok and isFriend == true then return "friend" end
+    end
+    if C_BattleNet and C_BattleNet.GetGameAccountInfoByGUID then
+        local ok, info = pcall(C_BattleNet.GetGameAccountInfoByGUID, guid)
+        if ok and type(info) == "table" then return "bnfriend" end
+    end
+    return nil
+end
+
+-- The BattleTag behind a Battle.net whisper (the author of those is a protected string).
+function ns.GetBattleTag(bnSenderID)
+    if ns.IsSecret(bnSenderID) or type(bnSenderID) ~= "number" then return nil end
+    if C_BattleNet and C_BattleNet.GetAccountInfoByID then
+        local ok, info = pcall(C_BattleNet.GetAccountInfoByID, bnSenderID)
+        if ok and type(info) == "table" and not ns.IsSecret(info.battleTag) and type(info.battleTag) == "string" then
+            return info.battleTag
+        end
+    end
+    return nil
 end
 
 -- Events -------------------------------------------------------------------------

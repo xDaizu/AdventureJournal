@@ -121,7 +121,11 @@ end
 local handlers = {}
 
 handlers.ADDON_LOADED = function(loadedName)
-    if loadedName == addonName then ns.EnsureDatabase() end
+    if loadedName == addonName then
+        ns.EnsureDatabase()
+        -- M4b: the conversation events are registered only while the option is on.
+        if ns.UpdateConversationEvents then ns.UpdateConversationEvents() end
+    end
 end
 
 handlers.PLAYER_ENTERING_WORLD = function(_, isReloadingUi)
@@ -146,7 +150,7 @@ handlers.QUEST_TURNED_IN = function(questID)
     end
 end
 
-local UNKNOWN_BOSS = "una criatura temible"
+local UNKNOWN_BOSS = ns.NEUTRAL_TEXT.BOSS
 
 handlers.BOSS_KILL = function(_, bossName)
     if ns.IsSecret(bossName) then ns.Debug("BOSS_KILL: nombre secreto, se usa el texto neutro") end
@@ -247,7 +251,7 @@ handlers.MINIMAP_ZONE_CHANGED = OnZoneChanged
 handlers.GOSSIP_SHOW = function()
     local rawName = ns.UnitNameSafe("npc")
     if ns.IsSecret(rawName) then ns.Debug("GOSSIP_SHOW: nombre del PNJ secreto, se usa el texto neutro") end
-    local npcName = SafeString(rawName, "un habitante de la zona")
+    local npcName = SafeString(rawName, ns.NEUTRAL_TEXT.NPC)
     if npcName ~= lastNPCName or not lastNPCTime or time() - lastNPCTime > 20 then
         lastNPCName, lastNPCTime = npcName, time()
         ns.AddEntry("NPC", npcName)
@@ -258,7 +262,7 @@ end
 handlers.CHAT_MSG_WHISPER = function(_, sender)
     if ns.IsSecret(sender) then
         ns.Debug("CHAT_MSG_WHISPER: remitente secreto, se usa el texto neutro")
-        ns.AddEntry("CHAT", "alguien")
+        ns.AddEntry("CHAT", ns.NEUTRAL_TEXT.SENDER)
     elseif type(sender) == "string" and sender ~= "" then
         sender = string.match(sender, "^([^%-]+)") or sender
         ns.AddEntry("CHAT", sender)
@@ -301,19 +305,26 @@ local function LogPayload(event, ...)
     ns.Debug("%s(%s)", event, table.concat(parts, ", "))
 end
 
-eventFrame:SetScript("OnEvent", function(_, event, ...)
-    local handler = handlers[event]
-    if not handler then return end
-    local ok, err
-    if ns.debug.on or ns.debug.secrets then
-        local args = { n = select("#", ...), ... }
-        if ns.debug.secrets and event ~= "ADDON_LOADED" then
-            for index = 1, args.n do args[index] = ns.Taint(args[index]) end
+-- One dispatcher per frame: it runs the handler for the event under pcall, applies the
+-- simulated secrets of `/diario debug secrets` and prints the payload in debug mode.
+-- Conversations.lua builds a second frame with it, so its handlers get the same treatment.
+function ns.MakeDispatcher(handlerTable)
+    return function(_, event, ...)
+        local handler = handlerTable[event]
+        if not handler then return end
+        local ok, err
+        if ns.debug.on or ns.debug.secrets then
+            local args = { n = select("#", ...), ... }
+            if ns.debug.secrets and event ~= "ADDON_LOADED" then
+                for index = 1, args.n do args[index] = ns.Taint(args[index]) end
+            end
+            if ns.debug.on then LogPayload(event, unpack(args, 1, args.n)) end
+            ok, err = pcall(handler, unpack(args, 1, args.n))
+        else
+            ok, err = pcall(handler, ...)
         end
-        if ns.debug.on then LogPayload(event, unpack(args, 1, args.n)) end
-        ok, err = pcall(handler, unpack(args, 1, args.n))
-    else
-        ok, err = pcall(handler, ...)
+        if not ok then ReportHandlerError(event, err) end
     end
-    if not ok then ReportHandlerError(event, err) end
-end)
+end
+
+eventFrame:SetScript("OnEvent", ns.MakeDispatcher(handlers))
