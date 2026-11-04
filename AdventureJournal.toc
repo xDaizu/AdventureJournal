@@ -1,9 +1,0 @@
-## Interface: 11509
-## Title: Diario de Aventuras
-## Notes: Diario narrativo automático e independiente para cada personaje de Classic Era.
-## Author: ChemaE
-## Version: 1.1.0-Era
-## SavedVariablesPerCharacter: AdventureJournalDB
-
-Bindings.xml
-AdventureJournal.lua

@@ -1,0 +1,14 @@
+## Interface: 11509
+## Title: Diario de Aventuras
+## Notes: Diario narrativo automático e independiente para cada personaje.
+## Author: ChemaE
+## Version: 1.2.0-dev
+## SavedVariablesPerCharacter: AdventureJournalDB
+
+# Bindings.xml is loaded by the client automatically; listing it here logs an XML error.
+Compat.lua
+Database.lua
+Narrative.lua
+Events.lua
+UI.lua
+Commands.lua

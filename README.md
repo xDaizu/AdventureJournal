@@ -4,7 +4,7 @@ Developer documentation. Players get the Spanish guide in [LEEME.txt](LEEME.txt)
 
 AdventureJournal is a narrative diary that runs automatically. It listens to game events (quests, bosses, deaths, loot, places, NPCs, whispers), turns each one into a short first-person paragraph in Spanish, and saves the paragraphs per character, grouped into *jornadas* (one jornada per login). Players read the diary in a book-style window in game, and an external Python script can export it to a `.txt` file.
 
-- Original author: ChemaE. Current version: `1.1.0-Era`.
+- Original author: ChemaE. Released version: `1.1.0-Era`. In development: `1.2.0-dev` (dual-client port, see the [roadmap](ROADMAP.md)).
 - UI language: Spanish only, hard-coded (no localization layer).
 
 ## Supported clients
@@ -24,9 +24,14 @@ All changes must keep both clients working. A change that fixes Forever and brea
 
 | File | Purpose |
 |---|---|
-| `AdventureJournal.toc` | Manifest for Classic Era (`## Interface: 11509`). See [TOC strategy](#toc-strategy). |
-| `AdventureJournal_Forever.toc` | Provisional Forever manifest (`16001`), same files, added before launch so the diary records from day one. Replaced properly in M1. |
-| `AdventureJournal.lua` | Everything: event handling, entry creation, prose templates, book UI, slash commands. |
+| `AdventureJournal_Vanilla.toc` | Manifest for Classic Era (`## Interface: 11509`). See [TOC strategy](#toc-strategy). |
+| `AdventureJournal_Forever.toc` | Manifest for Forever (`16001`), same file list, plus `IconTexture` and `Category`. |
+| `Compat.lua` | Client detection (`ns.IS_FOREVER`, `ns.IS_CLASSIC_ERA`), `ns.IsSecret`, `ns.SafeString`, and **every** API call that differs between clients (`ns.GetPlace`, `ns.GetQuestTitle`, `ns.GetItemInfoSafe`, `ns.UnitNameSafe`, `ns.RegisterEventSafe`, ...). Other files only call these wrappers. |
+| `Database.lua` | `ns.EnsureDatabase()`, `ns.SCHEMA_VERSION`, and (from M4) migrations. Caches the table as `ns.DB`. |
+| `Narrative.lua` | Moods and Spanish prose templates: `ns.ChooseMood`, `ns.ComposeEntry`. |
+| `Events.lua` | Event registration and handlers (one function per event), `ns.AddEntry`, session start/end. |
+| `UI.lua` | The book window: `ns.ToggleUI`, `ns.OpenAtDay`, `ns.SelectDay`, `ns.RefreshUI`. |
+| `Commands.lua` | Slash commands, the key-binding globals, `AdventureJournal_ToggleUI`. |
 | `Bindings.xml` | Key binding action `ADVENTUREJOURNAL_TOGGLE`, which calls the global `AdventureJournal_ToggleUI()`. |
 | `ExportarDiario.py` / `.bat` | Out-of-game exporter: parses the SavedVariables file and writes `Diario_<Character>.txt`. |
 | `LEEME.txt` | Player guide in Spanish (install, commands, export). Still describes Classic Era only. |
@@ -109,7 +114,8 @@ AdventureJournal/
 └── ...
 ```
 
-- Each client picks its own suffixed TOC. A game-type suffix takes priority over the plain `AdventureJournal.toc`. See [docs/toc-and-detection.md](../docs/toc-and-detection.md).
+- Each client picks its own suffixed TOC. There is no plain `AdventureJournal.toc`, so other clients (retail, TBC, MoP) load nothing. See [docs/toc-and-detection.md](../docs/toc-and-detection.md).
+- Neither TOC lists `Bindings.xml`: the client loads it by itself, and listing it logs `Unrecognized XML: Binding` (observed, bug #10).
 - With no `_Mainline`/`_Standard` TOC and no plain `.toc`, retail does not load the addon.
 - With separate TOCs, each interface number can be bumped on its own when either client patches.
 - A single TOC with `## Interface: 16001, 11509` is an alternative, but Classic Era's support for multi-interface TOCs has not been checked on this machine. Use separate TOCs unless that is confirmed in game.
@@ -162,6 +168,14 @@ foreach ($flavor in "_forever_", "_classic_era_") {
     -Target "D:\Projects\wow-addons\AdventureJournal"
 }
 ```
+
+Before any in-game test, run the local checks (Lua 5.1 syntax, and a scripted session against stubbed WoW globals, compared with the accepted reports). See [tools/README.md](../tools/README.md):
+
+```
+cd tools && npm test
+```
+
+A deliberate behaviour change needs `npm run update-expected`, and the diff of `tools/expected/` should show exactly that change.
 
 Test checklist before calling a change done:
 
