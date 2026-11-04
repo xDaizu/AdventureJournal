@@ -96,13 +96,50 @@ local function PrintDiagnostics()
         ns.debug.on and "ACTIVA" or "apagada", ns.debug.secrets and "ACTIVOS" or "apagados"))
 end
 
+-- A generated diary for trying the book with many jornadas: held in memory only (ns.demoDB, see
+-- UI.lua), never saved, never mixed with the real diary. Every other jornada has no mood, like
+-- diaries saved before the mood existed.
+local DEMO_TYPES = { "QUEST", "BOSS", "DEATH", "LOOT", "DISCOVERY", "NPC", "CHAT" }
+
+local function BuildDemoDiary(dayCount, perDay)
+    local demo = { version = ns.SCHEMA_VERSION, currentDay = dayCount, visited = {}, settings = {}, days = {} }
+    for day = 1, dayCount do
+        local events = {}
+        for index = 1, perDay do
+            local entry = {
+                type = DEMO_TYPES[(day + index) % #DEMO_TYPES + 1], text = "Asunto de prueba " .. day .. "." .. index,
+                place = "Durotar", zone = "Durotar", subZone = "", seed = index,
+                time = string.format("%02d:%02d:00", index % 24, day % 60),
+            }
+            if day % 2 == 0 then
+                entry.characterProfile, entry.contextualTone = "Heroico", "con el ánimo firme"
+            end
+            entry.prose = ns.ComposeEntry(entry)
+            events[index] = entry
+        end
+        demo.days[day] = { dateLabel = "PRUEBA", events = events }
+    end
+    return demo
+end
+
 local function SetDebug(arg1, arg2)
     if arg1 == "on" then
         ns.debug.on = true
         Say("Depuración activada: verás la carga de cada evento. /diario debug off la apaga.")
     elseif arg1 == "off" then
         ns.debug.on, ns.debug.secrets, ns.debug.buttons = false, false, false
-        Say("Depuración y secretos simulados desactivados.")
+        if ns.demoDB then ns.demoDB = nil; ns.RefreshIfVisible() end
+        Say("Depuración, secretos simulados y datos de prueba desactivados.")
+    elseif arg1 == "demo" then
+        if arg2 == "off" then
+            ns.demoDB = nil
+            ns.RefreshIfVisible()
+            Say("Datos de prueba retirados: el libro vuelve a mostrar tu diario.")
+        else
+            ns.demoDB = BuildDemoDiary(250, 20)
+            ns.OpenAtDay(250)
+            Say("El libro muestra 250 jornadas de PRUEBA (solo en pantalla: no se guardan y tu diario no se toca). /diario debug demo off o /reload lo retira.")
+        end
     elseif arg1 == "buttons" then
         ns.debug.buttons = true
         Say("Índice con botones (sin ScrollBox) para probar la alternativa. Solo vale si lo escribes ANTES de abrir el libro por primera vez tras /reload; /diario debug off o /reload lo apaga.")
@@ -115,7 +152,7 @@ local function SetDebug(arg1, arg2)
             Say("Secretos simulados ACTIVADOS (y la depuración). Los textos de los eventos se tratan como secretos. /diario debug secrets off o /reload lo apaga.")
         end
     else
-        Say("Usa /diario debug on, /diario debug off, /diario debug secrets o /diario debug buttons.")
+        Say("Usa /diario debug on, /diario debug off, /diario debug secrets, /diario debug buttons o /diario debug demo.")
     end
 end
 

@@ -4,6 +4,13 @@ local addonName, ns = ...
 local journalFrame
 ns.selectedDay = 1
 
+-- The diary the book shows: the real one, unless `/diario debug demo` swapped in a generated
+-- one (ns.demoDB). The demo exists only in memory and is never written to SavedVariables;
+-- entries still go into the real diary. It lets the index be tried with 250 jornadas.
+local function ViewDB()
+    return ns.demoDB or ns.EnsureDatabase()
+end
+
 local function CreateText(parent, template, value, width)
     local fs = parent:CreateFontString(nil, "OVERLAY", template or "GameFontNormal")
     fs:SetText(value or "")
@@ -58,7 +65,7 @@ end
 local ROW_HEIGHT = 27
 
 local function DayLabel(dayNumber)
-    local day = ns.DB and ns.DB.days[dayNumber]
+    local day = ViewDB().days[dayNumber]
     local count = day and type(day.events) == "table" and #day.events or 0
     return string.format("Jornada %d  ·  %d", dayNumber, count)
 end
@@ -269,8 +276,7 @@ local function BuildUI()
 end
 
 function ns.SelectDay(dayNumber)
-    if not ns.DB then ns.EnsureDatabase() end
-    local total = ns.DB.currentDay or 0
+    local total = ViewDB().currentDay or 0
     if total < 1 then return end
     ns.selectedDay = math.max(1, math.min(total, tonumber(dayNumber) or total))
     if journalFrame then ns.RefreshUI() end
@@ -278,7 +284,7 @@ end
 
 function ns.RefreshUI()
     if not journalFrame then return end
-    local DB = ns.EnsureDatabase()
+    local DB = ViewDB()
     local total = DB.currentDay or 0
     RefreshIndex(journalFrame, total)
 
@@ -297,7 +303,8 @@ function ns.RefreshUI()
     local day = DB.days[ns.selectedDay] or { events = {} }
     local events = day.events or {}
     journalFrame.dayTitle:SetText(string.format("Jornada %d", ns.selectedDay))
-    journalFrame.dayMeta:SetText(string.format("%s     ·     %d acontecimientos", day.dateLabel or "Fecha desconocida", #events))
+    journalFrame.dayMeta:SetText(string.format("%s     ·     %d acontecimientos%s", day.dateLabel or "Fecha desconocida", #events,
+        ns.demoDB and "     ·     DATOS DE PRUEBA (no se guardan)" or ""))
 
     local paragraphs = {}
     if #events == 0 then
