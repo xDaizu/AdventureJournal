@@ -245,7 +245,8 @@ eventFrame:SetScript("OnEvent", function(_, event, ...)
     elseif event == "CHAT_MSG_LOOT" then
         local message = ...
         if type(message) == "string" then
-            local itemLink = string.match(message, "|c%x+|Hitem:.-|h%[.-%]|h|r")
+            -- Any colour prefix: |cffRRGGBB (Classic Era) or |cnIQ<n>: (possibly Forever).
+            local itemLink = string.match(message, "|c[^|]*|Hitem:.-|h%[.-%]|h|r")
             if itemLink then
                 local itemID = tonumber(string.match(itemLink, "|Hitem:(%d+)"))
                 if not TryLogLoot(itemLink, itemID) and itemID then

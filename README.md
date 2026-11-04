@@ -24,7 +24,8 @@ All changes must keep both clients working. A change that fixes Forever and brea
 
 | File | Purpose |
 |---|---|
-| `AdventureJournal.toc` | Manifest. Currently Classic Era only (`## Interface: 11509`). See [TOC strategy](#toc-strategy). |
+| `AdventureJournal.toc` | Manifest for Classic Era (`## Interface: 11509`). See [TOC strategy](#toc-strategy). |
+| `AdventureJournal_Forever.toc` | Provisional Forever manifest (`16001`), same files, added before launch so the diary records from day one. Replaced properly in M1. |
 | `AdventureJournal.lua` | Everything: event handling, entry creation, prose templates, book UI, slash commands. |
 | `Bindings.xml` | Key binding action `ADVENTUREJOURNAL_TOGGLE`, which calls the global `AdventureJournal_ToggleUI()`. |
 | `ExportarDiario.py` / `.bat` | Out-of-game exporter: parses the SavedVariables file and writes `Diario_<Character>.txt`. |

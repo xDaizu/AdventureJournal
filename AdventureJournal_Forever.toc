@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: Diario de Aventuras
+## Notes: Diario narrativo automático e independiente para cada personaje. WoW Forever (provisional, sin probar).
+## Author: ChemaE
+## Version: 1.1.0-forever-preview
+## SavedVariablesPerCharacter: AdventureJournalDB
+
+Bindings.xml
+AdventureJournal.lua

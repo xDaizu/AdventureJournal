@@ -38,6 +38,14 @@ Goal: know how the current code really behaves before changing it.
 
 **Status (2026-11-04):** done for open-world solo play. The deferred checks above get filled in during normal play, and they don't block M1.
 
+### Forever day-one safety net (added 2026-11-04, before launch)
+
+So no events are lost on Forever while M1–M3 are in progress:
+- `AdventureJournal_Forever.toc` (`16001`, version `1.1.0-forever-preview`) added, so the unported diary loads on Forever. Expect Lua errors from secret values inside dungeons (bug #2).
+- The loot link pattern now accepts any colour prefix (`|c[^|]*`), covering `|cnIQ<n>:` (bug #3). No change on Classic Era.
+- Both addons are linked into `_forever_\Interface\AddOns\`.
+- AJProbe keeps a long-lived activity log of everything diary-worthy (see [AJProbe](../AJProbe/README.md)). **Backlog for M4/M6:** an importer that turns that log into diary entries for the jornadas it covers.
+
 ## M1: Restructure for two clients, no behaviour change 🟢 (M)
 
 Goal: a code layout that can hold client-specific code cleanly. Same behaviour as M0.
