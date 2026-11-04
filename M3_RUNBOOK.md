@@ -1,6 +1,6 @@
 # M3 runbook: first Forever session
 
-Step-by-step for the first session on WoW Forever (launch 2026-11-05). It follows the [M3 checklist in the roadmap](ROADMAP.md#m3-first-forever-session--m-from-2026-11-05). The folder you will play on is the **M5 state (includes M2 and M4)**: M2 and M4 passed the Classic Era smoke test, M5 passes the stubbed harness and (once you have run it) the Classic Era smoke test. Nothing of it has run on Forever. Nothing here needs code changes before you play.
+Step-by-step for the first session on WoW Forever (launch 2026-11-05). It follows the [M3 checklist in the roadmap](ROADMAP.md#m3-first-forever-session--m-from-2026-11-05). The folder you will play on is the **M4b state (includes M2, M4 and M5)**: M2, M4 and M5 passed the Classic Era smoke test (tags `m2-done`, `m4-done`, `m5-done`); M4b passes the stubbed harness and, once you have run its Classic Era smoke test, is tagged `m4b-done`. If you have not done that smoke test before this session, restore the tested state first: `git checkout m5-done` in `D:\Projects\wow-addons` (then `git checkout main` afterwards). Nothing of it has run on Forever. M4b changes nothing by default: the conversation log is off and the import only runs when you type it.
 
 **Rules for this session**
 - Don't edit addon files while the game is running. Play, note what happens, fix afterwards.
@@ -49,6 +49,35 @@ None of this has run on Forever. In `/diario diag`, "Interfaz (M5)" tells you wh
 
 Send back what each step showed. These answer the "verify in M3/M5" items: whether `Settings.OpenToCategory` takes the category ID on Forever, whether the ScrollBox templates exist and look right, and whether `AddonCompartmentFunc` works with this TOC.
 
+## 3c. M4b checks on Forever (the AJProbe backfill, opt-in conversations)
+Do this **after** a first stretch of play, so that AJProbe has data. AdventureJournal has been running meanwhile, so many events are already in the diary: the import fills only the gaps and skips duplicates.
+
+**Before you import anything, back up the two files** (the game must be closed or have just run `/reload`, so they are current). In PowerShell, replace `<ACCOUNT>`, `<Realm>` and `<Character>` with your own folder names:
+```
+$wtf = "D:\Games\Battle.net\World of Warcraft\_forever_\WTF\Account\<ACCOUNT>"
+$backup = "D:\Projects\wow-addons-backup-m4b\forever"
+New-Item -ItemType Directory -Force $backup
+Copy-Item "$wtf\SavedVariables\AJProbe.lua" $backup
+Copy-Item "$wtf\<Realm>\<Character>\SavedVariables\AdventureJournal.lua" $backup
+Get-ChildItem $backup
+```
+Both files must be listed (AJProbe.lua is the only complete record of the first days). The backup folder is outside the repository and outside the game folder.
+Optional, outside the game: rehearse on those files with `node tools\import-dryrun.js --probe <AJProbe.lua> --diary <AdventureJournal.lua> --flavor forever`. It writes nothing and prints counts; send me the output.
+
+| Step | What to do | You should see |
+|---|---|---|
+| Diag | `/diario diag`, look at "Lectura de fechas", "Conversaciones" and "AJProbe" | `Lectura de fechas ...: OK`; `Conversaciones: no. Eventos de chat registrados: 0 de 12`; `AJProbe: presente, N registros de actividad y M mensajes` |
+| Dry run | `/diario importar prueba` | A summary ending in `PRUEBA: no se ha guardado nada`. Nothing in the book changes |
+| Import | `/diario importar`, then open `/diario` | The summary says how many entries and new jornadas were added. Imported entries read like normal ones; new jornadas may appear between old ones (the one you are playing stays last) |
+| Again | `/diario importar` | `+0 acontecimientos`, `No había nada nuevo que importar` |
+| Loot | If the summary mentions loot whose quality is not cached | Wait a few seconds, run `/diario importar` again |
+| Conversations off | Whisper yourself or have a friend whisper you | A `[Diario]` CHAT entry as before. `/diario conversaciones` says `no`; the book has no conversations button |
+| Conversations on | `/diario conversaciones on`, have a friend whisper you, say something | The book shows a **Conversaciones** button; the whisper and your /say are in it. `/diario conversaciones off` hides it and stops capture |
+| Import chat | With it on, `/diario importar` | `Conversaciones: ...` line; the earlier chat appears in the right jornadas, nothing repeated |
+| Dungeon | Conversations on, party chat and /say inside a 5-player dungeon, then `/diario diag` | Whether the lines were stored, skipped or `[SECRET]`; `Errores en manejadores: ninguno`. This answers "is chat secret in instances" |
+
+Send back: the summary lines of the dry run and the import, the `/diario diag` lines above, a screenshot of the book with the conversations button and of the conversations view, and anything that overlaps in the book's layout (the new buttons are at the bottom of the book).
+
 ## 4. Inside a dungeon (5-player)
 1. Before entering, type `/diario debug on`. From now on grey `[Diario debug]` lines print every event's payload, with `[SECRET]` where the game hides the value.
 2. Inside: talk to an NPC, get a whisper (or a message in party chat), loot something, and kill a boss.
@@ -75,7 +104,8 @@ Close the game first: WoW writes SavedVariables on `/reload` or logout.
 - Any Lua error text (full message).
 - The grey debug lines from the dungeon.
 - `forever_summary.md`.
+- The M4b results from section 3c (summaries, diag lines, screenshots).
 - Anything that looked wrong in the UI (missing background texture, wrong button text).
 - Whether `/reload` continued the jornada (it should) and a real login started a new one.
 
-Open questions this session answers (all "verify in M3" in the README and ROADMAP): the `PLAYER_ENTERING_WORLD` flags (reload vs login), whether the own-loot patterns match Forever's loot messages (`toolsjprobe_summary.py` counts them), which payloads are really secret in a dungeon, whether `ENCOUNTER_END` / `BOSS_KILL` arguments are secret, which item-cache event fires (`GET_ITEM_INFO_RECEIVED` or `ITEM_DATA_LOAD_RESULT`), what Forever's item links look like, whether zone text is ever secret, and whether `C_QuestLog.GetTitleForQuestID` returns titles at `QUEST_TURNED_IN`.
+Open questions this session answers (all "verify in M3" in the README and ROADMAP): the `PLAYER_ENTERING_WORLD` flags (reload vs login), whether the own-loot patterns match Forever's loot messages (`toolsjprobe_summary.py` counts them), which payloads are really secret in a dungeon, whether `ENCOUNTER_END` / `BOSS_KILL` arguments are secret, which item-cache event fires (`GET_ITEM_INFO_RECEIVED` or `ITEM_DATA_LOAD_RESULT`), what Forever's item links look like, whether zone text is ever secret, whether `C_QuestLog.GetTitleForQuestID` returns titles at `QUEST_TURNED_IN`, and (M4b) whether chat is secret in instances, whether `C_FriendList.IsFriend` / `C_BattleNet.GetGameAccountInfoByGUID` identify friends by GUID, whether `time{...}` converts dates back, and whether `ENCOUNTER_END`'s `success` is the number 1 or a boolean.

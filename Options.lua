@@ -119,9 +119,9 @@ local function BuildPanel()
     controls.conversations = AddCheck(frame, y, "Guardar las conversaciones de rol",
         function(enabled) ns.SetSetting("conversations", enabled) end)
     AddText(frame, "GameFontHighlightSmall", 20, y - 28,
-        "Guarda susurros (también de Battle.net), chat de grupo y banda, y lo que digáis, gritéis o hagáis tú, tu grupo y tus amigos. "
-        .. "Son palabras de otros jugadores, por eso está desactivado por defecto. Con la casilla desmarcada no se guarda ni se muestra nada "
-        .. "(lo ya guardado se conserva). Dentro de instancias el chat es secreto y no se guarda.", 520)
+        "Guarda susurros, chat de grupo y banda, y lo que dicen tú, tu grupo y tus amigos. Son palabras de otros jugadores: "
+        .. "por eso está desactivado por defecto. Desmarcada, no se guarda ni se muestra nada (lo guardado se conserva). "
+        .. "En instancias el chat es secreto y no se guarda.", 520)
 
     frame:SetScript("OnShow", function() ns.RefreshOptionsPanel() end)
     return frame
