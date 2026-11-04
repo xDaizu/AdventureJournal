@@ -1,6 +1,6 @@
 # M3 runbook: first Forever session
 
-Step-by-step for the first session on WoW Forever (launch 2026-11-05). It follows the [M3 checklist in the roadmap](ROADMAP.md#m3-first-forever-session--m-from-2026-11-05). The folder you will play on is the **M2 state, smoke-tested only against stubs** (and on Classic Era if you ran the M2 smoke test). Nothing here needs code changes before you play.
+Step-by-step for the first session on WoW Forever (launch 2026-11-05). It follows the [M3 checklist in the roadmap](ROADMAP.md#m3-first-forever-session--m-from-2026-11-05). The folder you will play on is the **M4 state (includes M2), tested only against stubs** (and on Classic Era if you ran the smoke tests). Nothing here needs code changes before you play.
 
 **Rules for this session**
 - Don't edit addon files while the game is running. Play, note what happens, fix afterwards.
@@ -18,19 +18,22 @@ Step-by-step for the first session on WoW Forever (launch 2026-11-05). It follow
 3. Type `/ajprobe`. It prints event counts, which proves AJProbe is recording.
 
 ## 3. Open world, one thing at a time
+First type `/diario chat todo`. Since M4 the chat only echoes boss kills, deaths and epic loot by default; this makes it echo every entry, so you can see each step work. (Go back with `/diario chat importante`.)
+
 After each step, type `/diario diag` only if something looked wrong. Otherwise just do the step and watch the chat for a green `[Diario]` line.
 
 | Step | What to do | You should see |
 |---|---|---|
 | Quest | Turn in any quest | `[Diario]` line with the quest title (not "una misión (ID n)") |
 | Gossip | Open an NPC's dialog window | `[Diario]` with the NPC name |
-| Place | Walk into a new subzone | `[Diario]` with the place |
+| Place | Walk into a **new** subzone | `[Diario]` with the place. Walking back into a place you already saw gives nothing (M4) |
 | Death | Die once, if it happens | `[Diario] He caído en combate` |
-| Loot | Loot a blue (rare) item | `[Diario]` with the item link, shown as a clickable link |
+| Loot | Loot a blue (rare) item | `[Diario]` with the item link, shown as a clickable link. If nothing appears, run `/diario diag` ("Patrones de botín propio" should say 4) and `/diario debug on`, then loot again: a line saying "botín de otro jugador" means the loot message did not match your client's own-loot strings |
+| Group loot | In a group, let someone else loot | Nothing (M4: only your own loot counts) |
 | Whisper | Have a friend whisper you | `[Diario]` with the sender name |
-| UI | Type `/diario` (twice: the first press does nothing, known bug #8) | The book opens. Do the `◀` / `▶` buttons show as arrows or as empty squares? |
+| UI | Type `/diario` | The book opens on the first press (M4). Buttons read `< Anterior` / `Siguiente >`. Press Escape: the book closes. Does the paper background render? |
 | Binding | Press the key bound to the diary, if you set one | The book toggles |
-| Reload | `/reload`, then `/diario hoy` | A new jornada appears (known bug #4). Entries read as text, no `nil` |
+| Reload | `/reload`, then `/diario hoy` | Chat says `Continúas la jornada N` (same N as before, M4). Entries read as text, no `nil`. Log out and in again: now a **new** jornada starts |
 
 ## 4. Inside a dungeon (5-player)
 1. Before entering, type `/diario debug on`. From now on grey `[Diario debug]` lines print every event's payload, with `[SECRET]` where the game hides the value.
@@ -58,6 +61,7 @@ Close the game first: WoW writes SavedVariables on `/reload` or logout.
 - Any Lua error text (full message).
 - The grey debug lines from the dungeon.
 - `forever_summary.md`.
-- Anything that looked wrong in the UI (squares instead of arrows, missing textures).
+- Anything that looked wrong in the UI (missing background texture, wrong button text).
+- Whether `/reload` continued the jornada (it should) and a real login started a new one.
 
-Open questions this session answers (all "verify in M3" in the README): which payloads are really secret in a dungeon, whether `ENCOUNTER_END` / `BOSS_KILL` arguments are secret, which item-cache event fires (`GET_ITEM_INFO_RECEIVED` or `ITEM_DATA_LOAD_RESULT`), what Forever's item links look like, whether zone text is ever secret, and whether `C_QuestLog.GetTitleForQuestID` returns titles at `QUEST_TURNED_IN`.
+Open questions this session answers (all "verify in M3" in the README and ROADMAP): the `PLAYER_ENTERING_WORLD` flags (reload vs login), whether the own-loot patterns match Forever's loot messages (`toolsjprobe_summary.py` counts them), which payloads are really secret in a dungeon, whether `ENCOUNTER_END` / `BOSS_KILL` arguments are secret, which item-cache event fires (`GET_ITEM_INFO_RECEIVED` or `ITEM_DATA_LOAD_RESULT`), what Forever's item links look like, whether zone text is ever secret, and whether `C_QuestLog.GetTitleForQuestID` returns titles at `QUEST_TURNED_IN`.
