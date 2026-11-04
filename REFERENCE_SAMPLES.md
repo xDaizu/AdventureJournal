@@ -12,7 +12,7 @@ Character Volgajin, Zandalar Tribe. Open world only (Durotar, Valle de los Retos
 - **`issecretvalue` exists on Classic Era** and returned false for every value seen. The `issecretvalue ~= nil and issecretvalue(v)` guard is still correct.
 - Present: `C_Item.GetItemInfo`, `GetItemInfo`, `C_Item.RequestLoadItemDataByID`, `C_AddOns.GetAddOnMetadata`, `Settings` (+ `RegisterVerticalLayoutCategory`, `RegisterCanvasLayoutCategory`), `UISpecialFrames`, `BackdropTemplateMixin`, `CreateScrollBoxListLinearView`, `ScrollUtil`, `C_EventUtils.IsEventValid`, `C_Map.GetBestMapForUnit`, `C_Timer.After`, `C_GameRules`, `C_DamageMeter`, `GetQuestLogTitle`, `GetNumQuestLogEntries`.
 - **Missing:** `C_QuestLog.GetTitleForQuestID`, the global `GetAddOnMetadata`, `InterfaceOptions_AddCategory`.
-- Events: all registered except **`MINIMAP_ZONE_CHANGED`** ("Attempt to register unknown event"). `ITEM_DATA_LOAD_RESULT`, `ENCOUNTER_START/END`, `BOSS_KILL`, `PLAYER_LEVEL_UP` all exist.
+- Events: all registered except **`MINIMAP_ZONE_CHANGED`** and **`LEARNED_SPELL_IN_TAB`** ("Attempt to register unknown event"). The modern `LEARNED_SPELL_IN_SKILL_LINE` exists. `ITEM_DATA_LOAD_RESULT`, `ENCOUNTER_START/END`, `BOSS_KILL`, `PLAYER_LEVEL_UP` all exist.
 
 ### Loot strings (`esES`)
 
