@@ -96,6 +96,8 @@ Goal: code that should run on Forever on day one, with tools to diagnose it quic
 
 Goal: make it work on Forever and replace assumptions with what the game actually does.
 
+**Prepared offline (2026-11-04):** the step-by-step is in [M3_RUNBOOK.md](M3_RUNBOOK.md), and `tools/ajprobe_summary.py` turns AJProbe's Forever data into a draft of the REFERENCE_SAMPLES Forever section (tested on the Classic Era file). Nothing below is ticked: every item needs the live Forever client.
+
 - [x] Junction-link into `_forever_\Interface\AddOns\` (done 2026-11-04). Check that the addon is listed and not "out of date".
 - [ ] Read AJProbe's Forever data (`_forever_\WTF\Account\<ACCOUNT>\SavedVariables\AJProbe.lua`) and fill the Forever section of [REFERENCE_SAMPLES.md](REFERENCE_SAMPLES.md): `env`, loot link format, quest titles, which values are `[SECRET]` and where.
 - [ ] Check that `/chatlog` works on Forever (writes `_forever_\Logs\WoWChatLog.txt`).

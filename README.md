@@ -37,6 +37,7 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `LEEME.txt` | Player guide in Spanish (install, commands, export). Still describes Classic Era only. |
 | `README.md` | This file. |
 | `ROADMAP.md` | Milestone plan, backlog, bug-fix process and bug log. |
+| `M3_RUNBOOK.md` | Step-by-step for the first Forever session (what to type, what you should see, what to send back). |
 | `REFERENCE_SAMPLES.md` | Raw event payloads and API availability observed in game (captured with [AJProbe](../AJProbe/README.md)). |
 
 ## How it works
