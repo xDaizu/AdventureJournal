@@ -53,7 +53,7 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `LOOT` | `CHAT_MSG_LOOT`, plus `GET_ITEM_INFO_RECEIVED` for items not yet cached | Only quality ≥ 3 (rare or better). Parses the first item link in the message. Currently also logs group members' loot. |
 | `DISCOVERY` | `ZONE_CHANGED*`, `MINIMAP_ZONE_CHANGED` | Fires whenever "subzone, zone" changes. This includes places the player has already visited. |
 | `NPC` | `GOSSIP_SHOW` | Uses `UnitName("npc")`. Repeats of the same NPC within 20 s are ignored. |
-| `CHAT` | `CHAT_MSG_WHISPER` | Stores the **sender name only**, never the message text. This is a deliberate privacy choice; keep it. |
+| `CHAT` | `CHAT_MSG_WHISPER` | Stores the **sender name only**, never the message text. This stays the default. Storing conversation text is planned as an **opt-in, off by default** RP feature ([ROADMAP M4b](ROADMAP.md#m4b-backfill-from-ajprobe-and-rp-conversations--m)). |
 
 Events are registered through `pcall`, so a missing event on one client does not stop the addon from loading.
 

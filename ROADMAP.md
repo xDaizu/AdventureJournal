@@ -2,7 +2,7 @@
 
 Milestone plan to finish the dual-client port (WoW Forever + Classic Era), then handle bug fixes and improvements. Background and design rules: [README.md](README.md).
 
-Last updated: 2026-11-04.
+Last updated: 2026-11-04 (added M4b: backfill from AJProbe, RP conversations).
 
 ## Constraints that shape the plan
 
@@ -44,7 +44,7 @@ So no events are lost on Forever while M1–M3 are in progress:
 - `AdventureJournal_Forever.toc` (`16001`, version `1.1.0-forever-preview`) added, so the unported diary loads on Forever. Expect Lua errors from secret values inside dungeons (bug #2).
 - The loot link pattern now accepts any colour prefix (`|c[^|]*`), covering `|cnIQ<n>:` (bug #3). No change on Classic Era.
 - Both addons are linked into `_forever_\Interface\AddOns\`.
-- AJProbe keeps a long-lived activity log of everything diary-worthy (see [AJProbe](../AJProbe/README.md)). **Backlog for M4/M6:** an importer that turns that log into diary entries for the jornadas it covers.
+- AJProbe keeps a long-lived activity log of everything diary-worthy, plus an RP conversation log (see [AJProbe](../AJProbe/README.md)). [M4b](#m4b-backfill-from-ajprobe-and-rp-conversations--m) turns both into diary content.
 
 ## M1: Restructure for two clients, no behaviour change 🟢 (M)
 
@@ -108,6 +108,28 @@ Can start in parallel with M3. Everything here can be tested on Classic Era. Re-
 
 **Done when:** `/reload` doesn't create a new jornada, walking back and forth produces no repeated entries, group loot is ignored, and old diaries still load.
 
+## M4b: Backfill from AJProbe, and RP conversations 🟢 (M)
+
+New requirements (user, 2026-11-04): no event from the first Forever days may be lost, and on the RP server the diary should keep conversations, not only events. Depends on schema v2 (M4).
+
+**Backfill.** AJProbe has been recording since Forever launch (`AJProbeDB.log`, `AJProbeDB.chat`). Turn that into diary content:
+- [ ] `/diario importar`: in game, with both addons enabled (AdventureJournal can read the `AJProbeDB` global once AJProbe has loaded). Import only the current character's records (`c` field).
+- [ ] Rebuild jornadas from the log's `PLAYER_ENTERING_WORLD` records (`login = true` starts a jornada; reloads don't, matching the M4 rule). Merge into existing jornadas when the timestamps overlap.
+- [ ] Map records to entry types: `QUEST_TURNED_IN` → `QUEST`, `GOSSIP_SHOW` → `NPC`, zone records → `DISCOVERY` (first visit only, via `visited`), `PLAYER_DEAD` → `DEATH`, `CHAT_MSG_LOOT` with quality ≥ 3 from the player → `LOOT`, `BOSS_KILL` / successful `ENCOUNTER_END` → `BOSS`, `PLAYER_LEVEL_UP` → a new `LEVEL` type. Other records (XP, reputation, skills, system messages) are input for the backlog entry types.
+- [ ] Skip duplicates: an entry of the same type and subject within a few seconds of an existing one is the same event.
+- [ ] Records with `[SECRET]` values become neutral text or are skipped, and never fail.
+- [ ] Mark imported entries (`source = "ajprobe"`), and make the import idempotent: running it twice adds nothing.
+
+**RP conversations.**
+- [ ] New per-jornada `conversations` list (schema v2): `{ time, channel, who, rel, lang, text, place }`.
+- [ ] Live capture in AdventureJournal, ported from AJProbe's filter: whispers (in/out, Battle.net), party and raid chat, and `/say`, `/yell` and emotes from me, group members and friends only.
+- [ ] **Opt-in, off by default** in the released addon, because it stores other players' words. The setting lives in the M5 options panel; until then, `/diario conversaciones on|off`.
+- [ ] Shown in the book (a toggle between "events" and "conversations", or interleaved by time) and included in the M6 export.
+- [ ] `/diario importar` also imports `AJProbeDB.chat`.
+- [ ] Known limit (workspace rule 5): inside instances on Forever, chat arrives as secrets and cannot be stored. Show nothing for those, don't error.
+
+**Done when:** a real AJProbe log from the first Forever days imports into the right jornadas with no duplicates and no errors; running it again changes nothing; conversations appear in the book and in the export only when the option is on.
+
 ## M5: Options and convenience 🟢 then 🔵 (M)
 
 - [ ] `Settings` panel, guarded by a check that the API exists. If Classic Era lacks it, fall back to slash commands: chat output, the event types to log, whether to show the mood/profile.
@@ -120,7 +142,7 @@ Can start in parallel with M3. Everything here can be tested on Classic Era. Re-
 ## M6: Export 🟢 (S–M)
 
 - [ ] In-game export window: a read-only multi-line `EditBox` with the selected jornada (or all of them) as plain text, ready to select all and copy. Players then don't need Python.
-- [ ] Python exporter fixes: decode `\ddd` escapes as UTF-8 bytes, strip `|cnIQ` tags, and read schema v1 and v2.
+- [ ] Python exporter fixes: decode `\ddd` escapes as UTF-8 bytes, strip `|cnIQ` tags, and read schema v1 and v2 (including `conversations`, M4b).
 - [ ] Optional: export one jornada at a time; a Markdown output option.
 
 ## M7: Release 1.2.0 (S)
