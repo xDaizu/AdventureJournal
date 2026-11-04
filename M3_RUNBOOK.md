@@ -1,6 +1,6 @@
 # M3 runbook: first Forever session
 
-Step-by-step for the first session on WoW Forever (launch 2026-11-05). It follows the [M3 checklist in the roadmap](ROADMAP.md#m3-first-forever-session--m-from-2026-11-05). The folder you will play on is the **M4 state (includes M2), tested only against stubs** (and on Classic Era if you ran the smoke tests). Nothing here needs code changes before you play.
+Step-by-step for the first session on WoW Forever (launch 2026-11-05). It follows the [M3 checklist in the roadmap](ROADMAP.md#m3-first-forever-session--m-from-2026-11-05). The folder you will play on is the **M5 state (includes M2 and M4)**: M2 and M4 passed the Classic Era smoke test, M5 passes the stubbed harness and (once you have run it) the Classic Era smoke test. Nothing of it has run on Forever. Nothing here needs code changes before you play.
 
 **Rules for this session**
 - Don't edit addon files while the game is running. Play, note what happens, fix afterwards.
@@ -13,7 +13,7 @@ Step-by-step for the first session on WoW Forever (launch 2026-11-05). It follow
 3. In the chat you should see `[Diario] Comienza la jornada N.` If a red error box appears, take a screenshot or copy the text, and keep going.
 
 ## 2. Diagnostics (first thing)
-1. Type `/diario diag`. Copy the whole block (screenshot, or select the chat text) and send it to Claude.
+1. Type `/diario diag`. The block is about 70 lines. Chat text cannot be selected and `/chatlog` wrote no file on Classic Era (bug #15), so send **screenshots**: scroll the chat up with the mouse wheel and capture it in two or three pieces. The new "Interfaz (M5)" lines at the end matter most. (For a single yes/no question, a one-line `/run print(...)` is easier than the whole block.)
 2. What to look for: `Cliente` says `1.60.1` and interface `16001`; `IS_FOREVER=true`; `issecretvalue: sí`; the *events* lines say which events registered and why one did not; `Errores en manejadores: ninguno`.
 3. Type `/ajprobe`. It prints event counts, which proves AJProbe is recording.
 
@@ -35,6 +35,20 @@ After each step, type `/diario diag` only if something looked wrong. Otherwise j
 | Binding | Press the key bound to the diary, if you set one | The book toggles |
 | Reload | `/reload`, then `/diario hoy` | Chat says `Continúas la jornada N` (same N as before, M4). Entries read as text, no `nil`. Log out and in again: now a **new** jornada starts |
 
+## 3b. M5 checks on Forever (options panel, ScrollBox index, addon menu)
+None of this has run on Forever. In `/diario diag`, "Interfaz (M5)" tells you what the client has; then:
+
+| Step | What to do | You should see |
+|---|---|---|
+| Panel registered | `/diario diag`, look at "Panel de opciones" | `panel registrado (categoría N)`. If it says `NO disponible: ...`, send that text |
+| Open the panel | `/diario opciones` | The Settings window opens on **Diario de Aventuras** with a chat button, 7 check boxes, a mood check box and a greyed-out conversations box. If nothing opens, the command prints why; the panel should still be under Esc > Opciones > AddOns |
+| Options work | Press the chat button until it reads `nada`; untick *Muertes*; tick the mood box; `/reload`; reopen | The three changes are still there. Die once: no entry and no chat line. Open `/diario`: entry headers read `Hora · Ánimo` |
+| Commands | `/diario tipos`, `/diario tipos muertes on`, `/diario animo off`, `/diario chat importante` | Each answers and the panel (if open) follows |
+| Index | `/diario diag`, look at "Índice del libro" (after opening the book once); then `/diario debug demo` | `ScrollBox`; the demo shows 250 jornadas, the index scrolls with the wheel and the scroll bar, clicking a jornada opens it. `/diario debug demo off` goes back to your diary. If it says `botones (...)`, send the reason |
+| Addon menu | Click the addon-menu button at the minimap (the one that lists addons) | **Diario de Aventuras** is listed with the book icon and clicking it toggles the book. If it is not listed, run `/diario diag`: "Menú de addons" shows what the TOC field and the function look like |
+
+Send back what each step showed. These answer the "verify in M3/M5" items: whether `Settings.OpenToCategory` takes the category ID on Forever, whether the ScrollBox templates exist and look right, and whether `AddonCompartmentFunc` works with this TOC.
+
 ## 4. Inside a dungeon (5-player)
 1. Before entering, type `/diario debug on`. From now on grey `[Diario debug]` lines print every event's payload, with `[SECRET]` where the game hides the value.
 2. Inside: talk to an NPC, get a whisper (or a message in party chat), loot something, and kill a boss.
@@ -43,7 +57,7 @@ After each step, type `/diario diag` only if something looked wrong. Otherwise j
 5. Type `/diario debug off`, then `/reload`, then `/diario hoy`. Check that entries inside the dungeon read normally (fallback text such as "un habitante de la zona" or "una criatura temible" is expected if values were secret).
 
 ## 5. Extras
-- `/chatlog` (type it again to stop). Check that `D:\Games\Battle.net\World of Warcraft\_forever_\Logs\WoWChatLog.txt` appears.
+- `/chatlog` (type it again to stop). Check that `D:\Games\Battle.net\World of Warcraft\_forever_\Logs\WoWChatLog.txt` appears, also after closing the game. On Classic Era it never appeared (bug #15), so do not plan on it for copying diagnostics.
 - `/dump select(4, GetBuildInfo())` should print `16001`.
 
 ## 6. After you log out

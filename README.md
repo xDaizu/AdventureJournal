@@ -4,7 +4,7 @@ Developer documentation. Players get the Spanish guide in [LEEME.txt](LEEME.txt)
 
 AdventureJournal is a narrative diary that runs automatically. It listens to game events (quests, bosses, deaths, loot, places, NPCs, whispers), turns each one into a short first-person paragraph in Spanish, and saves the paragraphs per character, grouped into *jornadas* (one jornada per login). Players read the diary in a book-style window in game, and an external Python script can export it to a `.txt` file.
 
-- Original author: ChemaE. Released version: `1.1.0-Era`. In development: `1.2.0-dev` (dual-client port, see the [roadmap](ROADMAP.md)).
+- Original author: ChemaE. Released version: `1.1.0-Era`. In development: `1.2.0-dev` (dual-client port, see the [roadmap](ROADMAP.md)). Milestone state: M0–M2 and M4 are tested in game on Classic Era; M5 (options, mood in the book, ScrollBox index, Forever addon-menu entry) is written and passes the harness, and its in-game Classic Era smoke test is pending; M3 (first Forever session) is pending.
 - UI language: Spanish only, hard-coded (no localization layer).
 
 ## Supported clients
@@ -25,13 +25,14 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | File | Purpose |
 |---|---|
 | `AdventureJournal_Vanilla.toc` | Manifest for Classic Era (`## Interface: 11509`). See [TOC strategy](#toc-strategy). |
-| `AdventureJournal_Forever.toc` | Manifest for Forever (`16001`), same file list, plus `IconTexture` and `Category`. |
+| `AdventureJournal_Forever.toc` | Manifest for Forever (`16001`), same file list, plus `IconTexture`, `Category` and `AddonCompartmentFunc` (the Vanilla TOC has no such line). |
 | `Compat.lua` | Client detection (`ns.IS_FOREVER`, `ns.IS_CLASSIC_ERA`), `ns.IsSecret`, `ns.SafeString`, the debug state (`ns.debug`, `ns.Debug`, `ns.Describe`, simulated secrets via `ns.Taint`), and **every** API call that differs between clients (`ns.GetPlace`, `ns.GetQuestTitle`, `ns.GetItemInfoSafe`, `ns.UnitNameSafe`, `ns.RegisterEventSafe`, ...). Other files only call these wrappers. |
-| `Database.lua` | `ns.EnsureDatabase()`, `ns.SCHEMA_VERSION`, and (from M4) migrations. Caches the table as `ns.DB`. |
+| `Database.lua` | `ns.EnsureDatabase()`, `ns.SCHEMA_VERSION`, migrations, `ns.DEFAULT_SETTINGS`, the entry-type table `ns.TYPE_INFO`, and the settings helpers (`ns.GetSetting`, `ns.SetSetting`, `ns.IsTypeEnabled`, `ns.SetTypeEnabled`, `ns.TypeFromWord`). Caches the table as `ns.DB`. |
 | `Narrative.lua` | Moods and Spanish prose templates: `ns.ChooseMood`, `ns.ComposeEntry`. |
 | `Events.lua` | Event registration and handlers (one function per event), `ns.AddEntry`, session start/end, and the dispatcher that runs each handler under `pcall` (error isolation, debug output). |
-| `UI.lua` | The book window: `ns.ToggleUI`, `ns.OpenAtDay`, `ns.SelectDay`, `ns.RefreshUI`. |
-| `Commands.lua` | Slash commands (including `/diario diag` and `/diario debug`), the key-binding globals, `AdventureJournal_ToggleUI`. |
+| `UI.lua` | The book window: `ns.ToggleUI`, `ns.OpenAtDay`, `ns.SelectDay`, `ns.RefreshUI`. The jornada index is a ScrollBox when the client has it (functions, templates and a clean build), otherwise the original one-Button-per-jornada list (see [UI and commands](#ui-and-commands)). |
+| `Options.lua` | The options panel (Settings API, canvas layout) and `ns.OpenOptions`. Never required: if it cannot be built, every option is still reachable by slash command. |
+| `Commands.lua` | Slash commands (including `/diario diag` and `/diario debug`), the key-binding globals, `AdventureJournal_ToggleUI`, and `AdventureJournal_OnAddonCompartmentClick` (Forever's addon menu). |
 | `Bindings.xml` | Key binding action `ADVENTUREJOURNAL_TOGGLE`, which calls the global `AdventureJournal_ToggleUI()`. |
 | `ExportarDiario.py` / `.bat` | Out-of-game exporter: parses the SavedVariables file and writes `Diario_<Character>.txt`. |
 | `LEEME.txt` | Player guide in Spanish (install, commands, export). Still describes Classic Era only. |
@@ -57,9 +58,11 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `BOSS` | `BOSS_KILL`, `ENCOUNTER_END` (`success == 1`) | Repeats of the same name within 5 s are ignored, because both events can fire for one kill. |
 | `DEATH` | `PLAYER_DEAD` | |
 | `LOOT` | `CHAT_MSG_LOOT`, plus `GET_ITEM_INFO_RECEIVED` / `ITEM_DATA_LOAD_RESULT` for items not yet cached | Only the player's own loot (messages matching the locale's `LOOT_ITEM_SELF*` / `LOOT_ITEM_PUSHED_SELF*` strings) and only quality ≥ 3 (rare or better). Parses the first item link in the message. |
-| `DISCOVERY` | `ZONE_CHANGED*`, `MINIMAP_ZONE_CHANGED` | Only the first time a "subzone, zone" is seen (`visited`). Ignored while the zone text is nil or secret. |
+| `DISCOVERY` | `ZONE_CHANGED*`, `MINIMAP_ZONE_CHANGED` | Only the first time a "subzone, zone" is seen (`visited`). Ignored while the zone text is nil or secret. Zone-only places count too: "Durotar" and "Valle de los Retos, Durotar" are different places. |
 | `NPC` | `GOSSIP_SHOW` | Uses `UnitName("npc")`. Repeats of the same NPC within 20 s are ignored. |
 | `CHAT` | `CHAT_MSG_WHISPER` | Stores the **sender name only**, never the message text. This stays the default. Storing conversation text is planned as an **opt-in, off by default** RP feature ([ROADMAP M4b](ROADMAP.md#m4b-backfill-from-ajprobe-and-rp-conversations--m)). |
+
+Each type can be switched off in the options (M5, `settings.types`). `AddEntry` is the single gate: a disabled type is dropped there, **after** the handler has updated its dedupe state and `visited`, so switching a type back on does not replay what happened while it was off, and the secret guards are unchanged. `CHAT_MSG_LOOT` returns early when `LOOT` is off, so no item lookups are requested.
 
 Events are registered through `pcall`, so a missing event on one client does not stop the addon from loading. Each handler also runs under `pcall` (see [Error isolation](#error-isolation)).
 
@@ -95,7 +98,13 @@ AdventureJournalDB = {
   version    = 2,
   currentDay = <number>,          -- index of the latest jornada
   visited    = { ["Subzone, Zone"] = true, ... },  -- v2: places already logged as a DISCOVERY
-  settings   = { chat = "important" },             -- v2: "all" | "important" | "off"
+  settings   = {                                   -- v2; defaults merged on every load (see below)
+    chat          = "important",  -- "all" | "important" | "off"
+    types         = { QUEST = true, BOSS = true, DEATH = true, LOOT = true,
+                      DISCOVERY = true, NPC = true, CHAT = true },  -- which types are logged
+    showProfile   = false,        -- show the mood (characterProfile) in the book's entry header
+    conversations = false,        -- M4b placeholder: nothing reads it yet
+  },
   days = {
     [n] = {
       startedAt = "YYYY-MM-DD HH:MM:SS",
@@ -117,17 +126,28 @@ AdventureJournalDB = {
 }
 ```
 
-Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\WTF\...`). Diaries are **not shared** between Forever and Classic Era characters. The schema itself must stay identical on both clients, so the exporter and any future migration code work on either one. If the schema changes, bump `version` and migrate in `EnsureDatabase()`. **v1 → v2 (M4):** adds `visited` (seeded from the diary's existing DISCOVERY entries) and `settings`; existing jornadas are untouched.
+Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\WTF\...`). Diaries are **not shared** between Forever and Classic Era characters. The schema itself must stay identical on both clients, so the exporter and any future migration code work on either one. If the schema changes, bump `version` and migrate in `EnsureDatabase()`. **M5 added keys to `settings` without a schema bump** (the version stays 2): `EnsureDatabase` fills in any missing setting from `ns.DEFAULT_SETTINGS` on every load and replaces a value of the wrong type, and a type missing from `settings.types` counts as on. Diaries saved at v1 or at v2 before M5 load unchanged and keep their own values (checked in the harness: the migration scenario for v1, the 250-jornada diary for pre-M5 v2). **v1 → v2 (M4):** adds `visited` (seeded from the diary's existing DISCOVERY entries) and `settings`; existing jornadas are untouched.
 
 ### UI and commands
 
 - `AdventureJournalBookFrame` is an open book: the jornada index on the left (newest first), the selected jornada's prose on the right, and previous/next buttons. It is created on first use.
 - Slash commands: `/diario` or `/journal` (toggle), `/diario hoy` (latest jornada), `/diario anterior` (the one before it), `/diario chat [todo|importante|nada]` (what is echoed to the chat window; default `importante` = boss kills, deaths, epic loot).
+- Options (M5). Every option has a slash command **and** a control in the panel; both change the same `settings`:
+  - `/diario opciones` (also `options`, `config`): opens the panel (Esc > Opciones > AddOns > Diario de Aventuras). If it cannot be opened, the command says why and lists the commands below.
+  - `/diario chat [todo|importante|nada]`: chat echo.
+  - `/diario tipos`: lists which entry types are logged. `/diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros> <on|off>` (the English type names `quest`, `boss`, ... also work).
+  - `/diario animo [on|off]` (also `mood`): show the mood next to each entry's time in the book. Off by default, so the book looks as before M5. Entries saved before the mood existed have no `characterProfile` and render without it.
+  - Record conversations (M4b): the panel has a disabled placeholder checkbox and `settings.conversations` exists (off), but nothing is recorded or read yet.
+- Options panel: Settings API, **canvas** layout (our own frame, plain widgets), registered with `RegisterCanvasLayoutCategory` + `RegisterAddOnCategory` and opened with `Settings.OpenToCategory` (tried with the category ID, then the category object). It deliberately avoids `RegisterAddOnSetting` / `CreateCheckbox` / `CreateDropdown`, whose signatures are not known (they exist on Classic Era 1.15.9, observed; the call signatures cannot be observed). Whether `OpenToCategory` takes an ID on 1.15.9 and Forever is checked by the smoke test: **verify in game**.
+- Book index: a ScrollBox (`WowScrollBoxList` + `MinimalScrollBar` + `CreateScrollBoxListLinearView`, rows are `UIPanelButtonTemplate` buttons) creates frames only for the visible rows, so 250+ jornadas cost the same as 10. It is used only if the functions and both templates exist and the whole build succeeds; otherwise the original ScrollFrame with one Button per jornada is built, and `/diario diag` says which one and why. Observed on Classic Era 1.15.9: functions, templates and a full test build all work (`/diario diag`, "prueba de ScrollBox: OK"). How the real rows look and scroll is not observable offline: **verify in game**. Forever: **verify in M3**.
 - Escape closes the book.
+- Forever's addon menu (the minimap button): the Forever TOC has `## AddonCompartmentFunc: AdventureJournal_OnAddonCompartmentClick`, a global that toggles the book. The Vanilla TOC has no such line. Whether the entry appears and works on Forever: **verify in M3/M5**.
 - Developer commands:
   - `/diario diag`: client, interface, DB, API branches, registered events, handler errors. Run it first on a new client.
   - `/diario debug on` / `off`: print every handled event's payload (`[SECRET]` for secrets) and every fallback taken. Session only.
   - `/diario debug secrets` (`off` to stop): simulate secret values, mainly for Classic Era. Also turns debug on. `/diario debug off` or `/reload` turns everything off.
+  - `/diario debug demo` (`off` to stop): the book shows 250 generated jornadas (20 entries each, every other one without a mood) to try the index. They live in memory only: not saved, never mixed into your diary (entries made meanwhile still go to the real one). `/diario debug off` or `/reload` also removes them.
+  - `/diario debug buttons`: forces the old button index, to test the fallback. Only counts if typed **before** the book is first opened after `/reload`.
 - Key binding: "Diario de Aventuras → Abrir / cerrar el diario". There is no default key.
 
 ## Dual-client compatibility
@@ -148,7 +168,7 @@ AdventureJournal/
 - With no `_Mainline`/`_Standard` TOC and no plain `.toc`, retail does not load the addon.
 - With separate TOCs, each interface number can be bumped on its own when either client patches.
 - A single TOC with `## Interface: 16001, 11509` is an alternative, but Classic Era's support for multi-interface TOCs has not been checked on this machine. Use separate TOCs unless that is confirmed in game.
-- Both TOCs must declare `## SavedVariablesPerCharacter: AdventureJournalDB`. The Forever TOC can also add `IconTexture`, `Category` and `AddonCompartmentFunc` (the function must be global).
+- Both TOCs must declare `## SavedVariablesPerCharacter: AdventureJournalDB`. The Forever TOC adds `IconTexture`, `Category` and `AddonCompartmentFunc` (the function must be global; `AdventureJournal_OnAddonCompartmentClick` exists on both clients but only the Forever TOC names it). Both list `Options.lua` between `UI.lua` and `Commands.lua`.
 
 ### Coding rules for shared code
 
@@ -184,7 +204,10 @@ Entries marked "verify" have not been checked in game. Confirm them with `/dump`
 | Zone text | `GetRealZoneText`, `GetSubZoneText`. `GetRealZoneText()` is nil at `PLAYER_LOGIN` on a fresh login (observed). `MINIMAP_ZONE_CHANGED` does not exist | Same |
 | Frames | `BackdropTemplate`, `UIPanel*Template` | Same |
 | Textures and glyphs | `Interface\QuestFrame\QuestBG` (not checked yet). `◀`/`▶` rendered as **empty squares** (observed); the buttons now read `< Anterior` / `Siguiente >` | Verify that the `QuestBG` texture renders on the modern client |
-| Options panel (future) | `Settings` API exists; `InterfaceOptions_AddCategory` is missing (observed) | `Settings` API |
+| Options panel | Observed in game (`/run` check, 2026-11-04): `Settings.RegisterAddOnCategory`, `OpenToCategory`, `RegisterAddOnSetting`, `RegisterProxySetting`, `CreateCheckbox`, `CreateDropdown`, `VarType` and `SettingsPanel` all exist, plus `RegisterCanvasLayoutCategory` / `RegisterVerticalLayoutCategory` (M0); `InterfaceOptions_AddCategory` is missing. Templates `UICheckButtonTemplate`, `InterfaceOptionsCheckButtonTemplate` and `UIPanelButtonTemplate` work. **Call signatures are not observable**; the canvas path used here needs only the category functions and `OpenToCategory` | `Settings` API (**verify in M3**). Expected to match the Mainline docs: [api-quick-reference.md](../docs/api-quick-reference.md) |
+| ScrollBox | `CreateScrollBoxListLinearView`, `CreateDataProvider`, `ScrollUtil.InitScrollBoxListWithScrollBar` and the templates `WowScrollBoxList` and `MinimalScrollBar` all work; a full build in a hidden frame succeeded (observed). Row layout and scrolling: verify in game | **Verify in M3** (`/diario diag` runs the same probe) |
+| Addon menu entry | `AddonCompartmentFrame` does not exist (observed); the Vanilla TOC does not use it | `AddonCompartmentFunc` in the TOC, a global callback. **Verify in M3/M5** that the entry appears and the click opens the book |
+| Chat log | `/chatlog` produced no `WoWChatLog.txt` (observed 2026-11-04, also after closing the game); do not rely on it to copy diagnostics, use screenshots | **Verify in M3** |
 
 ## Development and testing
 
@@ -204,7 +227,7 @@ Before any in-game test, run the local checks (Lua 5.1 syntax, and a scripted se
 cd tools && npm test
 ```
 
-A deliberate behaviour change needs `npm run update-expected`, and the diff of `tools/expected/` should show exactly that change. There are two scenarios per client: normal play, and a session with secret values in an instance (`scenario_secrets.lua`). The stub cannot reproduce everything about real secrets; see the limits in [tools/README.md](../tools/README.md).
+A deliberate behaviour change needs `npm run update-expected`, and the diff of `tools/expected/` should show exactly that change. Scenarios per client: normal play, a session with secret values in an instance (`scenario_secrets.lua`), a schema v1 diary (`scenario_migration.lua`), every M5 option through the panel and the slash commands with persistence across `/reload` and a second login (`scenario_options.lua`, also with no Settings API and with `OpenToCategory` needing the category object), and a generated 250-jornada diary checking that the index creates a bounded number of frames (`scenario_bigdiary.lua`, also with no ScrollBox functions and with no ScrollBox templates). The stubs cannot reproduce everything about real secrets, layout or the real Settings and ScrollBox behaviour; see the limits in [tools/README.md](../tools/README.md).
 
 Test checklist before calling a change done:
 
@@ -214,6 +237,7 @@ Test checklist before calling a change done:
 - [ ] On Forever, **inside a dungeon**: talk to an NPC, receive a whisper, see loot messages, and kill a boss. No errors, and no `nil` entries after `/reload`.
 - [ ] On Classic Era, with `/diario debug secrets`: talk to an NPC, whisper yourself or have a friend whisper you, loot something, kill something. No errors, fallback text in the entries, nothing saved as `nil`. Then `/diario debug off`.
 - [ ] The book UI opens, scrolls and pages on both clients. Textures and arrows render.
+- [ ] M5, on each client: `/diario opciones` opens the panel; each option changes behaviour and survives `/reload`; `/diario debug demo` shows 250 jornadas that scroll smoothly (the index is a ScrollBox, `/diario diag` says so). On Forever, also the addon-menu entry (minimap button) opens the book.
 - [ ] The exporter reads SavedVariables from both `WTF` folders.
 
 ## Exporter

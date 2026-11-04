@@ -2,7 +2,7 @@
 
 Milestone plan to finish the dual-client port (WoW Forever + Classic Era), then handle bug fixes and improvements. Background and design rules: [README.md](README.md).
 
-Last updated: 2026-11-04 (M4 code done, M2 and M4 await the in-game Classic Era smoke test, M3 awaits the Forever launch).
+Last updated: 2026-11-04 (M0–M2 and M4 tested on Classic Era and tagged; M5 code done and awaiting the Classic Era smoke test; M3 awaits the Forever launch).
 
 ## Constraints that shape the plan
 
@@ -90,7 +90,7 @@ Goal: code that should run on Forever on day one, with tools to diagnose it quic
 
 **Done when:** on Classic Era the M0 checklist passes in normal mode, and also with simulated secrets: no errors, and fallback text appears in the entries. The Forever TOC is in place, ready for launch.
 
-**Status (2026-11-04):** code done, `npm test` passes. Waiting for the in-game Classic Era smoke test; then tag `m2-done`. The Forever behaviour of all of this is **unverified until M3**. Open questions for M3: are `ENCOUNTER_END` / `BOSS_KILL` payloads really secret, what does `UnitName("npc")` return in a dungeon, is `CHAT_MSG_LOOT` / `CHAT_MSG_WHISPER` text secret there, is the zone text ever secret, which item-cache event fires, and does a secret really pass `type()` as `"string"`.
+**Status (2026-11-04):** done on Classic Era: the in-game smoke test passed (user, 2026-11-04), tagged `m2-done`. The Forever behaviour of all of this is **unverified until M3**. Open questions for M3: are `ENCOUNTER_END` / `BOSS_KILL` payloads really secret, what does `UnitName("npc")` return in a dungeon, is `CHAT_MSG_LOOT` / `CHAT_MSG_WHISPER` text secret there, is the zone text ever secret, which item-cache event fires, and does a secret really pass `type()` as `"string"`.
 
 ## M3: First Forever session 🔵 (M) (from 2026-11-05)
 
@@ -127,7 +127,7 @@ Test split (user, 2026-11-04): **everything is tested on Classic Era now (harnes
 
 **Done when:** `/reload` doesn't create a new jornada, walking back and forth produces no repeated entries, group loot is ignored, and old diaries still load.
 
-**Status (2026-11-04):** code done and passing `npm test` on both flavors (new third run `second login`, new `scenario_migration.lua`). **Pending:** the in-game smoke test on Classic Era (it also covers M2) and, after M3, the same checks on Forever. M3 testing is also still pending: it needs the Forever launch ([runbook](M3_RUNBOOK.md)).
+**Status (2026-11-04):** done on Classic Era: code passes `npm test` on both flavors and the in-game smoke test passed (user, 2026-11-04; it also covered M2), tagged `m4-done`. The user's real diary (v1 → v2 migration, jornadas 1–8) loaded and a first-time discovery ("Poblado Sen'jin, Durotar") was logged. **Pending:** after M3, the same checks on Forever ([runbook](M3_RUNBOOK.md)).
 
 ## M4b: Backfill from AJProbe, and RP conversations 🟢 (M)
 
@@ -153,12 +153,18 @@ New requirements (user, 2026-11-04): no event from the first Forever days may be
 
 ## M5: Options and convenience 🟢 then 🔵 (M)
 
-- [ ] `Settings` panel, guarded by a check that the API exists. If Classic Era lacks it, fall back to slash commands: chat output, the event types to log, whether to show the mood/profile.
-- [ ] Show `characterProfile` (the mood) in the entry header in the UI.
-- [ ] Forever only, guarded: `AddonCompartmentFunc` entry (minimap addon menu).
-- [ ] Use a `ScrollBox` for the index if available, otherwise keep the current buttons. This fixes the one-Button-per-jornada growth.
+Status key: **H** = covered by the stubbed harness (`npm test`), **G** = needs the in-game Classic Era smoke test, **F** = needs Forever (verify in M3 / the next Forever session).
+
+- [x] **Options panel** (code done; H; **G**; **F**). `Options.lua`: Settings API, canvas layout (own frame and plain widgets), guarded at every step; if it cannot be built, `/diario opciones` explains why and lists the commands, and every option still works by command. Observed on Classic Era (2026-11-04, `/run` check): `RegisterAddOnCategory`, `OpenToCategory`, `RegisterAddOnSetting`, `RegisterProxySetting`, `CreateCheckbox`, `CreateDropdown`, `VarType` and `SettingsPanel` exist; the check boxes and buttons use templates that exist. **Not verifiable offline:** the call signatures (so the vertical layout was not used), whether `OpenToCategory(categoryID)` is the right call on 1.15.9 (the code tries the ID, then the category object, and checks that the settings window is up), and how the panel looks. Options: chat echo (`settings.chat`), the seven entry types (`settings.types`, default all on), mood in the book (`settings.showProfile`, default off so the default book is unchanged). Slash commands: `/diario opciones`, `chat`, `tipos`, `animo`. Disabled types are dropped in `AddEntry` after the handlers update dedupe and `visited` (harness: counts per type, dedupe across an off/on switch, secret payloads with types off and on). No schema bump: `settings` gains keys that `EnsureDatabase` fills from `ns.DEFAULT_SETTINGS`; v1 and pre-M5 v2 diaries load (harness).
+- [x] **Placeholder for the M4b conversations toggle** (H): a disabled checkbox in the panel and `settings.conversations = false`. Nothing reads it yet; M4b wires it (`/diario conversaciones on|off` and the panel).
+- [x] **Mood in the entry header** (code done; H; **G**). `Hora  ·  Ánimo`, only when `showProfile` is on. Entries without `characterProfile` render as before (harness: an entry injected without one, and 125 of 250 generated jornadas without moods).
+- [x] **Forever addon-menu entry** (code done; H for the TOC field and the function; **F**). `## AddonCompartmentFunc: AdventureJournal_OnAddonCompartmentClick` in the Forever TOC only; the global toggles the book (harness: the TOC field is read, the function called, the book toggles; the Vanilla TOC has no such line). Whether the minimap menu shows the entry and the click works on Forever: **verify in M3/M5**.
+- [x] **ScrollBox index** (code done; H; **G**; **F**). Used only if the functions, the templates (`WowScrollBoxList`, `MinimalScrollBar`) and a full build all work; otherwise the old buttons. Observed on Classic Era: all present and a test build succeeded (`/diario diag`). Harness: 251 jornadas create 35 frames in total with 15 rows; adding entries while open creates 0; three stub variants (functions missing, templates missing, forced with `/diario debug buttons`) all end on the button index and render. **Not verifiable offline:** row width and look, real scroll behaviour, the parchment background around the bar.
+- [x] **`/diario debug demo`**: shows 250 generated jornadas in the book only (memory, never saved), so the index can be scrolled in game without touching the real diary (H).
 
 **Done when:** options persist across sessions on both clients, and the UI stays responsive with 200+ jornadas (test with generated data).
+
+**Status (2026-11-04):** code done and passing `npm test` (6 new scenario runs per client). **Pending:** the in-game Classic Era smoke test (steps in the hand-over message and in README's checklist), then tag `m5-done`; the Forever checks (panel, `OpenToCategory`, ScrollBox, minimap entry) wait for the next Forever session (add them to [M3_RUNBOOK.md](M3_RUNBOOK.md) section 3b).
 
 ## M6: Export 🟢 (S–M)
 
@@ -235,3 +241,6 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 | 12 | 2026-11-04 | Classic Era | P2 | If `C_QuestLog.GetTitleForQuestID` is missing on 1.15.9, quest entries fall back to "una misión (ID n)", because the quest has already left the log at `QUEST_TURNED_IN`. **Rejected:** the API is missing, but the quest is still in the log during the event, so the scan finds the title. It is gone 1 s later. Keep the lookup synchronous. | Not a bug |
 | 13 | 2026-11-04 | Both | P3 | Prose sentences start in lower case after a full stop: "«Tu lugar en el mundo». pensando en el largo camino...". This happens in `QUEST` (all three variants) and `LOOT`, because the mood phrases start in lower case. | Fixed in M4 for new entries (old stored prose is unchanged) |
 | 14 | 2026-11-04 | Classic Era | P3 | `MINIMAP_ZONE_CHANGED` does not exist on Classic Era. Registering it fails silently inside `pcall`. Harmless; drop it in M1, or register it only if `C_EventUtils.IsEventValid` says it exists. | Fixed in M1 |
+| 15 | 2026-11-04 | Classic Era | P3 | `/chatlog` produced no `WoWChatLog.txt` anywhere under the WoW folder, not even after closing the game. M3's runbook step "check that `/chatlog` works on Forever" may fail the same way; chat text cannot be selected in the default UI either, so diagnostics are copied by screenshot. | Observation; check on Forever in M3 |
+| 16 | 2026-11-04 | Both | P3 | A zone-only place is a separate place from its subzones: the diary logged "Durotar" (empty subzone) as a first-time DISCOVERY at 20:06:16 in jornada 8, although other "subzone, Durotar" places were already in the diary. Cause not checked in game (probably a moment when the subzone text was empty). Consequence of keying `visited` by the full place text. Candidate fix: do not log a zone-only place when any "subzone, zone" of that zone is already visited. | Open (not an M5 item) |
+| 17 | 2026-11-04 | Both | P3 | Discoveries are never echoed to chat in the default `importante` mode (by design). The tester first read this as "not logged". Consider a clearer first-run hint or a `/diario chat` line in the login message. | Open (cosmetic) |
