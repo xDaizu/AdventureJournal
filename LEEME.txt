@@ -1,0 +1,69 @@
+DIARIO DE AVENTURAS — WORLD OF WARCRAFT CLASSIC ERA
+Versión 1.1.0-Era | Interfaz objetivo: 11509 (Classic Era 1.15.9)
+
+CONTENIDO
+- AdventureJournal.toc: manifiesto Classic Era y guardado por personaje.
+- AdventureJournal.lua: lógica, eventos, narración e interfaz del libro.
+- Bindings.xml: acción para asignar una tecla desde Key Bindings.
+- ExportarDiario.py / ExportarDiario.bat: exportador a TXT para Windows.
+
+INSTALACIÓN
+1. Cierra WoW Classic Era.
+2. Abre la carpeta del cliente Classic Era. En instalaciones oficiales suele ser:
+   World of Warcraft\_classic_era_\
+3. Entra en Interface\AddOns. Crea AddOns si no existe.
+4. Copia la carpeta AdventureJournal completa dentro de AddOns.
+5. Comprueba que la ruta final sea:
+   ...\_classic_era_\Interface\AddOns\AdventureJournal\AdventureJournal.toc
+6. Inicia Classic Era. En la pantalla de selección de personaje, abre Accesorios/AddOns y activa Diario de Aventuras.
+7. Entra con el personaje. Se creará una nueva jornada.
+
+ABRIR EL DIARIO
+- /diario
+- /journal
+- /diario hoy
+- /diario anterior
+
+ASIGNAR UNA TECLA
+1. Pulsa ESC y abre Opciones > Asignación de teclas / Key Bindings.
+2. Busca la sección «Diario de Aventuras».
+3. Asigna la tecla a «Abrir / cerrar el diario».
+4. No hay tecla predeterminada para evitar conflictos con otros controles.
+
+JORNADAS Y GUARDADO
+Cada evento PLAYER_LOGIN crea una jornada nueva, incluso si vuelves a entrar el mismo día del calendario. Esto conserva expresamente el criterio de una jornada por sesión de juego. Un /reload también vuelve a disparar el ciclo de inicio de sesión y puede crear otra jornada.
+
+El TOC usa SavedVariablesPerCharacter. El juego guarda los datos por separado para cada personaje en una ruta similar a:
+WTF\Account\<CUENTA>\<REINO>\<PERSONAJE>\SavedVariables\AdventureJournal.lua
+
+La estructura exacta puede variar según el tipo de cuenta/cliente. No edites ese archivo mientras el juego esté abierto. Haz copias de seguridad periódicas.
+
+EXPORTAR A TXT
+El cliente de WoW no permite que un addon escriba archivos arbitrarios en el disco. El historial se guarda en SavedVariables y se convierte a TXT con el exportador externo:
+1. Cierra el juego completamente para que WoW escriba los SavedVariables.
+2. Abre esta carpeta del addon y ejecuta ExportarDiario.bat.
+3. Selecciona el AdventureJournal.lua del personaje que quieres exportar.
+4. El TXT se crea junto al SavedVariables, con el nombre Diario_<PERSONAJE>.txt.
+
+El exportador necesita Python 3 en Windows. Si el comando «py -3» no existe, instala Python desde https://www.python.org/downloads/ y habilita el launcher de Python.
+
+QUÉ REGISTRA
+- Misiones entregadas mediante QUEST_TURNED_IN.
+- Jefes mediante BOSS_KILL y, cuando el cliente lo expone, ENCOUNTER_END.
+- Muertes del personaje.
+- Botín raro, épico o legendario (calidad 3 o superior), cuando el cliente proporciona la información del objeto.
+- Cambios de zona/subzona.
+- Apertura de diálogo de NPC. Si Classic no expone el nombre del NPC en ese momento, se usa una descripción neutra.
+- Susurros recibidos: registra el remitente, no el contenido del mensaje.
+
+COMPATIBILIDAD Y LIMITACIONES
+- Preparado para Classic Era 1.15.9, Interface 11509. Si el cliente cambia de parche, comprueba el número real con /dump select(4, GetBuildInfo()) y actualiza ## Interface en el TOC si procede.
+- Los eventos opcionales se registran con protección para que la ausencia de uno no impida cargar el addon.
+- El título de misión intenta obtenerse mediante C_QuestLog y usa alternativas si están disponibles; si no, registra el ID.
+- El botín puede no registrarse si la información del objeto no llega a cargarse.
+- Los mensajes de botín del chat pueden incluir botín del grupo, según la configuración y los mensajes que emita el cliente.
+- El registro de jefes depende de que la compilación emita BOSS_KILL o ENCOUNTER_END.
+- La interfaz es un libro abierto con índice a la izquierda, relato a la derecha y navegación anterior/siguiente. No utiliza animación física de volteo de página: la navegación cambia la jornada mostrada.
+
+IMPORTANTE
+Esta versión está adaptada a la API y al TOC de Classic Era. No ha sido posible ejecutarla dentro del cliente real desde este entorno; la primera carga y los eventos deben validarse en juego. Si aparece un error Lua, copia el mensaje completo (idealmente con /console scriptErrors 1) para corregirlo.
