@@ -85,6 +85,8 @@ local function PrintDiagnostics()
     Say(string.format("Patrones de botín propio: %d (0 = se acepta todo el botín)", #ns.GetOwnLootPatterns()))
 
     for _, row in ipairs(ns.GetApiBranches()) do Say(row[1] .. ": " .. row[2]) end
+    Say("Textos del juego que reconocen los tipos nuevos (M6): /diario diag mensajes los repite solos.")
+    for _, row in ipairs(ns.GetMessageStatus()) do Say("  " .. row[1] .. ": " .. row[2]) end
     Say("Interfaz (M5):")
     for _, row in ipairs(ns.GetUiFeatures()) do Say("  " .. row[1] .. ": " .. row[2]) end
 
@@ -112,6 +114,13 @@ local function PrintDiagnostics()
     end
     Say(string.format("Depuración: %s, secretos simulados: %s",
         ns.debug.on and "ACTIVA" or "apagada", ns.debug.secrets and "ACTIVOS" or "apagados"))
+end
+
+-- /diario diag mensajes: only the M6 message strings (short enough for one screenshot).
+local function PrintMessageDiagnostics()
+    Say("Textos del juego que reconocen los tipos nuevos (nivel, grupo, reputación, habilidades, hechizos):")
+    for _, row in ipairs(ns.GetMessageStatus()) do Say("  " .. row[1] .. ": " .. row[2]) end
+    Say("Si alguna línea dice «ninguna», ese tipo no puede reconocer nada en este cliente.")
 end
 
 -- A generated diary for trying the book with many jornadas: held in memory only (ns.demoDB, see
@@ -276,6 +285,8 @@ SlashCmdList["ADVENTUREJOURNAL"] = function(message)
         ns.OpenAtDay((ns.DB and ns.DB.currentDay or 1) - 1)
     elseif word == "diag" and arg1 == "" then
         PrintDiagnostics()
+    elseif word == "diag" and (arg1 == "mensajes" or arg1 == "messages") then
+        PrintMessageDiagnostics()
     elseif word == "debug" then
         SetDebug(arg1, arg2)
     elseif word == "chat" then

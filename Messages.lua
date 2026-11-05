@@ -222,3 +222,21 @@ function ns.SpellCandidate(message)
     local spellID = tonumber(string.match(shown, "|Hspell:(%d+)"))
     return { type = "SPELL", text = name, extra = { spellID = spellID, learnKind = SPELL_KIND[item.name] } }
 end
+
+-- Diagnostics (/diario diag): which of the client's strings each M6 type found. A type with "ninguna"
+-- cannot match anything on this client, so check the global names with /dump.
+function ns.GetMessageStatus()
+    local function names(list, extra)
+        local out = {}
+        for _, item in ipairs(list) do out[#out + 1] = item.name .. (extra and extra(item) or "") end
+        return #out > 0 and table.concat(out, ", ") or "ninguna"
+    end
+    local gains, changes = ns.GetReputationFormats()
+    return {
+        { "Mensajes de grupo (de 6)", names(ns.GetGroupFormats()) },
+        { "Mensajes de reputación: subidas", names(gains) },
+        { "Mensajes de reputación: cambios de nivel", names(changes) },
+        { "Mensajes de habilidades", names(ns.GetSkillFormats(), function(item) return " [" .. tostring(item.skillKind or "no se usa") .. "]" end) },
+        { "Mensajes de hechizos (de 3)", names(ns.GlobalFormats("spell", { "ERR_LEARN_SPELL_S", "ERR_LEARN_ABILITY_S", "ERR_LEARN_PASSIVE_S" })) },
+    }
+end

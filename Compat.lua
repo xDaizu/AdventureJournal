@@ -346,11 +346,13 @@ function ns.GlobalFormats(key, names, prefix)
     for _, name in ipairs(names or {}) do add(name) end
     if prefix then
         local found = {}
-        for name, value in pairs(_G) do
-            if type(name) == "string" and string.sub(name, 1, #prefix) == prefix and type(value) == "string" then
-                found[#found + 1] = name
+        pcall(function()
+            for name, value in pairs(_G) do
+                if type(name) == "string" and string.sub(name, 1, #prefix) == prefix and type(value) == "string" then
+                    found[#found + 1] = name
+                end
             end
-        end
+        end)
         table.sort(found)
         for _, name in ipairs(found) do add(name) end
     end

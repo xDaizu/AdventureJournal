@@ -61,10 +61,10 @@ end
 
 -- onToggle receives true/false. GetChecked() returns 1/nil on some clients, so only
 -- its truthiness is used.
-local function AddCheck(parent, y, text, onToggle)
+local function AddCheck(parent, y, text, onToggle, x)
     local check = CreateCheckButton(parent)
     check:SetSize(26, 26)
-    check:SetPoint("TOPLEFT", 20, y)
+    check:SetPoint("TOPLEFT", x or 20, y)
     local label = parent:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
     label:SetPoint("LEFT", check, "RIGHT", 4, 1)
     label:SetText(text)
@@ -98,12 +98,17 @@ local function BuildPanel()
 
     -- Which entry types are logged (settings.types).
     AddText(frame, "GameFontNormal", 16, -166, "Qué se anota en el diario")
+    -- Two columns, so that the twelve types (M6) do not push the rest of the panel out of view.
+    local rows = math.ceil(#ns.TYPE_INFO / 2)
     local y = -190
-    for _, info in ipairs(ns.TYPE_INFO) do
+    for index, info in ipairs(ns.TYPE_INFO) do
         local key = info.key
-        controls.types[key] = AddCheck(frame, y, info.label, function(enabled) ns.SetTypeEnabled(key, enabled) end)
-        y = y - 24
+        local column = index > rows and 1 or 0
+        local row = (index - 1) % rows
+        controls.types[key] = AddCheck(frame, y - row * 24, info.label,
+            function(enabled) ns.SetTypeEnabled(key, enabled) end, 20 + column * 270)
     end
+    y = y - rows * 24
 
     -- The book (settings.showProfile).
     AddText(frame, "GameFontNormal", 16, y - 14, "El libro")
