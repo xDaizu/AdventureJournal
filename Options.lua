@@ -31,7 +31,9 @@ function ns.RefreshOptionsPanel()
     ns.EnsureDatabase()
     controls.chat:SetText(ns.CHAT_MODE_NAMES[ns.GetSetting("chat")] or "?")
     for _, info in ipairs(ns.VisibleTypes()) do
-        controls.types[info.key]:SetChecked(ns.IsTypeEnabled(info.key))
+        -- A type that became visible after the panel was built has no checkbox (until the next /reload).
+        local control = controls.types[info.key]
+        if control then control:SetChecked(ns.IsTypeEnabled(info.key)) end
     end
     controls.profile:SetChecked(ns.GetSetting("showProfile") == true)
     controls.conversations:SetChecked(ns.ConversationsEnabled())

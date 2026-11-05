@@ -15,9 +15,14 @@ local S, fire, advance, slash, note, ns = H.S, H.fire, H.advance, H.slash, H.not
 local F = dofile(string.match(SCENARIO, "^(.*)/[^/]*$") .. "/fixture_ajprobe.lua")
 local Snap = F.Snapshot
 -- T4a adds QUEST_ACCEPT and GUILD (REVISIT and the death killer are not in AJProbe's records: nothing to import).
--- T4b adds ACHIEVEMENT on Forever (Classic Era has no achievements; AJProbe records no mounts).
+-- T4b adds ACHIEVEMENT (AJProbe records no mounts). Achievements are switched off in the shipped addon
+-- (ns.ACHIEVEMENTS_SUPPORTED, Database.lua); this scenario switches them on on Forever to keep their import
+-- tested. Classic Era has no achievements either way.
 local NEW_TYPES = { "LEVEL", "GROUP", "REPUTATION", "SKILL", "SPELL", "QUEST_ACCEPT", "GUILD" }
-if FLAVOR ~= "classic" then NEW_TYPES[#NEW_TYPES + 1] = "ACHIEVEMENT" end
+if FLAVOR ~= "classic" then
+    ns.ACHIEVEMENTS_SUPPORTED = true
+    NEW_TYPES[#NEW_TYPES + 1] = "ACHIEVEMENT"
+end
 S.achievements = FLAVOR ~= "classic" and { [7] = "Explorador", [8] = "Aventurero" } or S.achievements
 -- The fields, besides type and text, that each new type stores in an entry (compared live vs imported).
 local EXTRA_FIELDS = { "level", "groupEvent", "repEvent", "standing", "skillEvent", "rank", "spellID", "learnKind", "questID", "guildEvent", "achievementID" }

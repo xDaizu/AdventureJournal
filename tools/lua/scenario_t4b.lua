@@ -5,12 +5,16 @@
 -- Variants (H.variant):
 --   live       every feature through its events, in login, /reload and second login.
 --   secrets    the same events with secret values (stub secrets), then the addon's simulated secrets.
+--   default    the shipped state: achievements are switched off (ns.ACHIEVEMENTS_SUPPORTED = false), so the
+--              type is hidden and inert even on Forever, while mounts work. Every other variant switches
+--              achievements on for itself, so the code stays tested for when they come back.
 --   off_with / off_without
 --              both types off. `off_with` also fires the new events; `off_without` fires only the old
 --              ones. run.js checks that the two saved diaries are byte-identical (the M6 off-equality rule).
 local H = ...
 local S, fire, advance, slash, note, ns = H.S, H.fire, H.advance, H.slash, H.note, H.ns
 local FOREVER = FLAVOR ~= "classic"
+if H.variant ~= "default" then ns.ACHIEVEMENTS_SUPPORTED = true end
 
 local function Day() return AdventureJournalDB.days[AdventureJournalDB.currentDay] end
 
@@ -106,6 +110,22 @@ local ORDER = { "MOUNT", "ACHIEVEMENT" }
 local function Run(part, live)
     local function ev(...) if live then fire(...) end end
     for _, key in ipairs(ORDER) do BLOCKS[key][part](ev) end
+end
+
+-- ===================================================================================
+if H.variant == "default" then
+    SetUpJournal()
+    StartSession()
+    note("shipped state: MOUNT available = " .. tostring(ns.IsTypeAvailable("MOUNT")) .. ", ACHIEVEMENT available = "
+        .. tostring(ns.IsTypeAvailable("ACHIEVEMENT")) .. "; visible types = " .. #ns.VisibleTypes() .. " of " .. #ns.TYPE_INFO)
+    advance(20); fire("ACHIEVEMENT_EARNED", 7, false)
+    advance(20); if FOREVER then S.mounts[40].collected = true end; fire("NEW_MOUNT_ADDED", 40)
+    Show("an achievement is earned and a mount learned")
+    note("known achievements stay untouched: " .. Keys(AdventureJournalDB.knownAchievements))
+    slash("tipos logros on")
+    slash("tipos")
+    fire("PLAYER_LOGOUT")
+    return
 end
 
 -- ===================================================================================

@@ -70,6 +70,7 @@ const SCENARIOS = [
   { name: 'adventurejournal_t4a_off_with', file: 'scenario_t4a.lua', modes: ['login'], variant: 'off_with', sameDiaryAs: 'adventurejournal_t4a_off_without' },
   // T4b: MOUNT and ACHIEVEMENT (Forever only; hidden and inert on Classic Era), live, secrets, off-equality.
   { name: 'adventurejournal_t4b', file: 'scenario_t4b.lua', modes: ['login', 'reload', 'relogin'], variant: 'live' },
+  { name: 'adventurejournal_t4b_default', file: 'scenario_t4b.lua', modes: ['login'], variant: 'default' },
   { name: 'adventurejournal_t4b_secrets', file: 'scenario_t4b.lua', modes: ['login'], variant: 'secrets' },
   { name: 'adventurejournal_t4b_off_without', file: 'scenario_t4b.lua', modes: ['login'], variant: 'off_without' },
   { name: 'adventurejournal_t4b_off_with', file: 'scenario_t4b.lua', modes: ['login'], variant: 'off_with', sameDiaryAs: 'adventurejournal_t4b_off_without' },

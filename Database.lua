@@ -13,6 +13,13 @@ ns.SCHEMA_VERSION = 3
 --   words    what /diario tipos <word> accepts (lower case)
 --   default  logged unless the player changes it (default true). A type added later with
 --            default = false (T4: REVISIT) stays off for diaries that never chose a value.
+-- Achievements are switched off (decision 2026-11-05: Forever has no achievements, as far as the
+-- player knows; the one ID tried, 6, is not one there). The code, the prose, the import and the harness
+-- are kept: set this to true to switch them back on, and then check on Forever what
+-- GetAchievementInfo returns and what ACHIEVEMENT_EARNED sends (README, "APIs used"). While it is
+-- false the type is hidden from the panel and the commands and is never logged or imported.
+ns.ACHIEVEMENTS_SUPPORTED = false
+
 ns.TYPE_INFO = {
     { key = "QUEST",     label = "Misiones completadas", words = { "misiones", "mision", "misión", "quest" } },
     { key = "BOSS",      label = "Jefes derrotados",     words = { "jefes", "jefe", "boss" } },
@@ -38,7 +45,7 @@ ns.TYPE_INFO = {
     { key = "MOUNT",     label = "Monturas nuevas",       words = { "monturas", "montura", "mount", "mounts" },
       available = function() return ns.HasMountJournal() end },
     { key = "ACHIEVEMENT", label = "Logros conseguidos",  words = { "logros", "logro", "achievement", "achievements" },
-      available = function() return ns.HasAchievements() end },
+      available = function() return ns.ACHIEVEMENTS_SUPPORTED == true and ns.HasAchievements() end },
 }
 
 -- Whether this client can produce a type at all (T4b). Types with no `available` function always can.

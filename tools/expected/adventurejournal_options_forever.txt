@@ -6,17 +6,17 @@
 -- TOC AddonCompartmentFunc = AdventureJournal_OnAddonCompartmentClick; the global function exists = true
 -- defaults: chat=important showProfile=false conversations=false typesOff=[REVISIT]
 -- Settings.OpenToCategory was called with: ID 100; settings window shown = true
--- panel controls: chat button = importante, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=on, NPC=on, CHAT=on, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, ACHIEVEMENT=on, mood=off, conversations=off (usable)
+-- panel controls: chat button = importante, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=on, NPC=on, CHAT=on, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, mood=off, conversations=off (usable)
 -- panel: chat -> off after 1 click(s), button reads "nada"
 -- after changes: chat=off showProfile=true conversations=false typesOff=[DISCOVERY,NPC,CHAT,REVISIT]
--- panel controls: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=off, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, ACHIEVEMENT=on, mood=on, conversations=off (usable)
+-- panel controls: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=off, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, mood=on, conversations=off (usable)
 -- entries after events: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- chat lines printed while chat = nada: 0
 -- the place was still marked visited while DISCOVERY was off: true
 -- NPC on again, same NPC 5 s after the one seen while off (dedupe): QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- NPC on again, 30 s later: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
--- panel controls follow the commands: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, ACHIEVEMENT=on, mood=on, conversations=off (usable)
--- panel after /diario chat todo: chat button = todo, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, ACHIEVEMENT=on, mood=on, conversations=off (usable)
+-- panel controls follow the commands: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, mood=on, conversations=off (usable)
+-- panel after /diario chat todo: chat button = todo, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, mood=on, conversations=off (usable)
 -- LOOT off, uncached epic, then cached: QUEST=1 BOSS=0 DEATH=2 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0; handler errors = 0
@@ -69,13 +69,13 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 == chat output
 |cFFFFD700[Diario]|r Comienza la jornada 1. Tu historia continúa.
 |cFFFFD700[Diario]|r NPC: se anota.
-|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí; Logros conseguidos (logros): sí.
-|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas|logros> <on|off>
-|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí; Logros conseguidos (logros): sí.
-|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas|logros> <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
 |cFFFFD700[Diario]|r No conozco el tipo «xyz».
-|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí; Logros conseguidos (logros): sí.
-|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas|logros> <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
 |cFFFFD700[Diario]|r Mensajes en el chat: todo.
 |cFF00FF00[Diario]|r He caído en combate
 |cFFFFD700[Diario]|r Mensajes en el chat: importante.
@@ -267,7 +267,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 -- registered via Settings.RegisterAddOnCategory: Diario de Aventuras
 -- TOC AddonCompartmentFunc = AdventureJournal_OnAddonCompartmentClick; the global function exists = true
 -- after /reload: chat=all showProfile=true conversations=false typesOff=[DISCOVERY,CHAT,REVISIT]
--- panel controls after /reload: chat button = todo, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, ACHIEVEMENT=on, mood=on, conversations=off (usable)
+-- panel controls after /reload: chat button = todo, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, mood=on, conversations=off (usable)
 -- entries after /reload events: QUEST=1 BOSS=0 DEATH=4 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0; chat lines printed: 1
 -- panel: chat -> off after 2 click(s), button reads "nada"
 -- end of reload: chat=off showProfile=false conversations=false typesOff=[DISCOVERY,CHAT,REVISIT]
@@ -468,7 +468,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 -- registered via Settings.RegisterAddOnCategory: Diario de Aventuras
 -- TOC AddonCompartmentFunc = AdventureJournal_OnAddonCompartmentClick; the global function exists = true
 -- after the second login: chat=off showProfile=false conversations=false typesOff=[DISCOVERY,CHAT,REVISIT]; currentDay = 2
--- panel controls after the second login: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, ACHIEVEMENT=on, mood=off, conversations=off (usable)
+-- panel controls after the second login: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, MOUNT=on, mood=off, conversations=off (usable)
 -- jornada 1 with the mood shown (the last entry has no characterProfile):
 |cFFFF3333En Valle de los Retos, Durotar|r
 |cFF8A5A2417:57:05  ·  Cauteloso|r  La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
