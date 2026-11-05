@@ -99,11 +99,12 @@ local function StartSession(isReloadingUi)
 end
 
 -- Returns false only while the item is not cached yet (keep it pending). Returns
--- true once it is settled: logged, or dropped for being below rare quality (bug #11).
+-- true once it is settled: logged, or dropped for being below settings.lootQuality (bug #11;
+-- rare by default, epic in the "clasico" profile).
 local function TryLogLoot(itemLink, itemID)
     local _, _, quality = ns.GetItemInfoSafe(itemLink or itemID)
     if not quality then return false end
-    if quality >= 3 then
+    if quality >= ns.GetLootQuality() then
         local displayLink = itemLink
         if not displayLink then
             local _, link = ns.GetItemInfoSafe(itemID)

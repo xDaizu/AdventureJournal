@@ -227,7 +227,7 @@ HANDLERS.CHAT_MSG_LOOT = function(record, context)
         ns.RequestItemData(itemID)   -- a second /diario importar a moment later will know it
         return nil, "noquality"
     end
-    if quality < 3 then return nil, "ignored" end
+    if quality < ns.GetLootQuality() then return nil, "ignored" end   -- the live rule (settings.lootQuality)
     return { type = "LOOT", text = link, extra = { itemQuality = quality, itemLink = link, itemID = itemID } }
 end
 

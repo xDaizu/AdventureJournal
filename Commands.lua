@@ -10,6 +10,12 @@ function AdventureJournal_ToggleUI()
     ns.ToggleUI()
 end
 
+-- The name Chema's Forever line (1.1.0-Forever) gave the same function: kept so macros and
+-- bindings written for that version still work after updating.
+function AdventureJournal_Toggle()
+    ns.ToggleUI()
+end
+
 -- WoW Forever's addon menu (the minimap button). AdventureJournal_Forever.toc names this
 -- function in its AddonCompartmentFunc line; the Vanilla TOC has no such line, so Classic
 -- Era never calls it. It must be global, and receives (addonName, buttonName, menuButtonFrame).
@@ -57,6 +63,16 @@ local function PrintDiagnostics()
         end
         Say(string.format("Tipos desactivados: %s. Ánimo en el libro: %s",
             #off > 0 and table.concat(off, ", ") or "ninguno", ns.GetSetting("showProfile") and "sí" or "no"))
+        -- T1: the profile, the loot threshold, and what is left of a diary from Chema's Forever line.
+        local function Count(t)
+            local n = 0
+            if type(t) == "table" then for _ in pairs(t) do n = n + 1 end end
+            return n
+        end
+        Say(string.format("Perfil: %s. Botín desde calidad %d. Diario de la versión de Chema: %s",
+            tostring(ns.GetSetting("profile")), ns.GetLootQuality(),
+            DB.origin == "chema" and string.format("sí (%d lugares, %d monturas y %d logros conservados)",
+                Count(DB.visitedZones), Count(DB.knownMounts), Count(DB.knownAchievements)) or "no"))
     end
     do
         local chatOK, chatFailed = ns.GetConversationStatus()
@@ -282,7 +298,8 @@ end
 SLASH_ADVENTUREJOURNAL1 = "/diario"
 SLASH_ADVENTUREJOURNAL2 = "/journal"
 SlashCmdList["ADVENTUREJOURNAL"] = function(message)
-    local command = string.lower(message or "")
+    -- Surrounding spaces are ignored, as in Chema's version ("/diario hoy " works).
+    local command = string.lower(string.match(message or "", "^%s*(.-)%s*$"))
     local word, arg1, arg2 = string.match(command, "^(%S+)%s*(%S*)%s*(%S*)$")
     if command == "" or command == "abrir" then
         ns.ToggleUI()
@@ -317,4 +334,10 @@ SlashCmdList["ADVENTUREJOURNAL"] = function(message)
     else
         Say("Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario chat, /diario tipos, /diario animo, /diario conversaciones, /diario importar, /diario diag o /diario debug.")
     end
+end
+
+-- /ajdiag: the diagnostic command of Chema's Forever line, kept as a short name for /diario diag.
+SLASH_ADVENTUREJOURNALDIAG1 = "/ajdiag"
+SlashCmdList["ADVENTUREJOURNALDIAG"] = function()
+    PrintDiagnostics()
 end
