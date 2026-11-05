@@ -18,6 +18,8 @@ ns.TYPE_INFO = {
     { key = "CHAT",      label = "Susurros recibidos",   words = { "susurros", "susurro", "chat" } },
     -- M6. All on by default (a type missing from settings.types counts as on).
     { key = "LEVEL",     label = "Subidas de nivel",     words = { "nivel", "niveles", "level" } },
+    -- Names of other players, like the conversations: switch it off if you do not want them kept.
+    { key = "GROUP",     label = "Grupo: quién entra y sale", words = { "grupo", "grupos", "group", "party" } },
 }
 
 -- Names of the chat echo modes, for messages and the options panel.

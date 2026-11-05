@@ -60,6 +60,33 @@ function ns.ComposeEntry(entry)
         return string.format("En %s crucé unas palabras con %s. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.", place, subject)
     elseif entry.type == "CHAT" then
         return string.format("Recibí noticias de %s mientras me encontraba en %s. Incluso en los caminos más solitarios llegan voces de otros aventureros.", subject, place)
+    elseif entry.type == "GROUP" then
+        local kind = entry.groupEvent
+        if kind == "join" then
+            if variant == 1 then
+                return string.format("En %s se sumó %s a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.", place, subject)
+            elseif variant == 2 then
+                return string.format("%s se unió a mi grupo en %s. No es poca cosa tener a alguien que te cubra la espalda.", subject, place)
+            end
+            return string.format("Mi grupo creció en %s: %s se nos unió. Veremos qué da de sí la compañía.", place, subject)
+        elseif kind == "leave" then
+            if variant == 1 then
+                return string.format("En %s, %s dejó el grupo. El camino volvió a quedarse un poco más solo.", place, subject)
+            elseif variant == 2 then
+                return string.format("%s se separó de mi grupo en %s. Cada cual sigue su propio rumbo.", subject, place)
+            end
+            return string.format("En %s, %s abandonó el grupo; ojalá nos volvamos a cruzar.", place, subject)
+        elseif kind == "selfleave" then
+            if variant == 1 then
+                return string.format("En %s dejé el grupo y seguí mi propio camino. %s.", place, sentenceTone)
+            end
+            return string.format("Dejé el grupo en %s. A veces el mejor paso es el que se da en solitario.", place)
+        elseif kind == "disband" then
+            return string.format("En %s el grupo se disolvió y cada cual tomó su rumbo. %s.", place, sentenceTone)
+        elseif kind == "youjoin" then
+            return string.format("En %s me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.", place)
+        end
+        return string.format("Algo cambió en mi grupo en %s.", place)
     elseif entry.type == "LEVEL" then
         local level = type(entry.level) == "number" and entry.level or nil
         if not level then

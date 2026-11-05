@@ -141,6 +141,30 @@ HANDLERS.CHAT_MSG_WHISPER = function(record)
     return nil, "ignored"
 end
 
+-- The first argument of a generic AJProbe record (CHAT_MSG_*, GROUP_JOINED...): `a` holds the
+-- first four event arguments.
+local function FirstArg(record)
+    local args = record.a
+    return type(args) == "table" and args[1] or nil
+end
+
+-- M6: CHAT_MSG_SYSTEM carries the group joins and leaves (by name) in a[1].
+HANDLERS.CHAT_MSG_SYSTEM = function(record)
+    local message, secret = Text(FirstArg(record))
+    if secret then return nil, "secret" end
+    if not message then return nil, "ignored" end
+    local candidate = ns.SystemMessageCandidate(message)
+    if not candidate then return nil, "ignored" end
+    return candidate
+end
+
+-- M6: GROUP_JOINED a[1] = partyCategory. Only a dungeon group makes an entry (no names).
+HANDLERS.GROUP_JOINED = function(record)
+    local candidate = ns.GroupJoinedCandidate(FirstArg(record))
+    if not candidate then return nil, "ignored" end
+    return candidate
+end
+
 -- M6: PLAYER_LEVEL_UP carries the new level in `level`.
 HANDLERS.PLAYER_LEVEL_UP = function(record)
     if type(record.level) == "number" or ns.IsSecret(record.level) or record.level == "[SECRET]" then

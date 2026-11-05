@@ -293,13 +293,36 @@ handlers.PLAYER_LEVEL_UP = function(level)
     LogCandidate(ns.LevelCandidate(level))
 end
 
+-- M6: the system chat. Group joins and leaves arrive here by name. Skipped when unreadable (a secret
+-- message in an instance), so nothing is guessed.
+handlers.CHAT_MSG_SYSTEM = function(message)
+    if not ns.IsTypeEnabled("GROUP") then return end
+    if ns.IsSecret(message) then
+        ns.Debug("CHAT_MSG_SYSTEM: mensaje secreto, se omite")
+        return
+    end
+    local candidate = ns.SystemMessageCandidate(message)
+    if candidate and ns.IsTypeEnabled(candidate.type) then LogCandidate(candidate) end
+end
+
+-- M6: GROUP_JOINED(partyCategory, partyGUID). Only a dungeon group is logged, without names.
+handlers.GROUP_JOINED = function(category)
+    if not ns.IsTypeEnabled("GROUP") then return end
+    if ns.IsSecret(category) then
+        ns.Debug("GROUP_JOINED: categoría secreta, se omite")
+        return
+    end
+    local candidate = ns.GroupJoinedCandidate(category)
+    if candidate then LogCandidate(candidate) end
+end
+
 local EVENTS = {
     "ADDON_LOADED", "PLAYER_ENTERING_WORLD", "PLAYER_LOGOUT",
     "QUEST_TURNED_IN", "BOSS_KILL", "ENCOUNTER_END", "PLAYER_DEAD",
     "CHAT_MSG_LOOT", "GET_ITEM_INFO_RECEIVED", "ITEM_DATA_LOAD_RESULT",
     "ZONE_CHANGED_NEW_AREA", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "MINIMAP_ZONE_CHANGED",
     "GOSSIP_SHOW", "CHAT_MSG_WHISPER",
-    "PLAYER_LEVEL_UP",
+    "PLAYER_LEVEL_UP", "CHAT_MSG_SYSTEM", "GROUP_JOINED",
 }
 ns.EVENTS = EVENTS
 for _, eventName in ipairs(EVENTS) do ns.RegisterEventSafe(eventFrame, eventName) end
