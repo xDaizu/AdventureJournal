@@ -80,6 +80,7 @@ for _, method in ipairs({
     "SetBackdrop", "SetBackdropColor", "SetBackdropBorderColor", "SetWidth", "SetJustifyH",
     "SetJustifyV", "SetTextColor", "SetTexture", "SetTexCoord", "SetVertexColor", "SetScrollChild",
     "SetSpacing", "SetVerticalScroll", "SetFontObject", "SetAlpha",
+    "SetShadowColor", "SetShadowOffset", "SetWordWrap", "SetNormalTexture", "SetPushedTexture", "SetHighlightTexture",
 }) do Widget[method] = noop end
 
 function Widget:SetHeight(h) self.height = h end
@@ -405,8 +406,9 @@ if not FLAGS.noscrollbox then
         function provider:GetSize() return #self.list end
         return provider
     end
-    function CreateScrollBoxListLinearView()
-        local view = {}
+    function CreateScrollBoxListLinearView(...)
+        local view = { spacing = select(5, ...) }
+        function view:SetPadding(top, bottom, left, right, spacing) self.spacing = spacing end
         function view:SetElementExtent(extent) self.extent = extent end
         function view:SetElementInitializer(template, initializer)
             self.template, self.initializer = template, initializer

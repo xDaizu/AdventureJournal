@@ -26,59 +26,43 @@
 -- == conversations on: second import
 -- repeat: the diary is byte-identical afterwards
 -- book, events view, jornada 2:
-|cFF8A5A2411:23:21|r
-Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Estudiando los relieves del terreno con cautela.
+|cFFFF3333Nuevos Horizontes: Valle de los Retos, Durotar|r
+|cFF8A5A2411:23:21|r  Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Estudiando los relieves del terreno con cautela.
 
-|cFF8A5A2411:23:30|r
-Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Notando el peso de la armadura sobre los hombros.
+|cFF8A5A2411:23:30|r  Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Notando el peso de la armadura sobre los hombros.
 
-|cFF8A5A2411:23:40|r
-En Valle de los Retos, Durotar recibí un mensaje de Amigo. Con los nervios despiertos y la mano en la empuñadura.
+|cFF8A5A2411:23:40|r  En Valle de los Retos, Durotar recibí un mensaje de Amigo. Con los nervios despiertos y la mano en la empuñadura.
 
-|cFF8A5A2411:23:41|r
-Las palabras de alguien llegaron hasta mí en Valle de los Retos, Durotar. Con la templanza que otorga el hábito de viajar.
+|cFF8A5A2411:23:41|r  Las palabras de alguien llegaron hasta mí en Valle de los Retos, Durotar. Con la templanza que otorga el hábito de viajar.
 
-|cFF8A5A2411:24:05|r
-Intercambié noticias sobre los caminos con Gornek en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
+|cFF8A5A2411:24:05|r  Intercambié noticias sobre los caminos con Gornek en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
 
-|cFF8A5A2411:24:10|r
-Consulté ciertos detalles con un habitante de la zona mientras permanecía en Valle de los Retos, Durotar. Reflexionando sobre los acontecimientos recientes.
+|cFF8A5A2411:24:10|r  Consulté ciertos detalles con un habitante de la zona mientras permanecía en Valle de los Retos, Durotar. Reflexionando sobre los acontecimientos recientes.
 
-|cFF8A5A2411:24:20|r
-Cumplí hasta el último detalle del encargo «Tu lugar en el mundo» en tierras de Valle de los Retos, Durotar. Manteniendo una actitud serena ante la adversidad.
+|cFF8A5A2411:24:20|r  Cumplí hasta el último detalle del encargo «Tu lugar en el mundo» en tierras de Valle de los Retos, Durotar. Manteniendo una actitud serena ante la adversidad.
 
-|cFF8A5A2411:24:30|r
-El deber me reclamó en Valle de los Retos, Durotar y respondí completando una misión más. Escuchando el rumor del viento entre la vegetación.
+|cFF8A5A2411:24:30|r  El deber me reclamó en Valle de los Retos, Durotar y respondí completando una misión más. Escuchando el rumor del viento entre la vegetación.
 
-|cFF8A5A2411:24:40|r
-La promesa hecha en Valle de los Retos, Durotar quedó saldada, aunque el nombre del encargo se me escapa. Procurando no confiarme demasiado.
+|cFF8A5A2411:24:40|r  La promesa hecha en Valle de los Retos, Durotar quedó saldada, aunque el nombre del encargo se me escapa. Procurando no confiarme demasiado.
 
-|cFF8A5A2411:24:50|r
-Mi paciencia en Valle de los Retos, Durotar dio frutos al reclamar |cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r. Con el pensamiento puesto en el descanso de la próxima posada.
+|cFF8A5A2411:24:50|r  Mi paciencia en Valle de los Retos, Durotar dio frutos al reclamar |cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r. Con el pensamiento puesto en el descanso de la próxima posada.
 
-|cFF8A5A2411:24:53|r
-Guardé con cuidado |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r en mi mochila mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.
+|cFF8A5A2411:24:53|r  Guardé con cuidado |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r en mi mochila mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.
 
-|cFF8A5A2411:25:00|r
-El enfrentamiento contra Jefe de prueba en Valle de los Retos, Durotar exigió hasta el último de mis recursos, pero la victoria fue mía. Con el espíritu preparado para cualquier eventualidad.
+|cFF8A5A2411:25:00|r  El enfrentamiento contra Jefe de prueba en Valle de los Retos, Durotar exigió hasta el último de mis recursos, pero la victoria fue mía. Con el espíritu preparado para cualquier eventualidad.
 
-|cFF8A5A2411:25:30|r
-Tras un cruce de golpes legendario en Valle de los Retos, Durotar, Otro jefe acabó rindiendo el aliento. Pensando en el largo camino que aún me aguarda.
+|cFF8A5A2411:25:30|r  Tras un cruce de golpes legendario en Valle de los Retos, Durotar, Otro jefe acabó rindiendo el aliento. Pensando en el largo camino que aún me aguarda.
 
-|cFF8A5A2411:25:32|r
-Añadí la derrota de una criatura temible a mi historial de grandes gestas en Valle de los Retos, Durotar. Avanzando sin prisa pero sin pausa.
+|cFF8A5A2411:25:32|r  Añadí la derrota de una criatura temible a mi historial de grandes gestas en Valle de los Retos, Durotar. Avanzando sin prisa pero sin pausa.
 
-|cFF8A5A2411:25:40|r
-Pagué con mi vida un exceso de confianza en Valle de los Retos, Durotar. Apretando los dientes ante un final imprevisto.
+|cFF8A5A2411:25:40|r  Pagué con mi vida un exceso de confianza en Valle de los Retos, Durotar. Apretando los dientes ante un final imprevisto.
 
-|cFF8A5A2411:25:50|r
-El camino en Valle de los Retos, Durotar me ha curtido lo suficiente como para ascender al nivel 2. Observando con recelo las sombras del camino.
+|cFF8A5A2411:25:50|r  El camino en Valle de los Retos, Durotar me ha curtido lo suficiente como para ascender al nivel 2. Observando con recelo las sombras del camino.
 
-|cFF8A5A2411:26:00|r
-Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Avanzando con paso medido por estas tierras vírgenes.
+|cFFFF3333Nuevos Horizontes: El Cubil, Durotar|r
+|cFF8A5A2411:26:00|r  Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Avanzando con paso medido por estas tierras vírgenes.
 
-|cFF8A5A2411:26:50|r
-Un nuevo logro anotado en mi haber tras finalizar «Otra misión» en Valle de los Retos, Durotar. Con el ánimo firme y la mente despejada.
+|cFF8A5A2411:26:50|r  Un nuevo logro anotado en mi haber tras finalizar «Otra misión» en Valle de los Retos, Durotar. Con el ánimo firme y la mente despejada.
 -- book, conversations view, jornada 2:
 |cFF8A5A2411:23:40|r  Amigo te susurra (Orco): «Hola, ¿vienes a Orgrimmar?»
 
