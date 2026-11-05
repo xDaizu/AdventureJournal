@@ -64,6 +64,8 @@ end
 
 -- The subject two entries must share to be the same event.
 local function Subject(entryType, text, source)
+    local newType = ns.NewTypeSubject(entryType, text, source)   -- the M6 types (Messages.lua)
+    if newType then return newType end
     if entryType == "LOOT" and type(source.itemID) == "number" then return "item:" .. source.itemID end
     if entryType == "QUEST" and type(source.questID) == "number" then return "quest:" .. source.questID end
     return text
@@ -136,6 +138,14 @@ HANDLERS.CHAT_MSG_WHISPER = function(record)
     local from, secret = Text(record.from)
     if from then return { type = "CHAT", text = ns.StripRealm(from) } end
     if secret then return { type = "CHAT", text = ns.NEUTRAL_TEXT.SENDER, secret = true } end
+    return nil, "ignored"
+end
+
+-- M6: PLAYER_LEVEL_UP carries the new level in `level`.
+HANDLERS.PLAYER_LEVEL_UP = function(record)
+    if type(record.level) == "number" or ns.IsSecret(record.level) or record.level == "[SECRET]" then
+        return ns.LevelCandidate(record.level == "[SECRET]" and nil or record.level)
+    end
     return nil, "ignored"
 end
 
@@ -421,7 +431,7 @@ function ns.PlanImport()
                         end
                     else
                         local subject = Subject(kind, text, candidate.extra or {})
-                        if IsKnown(known, kind, subject, record.t, WINDOW[kind] or 5) then
+                        if IsKnown(known, kind, subject, record.t, WINDOW[kind] or ns.DEDUPE_WINDOW[kind] or 5) then
                             stats.duplicates = stats.duplicates + 1
                             keep = false
                         else

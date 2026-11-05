@@ -118,6 +118,23 @@ local function TryLogLoot(itemLink, itemID)
     return true
 end
 
+-- Dedupe for the M6 types: the same subject within its window (ns.DEDUPE_WINDOW) is one event.
+local recentSubjects = {}
+local function IsRepeat(kind, subject)
+    local key = kind .. "" .. subject
+    local now = time()
+    local last = recentSubjects[key]
+    recentSubjects[key] = now
+    return last ~= nil and now - last <= (ns.DEDUPE_WINDOW[kind] or 5)
+end
+
+-- Logs a candidate from Messages.lua unless it repeats a recent one.
+local function LogCandidate(candidate)
+    local subject = ns.NewTypeSubject(candidate.type, candidate.text, candidate.extra or {}) or candidate.text
+    if IsRepeat(candidate.type, subject) then return end
+    ns.AddEntry(candidate.type, candidate.text, candidate.extra)
+end
+
 local handlers = {}
 
 handlers.ADDON_LOADED = function(loadedName)
@@ -269,12 +286,20 @@ handlers.CHAT_MSG_WHISPER = function(_, sender)
     end
 end
 
+-- M6: the level reached. The new level is the first argument.
+handlers.PLAYER_LEVEL_UP = function(level)
+    if not ns.IsTypeEnabled("LEVEL") then return end
+    if ns.IsSecret(level) then ns.Debug("PLAYER_LEVEL_UP: nivel secreto, se usa el texto neutro") end
+    LogCandidate(ns.LevelCandidate(level))
+end
+
 local EVENTS = {
     "ADDON_LOADED", "PLAYER_ENTERING_WORLD", "PLAYER_LOGOUT",
     "QUEST_TURNED_IN", "BOSS_KILL", "ENCOUNTER_END", "PLAYER_DEAD",
     "CHAT_MSG_LOOT", "GET_ITEM_INFO_RECEIVED", "ITEM_DATA_LOAD_RESULT",
     "ZONE_CHANGED_NEW_AREA", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "MINIMAP_ZONE_CHANGED",
     "GOSSIP_SHOW", "CHAT_MSG_WHISPER",
+    "PLAYER_LEVEL_UP",
 }
 ns.EVENTS = EVENTS
 for _, eventName in ipairs(EVENTS) do ns.RegisterEventSafe(eventFrame, eventName) end

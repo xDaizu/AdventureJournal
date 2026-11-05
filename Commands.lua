@@ -219,7 +219,9 @@ local function SetTypes(typeWord, switchWord)
         table.insert(lines, string.format("%s (%s): %s", info.label, info.words[1], YesNo(ns.IsTypeEnabled(info.key))))
     end
     Say("Se anota en el diario: " .. table.concat(lines, "; ") .. ".")
-    Say("Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros> <on|off>")
+    local words = {}
+    for _, info in ipairs(ns.TYPE_INFO) do table.insert(words, info.words[1]) end
+    Say("Cambiar: /diario tipos <" .. table.concat(words, "|") .. "> <on|off>")
 end
 
 -- /diario animo: show the mood next to each entry's time in the book (settings.showProfile).

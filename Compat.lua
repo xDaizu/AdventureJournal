@@ -126,6 +126,7 @@ ns.NEUTRAL_TEXT = {
     BOSS = "una criatura temible",
     QUEST = "una misión cuyo nombre no he podido recuperar",
     SENDER = "alguien",
+    LEVEL = "He subido de nivel",
 }
 
 -- "Name-Realm" -> "Name" (chat authors carry the realm, observed in M0).
@@ -255,6 +256,128 @@ function ns.IsOwnLootMessage(message)
         if string.find(message, pattern) then return true end
     end
     return false
+end
+
+-- Game messages from the client's own strings (M6) -------------------------------------
+-- The client's global format strings ("%s se une al grupo.") turned into Lua patterns, so
+-- nothing here depends on the locale. Unlike FormatToPattern above (loot, one kind of text), this
+-- keeps track of positional arguments ("%2$s ... %1$s"), so a captured value can be asked for by
+-- the argument it stands for, not by where it sits in the sentence.
+
+-- Returns { pattern, order } or nil. order[i] = { arg = n, number = bool } for capture i.
+function ns.CompileFormat(format)
+    if type(format) ~= "string" or format == "" then return nil end
+    local parts, order = { "^" }, {}
+    local nextArg, position, length = 1, 1, #format
+    while position <= length do
+        local char = string.sub(format, position, position)
+        local consumed = 1
+        if char == "%" then
+            local _, finish, argument, conversion = string.find(format, "^%%(%d+)%$([sdifg])", position)
+            if not finish then
+                _, finish, conversion = string.find(format, "^%%[%-%+ #0]*%d*%.?%d*([sdifg%%])", position)
+                argument = nil
+            end
+            if not finish then return nil end       -- a conversion we do not understand: no pattern
+            consumed = finish - position + 1
+            if conversion == "%" then
+                parts[#parts + 1] = "%%"
+            else
+                local arg = tonumber(argument)
+                if not arg then arg = nextArg; nextArg = nextArg + 1 end
+                local isNumber = conversion ~= "s"
+                order[#order + 1] = { arg = arg, number = isNumber }
+                if not isNumber then
+                    parts[#parts + 1] = "(.-)"
+                elseif conversion == "d" or conversion == "i" then
+                    parts[#parts + 1] = "(%-?%d+)"
+                else
+                    parts[#parts + 1] = "([%d%.]+)"
+                end
+            end
+        elseif string.find(char, "^%p$") then
+            parts[#parts + 1] = "%" .. char
+        else
+            parts[#parts + 1] = char
+        end
+        position = position + consumed
+    end
+    parts[#parts + 1] = "$"
+    return { pattern = table.concat(parts), order = order }
+end
+
+-- The values of a message matching `compiled`, indexed by argument number (numbers converted),
+-- or nil when it does not match. A format without arguments gives an empty table.
+function ns.MatchFormat(compiled, text)
+    if type(text) ~= "string" then return nil end
+    if #compiled.order == 0 then
+        if string.find(text, compiled.pattern) then return {} end
+        return nil
+    end
+    local captures = { string.match(text, compiled.pattern) }
+    if #captures == 0 then return nil end
+    local values = {}
+    for index, spec in ipairs(compiled.order) do
+        local value = captures[index]
+        values[spec.arg] = spec.number and tonumber(value) or value
+    end
+    return values
+end
+
+-- The client's formats for one kind of message: the given global names (those that exist), then
+-- every string global that starts with `prefix`, sorted. Cached. Each item:
+-- { name = "ERR_JOINED_GROUP_S", format = "...", compiled = {...} }.
+local formatCache = {}
+function ns.GlobalFormats(key, names, prefix)
+    local cached = formatCache[key]
+    if cached then return cached end
+    local list, seen = {}, {}
+    local function add(name)
+        if seen[name] then return end
+        local value = _G[name]
+        if type(value) == "string" and value ~= "" then
+            local compiled = ns.CompileFormat(value)
+            if compiled then
+                seen[name] = true
+                list[#list + 1] = { name = name, format = value, compiled = compiled }
+            end
+        end
+    end
+    for _, name in ipairs(names or {}) do add(name) end
+    if prefix then
+        local found = {}
+        for name, value in pairs(_G) do
+            if type(name) == "string" and string.sub(name, 1, #prefix) == prefix and type(value) == "string" then
+                found[#found + 1] = name
+            end
+        end
+        table.sort(found)
+        for _, name in ipairs(found) do add(name) end
+    end
+    formatCache[key] = list
+    return list
+end
+
+-- The first of `formats` (from GlobalFormats) that `text` matches: item, values; or nil.
+function ns.MatchFormats(formats, text)
+    for _, item in ipairs(formats) do
+        local values = ns.MatchFormat(item.compiled, text)
+        if values then return item, values end
+    end
+    return nil
+end
+
+-- A player name out of a system message: unwraps a |Hplayer:...|h[Name]|h link and colour codes,
+-- and drops "-Realm". Returns nil when nothing readable is left.
+function ns.PlayerNameFromText(text)
+    if type(text) ~= "string" then return nil end
+    local linked = string.match(text, "|Hplayer:[^|]*|h%[?([^|%]]+)%]?|h")
+    if linked then text = linked end
+    text = string.gsub(text, "|c%x%x%x%x%x%x%x%x", "")
+    text = string.gsub(text, "|r", "")
+    text = ns.StripRealm(text)
+    if text == "" then return nil end
+    return text
 end
 
 -- Who wrote a chat line (M4b) ----------------------------------------------------------

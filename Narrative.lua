@@ -21,6 +21,8 @@ function ns.ChooseMood(eventType)
         return "Entusiasmado", "con la agradable impresión de que el viaje empieza a dar sus frutos"
     elseif eventType == "DISCOVERY" then
         return "Explorador", "con la curiosidad de quien acaba de encontrar un lugar nuevo"
+    elseif eventType == "LEVEL" then
+        return "Orgulloso", "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí"
     end
     local mood = MOODS[math.random(1, #MOODS)]
     return mood[1], mood[2]
@@ -58,6 +60,16 @@ function ns.ComposeEntry(entry)
         return string.format("En %s crucé unas palabras con %s. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.", place, subject)
     elseif entry.type == "CHAT" then
         return string.format("Recibí noticias de %s mientras me encontraba en %s. Incluso en los caminos más solitarios llegan voces de otros aventureros.", subject, place)
+    elseif entry.type == "LEVEL" then
+        local level = type(entry.level) == "number" and entry.level or nil
+        if not level then
+            return string.format("En %s noté que algo había cambiado por dentro: había subido de nivel. %s.", place, sentenceTone)
+        elseif variant == 1 then
+            return string.format("En %s noté cómo algo cambiaba por dentro: alcancé el nivel %d. %s.", place, level, sentenceTone)
+        elseif variant == 2 then
+            return string.format("Subí al nivel %d en %s. No fue gratis, y se nota. %s.", level, place, sentenceTone)
+        end
+        return string.format("El nivel %d llegó cuando menos lo esperaba, en %s. %s.", level, place, sentenceTone)
     end
     return subject
 end

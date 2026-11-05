@@ -16,6 +16,8 @@ ns.TYPE_INFO = {
     { key = "DISCOVERY", label = "Lugares descubiertos", words = { "lugares", "lugar", "descubrimientos", "discovery" } },
     { key = "NPC",       label = "Charlas con PNJ",      words = { "pnj", "npc" } },
     { key = "CHAT",      label = "Susurros recibidos",   words = { "susurros", "susurro", "chat" } },
+    -- M6. All on by default (a type missing from settings.types counts as on).
+    { key = "LEVEL",     label = "Subidas de nivel",     words = { "nivel", "niveles", "level" } },
 }
 
 -- Names of the chat echo modes, for messages and the options panel.
