@@ -240,3 +240,69 @@ function ns.GetMessageStatus()
         { "Mensajes de hechizos (de 3)", names(ns.GlobalFormats("spell", { "ERR_LEARN_SPELL_S", "ERR_LEARN_ABILITY_S", "ERR_LEARN_PASSIVE_S" })) },
     }
 end
+
+-- Round trip (/diario diag mensajes): for every string a type reads, builds a sample sentence from the
+-- client's own format with invented values, feeds it to the same parser the game events use and says
+-- what came out. It touches nothing (no entry is made). If a line says NO, the client's sentence does
+-- not match what the parser expects (a different argument order, a different shape).
+local function FillFormat(format, values)
+    local text = string.gsub(format, "%%(%d+)%$[sdifg]", function(index) return tostring(values[tonumber(index)]) end)
+    local nextArg = 0
+    text = string.gsub(text, "%%([%-%+ #0]*%d*%.?%d*[sdifg%%])", function(spec)
+        if spec == "%" then return "%" end
+        nextArg = nextArg + 1
+        return tostring(values[nextArg])
+    end)
+    return text
+end
+
+function ns.SelfTestMessages()
+    local rows = {}
+    local function add(name, sample, result, ok)
+        rows[#rows + 1] = { name, string.format("«%s» -> %s", sample, result), ok }
+    end
+    local function describe(candidate)
+        if not candidate then return "NO lo reconoce", false end
+        local detail = candidate.type .. " " .. tostring(candidate.extra and (candidate.extra.groupEvent or candidate.extra.repEvent
+            or candidate.extra.skillEvent or candidate.extra.learnKind) or "") .. " «" .. tostring(candidate.text) .. "»"
+        if candidate.extra and candidate.extra.standing then detail = detail .. " (nivel «" .. candidate.extra.standing .. "»)" end
+        if candidate.extra and candidate.extra.rank then detail = detail .. " (" .. candidate.extra.rank .. ")" end
+        return detail, true
+    end
+    for _, item in ipairs(ns.GetGroupFormats()) do
+        local sample = FillFormat(item.format, { "Prueba" })
+        local result, ok = describe(ns.GroupCandidate(sample))
+        add(item.name, sample, result, ok)
+    end
+    local gains, changes = ns.GetReputationFormats()
+    for _, item in ipairs(gains) do
+        local sample = FillFormat(item.format, { "Prueba", 25, 25 })
+        local candidate = ns.ReputationCandidate(sample)
+        local result, ok = describe(candidate)
+        add(item.name, sample, result, ok and candidate.text == "Prueba")
+    end
+    for _, item in ipairs(changes) do
+        local sample = FillFormat(item.format, { "Amistoso", "Prueba" })
+        local candidate = ns.ReputationCandidate(sample)
+        local result, ok = describe(candidate)
+        add(item.name, sample, result, ok and candidate.text == "Prueba" and candidate.extra.standing == "Amistoso")
+    end
+    for _, item in ipairs(ns.GetSkillFormats()) do
+        if item.skillKind then
+            local sample = FillFormat(item.format, { "Prueba", 50 })
+            local candidate = ns.SkillCandidate(sample)
+            local result, ok = describe(candidate)
+            add(item.name, sample, result, ok and candidate.text == "Prueba")
+        end
+    end
+    for _, name in ipairs({ "ERR_LEARN_SPELL_S", "ERR_LEARN_ABILITY_S", "ERR_LEARN_PASSIVE_S" }) do
+        local format = _G[name]
+        if type(format) == "string" then
+            local sample = FillFormat(format, { "|cff71d5ff|Hspell:1:0|h[Prueba]|h|r" })
+            local candidate = ns.SpellCandidate(sample)
+            local result, ok = describe(candidate)
+            add(name, sample, result, ok and candidate.text == "Prueba" and candidate.extra.spellID == 1)
+        end
+    end
+    return rows
+end

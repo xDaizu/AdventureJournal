@@ -120,7 +120,14 @@ end
 local function PrintMessageDiagnostics()
     Say("Textos del juego que reconocen los tipos nuevos (nivel, grupo, reputación, habilidades, hechizos):")
     for _, row in ipairs(ns.GetMessageStatus()) do Say("  " .. row[1] .. ": " .. row[2]) end
+    Say("Prueba de ida y vuelta (una frase inventada con cada texto del juego, pasada por el mismo lector; no anota nada):")
+    local failed = 0
+    for _, row in ipairs(ns.SelfTestMessages()) do
+        if not row[3] then failed = failed + 1 end
+        Say("  " .. (row[3] and "OK  " or "NO  ") .. row[1] .. ": " .. row[2])
+    end
     Say("Si alguna línea dice «ninguna», ese tipo no puede reconocer nada en este cliente.")
+    Say(failed == 0 and "RESULTADO: todos los textos se reconocen." or ("RESULTADO: " .. failed .. " texto(s) NO se reconocen: esos tipos fallarán en este cliente."))
 end
 
 -- A generated diary for trying the book with many jornadas: held in memory only (ns.demoDB, see
