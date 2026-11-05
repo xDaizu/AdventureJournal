@@ -2,7 +2,7 @@
 
 Milestone plan to finish the dual-client port (WoW Forever + Classic Era), then handle bug fixes and improvements. Background and design rules: [README.md](README.md).
 
-Last updated: 2026-11-04 (M0–M2, M4 and M5 tested on Classic Era and tagged; M4b code done and awaiting the Classic Era smoke test; M3 awaits the Forever launch).
+Last updated: 2026-11-04 (M0–M2, M4 and M5 tested on Classic Era and tagged; M4b tested on Classic Era and tagged, its import also run on real Forever data; M3 (the rest of the Forever checks) is in progress).
 
 ## Constraints that shape the plan
 
@@ -156,7 +156,7 @@ Status key (same as M5): **H** = covered by the stubbed harness (`npm test`), **
 
 **Done when:** a real AJProbe log from the first Forever days imports into the right jornadas with no duplicates and no errors; running it again changes nothing; conversations appear in the book and in the export only when the option is on.
 
-**Status (2026-11-04):** code done and passing `npm test` (6 new scenario runs per client plus the changed reports). Rehearsed offline, in memory, on a copy of the real Classic Era files (94 activity records, 4 chat lines, a diary with 11 jornadas): no error, 1 NPC entry the diary lacked (probably logged while NPC was switched off during the M5 test), 4 duplicates skipped, second run byte-identical, AJProbeDB untouched. **Pending:** the in-game Classic Era smoke test (steps in the hand-over message), then tag `m4b-done`; the Forever checks go into [M3_RUNBOOK.md](M3_RUNBOOK.md) section 3c. Before the first import on the real data: copy `AJProbe.lua` and `AdventureJournal.lua` from the SavedVariables folders.
+**Status (2026-11-04):** code done and passing `npm test` (6 new scenario runs per client plus the changed reports). Rehearsed offline, in memory, on a copy of the real Classic Era files (94 activity records, 4 chat lines, a diary with 11 jornadas): no error, 1 NPC entry the diary lacked (probably logged while NPC was switched off during the M5 test), 4 duplicates skipped, second run byte-identical, AJProbeDB untouched. **Done on Classic Era:** the in-game smoke test passed (user, 2026-11-05) and `m4b-done` is tagged. The real import added exactly the predicted NPC entry, no duplicates; with conversations off nothing was captured (a line said while off is in AJProbe and not in the diary), with it on SAY, emote and party lines were. **Seen on Forever (2026-11-05, character Necroroth, real data):** `/diario importar prueba` and `/diario importar` worked: +18 conversation lines (party, party leader, say, emotes), 4 already captured live skipped as duplicates, 0 new jornadas, 0 errors, AJProbe only read (its record count grew only from the next login). Live party capture after a `/reload` stored 4 of 4 lines. **Still unverified on Forever:** whether switching the option on without a `/reload` registers the chat events (the party lines before the reload were missed; most likely the option was still off, not proven), chat inside instances (secret or not), the friend / Battle.net lookups, and the layout of the new buttons. The backup before the first Forever import was taken late (after the import, from the game's own `.bak` files); the runbook now says to copy the files first. The remaining Forever checks are in [M3_RUNBOOK.md](M3_RUNBOOK.md) section 3c.
 
 ## M5: Options and convenience 🟢 then 🔵 (M)
 

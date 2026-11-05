@@ -4,7 +4,7 @@ Developer documentation. Players get the Spanish guide in [LEEME.txt](LEEME.txt)
 
 AdventureJournal is a narrative diary that runs automatically. It listens to game events (quests, bosses, deaths, loot, places, NPCs, whispers), turns each one into a short first-person paragraph in Spanish, and saves the paragraphs per character, grouped into *jornadas* (one jornada per login). Players read the diary in a book-style window in game, and an external Python script can export it to a `.txt` file.
 
-- Original author: ChemaE. Released version: `1.1.0-Era`. In development: `1.2.0-dev` (dual-client port, see the [roadmap](ROADMAP.md)). Milestone state: M0–M2, M4 and M5 (options, mood in the book, ScrollBox index, Forever addon-menu entry) are tested in game on Classic Era and tagged. M4b (backfill from AJProbe, opt-in RP conversations) is written and passes the harness; its in-game Classic Era smoke test is pending. M3 (first Forever session) is pending.
+- Original author: ChemaE. Released version: `1.1.0-Era`. In development: `1.2.0-dev` (dual-client port, see the [roadmap](ROADMAP.md)). Milestone state: M0–M2, M4, M4b (backfill from AJProbe, opt-in RP conversations) and M5 (options, mood in the book, ScrollBox index, Forever addon-menu entry) are tested in game on Classic Era and tagged; the M4b import and live party capture have also run on real Forever data. M3 (the rest of the Forever checks) is in progress.
 - UI language: Spanish only, hard-coded (no localization layer).
 
 ## Supported clients
