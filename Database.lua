@@ -20,6 +20,9 @@ ns.TYPE_INFO = {
     { key = "LEVEL",     label = "Subidas de nivel",     words = { "nivel", "niveles", "level" } },
     -- Names of other players, like the conversations: switch it off if you do not want them kept.
     { key = "GROUP",     label = "Grupo: quién entra y sale", words = { "grupo", "grupos", "group", "party" } },
+    { key = "REPUTATION", label = "Reputación con facciones", words = { "reputacion", "reputación", "facciones", "reputation" } },
+    { key = "SKILL",     label = "Habilidades aprendidas y mejoradas", words = { "habilidades", "habilidad", "skill", "skills" } },
+    { key = "SPELL",     label = "Hechizos aprendidos",   words = { "hechizos", "hechizo", "spell", "spells" } },
 }
 
 -- Names of the chat echo modes, for messages and the options panel.

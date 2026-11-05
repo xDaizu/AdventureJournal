@@ -296,13 +296,62 @@ end
 -- M6: the system chat. Group joins and leaves arrive here by name. Skipped when unreadable (a secret
 -- message in an instance), so nothing is guessed.
 handlers.CHAT_MSG_SYSTEM = function(message)
-    if not ns.IsTypeEnabled("GROUP") then return end
+    if not (ns.IsTypeEnabled("GROUP") or ns.IsTypeEnabled("SPELL")) then return end
     if ns.IsSecret(message) then
         ns.Debug("CHAT_MSG_SYSTEM: mensaje secreto, se omite")
         return
     end
     local candidate = ns.SystemMessageCandidate(message)
     if candidate and ns.IsTypeEnabled(candidate.type) then LogCandidate(candidate) end
+end
+
+-- M6: reputation. The first gain with each faction in each jornada, and every change of standing.
+-- `firstGainSeen` remembers the factions already logged in the current jornada; it is rebuilt from
+-- the diary when the jornada changes, so a /reload does not log them a second time.
+local firstGainSeen = { day = nil, keys = {} }
+
+local function FirstGainKeys()
+    local DB = ns.DB
+    local day = DB and DB.days[DB.currentDay]
+    if firstGainSeen.day ~= day then
+        firstGainSeen.day, firstGainSeen.keys = day, {}
+        if day and type(day.events) == "table" then
+            for _, entry in ipairs(day.events) do
+                if type(entry) == "table" and type(entry.text) == "string" then
+                    local key = ns.OnceKey(entry.type, entry.text, entry)
+                    if key then firstGainSeen.keys[key] = true end
+                end
+            end
+        end
+    end
+    return firstGainSeen.keys
+end
+
+handlers.CHAT_MSG_COMBAT_FACTION_CHANGE = function(message)
+    if not ns.IsTypeEnabled("REPUTATION") then return end
+    if ns.IsSecret(message) then
+        ns.Debug("CHAT_MSG_COMBAT_FACTION_CHANGE: mensaje secreto, se omite")
+        return
+    end
+    local candidate = ns.ReputationCandidate(message)
+    if not candidate then return end
+    if candidate.once then
+        local keys = FirstGainKeys()
+        if keys[candidate.once] then return end
+        keys[candidate.once] = true
+    end
+    LogCandidate(candidate)
+end
+
+-- M6: skills. A new skill, and a skill reaching a multiple of ns.SKILL_STEP.
+handlers.CHAT_MSG_SKILL = function(message)
+    if not ns.IsTypeEnabled("SKILL") then return end
+    if ns.IsSecret(message) then
+        ns.Debug("CHAT_MSG_SKILL: mensaje secreto, se omite")
+        return
+    end
+    local candidate = ns.SkillCandidate(message)
+    if candidate then LogCandidate(candidate) end
 end
 
 -- M6: GROUP_JOINED(partyCategory, partyGUID). Only a dungeon group is logged, without names.
@@ -323,6 +372,7 @@ local EVENTS = {
     "ZONE_CHANGED_NEW_AREA", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "MINIMAP_ZONE_CHANGED",
     "GOSSIP_SHOW", "CHAT_MSG_WHISPER",
     "PLAYER_LEVEL_UP", "CHAT_MSG_SYSTEM", "GROUP_JOINED",
+    "CHAT_MSG_COMBAT_FACTION_CHANGE", "CHAT_MSG_SKILL",
 }
 ns.EVENTS = EVENTS
 for _, eventName in ipairs(EVENTS) do ns.RegisterEventSafe(eventFrame, eventName) end

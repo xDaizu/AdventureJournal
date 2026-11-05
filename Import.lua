@@ -158,6 +158,25 @@ HANDLERS.CHAT_MSG_SYSTEM = function(record)
     return candidate
 end
 
+-- M6: reputation and skills: the message is a[1] of the record.
+HANDLERS.CHAT_MSG_COMBAT_FACTION_CHANGE = function(record)
+    local message, secret = Text(FirstArg(record))
+    if secret then return nil, "secret" end
+    if not message then return nil, "ignored" end
+    local candidate = ns.ReputationCandidate(message)
+    if not candidate then return nil, "ignored" end
+    return candidate
+end
+
+HANDLERS.CHAT_MSG_SKILL = function(record)
+    local message, secret = Text(FirstArg(record))
+    if secret then return nil, "secret" end
+    if not message then return nil, "ignored" end
+    local candidate, reason = ns.SkillCandidate(message)
+    if not candidate then return nil, reason or "ignored" end
+    return candidate
+end
+
 -- M6: GROUP_JOINED a[1] = partyCategory. Only a dungeon group makes an entry (no names).
 HANDLERS.GROUP_JOINED = function(record)
     local candidate = ns.GroupJoinedCandidate(FirstArg(record))
@@ -311,6 +330,21 @@ local function RangeOfDay(day, isCurrent)
     return low, high
 end
 
+-- The "once per jornada" keys (ns.OnceKey) a jornada range already holds, read lazily from its entries
+-- and kept up to date with what the plan adds.
+local function OnceSeen(range)
+    if not range.onceSeen then
+        range.onceSeen = {}
+        for _, entry in ipairs(range.day.events or {}) do
+            if type(entry) == "table" and type(entry.text) == "string" then
+                local key = ns.OnceKey(entry.type, entry.text, entry)
+                if key then range.onceSeen[key] = true end
+            end
+        end
+    end
+    return range.onceSeen
+end
+
 -- Returns a plan, or nil and a message for the player.
 function ns.PlanImport()
     local probe = _G.AJProbeDB
@@ -453,6 +487,16 @@ function ns.PlanImport()
                             stats.zoneOnly = stats.zoneOnly + 1
                             keep = false
                         end
+                    elseif candidate.once then
+                        -- Once per jornada (the first reputation gain with a faction): a duplicate when
+                        -- the jornada this record belongs to already has one. A record that falls in no
+                        -- jornada yet starts a new one, which has none.
+                        local existing = Containing(record.t, session)
+                        local seen = existing and OnceSeen(existing)
+                        if seen and seen[candidate.once] then
+                            stats.duplicates = stats.duplicates + 1
+                            keep = false
+                        end
                     else
                         local subject = Subject(kind, text, candidate.extra or {})
                         if IsKnown(known, kind, subject, record.t, WINDOW[kind] or ns.DEDUPE_WINDOW[kind] or 5) then
@@ -465,6 +509,7 @@ function ns.PlanImport()
                     if keep then
                         local target = Containing(record.t, session)
                         if not target then target = NewDay(session) end
+                        if candidate.once then OnceSeen(target)[candidate.once] = true end
                         if kind == "DISCOVERY" then
                             visited[text] = true
                             if not candidate.zoneOnly then zoneHasSubzone[candidate.zoneName] = true end

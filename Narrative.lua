@@ -87,6 +87,47 @@ function ns.ComposeEntry(entry)
             return string.format("En %s me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.", place)
         end
         return string.format("Algo cambió en mi grupo en %s.", place)
+    elseif entry.type == "REPUTATION" then
+        local standing = SafeString(entry.standing, "")
+        if entry.repEvent == "standing" and standing ~= "" then
+            if variant == 1 then
+                return string.format("En %s mi relación con %s cambió: ahora soy %s ante ellos. %s.", place, subject, standing, sentenceTone)
+            elseif variant == 2 then
+                return string.format("Ante %s ya soy %s. Lo supe en %s, y no es poca cosa.", subject, standing, place)
+            end
+            return string.format("%s me tiene ahora por %s; lo comprobé en %s.", subject, standing, place)
+        end
+        if variant == 1 then
+            return string.format("En %s empecé a ganarme la confianza de %s. %s.", place, subject, sentenceTone)
+        elseif variant == 2 then
+            return string.format("Mis actos en %s no pasaron desapercibidos para %s: su opinión de mí empieza a mejorar.", place, subject)
+        end
+        return string.format("%s empieza a mirarme con mejores ojos, y todo ocurrió en %s. %s.", subject, place, sentenceTone)
+    elseif entry.type == "SKILL" then
+        local rank = type(entry.rank) == "number" and entry.rank or nil
+        if entry.skillEvent == "rank" and rank then
+            if variant == 1 then
+                return string.format("En %s mi destreza en %s llegó a %d. Se nota la práctica. %s.", place, subject, rank, sentenceTone)
+            elseif variant == 2 then
+                return string.format("%s ya está en %d. Lo noté en %s: la repetición acaba dando sus frutos.", subject, rank, place)
+            end
+            return string.format("A fuerza de insistir, mi habilidad en %s subió a %d en %s.", subject, rank, place)
+        end
+        if variant == 1 then
+            return string.format("En %s aprendí algo que no sabía: %s. %s.", place, subject, sentenceTone)
+        elseif variant == 2 then
+            return string.format("Una habilidad nueva se suma a mi repertorio en %s: %s.", place, subject)
+        end
+        return string.format("%s: una destreza más que anotar. Fue en %s. %s.", subject, place, sentenceTone)
+    elseif entry.type == "SPELL" then
+        local what = "un nuevo hechizo"
+        if entry.learnKind == "ability" then what = "una nueva habilidad" elseif entry.learnKind == "passive" then what = "una nueva habilidad pasiva" end
+        if variant == 1 then
+            return string.format("En %s aprendí %s: %s. %s.", place, what, subject, sentenceTone)
+        elseif variant == 2 then
+            return string.format("Hay %s más en mi repertorio: %s. Lo aprendí en %s.", what, subject, place)
+        end
+        return string.format("%s entra a formar parte de lo que sé hacer (%s, aprendido en %s).", subject, what, place)
     elseif entry.type == "LEVEL" then
         local level = type(entry.level) == "number" and entry.level or nil
         if not level then
