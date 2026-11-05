@@ -78,6 +78,25 @@ Optional, outside the game: rehearse on those files with `node tools\import-dryr
 
 Send back: the summary lines of the dry run and the import, the `/diario diag` lines above, a screenshot of the book with the conversations button and of the conversations view, and anything that overlaps in the book's layout (the new buttons are at the bottom of the book).
 
+## 3d. M6 checks on Forever (level, party, reputation, skills, spells; their import)
+Five new entry types, all on by default (`/diario tipos` lists them). Everything below is **F** (needs Forever): the harness and Classic Era cannot say what Forever really sends.
+
+| Step | What to do | You should see |
+|---|---|---|
+| Strings | `/diario diag mensajes` (take a screenshot) | Five lines, none saying `ninguna`: group (6 names), reputation increases (`FACTION_STANDING_INCREASED...`) and changes (`FACTION_STANDING_CHANGED...`), skills (`ERR_SKILL_UP_SI [rank]`, `ERR_SKILL_GAINED_S [new]`), spells (3 names). A `ninguna` means the global has another name on Forever: then type `/run print(ERR_JOINED_GROUP_S)` (and the other names) and send what it prints |
+| The texts | `/run print(ERR_JOINED_GROUP_S, ERR_LEFT_GROUP_S, ERR_LEFT_GROUP_YOU, ERR_GROUP_DISBANDED)` and `/run print(FACTION_STANDING_INCREASED, FACTION_STANDING_CHANGED)` and `/run print(ERR_SKILL_UP_SI, ERR_SKILL_GAINED_S, ERR_LEARN_SPELL_S, ERR_LEARN_ABILITY_S)` | The sentences with `%s` / `%d` where the name or number goes. Send them (screenshot). The Spanish ones for group, skills and spells were already seen in AJProbe's Forever file; `FACTION_STANDING_CHANGED` never was |
+| Level | Level up once | An entry "He alcanzado el nivel N" with the **new** level (if it shows the old level, tell me) |
+| Party | Invite a player, let them join, then they leave, then you leave | One entry per event with the name: `<Name>` joined, `<Name>` left, "He dejado el grupo" or "Mi grupo se ha disuelto". If the names are missing, `/diario debug on` and repeat: send the grey `CHAT_MSG_SYSTEM(...)` line |
+| Dungeon group | `/diario debug on`, join a dungeon through the group finder (or a normal 5-player group), then `/diario debug off` and `/diario hoy` | Whether `CHAT_MSG_SYSTEM` payloads print `[SECRET]` there (then no entry from them: expected) and whether `GROUP_JOINED(2, ...)` made "me uní a un grupo ... instancia" with no names. Send the grey lines |
+| Reputation | Kill a mob of a faction you have not hit today | One entry the **first** time with that faction ("... ganarme la confianza de X"), none for the next kills, again after a new login. Send a screenshot of the chat line when your standing changes (for example Neutral to Friendly) so the standing entry can be checked: that sentence was never captured |
+| Skills | Raise a weapon skill to a multiple of 25, or learn a profession | An entry at 25, 50, 75... and one for "Has ganado la siguiente habilidad" |
+| Spells | Learn a spell at a trainer or by levelling | "Aprendí un nuevo hechizo: X" (one per rank) |
+| Off | `/diario tipos grupo off`, repeat a join | Nothing is logged; `/diario tipos grupo on` brings it back |
+
+**Import.** Back up first (section 3c has the PowerShell block; for this milestone use `D:\Projects\wow-addons-backup-m6orever`, and copy **both** `AJProbe.lua` and `AdventureJournal.lua`). Rehearsal on a copy of your Forever files (2026-11-05, character Necroroth): the dry run says `Se añadirían: 25 acontecimientos (LEVEL 5, GROUP 8, REPUTATION 1, SKILL 1, SPELL 10)`; the import adds them with 0 new jornadas; the second run adds nothing. If your numbers differ, send the summary lines. The imported group entries carry the names AJProbe saw in the system messages; if you do not want them, `/diario tipos grupo off` before importing.
+
+Send back: the screenshot of `/diario diag mensajes`, the `/run print(...)` lines, the grey debug lines of the dungeon, the standing-change sentence, and the import summaries.
+
 ## 4. Inside a dungeon (5-player)
 1. Before entering, type `/diario debug on`. From now on grey `[Diario debug]` lines print every event's payload, with `[SECRET]` where the game hides the value.
 2. Inside: talk to an NPC, get a whisper (or a message in party chat), loot something, and kill a boss.
@@ -105,6 +124,7 @@ Close the game first: WoW writes SavedVariables on `/reload` or logout.
 - The grey debug lines from the dungeon.
 - `forever_summary.md`.
 - The M4b results from section 3c (summaries, diag lines, screenshots).
+- The M6 results from section 3d (message strings, dungeon group, the standing-change sentence, import summaries).
 - Anything that looked wrong in the UI (missing background texture, wrong button text).
 - Whether `/reload` continued the jornada (it should) and a real login started a new one.
 

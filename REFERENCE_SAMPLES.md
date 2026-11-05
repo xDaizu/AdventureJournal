@@ -68,4 +68,16 @@ Ran `ExportarDiario.py`'s `find_database` + `export_text` on the real file: it p
 
 ## Forever 1.60.1
 
-To capture in M3.
+To capture in M3. What is already known from AJProbe's first Forever file (2026-11-05, esES, read for M6; shapes only, names and numbers replaced):
+
+| Event | Text as the game sent it |
+|---|---|
+| `CHAT_MSG_SYSTEM` | `<Name> se une al grupo.` / `<Name> deja el grupo.` / `Dejas el grupo.` / `Tu grupo se ha disuelto.` / `Has invitado a <Name> a unirse a tu grupo.` / `<Name> rechaza la invitación a tu grupo.` / `Has solicitado unirte al grupo de <Name>.` (plain text, no player link) |
+| `CHAT_MSG_SYSTEM` | `Has aprendido un nuevo hechizo: \|cff71d5ff\|Hspell:ID:0\|h[Name (Rango N)]\|h\|r.` and `Has aprendido una nueva facultad: ...` (the esES word for an ability) |
+| `GROUP_JOINED` / `GROUP_LEFT` | `(1, "Party-...")`: category 1 = home group. Fired when the group was **formed** (at the invitation, before anybody accepted), and `GROUP_LEFT` 4 s later when the invitation was refused. No names. The instance category (2) was not seen |
+| `CHAT_MSG_COMBAT_FACTION_CHANGE` | `Tu reputación con <Faction> ha aumentado en N.` (Classic Era words it `... ha aumentado. (+N)`) |
+| `CHAT_MSG_SKILL` | `Tu habilidad en <Skill> ha subido a N.` / `Has ganado la siguiente habilidad: <Skill>` |
+| `CHAT_MSG_COMBAT_XP_GAIN` | `<Mob> muere, obtienes N experiencia.` / `Obtienes N experiencia.`, with ` (+N bonus de grupo)` or ` (+N bonus por grupo)` appended. No entry type uses it (user's choice) |
+| `PLAYER_LEVEL_UP` | `level` = the new level (2 to 6 in the first session) |
+
+Never captured: the sentence for a change of standing ("Eres ahora ... con ..."), the raid join and leave strings, the passive-ability string, anything from an instance group.

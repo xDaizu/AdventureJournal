@@ -4,7 +4,7 @@ Developer documentation. Players get the Spanish guide in [LEEME.txt](LEEME.txt)
 
 AdventureJournal is a narrative diary that runs automatically. It listens to game events (quests, bosses, deaths, loot, places, NPCs, whispers), turns each one into a short first-person paragraph in Spanish, and saves the paragraphs per character, grouped into *jornadas* (one jornada per login). Players read the diary in a book-style window in game, and an external Python script can export it to a `.txt` file.
 
-- Original author: ChemaE. Released version: `1.1.0-Era`. In development: `1.2.0-dev` (dual-client port, see the [roadmap](ROADMAP.md)). Milestone state: M0–M2, M4, M4b (backfill from AJProbe, opt-in RP conversations) and M5 (options, mood in the book, ScrollBox index, Forever addon-menu entry) are tested in game on Classic Era and tagged; the M4b import and live party capture have also run on real Forever data. M3 (the rest of the Forever checks) is in progress.
+- Original author: ChemaE. Released version: `1.1.0-Era`. In development: `1.2.0-dev` (dual-client port, see the [roadmap](ROADMAP.md)). Milestone state: M0–M2, M4, M4b (backfill from AJProbe, opt-in RP conversations) and M5 (options, mood in the book, ScrollBox index, Forever addon-menu entry) are tested in game on Classic Era and tagged; the M4b import and live party capture have also run on real Forever data. **M6 (five more entry types: level, party, reputation, skills, spells, live and imported) is written and passes the harness; its Classic Era smoke test and the Forever checks are pending.** M3 (the rest of the Forever checks) is in progress.
 - UI language: Spanish only, hard-coded (no localization layer).
 
 ## Supported clients
@@ -28,6 +28,7 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `AdventureJournal_Forever.toc` | Manifest for Forever (`16001`), same file list, plus `IconTexture`, `Category` and `AddonCompartmentFunc` (the Vanilla TOC has no such line). |
 | `Compat.lua` | Client detection (`ns.IS_FOREVER`, `ns.IS_CLASSIC_ERA`), `ns.IsSecret`, `ns.SafeString`, the debug state (`ns.debug`, `ns.Debug`, `ns.Describe`, simulated secrets via `ns.Taint`), and **every** API call that differs between clients (`ns.GetPlace`, `ns.GetQuestTitle`, `ns.GetItemInfoSafe`, `ns.UnitNameSafe`, `ns.RegisterEventSafe`, ...). Other files only call these wrappers. |
 | `Database.lua` | `ns.EnsureDatabase()`, `ns.SCHEMA_VERSION`, migrations, `ns.DEFAULT_SETTINGS`, the entry-type table `ns.TYPE_INFO`, and the settings helpers (`ns.GetSetting`, `ns.SetSetting`, `ns.IsTypeEnabled`, `ns.SetTypeEnabled`, `ns.TypeFromWord`). Caches the table as `ns.DB`. |
+| `Messages.lua` | M6: turns what the game says into entries for the types added in M6 (LEVEL, GROUP, REPUTATION, SKILL, SPELL). One parser per type, used by **both** the live handlers and the AJProbe import, so a live and an imported entry are the same entry. Patterns are built from the client's own global strings (`ns.GlobalFormats`), never from a Spanish literal. Also `ns.DEDUPE_WINDOW`, `ns.NewTypeSubject`, `ns.OnceKey`, `ns.SKILL_STEP` and `ns.GetMessageStatus` (for `/diario diag`). |
 | `Narrative.lua` | Moods and Spanish prose templates: `ns.ChooseMood`, `ns.ComposeEntry`. |
 | `Events.lua` | Event registration and handlers (one function per event), `ns.AddEntry`, session start/end, and the dispatcher that runs each handler under `pcall` (error isolation, debug output). |
 | `Conversations.lua` | M4b: the opt-in RP conversation log: the chat filter ported from AJProbe, `ns.UpdateConversationEvents` (events are registered only while the option is on), and the text formatting the book uses. |
@@ -62,6 +63,11 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `LOOT` | `CHAT_MSG_LOOT`, plus `GET_ITEM_INFO_RECEIVED` / `ITEM_DATA_LOAD_RESULT` for items not yet cached | Only the player's own loot (messages matching the locale's `LOOT_ITEM_SELF*` / `LOOT_ITEM_PUSHED_SELF*` strings) and only quality ≥ 3 (rare or better). Parses the first item link in the message. |
 | `DISCOVERY` | `ZONE_CHANGED*`, `MINIMAP_ZONE_CHANGED` | Only the first time a "subzone, zone" is seen (`visited`). Ignored while the zone text is nil or secret. Zone-only places count too: "Durotar" and "Valle de los Retos, Durotar" are different places. |
 | `NPC` | `GOSSIP_SHOW` | Uses `UnitName("npc")`. Repeats of the same NPC within 20 s are ignored. |
+| `LEVEL` | `PLAYER_LEVEL_UP` | M6. The new level is the first argument; a secret or unreadable one gives "He subido de nivel" with no number. Same level within 10 s: one entry. |
+| `GROUP` | `CHAT_MSG_SYSTEM`, `GROUP_JOINED` | M6. **Names of other players**, so it has its own switch (on by default). Built from the system messages `ERR_JOINED_GROUP_S`, `ERR_LEFT_GROUP_S`, `ERR_LEFT_GROUP_YOU`, `ERR_GROUP_DISBANDED` (+ the raid forms): `groupEvent` = `join`, `leave`, `selfleave`, `disband`. `GROUP_JOINED` has no name and fires when a group is *formed* (even at the invitation; AJProbe data), so it only makes an entry for an instance-category group: `youjoin`, "un grupo", no names. A secret system message is skipped. Same event within 3 s: one entry. |
+| `REPUTATION` | `CHAT_MSG_COMBAT_FACTION_CHANGE` | M6. `repEvent = "gain"`: only the **first** gain with each faction in each jornada, no figures. `repEvent = "standing"`: every change of standing (`FACTION_STANDING_CHANGED*`; this sentence was never captured, harness-only until verified). |
+| `SKILL` | `CHAT_MSG_SKILL` | M6. `skillEvent = "new"` for a new skill, `"rank"` when a skill reaches a multiple of 25 (`ns.SKILL_STEP`). Stateless, so live and import agree. |
+| `SPELL` | `CHAT_MSG_SYSTEM` | M6. "Has aprendido un nuevo hechizo / una nueva facultad: [link]." (`ERR_LEARN_SPELL_S`, `_ABILITY_S`, `_PASSIVE_S`). One entry per spell ID (each rank is its own); `spellID`, `learnKind`. |
 | `CHAT` | `CHAT_MSG_WHISPER` | Stores the **sender name only**, never the message text. This is the default and is unchanged. The text of conversations is a separate **opt-in, off by default** feature ([Backfill and conversations](#backfill-and-conversations-m4b)). |
 
 Each type can be switched off in the options (M5, `settings.types`). `AddEntry` is the single gate: a disabled type is dropped there, **after** the handler has updated its dedupe state and `visited`, so switching a type back on does not replay what happened while it was off, and the secret guards are unchanged. `CHAT_MSG_LOOT` returns early when `LOOT` is off, so no item lookups are requested.
@@ -82,6 +88,8 @@ Inside instances Forever may hand the handlers secret values. Every handler chec
 | `QUEST_TURNED_IN` | Secret quest ID: neutral title |
 | `GET_ITEM_INFO_RECEIVED`, `ITEM_DATA_LOAD_RESULT` | Ignored |
 | `ZONE_CHANGED*` | Secret zone text: no `DISCOVERY` entry |
+| `PLAYER_LEVEL_UP` (M6) | Secret or unreadable level: neutral text "He subido de nivel" |
+| `CHAT_MSG_SYSTEM`, `CHAT_MSG_COMBAT_FACTION_CHANGE`, `CHAT_MSG_SKILL` (M6) | A secret message: skipped (nothing can be said without reading it, and nothing is guessed). `GROUP_JOINED` with a secret category: skipped |
 | `CHAT_MSG_*` of the conversation log (M4b, only while the option is on) | A secret text or author: the line is skipped. A secret GUID or language is dropped from the line (a `/say` with a secret GUID is skipped: nobody can tell who wrote it) |
 | `/diario importar` | Reads AJProbe's `[SECRET]` markers: neutral text (NPC, boss, quest, whisper sender) or the record is skipped (loot, `ENCOUNTER_END` success, place, chat line) |
 
@@ -104,7 +112,7 @@ Two features that read or store more than the live diary does. Both are describe
 - Only this character's records: AJProbe tags each one with `c = "Name-GetRealmName()"`.
 - Sessions come from the log's `PLAYER_ENTERING_WORLD` records: `login = true` starts one, reloads and loading screens do not (the M4 rule).
 - A record goes into the narrowest existing jornada whose time range holds it (3 s tolerance); a record in none, and any session with no jornada, gets a new jornada (`source = "ajprobe"`). New jornadas are inserted in time order, so later jornadas can move up a number; the current jornada stays last. **Existing entries and jornadas are never modified or deleted.**
-- Mapping: quests, NPC talks, deaths, own loot of quality 3 or better (same locale patterns as live play), boss kills (`BOSS_KILL`, successful `ENCOUNTER_END`), first visits to places (`visited`; a zone-only place is skipped once a subzone of that zone is known, bug #16) and whispers (the sender-only `CHAT` entry). Entry types switched off in the options are skipped. Everything else AJProbe logs (XP, reputation, skills, level-ups...) has no entry type yet.
+- Mapping: quests, NPC talks, deaths, own loot of quality 3 or better (same locale patterns as live play), boss kills (`BOSS_KILL`, successful `ENCOUNTER_END`), first visits to places (`visited`; a zone-only place is skipped once a subzone of that zone is known, bug #16) and whispers (the sender-only `CHAT` entry). Entry types switched off in the options are skipped. M6 adds `PLAYER_LEVEL_UP` (LEVEL), `CHAT_MSG_SYSTEM` (GROUP and SPELL), `GROUP_JOINED` of an instance group (GROUP), `CHAT_MSG_COMBAT_FACTION_CHANGE` (REPUTATION) and `CHAT_MSG_SKILL` (SKILL), with the same parsers as live play; the summary counts them by type. A reputation gain is a duplicate when the jornada the record falls in already has a first gain for that faction. Experience (`CHAT_MSG_COMBAT_XP_GAIN`, 165 lines in the first Forever session) deliberately has **no** entry type (user's choice, 2026-11-05: nothing beyond the level-up entry), nor do the other AJProbe records (achievements, flights, `LEARNED_SPELL_IN_SKILL_LINE`).
 - Duplicates: the same type and subject within a few seconds of an existing entry (NPC 20 s, whisper 1 s, others 5 s) is the same event. That is what makes a second run add nothing.
 - `[SECRET]` markers become neutral text or the record is skipped. Imported entries carry `source = "ajprobe"`.
 - The summary says how many records were read, entries added, duplicates and secrets skipped. Loot whose quality is not cached yet is requested: repeat the command a few seconds later.
@@ -122,7 +130,8 @@ AdventureJournalDB = {
   settings   = {                                   -- v2; defaults merged on every load (see below)
     chat          = "important",  -- "all" | "important" | "off"
     types         = { QUEST = true, BOSS = true, DEATH = true, LOOT = true,
-                      DISCOVERY = true, NPC = true, CHAT = true },  -- which types are logged
+                      DISCOVERY = true, NPC = true, CHAT = true,
+                      LEVEL = true, GROUP = true, REPUTATION = true, SKILL = true, SPELL = true },  -- which types are logged (M6 added the last five)
     showProfile   = false,        -- show the mood (characterProfile) in the book's entry header
     conversations = false,        -- M4b: record RP conversations (opt-in, off by default)
   },
@@ -135,13 +144,18 @@ AdventureJournalDB = {
       startTs, endTs,                -- M4b, optional: epochs, only on those jornadas
       events = {
         {
-          type, text, prose,           -- type is QUEST|BOSS|DEATH|LOOT|DISCOVERY|NPC|CHAT
+          type, text, prose,           -- type is QUEST|BOSS|DEATH|LOOT|DISCOVERY|NPC|CHAT, and (M6) LEVEL|GROUP|REPUTATION|SKILL|SPELL
           place, zone, subZone,
           time = "HH:MM:SS", timestamp = <epoch>,
           characterProfile, contextualTone, seed,
           -- type-specific extras:
           questID,                     -- QUEST
           itemID, itemLink, itemQuality, -- LOOT
+          level,                       -- M6, LEVEL (absent when the game hid it)
+          groupEvent,                  -- M6, GROUP: "join" | "leave" | "selfleave" | "disband" | "youjoin"; text is the name
+          repEvent, standing,          -- M6, REPUTATION: "gain" | "standing"; text is the faction, standing the new standing
+          skillEvent, rank,            -- M6, SKILL: "new" | "rank"; text is the skill
+          spellID, learnKind,          -- M6, SPELL: learnKind "spell" | "ability" | "passive"; text is the spell name
           source = "ajprobe",          -- M4b, optional: entries added by /diario importar
         },
       },
@@ -155,7 +169,7 @@ AdventureJournalDB = {
 }
 ```
 
-Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\WTF\...`). Diaries are **not shared** between Forever and Classic Era characters. The schema itself must stay identical on both clients, so the exporter and any future migration code work on either one. If the schema changes, bump `version` and migrate in `EnsureDatabase()`. **M5 added keys to `settings` without a schema bump** (the version stays 2): `EnsureDatabase` fills in any missing setting from `ns.DEFAULT_SETTINGS` on every load and replaces a value of the wrong type, and a type missing from `settings.types` counts as on. Diaries saved at v1 or at v2 before M5 load unchanged and keep their own values (checked in the harness: the migration scenario for v1, the 250-jornada diary for pre-M5 v2). **v1 → v2 (M4):** adds `visited` (seeded from the diary's existing DISCOVERY entries) and `settings`; existing jornadas are untouched. **M4b added `conversations`, `source`, `startTs` and `endTs` without a schema bump** (the version stays 2): they are optional, nothing needs a migration, v1 and v2 diaries (with or without M5 settings) load unchanged (harness), and the code that reads a jornada treats a missing `conversations` as empty. The exporter (M7) must learn them.
+Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\WTF\...`). Diaries are **not shared** between Forever and Classic Era characters. The schema itself must stay identical on both clients, so the exporter and any future migration code work on either one. If the schema changes, bump `version` and migrate in `EnsureDatabase()`. **M5 added keys to `settings` without a schema bump** (the version stays 2): `EnsureDatabase` fills in any missing setting from `ns.DEFAULT_SETTINGS` on every load and replaces a value of the wrong type, and a type missing from `settings.types` counts as on. Diaries saved at v1 or at v2 before M5 load unchanged and keep their own values (checked in the harness: the migration scenario for v1, the 250-jornada diary for pre-M5 v2). **v1 → v2 (M4):** adds `visited` (seeded from the diary's existing DISCOVERY entries) and `settings`; existing jornadas are untouched. **M6 added five entry types and their fields (`level`, `groupEvent`, `repEvent`, `standing`, `skillEvent`, `rank`, `spellID`, `learnKind`) without a schema bump** (the version stays 2): a type missing from `settings.types` counts as on, `EnsureDatabase` fills the five keys with `true`, and the book shows any entry by its stored prose. **M4b added `conversations`, `source`, `startTs` and `endTs` without a schema bump** (the version stays 2): they are optional, nothing needs a migration, v1 and v2 diaries (with or without M5 settings) load unchanged (harness), and the code that reads a jornada treats a missing `conversations` as empty. The exporter (M7) must learn them.
 
 ### UI and commands
 
@@ -164,7 +178,7 @@ Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\W
 - Options (M5). Every option has a slash command **and** a control in the panel; both change the same `settings`:
   - `/diario opciones` (also `options`, `config`): opens the panel (Esc > Opciones > AddOns > Diario de Aventuras). If it cannot be opened, the command says why and lists the commands below.
   - `/diario chat [todo|importante|nada]`: chat echo.
-  - `/diario tipos`: lists which entry types are logged. `/diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros> <on|off>` (the English type names `quest`, `boss`, ... also work).
+  - `/diario tipos`: lists which entry types are logged. `/diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos> <on|off>` (the English type names `quest`, `boss`, `level`, `group`, `reputation`, `skill`, `spell` also work). The options panel shows the twelve types in two columns.
   - `/diario animo [on|off]` (also `mood`): show the mood next to each entry's time in the book. Off by default, so the book looks as before M5. Entries saved before the mood existed have no `characterProfile` and render without it.
   - `/diario conversaciones [on|off]` (also `conversations`, `conv`): record RP conversations (M4b). Off by default; the panel's *Guardar las conversaciones de rol* check box does the same. The chat events are registered only while it is on.
   - `/diario importar` and `/diario importar prueba` (also `import`, `test`): the AJProbe backfill, or a dry run that only counts (M4b, see [Backfill and conversations](#backfill-and-conversations-m4b)).
@@ -174,7 +188,7 @@ Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\W
 - Escape closes the book.
 - Forever's addon menu (the minimap button): the Forever TOC has `## AddonCompartmentFunc: AdventureJournal_OnAddonCompartmentClick`, a global that toggles the book. The Vanilla TOC has no such line. Whether the entry appears and works on Forever: **verify in M3/M5**.
 - Developer commands:
-  - `/diario diag`: client, interface, DB, API branches, registered events, handler errors. Run it first on a new client.
+  - `/diario diag`: client, interface, DB, API branches, registered events, handler errors. Run it first on a new client. `/diario diag mensajes` (M6) prints only which of the client's message strings each new type found (group, reputation, skills, spells); a line saying `ninguna` means that type cannot recognise anything on this client.
   - `/diario debug on` / `off`: print every handled event's payload (`[SECRET]` for secrets) and every fallback taken. Session only.
   - `/diario debug secrets` (`off` to stop): simulate secret values, mainly for Classic Era. Also turns debug on. `/diario debug off` or `/reload` turns everything off.
   - `/diario debug demo` (`off` to stop): the book shows 250 generated jornadas (20 entries each, every other one without a mood) to try the index. They live in memory only: not saved, never mixed into your diary (entries made meanwhile still go to the real one). `/diario debug off` or `/reload` also removes them.
@@ -237,6 +251,7 @@ Entries marked "verify" have not been checked in game. Confirm them with `/dump`
 | Textures and glyphs | `Interface\QuestFrame\QuestBG` (not checked yet). `◀`/`▶` rendered as **empty squares** (observed); the buttons now read `< Anterior` / `Siguiente >` | Verify that the `QuestBG` texture renders on the modern client |
 | Options panel | Observed in game (`/run` check, 2026-11-04): `Settings.RegisterAddOnCategory`, `OpenToCategory`, `RegisterAddOnSetting`, `RegisterProxySetting`, `CreateCheckbox`, `CreateDropdown`, `VarType` and `SettingsPanel` all exist, plus `RegisterCanvasLayoutCategory` / `RegisterVerticalLayoutCategory` (M0); `InterfaceOptions_AddCategory` is missing. Templates `UICheckButtonTemplate`, `InterfaceOptionsCheckButtonTemplate` and `UIPanelButtonTemplate` work. **Call signatures are not observable**; the canvas path used here needs only the category functions and `OpenToCategory` | `Settings` API (**verify in M3**). Expected to match the Mainline docs: [api-quick-reference.md](../docs/api-quick-reference.md) |
 | ScrollBox | `CreateScrollBoxListLinearView`, `CreateDataProvider`, `ScrollUtil.InitScrollBoxListWithScrollBar` and the templates `WowScrollBoxList` and `MinimalScrollBar` all work; a full build in a hidden frame succeeded (observed). Row layout and scrolling: verify in game | **Verify in M3** (`/diario diag` runs the same probe) |
+| Message strings (M6) | Group: `ERR_JOINED_GROUP_S`, `ERR_LEFT_GROUP_S`, `ERR_LEFT_GROUP_YOU`, `ERR_GROUP_DISBANDED`, `ERR_RAID_MEMBER_ADDED_S`, `ERR_RAID_MEMBER_REMOVED_S`; skills `ERR_SKILL_UP_SI`, `ERR_SKILL_GAINED_S` (and every `ERR_SKILL_*`); spells `ERR_LEARN_SPELL_S`, `_ABILITY_S`, `_PASSIVE_S`; reputation every `FACTION_STANDING_INCREASED*` / `FACTION_STANDING_CHANGED*`. Names confirmed by Warcraft Wiki: `ERR_JOINED_GROUP_S`, `ERR_LEFT_GROUP_S`, `ERR_LEFT_GROUP_YOU`, `ERR_SKILL_UP_SI`, `ERR_SKILL_GAINED_S`; the others are from memory and found by the prefix scan where possible. **The esES sentences match what AJProbe recorded on Forever** (join, leave, you leave, disbanded, spell, ability "facultad", skill up and gained, reputation). Classic Era words the reputation increase differently from Forever (`ha aumentado. (+N)` vs `ha aumentado en N.`); both are built from the client's own string. Not captured anywhere yet: the standing-changed sentence, the raid and passive strings. Check with `/diario diag mensajes` | Same strings; **verify in M3** with `/diario diag mensajes` (section 3d of the runbook) |
 | Date parsing (import) | `time{year=...}` converts the saved local-time strings back to epochs; checked by converting back, with the stored epochs as fallback. `/diario diag` shows "Lectura de fechas" (**verify in game**) | Same (**verify in M3**) |
 | Chat for conversations | `CHAT_MSG_WHISPER`, `_WHISPER_INFORM`, `_BN_WHISPER`, `_BN_WHISPER_INFORM`, `_PARTY(_LEADER)`, `_RAID(_LEADER)`, `_SAY`, `_YELL`, `_EMOTE`, `_TEXT_EMOTE` all register (observed in AJProbe's `env.events`). The GUID is argument 12, the Battle.net sender ID argument 13; the author carries the realm (observed). AJProbe's data shows `rel = "me"` working; the friend and Battle.net lookups (`C_FriendList.IsFriend`, `C_BattleNet.*`) have not been seen to return anything yet (**verify in game**) | Same events. **Text and author may be secret in instances** (verify in M3). `C_FriendList` / `C_BattleNet` signatures: verify |
 | Group lookups (conversations) | `UnitGUID`, `GetNumGroupMembers`, `IsInRaid` | Same; unit GUIDs may be secret inside instances (guarded) |
@@ -273,6 +288,7 @@ Test checklist before calling a change done:
 - [ ] The book UI opens, scrolls and pages on both clients. Textures and arrows render.
 - [ ] M5, on each client: `/diario opciones` opens the panel; each option changes behaviour and survives `/reload`; `/diario debug demo` shows 250 jornadas that scroll smoothly (the index is a ScrollBox, `/diario diag` says so). On Forever, also the addon-menu entry (minimap button) opens the book.
 - [ ] M4b, on each client (steps in the roadmap's hand-over and, for Forever, [M3_RUNBOOK.md](M3_RUNBOOK.md) section 3c): back up `AJProbe.lua` and `AdventureJournal.lua`; `/diario importar prueba` counts, `/diario importar` imports, the second run adds nothing; the imported entries and jornadas show in the book; with `/diario conversaciones on`, a whisper appears in the book's conversations view, and with it off nothing is captured or shown. On Forever, also a dungeon: secret chat is skipped with no error.
+- [ ] M6, on each client (runbook section 3d for Forever): `/diario diag mensajes` finds the strings; a level-up, a party join and leave, a first reputation gain, a skill at a multiple of 25 and a learned spell each produce one entry; `/diario tipos <tipo> off` stops it; back up `AJProbe.lua` and `AdventureJournal.lua`, then `/diario importar prueba` and `/diario importar` add the missing ones and a second run adds nothing.
 - [ ] The exporter reads SavedVariables from both `WTF` folders.
 
 ## Exporter
