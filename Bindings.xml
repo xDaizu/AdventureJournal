@@ -1,5 +1,5 @@
 <Bindings>
-    <Binding name="ADVENTUREJOURNAL_TOGGLE">
-        AdventureJournal_Toggle()
+    <Binding name="ADVENTUREJOURNAL_TOGGLE" header="ADVENTUREJOURNAL">
+        AdventureJournal_ToggleUI()
     </Binding>
 </Bindings>

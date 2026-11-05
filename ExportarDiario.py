@@ -93,7 +93,8 @@ def find_database(source):
 def clean(value):
     if value is None: return ''
     text = str(value)
-    text = re.sub(r'\|c[0-9A-Fa-f]{8}|\|r', '', text)
+    # Colour codes: |cffRRGGBB (Classic Era) and quality tags such as |cnIQ4: (Mainline/Forever).
+    text = re.sub(r'\|c[0-9A-Fa-f]{8}|\|cn[^:|]*:|\|r', '', text)
     text = re.sub(r'\|Hitem:[^|]*\|h\[([^]]+)\]\|h', r'\1', text)
     return text
 
