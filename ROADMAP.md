@@ -2,7 +2,7 @@
 
 Milestone plan to finish the dual-client port (WoW Forever + Classic Era), then handle bug fixes and improvements. Background and design rules: [README.md](README.md).
 
-Last updated: 2026-11-04 (M0–M2, M4 and M5 tested on Classic Era and tagged; M4b tested on Classic Era and tagged, its import also run on real Forever data; M3 (the rest of the Forever checks) is in progress).
+Last updated: 2026-11-05 (M0–M2, M4 and M5 tested on Classic Era and tagged; M4b tested on Classic Era and tagged, its import also run on real Forever data; M3 (the rest of the Forever checks) is in progress).
 
 ## Constraints that shape the plan
 
@@ -143,7 +143,7 @@ Status key (same as M5): **H** = covered by the stubbed harness (`npm test`), **
 - [x] Skip duplicates (H): same type and subject within a few seconds of an existing entry or of one imported earlier in the run. Subject = item ID for loot, quest ID for quests, else the text. Windows: NPC 20 s (the live rule), quest / boss / death / loot 5 s, whisper 1 s. This is also what makes a second run add nothing.
 - [x] Secrets (H; **F**): `[SECRET]` becomes the same neutral texts the live handlers use (`ns.NEUTRAL_TEXT`: NPC, boss, quest, whisper sender) or the record is skipped (secret loot, secret `ENCOUNTER_END` success, secret place). Never an error.
 - [x] Idempotent (H; R): the second run adds nothing and leaves the diary byte-identical, also when `time{...}` does not work on the client (the `notimetable` scenario: imported jornadas keep their epochs). AJProbeDB is compared before and after every run in every scenario.
-- [ ] `PLAYER_LEVEL_UP` → a `LEVEL` type: **not done** (it needs a type in the options, a live handler and prose, which would change default behaviour). The records keep `level`; see the backlog.
+- [ ] `PLAYER_LEVEL_UP` → a `LEVEL` type: **not done** (it needs a type in the options, a live handler and prose, which would change default behaviour). The records keep `level`. Moved to [M6](#m6-more-entry-types-live-and-imported--l) (part of release 1.2.0).
 
 **RP conversations.**
 - [x] Per-jornada `conversations` list (H): `{ time, timestamp, channel, who, rel, lang, text, place }` (+ `source = "ajprobe"` when imported). `channel` is the event name without `CHAT_MSG_` (`WHISPER`, `WHISPER_INFORM`, `BN_WHISPER`, `PARTY`, `RAID`, `SAY`, `YELL`, `EMOTE`, `TEXT_EMOTE`, ...). **No schema bump**: the list and the new `source` / `startTs` / `endTs` fields are optional and additive; `version` stays 2. M5 diaries and v1 diaries load unchanged (harness: migration, big-diary and overlap scenarios), and an older addon reading a newer diary just ignores them.
@@ -152,7 +152,7 @@ Status key (same as M5): **H** = covered by the stubbed harness (`npm test`), **
 - [x] Shown in the book (H; **G** for layout): a toggle button between the events view and the conversations view (only while the option is on), 100 lines per page with `< Antes` / `Después >` buttons. The ScrollBox index and its fallback are untouched apart from the row count. Not shown at all while the option is off. **Chosen over interleaving** because a busy RP day has far more lines than events.
 - [x] `/diario importar` also imports `AJProbeDB.chat` (H; R) **only when the conversations option is on**; with it off the summary says how many lines it left alone. A line already captured live is a duplicate (same channel, author and text within 2 s). Chat records outside every jornada and session are counted ("sin jornada") and left out.
 - [x] Known limit (workspace rule 5) (H; **F**): inside instances on Forever chat is secret. A line with a secret text or author is skipped, shows nothing and never errors (harness: stub secrets, simulated secrets, an "instance"). Whether Forever really sends secret chat there is still **verify in M3**.
-- [ ] Included in the M6 export: **not part of M4b**. The shape is ready (`days[n].conversations`, optional); the exporter must learn it in M6.
+- [ ] Included in the export: **not part of M4b**. The shape is ready (`days[n].conversations`, optional); the exporter must learn it in M7.
 
 **Done when:** a real AJProbe log from the first Forever days imports into the right jornadas with no duplicates and no errors; running it again changes nothing; conversations appear in the book and in the export only when the option is on.
 
@@ -173,18 +173,36 @@ Status key: **H** = covered by the stubbed harness (`npm test`), **G** = needs t
 
 **Status (2026-11-04):** done on Classic Era: code passes `npm test` (6 new scenario runs per client) and the in-game smoke test passed (user, 2026-11-04), tagged `m5-done`. **Pending:** the Forever checks (panel, `OpenToCategory`, ScrollBox, minimap entry) wait for the next Forever session ([M3_RUNBOOK.md](M3_RUNBOOK.md) section 3b).
 
-## M6: Export 🟢 (S–M)
+## M6: More entry types, live and imported 🟢 + 🔵 (L)
+
+Requested by the user on 2026-11-05 and **part of release 1.2.0**: they are done before the export (M7) and the release (M8), so the exporter and the final checklist cover them. They were in the backlog before.
+
+**Rule for every type below.** It needs, in this order: (a) an entry in `ns.TYPE_INFO`, so the options panel and `/diario tipos` list it (a type missing from `settings.types` counts as on, so existing diaries need no migration and no schema bump; decide per type whether "on by default" is right); (b) a live handler with the secret guards of rule 3 on both clients, feature-detected; (c) prose in `Narrative.lua`, with variants; (d) an import handler in `Import.lua` with its own dedupe window, `source = "ajprobe"`, idempotent; (e) harness scenarios (live, import, a second run, the type switched off) and a stub extension where needed. Live and imported entries must read the same. Mark each item H (harness), R (needs in-game test on Classic Era) or F (needs Forever).
+
+- [ ] **Level up** (S): `PLAYER_LEVEL_UP` (new level is the first argument). Live handler and prose, and the import of AJProbe's `PLAYER_LEVEL_UP` records (they carry `level`; 5 on Forever from the first session). This replaces the unchecked `LEVEL` item in M4b.
+- [ ] **Party: joined and left, with who** (M): AJProbe's `GROUP_JOINED` record has **no names** (checked on the Forever file). The name is in the `CHAT_MSG_SYSTEM` line that follows it within about a second (`Dips Jawshatter se une al grupo.`). Import: pair the two records and match the text with the client's own global strings (`ERR_JOINED_GROUP_S`, `ERR_LEFT_GROUP_S`; check the exact names on both clients), never a Spanish literal. Live: the same system message, or `GROUP_ROSTER_UPDATE` plus `UnitName("party1".."party4")`. "If possible": inside instances on Forever names may be secret; then the entry says "un grupo" with no names (**F**, verify in M3). Other players' names are as sensitive as conversations: decide whether the names are tied to a setting (a suggestion: its own type, `GROUP`, switchable like the others).
+- [ ] **Experience** (M): AJProbe holds 165 `CHAT_MSG_COMBAT_XP_GAIN` lines in the first session, so one entry per line is out of the question. Decide in this milestone: a summary per jornada (total gained and levels reached), or none beyond the level-up entry. The import must give the same result as live play.
+- [ ] **Reputation** (S–M): `CHAT_MSG_COMBAT_FACTION_CHANGE` (11 on Forever). One entry per faction and jornada, or only standing changes (for example "Neutral" to "Amistoso"); decide in this milestone, matching the message text with the client's global strings (`FACTION_STANDING_INCREASED` and similar; verify the names).
+- [ ] **Skills learned and levelled** (S–M): `CHAT_MSG_SKILL` (43 on Forever) and `LEARNED_SPELL_IN_SKILL_LINE` (9). A threshold keeps the book readable (a new skill, a new tier, or every N points; decide here). Match the text with the global strings (`ERR_SKILL_UP_SI` and similar; verify).
+- [ ] Options panel and `/diario tipos` show the new types; the README table of entry types, the type list in `diag` and the harness reports are updated.
+- [ ] The import summary counts the new types, and `/diario importar` on the real Classic Era and Forever diaries adds only what is missing (backup first).
+- [ ] Behaviour with every new type **switched off** equals M4b's (harness check), so a player can keep the old diary.
+
+**Done when:** each type works live and imported on both clients (`npm test` green, Classic Era smoke test passed; the Forever parts verified in the next Forever session).
+
+## M7: Export and conversation management 🟢 (M)
 
 - [ ] In-game export window: a read-only multi-line `EditBox` with the selected jornada (or all of them) as plain text, ready to select all and copy. Players then don't need Python.
-- [ ] Python exporter fixes: decode `\ddd` escapes as UTF-8 bytes, strip `|cnIQ` tags, and read schema v1 and v2 (including `conversations`, M4b).
+- [ ] Python exporter fixes: decode `\ddd` escapes as UTF-8 bytes, strip `|cnIQ` tags, and read schema v1 and v2 (including `conversations`, M4b, and the M6 types).
 - [ ] Optional: export one jornada at a time; a Markdown output option.
+- [ ] **Delete stored conversations** (requested 2026-11-05): `/diario conversaciones borrar`, with a confirmation, for one jornada or all of them. The import must not bring a deleted line back: decide how (for example remember the deleted epoch range, or import only lines newer than a marker). Per-channel choices and a search inside the conversations view are optional.
 
-## M7: Release 1.2.0 (S)
+## M8: Release 1.2.0 (S)
 
 - [ ] Version `1.2.0` in both TOCs. Drop the `-Era` suffix.
-- [ ] Update `LEEME.txt` (Spanish): install for both clients (`_forever_` and `_classic_era_`), the new commands, options, in-game export.
+- [ ] Update `LEEME.txt` (Spanish): install for both clients (`_forever_` and `_classic_era_`), the new commands, options, entry types, in-game export.
 - [ ] `CHANGELOG.md`.
-- [ ] Final checklist on both clients from a clean SavedVariables, and from an M0-era v1 diary (migration test).
+- [ ] Final checklist on both clients from a clean SavedVariables, and from an M0-era v1 diary (migration test), with every M6 type on and off.
 - [ ] Package: zip the **folder**; exclude `README.md`, `ROADMAP.md` and dev files. Tag game versions **1.60.1** (Forever) and **1.15.9** (Classic Era) on CurseForge/Wago.
 
 ---
@@ -195,15 +213,14 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 
 **More story content**
 - More prose variants for every entry type, not just quests. Avoid repeating the same template within a jornada.
-- **Requested 2026-11-05:** a level-up entry type (`PLAYER_LEVEL_UP`). AJProbe already holds 5 level-ups on Forever (character Necroroth, first session) and its records carry `level`, so the backfill can import them the day the type exists. Needs a `TYPE_INFO` entry, narrative text and the import handler.
-- **Requested 2026-11-05:** party joins and leaves, with who joined (`GROUP_JOINED` / `GROUP_LEFT`). AJProbe's `GROUP_JOINED` record holds no names (checked on the Forever file); the name is in the `CHAT_MSG_SYSTEM` line just after it (`Dips Jawshatter se une al grupo.`, within about a second). So the backfill must pair those two records and match the text with the client's own global strings (`ERR_JOINED_GROUP_S`, `ERR_LEFT_GROUP_S`), not a Spanish literal. Live, the same system message or `GROUP_ROSTER_UPDATE` plus `UnitName("party1".."party4")` would give the names. "If possible": in instances on Forever names may be secret, in which case the entry says "un grupo" without names (verify in M3). Entries about other players' names fall under the same care as conversations: consider tying them to a setting.
-- New entry types: new profession skill tiers, flight paths learned, first visit to a capital or dungeon, reputation level changes, PvP honour or battleground results (outside the match only).
+- More entry types (the level-up, party, experience, reputation and skill ones are M6): flight paths learned, first visit to a capital or dungeon, PvP honour or battleground results (outside the match only).
 - End-of-jornada summary paragraph (quests, places, deaths), written at logout or when the jornada is opened.
 - Forever only: Hardcore deaths (`C_GameRules.IsHardcoreActive()`) get a special epitaph entry. Skyborne/Legacy/Camping events once their APIs are known (`/api`).
 
 **Conversations**
-- **Requested 2026-11-05:** a way to delete stored conversations (`/diario conversaciones borrar`, with a confirmation; per jornada or all), and per-channel choices. Search inside the conversations view. The import must not bring a deleted line back: decide how (for example remember the epoch range deleted, or only import lines newer than a marker).
-- **Requested 2026-11-05:** import the other AJProbe records: XP, reputation changes, and skills learned or levelled up. On the first Forever session AJProbe holds `CHAT_MSG_COMBAT_XP_GAIN` (165), `CHAT_MSG_SKILL` (43), `CHAT_MSG_COMBAT_FACTION_CHANGE` (11) and `LEARNED_SPELL_IN_SKILL_LINE` (9). XP lines are too frequent to be one entry each: summarise per jornada or per level (for example "gané N de experiencia"), and give reputation and skills thresholds so the book stays readable. Also system messages, achievements and flights, once their entry types exist. Each needs an entry type first, then a live handler, then the import handler, so that live and imported entries match.
+- Moved to the milestones on 2026-11-05 (part of release 1.2.0): the level-up entry, party joins with names, and the XP, reputation and skills entries with their import are [M6](#m6-more-entry-types-live-and-imported--l); deleting stored conversations is in [M7](#m7-export-and-conversation-management--m).
+- Still backlog: per-channel choices and a search inside the conversations view.
+- Import the other AJProbe records not covered by M6 (system messages, achievements, spells learned, flights) once their entry types exist.
 
 **UI**
 - Search and filter by entry type or zone. Bookmarks.
