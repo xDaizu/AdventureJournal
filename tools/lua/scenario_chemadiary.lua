@@ -131,7 +131,7 @@ local function Settings(label)
     local db = AdventureJournalDB
     local s = db.settings
     local off = {}
-    for _, info in ipairs(H.ns.TYPE_INFO) do
+    for _, info in ipairs(H.ns.VisibleTypes()) do
         if not H.ns.IsTypeEnabled(info.key) then off[#off + 1] = info.key end
     end
     local chema = {}

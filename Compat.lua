@@ -128,6 +128,8 @@ ns.NEUTRAL_TEXT = {
     SENDER = "alguien",
     LEVEL = "He subido de nivel",
     GUILD = "una hermandad",
+    MOUNT = "una montura",
+    ACHIEVEMENT = "un logro",
 }
 
 -- "Name-Realm" -> "Name" (chat authors carry the realm, observed in M0).
@@ -179,6 +181,100 @@ function ns.UnitNameSafe(unit)
     local ok, name = pcall(UnitName, unit)
     if ok then return ns.Taint(name) end
     return nil
+end
+
+-- T4b: mounts and achievements (Forever only; Classic Era has neither) ---------------------------
+-- Observed on Forever 2026-11-05 (/dump): C_MountJournal.GetMountIDs is a function, and
+-- C_MountJournal.GetMountInfoByID(id) returns 13 values: name, spellID, icon, isActive, isUsable,
+-- sourceType, isFavorite, isFactionSpecific, faction, shouldHideOnChar, isCollected (the 11th, as
+-- Chema's version missed), mountID, isForDragonriding. GetAchievementInfo(6) returned nothing there
+-- (the function exists, the ID is not an achievement of this client): its return order is not verified.
+function ns.HasMountJournal()
+    return type(C_MountJournal) == "table" and type(C_MountJournal.GetMountIDs) == "function"
+        and type(C_MountJournal.GetMountInfoByID) == "function"
+end
+
+function ns.HasAchievements()
+    return type(GetAchievementInfo) == "function"
+end
+
+-- The mount IDs of the journal: a list of numbers, or nil (no journal, an error, nothing yet).
+function ns.GetMountIDs()
+    if not ns.HasMountJournal() then return nil end
+    local ok, ids = pcall(C_MountJournal.GetMountIDs)
+    if not ok or ns.IsSecret(ids) or type(ids) ~= "table" or #ids == 0 then return nil end
+    return ids
+end
+
+-- name, isCollected of a mount; each nil when it cannot be read. The name is the first return and
+-- isCollected the 11th (observed).
+function ns.GetMountInfo(mountID)
+    if not ns.HasMountJournal() or ns.IsSecret(mountID) or type(mountID) ~= "number" then return nil, nil end
+    local results = { pcall(C_MountJournal.GetMountInfoByID, mountID) }
+    if not results[1] then return nil, nil end
+    local name, collected = results[2], results[12]
+    if ns.IsSecret(name) or type(name) ~= "string" or name == "" then name = nil end
+    if ns.IsSecret(collected) then collected = nil end
+    return name, collected == true
+end
+
+-- The name of an achievement, or nil. The global returns the ID first and the name second in
+-- every client that has it; a client that returned the name first is tolerated.
+function ns.GetAchievementName(achievementID)
+    if not ns.HasAchievements() or ns.IsSecret(achievementID) or type(achievementID) ~= "number" then return nil end
+    local results = { pcall(GetAchievementInfo, achievementID) }
+    if not results[1] then return nil end
+    local candidate = results[3]
+    if type(candidate) ~= "string" and type(results[2]) == "string" then candidate = results[2] end
+    if ns.IsSecret(candidate) or type(candidate) ~= "string" or candidate == "" then return nil end
+    return candidate
+end
+
+-- T4b: mounts and achievements (Forever only; Classic Era has neither) ---------------------------
+-- Observed on Forever 2026-11-05 (/dump): C_MountJournal.GetMountIDs is a function, and
+-- C_MountJournal.GetMountInfoByID(id) returns 13 values: name, spellID, icon, isActive, isUsable,
+-- sourceType, isFavorite, isFactionSpecific, faction, shouldHideOnChar, isCollected (the 11th, as
+-- Chema's version missed), mountID, isForDragonriding. GetAchievementInfo(6) returned nothing there
+-- (the function exists, the ID is not an achievement of this client): its return order is not verified.
+function ns.HasMountJournal()
+    return type(C_MountJournal) == "table" and type(C_MountJournal.GetMountIDs) == "function"
+        and type(C_MountJournal.GetMountInfoByID) == "function"
+end
+
+function ns.HasAchievements()
+    return type(GetAchievementInfo) == "function"
+end
+
+-- The mount IDs of the journal: a list of numbers, or nil (no journal, an error, nothing yet).
+function ns.GetMountIDs()
+    if not ns.HasMountJournal() then return nil end
+    local ok, ids = pcall(C_MountJournal.GetMountIDs)
+    if not ok or ns.IsSecret(ids) or type(ids) ~= "table" or #ids == 0 then return nil end
+    return ids
+end
+
+-- name, isCollected of a mount; each nil when it cannot be read. The name is the first return and
+-- isCollected the 11th (observed).
+function ns.GetMountInfo(mountID)
+    if not ns.HasMountJournal() or ns.IsSecret(mountID) or type(mountID) ~= "number" then return nil, nil end
+    local results = { pcall(C_MountJournal.GetMountInfoByID, mountID) }
+    if not results[1] then return nil, nil end
+    local name, collected = results[2], results[12]
+    if ns.IsSecret(name) or type(name) ~= "string" or name == "" then name = nil end
+    if ns.IsSecret(collected) then collected = nil end
+    return name, collected == true
+end
+
+-- The name of an achievement, or nil. The global returns the ID first and the name second in
+-- every client that has it; a client that returned the name first is tolerated.
+function ns.GetAchievementName(achievementID)
+    if not ns.HasAchievements() or ns.IsSecret(achievementID) or type(achievementID) ~= "number" then return nil end
+    local results = { pcall(GetAchievementInfo, achievementID) }
+    if not results[1] then return nil end
+    local candidate = results[3]
+    if type(candidate) ~= "string" and type(results[2]) == "string" then candidate = results[2] end
+    if ns.IsSecret(candidate) or type(candidate) ~= "string" or candidate == "" then return nil end
+    return candidate
 end
 
 -- T4a: whether the player is on a flight path. Missing, failing or secret: not on one.

@@ -581,6 +581,23 @@ T.GUILD_leave_unnamed = {
     "Salí de las filas de mi hermandad, con la mirada puesta en nuevos rumbos.",
 }
 
+-- The mount's name could not be read.
+T.MOUNT_unnamed = {
+    "He obtenido una nueva montura. Mis desplazamientos en {place} serán mucho más veloces.",
+    "Añadí una montura a mis establos mientras me hallaba en {place}. Ahorraré mucho tiempo en el camino.",
+    "Un nuevo e imponente compañero de viaje se une a mí. Recorrer {place} será más ágil.",
+    "A partir de hoy recorreré los parajes de {place} a lomos de una montura nueva.",
+    "El viaje por {place} resultará más llevadero tras hacerme con una nueva montura.",
+}
+-- The achievement's name could not be read.
+T.ACHIEVEMENT_unnamed = {
+    "Completé con éxito un logro mientras exploraba {place}.",
+    "Anoté una proeza en mi expediente tras unos hechos en {place}.",
+    "Un hito personal alcanzado en {place}.",
+    "Mis hazañas en {place} fueron reconocidas con un nuevo logro.",
+    "Un motivo más de orgullo en mi trayectoria, logrado en {place}.",
+}
+
 T.ACHIEVEMENT = {
     "Completé con éxito el logro «{name}» mientras exploraba {place}.",
     "Anoté una proeza en mi expediente tras conseguir el logro «{name}» en {place}.",
@@ -688,8 +705,9 @@ function ns.ComposeEntry(entry, female)
         -- No combat log: this is the enemy fought when combat began, not a known killer.
         values.killer = killer ~= "" and ("«" .. killer .. "» (el último enemigo al que me enfrenté)") or ""
         list, unnamed = T.DEATH, killer == ""
-    elseif kind == "LOOT" or kind == "NPC" or kind == "CHAT" or kind == "MOUNT"
-        or kind == "FLIGHT_POINT" or kind == "ACHIEVEMENT" then
+    elseif kind == "MOUNT" or kind == "ACHIEVEMENT" then
+        list = name == NEUTRAL[kind] and T[kind .. "_unnamed"] or T[kind]
+    elseif kind == "LOOT" or kind == "NPC" or kind == "CHAT" or kind == "FLIGHT_POINT" then
         list = T[kind]
     elseif kind == "LEVEL" then
         if type(entry.level) == "number" then

@@ -33,7 +33,30 @@ ns.TYPE_INFO = {
     { key = "QUEST_ACCEPT", label = "Misiones aceptadas",  words = { "aceptadas", "aceptada", "aceptar", "quest_accept", "questaccept" } },
     { key = "REVISIT",   label = "Lugares que vuelves a visitar", words = { "revisitas", "revisita", "volver", "revisit" }, default = false },
     { key = "GUILD",     label = "Hermandad: entrar y salir", words = { "hermandad", "hermandades", "guild" } },
+    -- T4b: only where the client has the API (Forever); `available` hides the type from the panel and
+    -- /diario tipos elsewhere, and a type that is not available is never logged.
+    { key = "MOUNT",     label = "Monturas nuevas",       words = { "monturas", "montura", "mount", "mounts" },
+      available = function() return ns.HasMountJournal() end },
+    { key = "ACHIEVEMENT", label = "Logros conseguidos",  words = { "logros", "logro", "achievement", "achievements" },
+      available = function() return ns.HasAchievements() end },
 }
+
+-- Whether this client can produce a type at all (T4b). Types with no `available` function always can.
+function ns.IsTypeAvailable(entryType)
+    for _, info in ipairs(ns.TYPE_INFO) do
+        if info.key == entryType then return info.available == nil or info.available() == true end
+    end
+    return true   -- a type this version does not know (saved by another version)
+end
+
+-- TYPE_INFO without the types this client cannot produce: what the panel and the commands list.
+function ns.VisibleTypes()
+    local out = {}
+    for _, info in ipairs(ns.TYPE_INFO) do
+        if info.available == nil or info.available() == true then out[#out + 1] = info end
+    end
+    return out
+end
 
 -- Names of the chat echo modes, for messages and the options panel.
 ns.CHAT_MODE_NAMES = { all = "todo", important = "importante", off = "nada" }
@@ -230,6 +253,7 @@ end
 -- A type the player set is what they set. Otherwise its TYPE_INFO default, and a type this
 -- version does not know (an entry saved by another version, such as Chema's MOUNT) counts as on.
 function ns.IsTypeEnabled(entryType)
+    if not ns.IsTypeAvailable(entryType) then return false end
     local settings = ns.DB and ns.DB.settings
     local types = settings and settings.types
     local value

@@ -1,0 +1,102 @@
+##### forever: fresh login #####
+== scenario log
+-- both types off: 3 entries; MOUNT=0 ACHIEVEMENT=0
+== events registered
+ACHIEVEMENT_EARNED, ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, NEW_MOUNT_ADDED, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 1. Tu historia continúa.
+|cFFFFD700[Diario]|r MOUNT: NO se anota.
+|cFFFFD700[Diario]|r ACHIEVEMENT: NO se anota.
+|cFF00FF00[Diario]|r He caído en combate
+== AdventureJournalDB
+{
+  ["currentDay"] = 1,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 18:02:19",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Valle de los Retos, Durotar",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "17:56:40",
+          ["timestamp"] = 1793815000,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la fría promesa de un retorno implacable",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.",
+          ["seed"] = 2,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "17:56:50",
+          ["timestamp"] = 1793815010,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Escuché atentamente lo que Gornek tenía que decir en Valle de los Retos, Durotar. Con más ironía que paciencia.",
+          ["seed"] = 3,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Gornek",
+          ["time"] = "17:56:55",
+          ["timestamp"] = 1793815015,
+          ["type"] = "NPC",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["knownMounts"] = {
+    ["21"] = true,
+    ["35"] = true,
+  },
+  ["mountsSeeded"] = true,
+  ["settings"] = {
+    ["chat"] = "important",
+    ["conversations"] = false,
+    ["deathKiller"] = false,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["ACHIEVEMENT"] = false,
+      ["BOSS"] = true,
+      ["CHAT"] = true,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = true,
+      ["GUILD"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["MOUNT"] = false,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["QUEST_ACCEPT"] = true,
+      ["REPUTATION"] = true,
+      ["REVISIT"] = false,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["Valle de los Retos, Durotar"] = true,
+  },
+}

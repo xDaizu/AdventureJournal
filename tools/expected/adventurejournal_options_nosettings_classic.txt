@@ -8,16 +8,16 @@
 -- panel controls: (no options panel)
 -- after changes: chat=off showProfile=true conversations=false typesOff=[DISCOVERY,NPC,CHAT,REVISIT]
 -- panel controls: (no options panel)
--- entries after events: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
+-- entries after events: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- chat lines printed while chat = nada: 0
 -- the place was still marked visited while DISCOVERY was off: true
--- NPC on again, same NPC 5 s after the one seen while off (dedupe): QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- NPC on again, 30 s later: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
+-- NPC on again, same NPC 5 s after the one seen while off (dedupe): QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- NPC on again, 30 s later: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- panel controls follow the commands: (no options panel)
 -- panel after /diario chat todo: (no options panel)
--- LOOT off, uncached epic, then cached: QUEST=1 BOSS=0 DEATH=2 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0; handler errors = 0
+-- LOOT off, uncached epic, then cached: QUEST=1 BOSS=0 DEATH=2 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0; handler errors = 0
 -- book with the mood shown:
 |cFFFF3333En Valle de los Retos, Durotar|r
 |cFF8A5A2417:57:05  ·  Cauteloso|r  La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
@@ -248,6 +248,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     ["profile"] = "ampliado",
     ["showProfile"] = true,
     ["types"] = {
+      ["ACHIEVEMENT"] = true,
       ["BOSS"] = true,
       ["CHAT"] = false,
       ["DEATH"] = true,
@@ -256,6 +257,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["GUILD"] = true,
       ["LEVEL"] = true,
       ["LOOT"] = true,
+      ["MOUNT"] = true,
       ["NPC"] = true,
       ["QUEST"] = true,
       ["QUEST_ACCEPT"] = true,

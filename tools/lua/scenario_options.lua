@@ -24,7 +24,7 @@ end
 
 local function SettingsLine()
     local off = {}
-    for _, info in ipairs(ns.TYPE_INFO) do
+    for _, info in ipairs(ns.VisibleTypes()) do
         if Settings().types[info.key] == false then off[#off + 1] = info.key end
     end
     return string.format("chat=%s showProfile=%s conversations=%s typesOff=[%s]", tostring(Settings().chat),
@@ -35,7 +35,7 @@ local function ControlsLine()
     local c = ns.optionsControls
     if not c then return "(no options panel)" end
     local parts = { "chat button = " .. tostring(c.chat.text) }
-    for _, info in ipairs(ns.TYPE_INFO) do
+    for _, info in ipairs(ns.VisibleTypes()) do
         parts[#parts + 1] = info.key .. (c.types[info.key]:GetChecked() and "=on" or "=off")
     end
     parts[#parts + 1] = "mood" .. (c.profile:GetChecked() and "=on" or "=off")

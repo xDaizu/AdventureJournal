@@ -58,7 +58,7 @@ local function PrintDiagnostics()
         for _ in pairs(DB.visited) do visitedCount = visitedCount + 1 end
         Say(string.format("Lugares visitados: %d. Mensajes en el chat: %s", visitedCount, tostring(DB.settings.chat)))
         local off = {}
-        for _, info in ipairs(ns.TYPE_INFO) do
+        for _, info in ipairs(ns.VisibleTypes()) do
             if not ns.IsTypeEnabled(info.key) then table.insert(off, info.key) end
         end
         Say(string.format("Tipos desactivados: %s. Ánimo en el libro: %s",
@@ -240,6 +240,10 @@ local function SetTypes(typeWord, switchWord)
     ns.EnsureDatabase()
     local key = typeWord ~= "" and ns.TypeFromWord(typeWord) or nil
     local enabled = SWITCH_WORDS[switchWord]
+    if key and not ns.IsTypeAvailable(key) then
+        Say(key .. ": este cliente no tiene lo necesario para anotarlo.")
+        return
+    end
     if key and enabled ~= nil then
         ns.SetTypeEnabled(key, enabled)
         Say(string.format("%s: %s.", key, enabled and "se anota" or "NO se anota"))
@@ -247,12 +251,12 @@ local function SetTypes(typeWord, switchWord)
     end
     if typeWord ~= "" and not key then Say("No conozco el tipo «" .. typeWord .. "».") end
     local lines = {}
-    for _, info in ipairs(ns.TYPE_INFO) do
+    for _, info in ipairs(ns.VisibleTypes()) do
         table.insert(lines, string.format("%s (%s): %s", info.label, info.words[1], YesNo(ns.IsTypeEnabled(info.key))))
     end
     Say("Se anota en el diario: " .. table.concat(lines, "; ") .. ".")
     local words = {}
-    for _, info in ipairs(ns.TYPE_INFO) do table.insert(words, info.words[1]) end
+    for _, info in ipairs(ns.VisibleTypes()) do table.insert(words, info.words[1]) end
     Say("Cambiar: /diario tipos <" .. table.concat(words, "|") .. "> <on|off>")
 end
 

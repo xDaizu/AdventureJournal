@@ -15,9 +15,12 @@ local S, fire, advance, slash, note, ns = H.S, H.fire, H.advance, H.slash, H.not
 local F = dofile(string.match(SCENARIO, "^(.*)/[^/]*$") .. "/fixture_ajprobe.lua")
 local Snap = F.Snapshot
 -- T4a adds QUEST_ACCEPT and GUILD (REVISIT and the death killer are not in AJProbe's records: nothing to import).
+-- T4b adds ACHIEVEMENT on Forever (Classic Era has no achievements; AJProbe records no mounts).
 local NEW_TYPES = { "LEVEL", "GROUP", "REPUTATION", "SKILL", "SPELL", "QUEST_ACCEPT", "GUILD" }
+if FLAVOR ~= "classic" then NEW_TYPES[#NEW_TYPES + 1] = "ACHIEVEMENT" end
+S.achievements = FLAVOR ~= "classic" and { [7] = "Explorador", [8] = "Aventurero" } or S.achievements
 -- The fields, besides type and text, that each new type stores in an entry (compared live vs imported).
-local EXTRA_FIELDS = { "level", "groupEvent", "repEvent", "standing", "skillEvent", "rank", "spellID", "learnKind", "questID", "guildEvent" }
+local EXTRA_FIELDS = { "level", "groupEvent", "repEvent", "standing", "skillEvent", "rank", "spellID", "learnKind", "questID", "guildEvent", "achievementID" }
 
 S.questTitles[4641] = "Tu lugar en el mundo"
 S.questTitles[4642] = "Cuernos rotos"
@@ -175,6 +178,12 @@ local function NewRecords(fixture, T)
     fixture.Log(T + 385, "CHAT_MSG_SYSTEM", { a = { "Has invitado a Garona a unirse a tu hermandad." } })   -- an invitation: none
     fixture.Log(T + 390, "CHAT_MSG_SYSTEM", { a = { "Has dejado la hermandad." } })
     fixture.Log(T + 395, "CHAT_MSG_SYSTEM", { a = { "[SECRET]" } })
+    -- ACHIEVEMENT (Forever): a = { achievementID, alreadyEarned }; the name is looked up at import time
+    fixture.Log(T + 410, "ACHIEVEMENT_EARNED", { a = { 7, false } })
+    fixture.Log(T + 411, "ACHIEVEMENT_EARNED", { a = { 7, false } })           -- twice: one entry
+    fixture.Log(T + 420, "ACHIEVEMENT_EARNED", { a = { 8, true } })            -- earned before: none
+    fixture.Log(T + 430, "ACHIEVEMENT_EARNED", { a = { 4242, false } })        -- no name: neutral text
+    fixture.Log(T + 440, "ACHIEVEMENT_EARNED", { a = { "[SECRET]", false } })  -- unreadable: none
 end
 
 -- ===================================================================================
@@ -309,6 +318,10 @@ if H.variant == "types" then
     advance(20); if FLAVOR == "classic" then fire("QUEST_ACCEPTED", 2, 4642) else fire("QUEST_ACCEPTED", 4642) end
     advance(20); fire("CHAT_MSG_SYSTEM", "Volgajin se ha unido a la hermandad.")
     advance(20); fire("CHAT_MSG_SYSTEM", "Has dejado la hermandad.")
+    if FLAVOR ~= "classic" then
+        advance(20); fire("ACHIEVEMENT_EARNED", 7, false)
+        advance(20); fire("ACHIEVEMENT_EARNED", 4242, false)
+    end
     local compared = 0
     for _, live in ipairs(AdventureJournalDB.days[AdventureJournalDB.currentDay].events) do
         if live.type ~= "DISCOVERY" then

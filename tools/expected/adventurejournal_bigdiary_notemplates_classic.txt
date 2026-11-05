@@ -1,6 +1,6 @@
 ##### classic: fresh login #####
 == scenario log
--- old v2 diary loaded: version 3, settings.chat kept = off, defaults added: showProfile=false, 14 types on
+-- old v2 diary loaded: version 3, settings.chat kept = off, defaults added: showProfile=false, 16 types on
 -- after login: currentDay = 251
 -- index mode: botones (CreateFrame: Couldn't find inherited node "WowScrollBoxList")
 -- frames created by opening the book once: more than 80 (524)

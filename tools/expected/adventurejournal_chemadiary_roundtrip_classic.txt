@@ -1,7 +1,7 @@
 ##### classic: fresh login #####
 == scenario log
 -- after ADDON_LOADED: version=3 origin=nil profile=ampliado chat=off lootQuality=3 showProfile=true conversations=false
--- after ADDON_LOADED: types off = LOOT, REVISIT; Chema's types (for T4): QUEST_ACCEPT=true, REVISIT=false, MOUNT=nil, ACHIEVEMENT=nil, GUILD=true
+-- after ADDON_LOADED: types off = LOOT, REVISIT; Chema's types (for T4): QUEST_ACCEPT=true, REVISIT=false, MOUNT=true, ACHIEVEMENT=true, GUILD=true
 -- after ADDON_LOADED: visited places = 2
 -- after load: visitedZones, knownMounts, knownAchievements and jornadas 1, 2 are byte-identical to the diary as it was saved before this load
 -- roundtrip: jornada 3 has 1 entries: DISCOVERY «Razor Hill, Durotar»

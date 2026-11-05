@@ -145,6 +145,16 @@ HANDLERS.QUEST_ACCEPTED = function(record)
     return { type = "QUEST_ACCEPT", text = text, extra = { questID = id }, secret = title == nil and secretTitle }
 end
 
+-- T4b: ACHIEVEMENT_EARNED a = { achievementID, alreadyEarned }. AJProbe records the ID only; the name is
+-- looked up now (neutral text when it cannot be). NEW_MOUNT_ADDED is not recorded by AJProbe.
+HANDLERS.ACHIEVEMENT_EARNED = function(record)
+    local args = type(record.a) == "table" and record.a or {}
+    if args[2] == true then return nil, "ignored" end   -- earned before
+    local candidate = ns.AchievementCandidate(args[1])
+    if not candidate then return nil, "ignored" end
+    return candidate
+end
+
 HANDLERS.GOSSIP_SHOW = function(record)
     local name, secret = Text(record.npc)
     return { type = "NPC", text = name or ns.NEUTRAL_TEXT.NPC, secret = name == nil and secret }

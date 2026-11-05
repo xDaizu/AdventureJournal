@@ -67,8 +67,12 @@ local SHAPES = {
     { "SPELL ability", { type = "SPELL", text = "Carga", learnKind = "ability" }, 10 },
     { "SPELL passive", { type = "SPELL", text = "Maestría", learnKind = "passive" }, 10 },
     { "MOUNT", { type = "MOUNT", text = "Lobo veloz" }, 10 },
+    { "MOUNT unnamed", { type = "MOUNT", text = ns.NEUTRAL_TEXT.MOUNT }, 5 },
+    { "ACHIEVEMENT unnamed", { type = "ACHIEVEMENT", text = ns.NEUTRAL_TEXT.ACHIEVEMENT }, 5 },
     { "FLIGHT_POINT", { type = "FLIGHT_POINT", text = "x" }, 10 },
     { "GUILD join", { type = "GUILD", text = "Los Errantes" }, 10 },
+    { "GUILD join unnamed", { type = "GUILD", text = ns.NEUTRAL_TEXT.GUILD }, 5 },
+    { "GUILD leave unnamed", { type = "GUILD", text = ns.NEUTRAL_TEXT.GUILD, guildEvent = "leave" }, 5 },
     { "GUILD leave", { type = "GUILD", text = "Los Errantes", guildEvent = "leave" }, 10 },
     { "ACHIEVEMENT", { type = "ACHIEVEMENT", text = "Explorador" }, 10 },
     { "DISCOVERY", { type = "DISCOVERY", text = "Valle de los Retos, Durotar" }, 3 },
@@ -131,7 +135,8 @@ end
 
 -- Template sizes: Chema's counts.
 local EXPECT = { QUEST = 20, QUEST_ACCEPT = 20, BOSS = 20, DEATH = 20, LOOT = 20, LEVEL = 20, NPC = 20,
-    MOUNT = 10, FLIGHT_POINT = 10, GUILD_join = 10, ACHIEVEMENT = 10,
+    MOUNT = 10, FLIGHT_POINT = 10, GUILD_join = 10, ACHIEVEMENT = 10, MOUNT_unnamed = 5, ACHIEVEMENT_unnamed = 5,
+    GUILD_join_unnamed = 5, GUILD_leave_unnamed = 5,
     CHAT = 10, GROUP_join = 10, GROUP_leave = 10, GROUP_selfleave = 10, GROUP_disband = 10, GROUP_youjoin = 10,
     REPUTATION_gain = 10, REPUTATION_standing = 10, SKILL_new = 10, SKILL_rank = 10, SPELL = 10, GUILD_leave = 10 }
 for key, n in pairs(EXPECT) do
