@@ -5,6 +5,7 @@ Developer documentation. Players get the Spanish guide in [LEEME.txt](LEEME.txt)
 AdventureJournal is a narrative diary that runs automatically. It listens to game events (quests, bosses, deaths, loot, places, NPCs, whispers), turns each one into a short first-person paragraph in Spanish, and saves the paragraphs per character, grouped into *jornadas* (one jornada per login). Players read the diary in a book-style window in game, and an external Python script can export it to a `.txt` file.
 
 - Original author: ChemaE. Released version: `1.1.0-Era`. In development: `1.2.0-dev` (dual-client port, see the [roadmap](ROADMAP.md)). Milestone state: M0–M2, M4, M4b (backfill from AJProbe, opt-in RP conversations) and M5 (options, mood in the book, ScrollBox index, Forever addon-menu entry) are tested in game on Classic Era and tagged; the M4b import and live party capture have also run on real Forever data. **M6 (five more entry types: level, party, reputation, skills, spells, live and imported) is written and passes the harness; its Classic Era smoke test and the Forever checks are pending.** M3 (the rest of the Forever checks) is in progress.
+- **Transition with Chema's Forever line** (`1.1.0-Forever`, which diverged from this one; see the [roadmap](ROADMAP.md#transition-with-chemas-forever-line-t1t5)): his look, style and prose are to become this addon's, on this line's engine. T1 (his diaries load here and keep everything, profiles, loot threshold) is on branch `transition-t1-migration`, passing the harness, smoke test pending.
 - UI language: Spanish only, hard-coded (no localization layer).
 
 ## Supported clients
@@ -60,7 +61,7 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `QUEST` | `QUEST_TURNED_IN` | Repeats of the same quest ID within 3 s are ignored. The title comes from `C_QuestLog.GetTitleForQuestID`, falling back to the quest log, then to the quest ID. |
 | `BOSS` | `BOSS_KILL`, `ENCOUNTER_END` (`success == 1`) | Repeats of the same name within 5 s are ignored, because both events can fire for one kill. |
 | `DEATH` | `PLAYER_DEAD` | |
-| `LOOT` | `CHAT_MSG_LOOT`, plus `GET_ITEM_INFO_RECEIVED` / `ITEM_DATA_LOAD_RESULT` for items not yet cached | Only the player's own loot (messages matching the locale's `LOOT_ITEM_SELF*` / `LOOT_ITEM_PUSHED_SELF*` strings) and only quality ≥ 3 (rare or better). Parses the first item link in the message. |
+| `LOOT` | `CHAT_MSG_LOOT`, plus `GET_ITEM_INFO_RECEIVED` / `ITEM_DATA_LOAD_RESULT` for items not yet cached | Only the player's own loot (messages matching the locale's `LOOT_ITEM_SELF*` / `LOOT_ITEM_PUSHED_SELF*` strings) and only quality ≥ `settings.lootQuality` (T1: 3 = rare or better by default, 4 = epic in the *clásico* profile; the import uses the same threshold). Parses the first item link in the message. |
 | `DISCOVERY` | `ZONE_CHANGED*`, `MINIMAP_ZONE_CHANGED` | Only the first time a "subzone, zone" is seen (`visited`). Ignored while the zone text is nil or secret. Zone-only places count too: "Durotar" and "Valle de los Retos, Durotar" are different places. |
 | `NPC` | `GOSSIP_SHOW` | Uses `UnitName("npc")`. Repeats of the same NPC within 20 s are ignored. |
 | `LEVEL` | `PLAYER_LEVEL_UP` | M6. The new level is the first argument; a secret or unreadable one gives "He subido de nivel" with no number. Same level within 10 s: one entry. |
@@ -124,9 +125,10 @@ Two features that read or store more than the live diary does. Both are describe
 
 ```lua
 AdventureJournalDB = {
-  version    = 2,
+  version    = 3,
   currentDay = <number>,          -- index of the latest jornada
   visited    = { ["Subzone, Zone"] = true, ... },  -- v2: places already logged as a DISCOVERY
+  origin     = "chema",           -- T1, optional: this diary was first written by Chema's Forever line
   settings   = {                                   -- v2; defaults merged on every load (see below)
     chat          = "important",  -- "all" | "important" | "off"
     types         = { QUEST = true, BOSS = true, DEATH = true, LOOT = true,
@@ -134,7 +136,11 @@ AdventureJournalDB = {
                       LEVEL = true, GROUP = true, REPUTATION = true, SKILL = true, SPELL = true },  -- which types are logged (M6 added the last five)
     showProfile   = false,        -- show the mood (characterProfile) in the book's entry header
     conversations = false,        -- M4b: record RP conversations (opt-in, off by default)
+    lootQuality   = 3,            -- T1: lowest item quality logged as LOOT (2..5; 3 rare, 4 epic)
+    profile       = "ampliado",   -- T1: the profile last applied, "ampliado" | "clasico" (a record)
   },
+  -- T1: kept untouched when the diary comes from Chema's Forever line (1.1.0-Forever), never written here:
+  visitedZones, knownMounts, knownAchievements,   -- his tables; visitedZones is merged into `visited` on every load
   days = {
     [n] = {
       startedAt = "YYYY-MM-DD HH:MM:SS",
@@ -171,10 +177,19 @@ AdventureJournalDB = {
 
 Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\WTF\...`). Diaries are **not shared** between Forever and Classic Era characters. The schema itself must stay identical on both clients, so the exporter and any future migration code work on either one. If the schema changes, bump `version` and migrate in `EnsureDatabase()`. **M5 added keys to `settings` without a schema bump** (the version stays 2): `EnsureDatabase` fills in any missing setting from `ns.DEFAULT_SETTINGS` on every load and replaces a value of the wrong type, and a type missing from `settings.types` counts as on. Diaries saved at v1 or at v2 before M5 load unchanged and keep their own values (checked in the harness: the migration scenario for v1, the 250-jornada diary for pre-M5 v2). **v1 → v2 (M4):** adds `visited` (seeded from the diary's existing DISCOVERY entries) and `settings`; existing jornadas are untouched. **M6 added five entry types and their fields (`level`, `groupEvent`, `repEvent`, `standing`, `skillEvent`, `rank`, `spellID`, `learnKind`) without a schema bump** (the version stays 2): a type missing from `settings.types` counts as on, `EnsureDatabase` fills the five keys with `true`, and the book shows any entry by its stored prose. **M4b added `conversations`, `source`, `startTs` and `endTs` without a schema bump** (the version stays 2): they are optional, nothing needs a migration, v1 and v2 diaries (with or without M5 settings) load unchanged (harness), and the code that reads a jornada treats a missing `conversations` as empty. The exporter (M7) must learn them.
 
+**v2 → v3 (T1, diaries from Chema's Forever line).** Chema's `1.1.0-Forever` (github.com/xDaizu/AdventureJournal, branch `main`) saves the same `AdventureJournalDB` with a different shape: `visitedZones`, `knownMounts`, `knownAchievements`, `days[n].mainZone`, entries with `header`, `travelMethod`, `npc`, `killer`, `mountID`, `achievementID`, and types this line does not log yet (`QUEST_ACCEPT`, `REVISIT`, `MOUNT`, `ACHIEVEMENT`, `GUILD`). It also writes `version = 2` on every load, so **a diary is recognised by its keys, never by the version number**. The rules in `EnsureDatabase`:
+- *First load of a Chema diary* (it has any of his three tables and no `settings`): `origin = "chema"` and the **clásico** profile is applied once. Its choices then behave like any other setting: a later change by the player is kept.
+- *Every load*: the places in `visitedZones` are copied into `visited` (same `"Subzone, Zone"` key), so they are not discovered again. Running it on every load covers a player who went back to Chema's version for a while: that version ignores `visited` and keeps writing `visitedZones`.
+- *Never*: his tables, his jornadas and his entry fields are not changed or deleted. Entries of his types show from their stored `prose`; a type this version does not know counts as on.
+- `version` becomes 3 for every diary. Older diaries of this line (v1, v2) keep all their values; they get `lootQuality = 3` and `profile = "ampliado"`.
+
+**Profiles (T1).** `ns.PROFILES` holds the values a profile writes; `ns.ApplyProfile(name)` writes them (the panel and a command arrive in T5). **clásico** is what Chema's diary did: `chat = "all"`, `lootQuality = 4`, NPC / CHAT / LEVEL / GROUP / REPUTATION / SKILL / SPELL off, his own types on (written now so that a later `default = false`, planned for REVISIT, cannot switch them off). **ampliado** is this line's defaults. A fresh diary gets ampliado's values (decision D1 in the transition plan is still open). `TYPE_INFO` rows may carry `default = false`; a type the player never set uses that default.
+
 ### UI and commands
 
 - `AdventureJournalBookFrame` is an open book: the jornada index on the left (newest first), the selected jornada's prose on the right, and previous/next buttons. It is created on first use.
-- Slash commands: `/diario` or `/journal` (toggle), `/diario hoy` (latest jornada), `/diario anterior` (the one before it), `/diario chat [todo|importante|nada]` (what is echoed to the chat window; default `importante` = boss kills, deaths, epic loot).
+- Slash commands: `/diario` or `/journal` (toggle), `/diario hoy` (latest jornada), `/diario anterior` (the one before it), `/diario chat [todo|importante|nada]` (what is echoed to the chat window; default `importante` = boss kills, deaths, epic loot). Spaces around the command are ignored (as in Chema's version).
+- Kept from Chema's Forever line (T1), so macros and habits keep working: the global `AdventureJournal_Toggle()` (same as `AdventureJournal_ToggleUI()`), and `/ajdiag` (same as `/diario diag`).
 - Options (M5). Every option has a slash command **and** a control in the panel; both change the same `settings`:
   - `/diario opciones` (also `options`, `config`): opens the panel (Esc > Opciones > AddOns > Diario de Aventuras). If it cannot be opened, the command says why and lists the commands below.
   - `/diario chat [todo|importante|nada]`: chat echo.
@@ -188,7 +203,7 @@ Each client keeps its own `WTF` folder (`_forever_\WTF\...` and `_classic_era_\W
 - Escape closes the book.
 - Forever's addon menu (the minimap button): the Forever TOC has `## AddonCompartmentFunc: AdventureJournal_OnAddonCompartmentClick`, a global that toggles the book. The Vanilla TOC has no such line. Whether the entry appears and works on Forever: **verify in M3/M5**.
 - Developer commands:
-  - `/diario diag`: client, interface, DB, API branches, registered events, handler errors. Run it first on a new client. `/diario diag mensajes` (M6) prints only which of the client's message strings each new type found (group, reputation, skills, spells); a line saying `ninguna` means that type cannot recognise anything on this client. It ends with a round-trip test: for each string it builds an invented sentence from the client's own format, passes it through the same parser the game events use (nothing is logged) and prints `OK` or `NO`, last line `RESULTADO: ...`.
+  - `/diario diag`: client, interface, DB, profile and loot threshold, whether the diary came from Chema's version (and how many of his places, mounts and achievements are kept), API branches, registered events, handler errors. Run it first on a new client. `/diario diag mensajes` (M6) prints only which of the client's message strings each new type found (group, reputation, skills, spells); a line saying `ninguna` means that type cannot recognise anything on this client. It ends with a round-trip test: for each string it builds an invented sentence from the client's own format, passes it through the same parser the game events use (nothing is logged) and prints `OK` or `NO`, last line `RESULTADO: ...`.
   - `/diario debug on` / `off`: print every handled event's payload (`[SECRET]` for secrets) and every fallback taken. Session only.
   - `/diario debug secrets` (`off` to stop): simulate secret values, mainly for Classic Era. Also turns debug on. `/diario debug off` or `/reload` turns everything off.
   - `/diario debug demo` (`off` to stop): the book shows 250 generated jornadas (20 entries each, every other one without a mood) to try the index. They live in memory only: not saved, never mixed into your diary (entries made meanwhile still go to the real one). `/diario debug off` or `/reload` also removes them.

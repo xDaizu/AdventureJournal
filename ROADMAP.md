@@ -2,7 +2,7 @@
 
 Milestone plan to finish the dual-client port (WoW Forever + Classic Era), then handle bug fixes and improvements. Background and design rules: [README.md](README.md).
 
-Last updated: 2026-11-05 (M0–M2, M4 and M5 tested on Classic Era and tagged; M4b tested on Classic Era and tagged, its import also run on real Forever data; M6 written and passing the harness, smoke test pending; M3 (the rest of the Forever checks) is in progress).
+Last updated: 2026-11-05 (M0–M2, M4 and M5 tested on Classic Era and tagged; M4b tested on Classic Era and tagged, its import also run on real Forever data; M6 written and passing the harness, smoke test pending; M3 (the rest of the Forever checks) is in progress; transition with Chema's Forever line: T1 written on branch `transition-t1-migration`, passing the harness, smoke test pending).
 
 ## Constraints that shape the plan
 
@@ -196,6 +196,21 @@ Decisions (user, 2026-11-05): experience gets **no** entry type (nothing beyond 
 **Status (2026-11-05):** code done and `npm test` green on both flavors (new scenarios `newtypes`, `importnew`, plus `nomessages`, `secrets`, off-equality). **Pending:** the Classic Era smoke test (user), tag `m6-done`, and the Forever checks ([M3_RUNBOOK.md](M3_RUNBOOK.md) section 3d).
 
 **Done when:** each type works live and imported on both clients (`npm test` green, Classic Era smoke test passed; the Forever parts verified in the next Forever session).
+
+## Transition with Chema's Forever line (T1–T5)
+
+Chema's `1.1.0-Forever` (github.com/xDaizu/AdventureJournal, branch `main`, commit `fa20e9f`) diverged from this line: a Forever-only rewrite with much richer prose, its own book design and texture, and some entry types this line lacks (quest accepted with its giver, revisits with the travel method, mounts, achievements, guild). It also has no secret guards and several broken handlers. Goal: **one addon that looks and reads like Chema's diary, on this line's engine, losing nothing either side has.** Decided (user, 2026-11-05):
+- **All look and style comes from Chema's version** (he is a designer): one book design for everyone, his. B-only controls (conversations toggle and paging, previous/next, page number) are fitted into his design, ideally by him.
+- Differences are ordinary settings. A **profile** writes a set of them once: **clásico** (what Chema's diary does) or **ampliado** (this line). A diary from Chema's line gets clásico on its first load here; every other diary keeps its settings. Chema's bugs are fixed for everyone, without an option.
+- Work on a feature branch per milestone, then an MR to main (user's request).
+
+Open decisions: **D1** the profile of a fresh install (for now: ampliado, i.e. unchanged); **D2** one prose set for everyone (recommended: Chema's); **D3** gender in the prose; **D4** whether previous/next and the page number stay (Chema's call); **D5** agree the plan with Chema.
+
+- [x] **T1: his diaries load here, profiles, loot threshold** (branch `transition-t1-migration`; H; **R**; **F**). Schema v3. A Chema diary is recognised by its keys (`visitedZones`, `knownMounts`, `knownAchievements`, and no `settings`), because his code writes `version = 2` on every load. First load: `origin = "chema"` and the clásico profile (chat `all`, epic loot, the types his diary never had off, his own types on). Every load: `visitedZones` merged into `visited`. His tables, jornadas and fields are never touched (harness: byte-identical across login, `/reload` and a second login, and across a round trip where his version wrote into one of our diaries). New settings `lootQuality` (live and import) and `profile`; `TYPE_INFO` rows may set `default = false`; `ns.ApplyProfile`. Kept from his version: `AdventureJournal_Toggle()`, `/ajdiag`, spaces around a `/diario` command. `/diario diag` shows the profile, the loot threshold and what is kept of his diary. No visible change for a diary of this line (every existing harness report changed only by `version`, the two new settings, the new globals and one diag line). **Pending:** the Classic Era smoke test on your own diary (it must look and behave exactly as before), and a check on Forever with a real diary from Chema's version if one is available (back it up first).
+- [ ] **T2: his prose becomes the prose.** `Locales.lua` into `Narrative.lua` (20-variant lists, mood categories, zone headers per travel method), with the capital after a full stop, his typos fixed, neutral fallbacks, the D3 decision; `ComposeEntry` returns prose and header; Chema-style variants for the types only this line has. Stored prose never changes.
+- [ ] **T3: his book for everyone.** `Textures/tiled.tga` (replaces `QuestBG`), his layout, colours, fonts, red place headers, index rows with "lugar · fecha"; this line's ScrollBox index, conversations view and fallbacks underneath.
+- [ ] **T4: his entry types, done this line's way** (M6 rule): T4a both clients `QUEST_ACCEPT` with the giver, `REVISIT` with the travel method (`default = false`), the killer on death, `GUILD`; T4b Forever only, feature-detected `MOUNT`, `ACHIEVEMENT`.
+- [ ] **T5: profile UI.** A *Perfil* row in the panel (with a confirmation), `/diario perfil clasico|ampliado`, a `lootQuality` control (the LOOT label "Botín raro o mejor" must follow it), and a one-time hint for players who came from his version.
 
 ## M7: Export and conversation management 🟢 (M)
 
