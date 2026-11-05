@@ -195,13 +195,15 @@ Each item must work on both clients or be cleanly guarded. Mark ideas that only 
 
 **More story content**
 - More prose variants for every entry type, not just quests. Avoid repeating the same template within a jornada.
-- New entry types: level up (`PLAYER_LEVEL_UP`; AJProbe's log already has `level`, so the backfill can import it the day the type exists), new profession skill tiers, flight paths learned, first visit to a capital or dungeon, reputation level changes, PvP honour or battleground results (outside the match only).
+- **Requested 2026-11-05:** a level-up entry type (`PLAYER_LEVEL_UP`). AJProbe already holds 5 level-ups on Forever (character Necroroth, first session) and its records carry `level`, so the backfill can import them the day the type exists. Needs a `TYPE_INFO` entry, narrative text and the import handler.
+- **Requested 2026-11-05:** party joins and leaves, with who joined (`GROUP_JOINED` / `GROUP_LEFT`). AJProbe's `GROUP_JOINED` record holds no names (checked on the Forever file); the name is in the `CHAT_MSG_SYSTEM` line just after it (`Dips Jawshatter se une al grupo.`, within about a second). So the backfill must pair those two records and match the text with the client's own global strings (`ERR_JOINED_GROUP_S`, `ERR_LEFT_GROUP_S`), not a Spanish literal. Live, the same system message or `GROUP_ROSTER_UPDATE` plus `UnitName("party1".."party4")` would give the names. "If possible": in instances on Forever names may be secret, in which case the entry says "un grupo" without names (verify in M3). Entries about other players' names fall under the same care as conversations: consider tying them to a setting.
+- New entry types: new profession skill tiers, flight paths learned, first visit to a capital or dungeon, reputation level changes, PvP honour or battleground results (outside the match only).
 - End-of-jornada summary paragraph (quests, places, deaths), written at logout or when the jornada is opened.
 - Forever only: Hardcore deaths (`C_GameRules.IsHardcoreActive()`) get a special epitaph entry. Skyborne/Legacy/Camping events once their APIs are known (`/api`).
 
 **Conversations**
-- A way to delete stored conversations (`/diario conversaciones borrar`, with a confirmation) and per-channel choices. Search inside the conversations view.
-- Import the other AJProbe records (XP, reputation, skills, system messages, achievements, spells learned, flights) once their entry types exist.
+- **Requested 2026-11-05:** a way to delete stored conversations (`/diario conversaciones borrar`, with a confirmation; per jornada or all), and per-channel choices. Search inside the conversations view. The import must not bring a deleted line back: decide how (for example remember the epoch range deleted, or only import lines newer than a marker).
+- **Requested 2026-11-05:** import the other AJProbe records: XP, reputation changes, and skills learned or levelled up. On the first Forever session AJProbe holds `CHAT_MSG_COMBAT_XP_GAIN` (165), `CHAT_MSG_SKILL` (43), `CHAT_MSG_COMBAT_FACTION_CHANGE` (11) and `LEARNED_SPELL_IN_SKILL_LINE` (9). XP lines are too frequent to be one entry each: summarise per jornada or per level (for example "gané N de experiencia"), and give reputation and skills thresholds so the book stays readable. Also system messages, achievements and flights, once their entry types exist. Each needs an entry type first, then a live handler, then the import handler, so that live and imported entries match.
 
 **UI**
 - Search and filter by entry type or zone. Bookmarks.
