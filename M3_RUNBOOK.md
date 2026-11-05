@@ -62,7 +62,7 @@ Copy-Item "$wtf\<Realm>\<Character>\SavedVariables\AdventureJournal.lua" $backup
 Get-ChildItem $backup
 ```
 Both files must be listed (AJProbe.lua is the only complete record of the first days). The backup folder is outside the repository and outside the game folder.
-Optional, outside the game: rehearse on those files with `node tools\import-dryrun.js --probe <AJProbe.lua> --diary <AdventureJournal.lua> --flavor forever`. It writes nothing and prints counts; send me the output.
+Optional, outside the game: rehearse on those files (from the `AdventureJournal` folder) with `node tools\import-dryrun.js --probe <AJProbe.lua> --diary <AdventureJournal.lua> --flavor forever`. It writes nothing and prints counts; send me the output.
 
 | Step | What to do | You should see |
 |---|---|---|
@@ -111,7 +111,7 @@ Send back: the screenshot of `/diario diag mensajes`, the `/run print(...)` line
 ## 6. After you log out
 Close the game first: WoW writes SavedVariables on `/reload` or logout.
 
-1. Summarise AJProbe's Forever data (read-only):
+1. Summarise AJProbe's Forever data (read-only; run from the `AdventureJournal` folder):
    ```
    py -3 tools\ajprobe_summary.py > forever_summary.md
    ```

@@ -1,0 +1,170 @@
+##### forever: fresh login #####
+== scenario log
+-- date parsing works here = false
+-- == first import (the empty jornada cannot be dated, so its session gets a jornada of its own)
+-- diary: currentDay = 3, jornadas in days = 3
+--   jornada 1: 2026-11-04 04:03:20 -> 2026-11-04 04:08:20, 1 entradas [QU*], 0 conversaciones, source=ajprobe
+--   jornada 2: 2026-11-04 05:26:40 -> 2026-11-04 05:28:20, 1 entradas [DE*], 0 conversaciones, source=ajprobe
+--   jornada 3: 2026-11-04 04:03:20 -> 2026-11-04 04:08:20, 0 entradas [], 0 conversaciones
+-- == second import: nothing new, byte-identical
+-- repeat: the diary is byte-identical afterwards
+-- == third import
+-- repeat: the diary is byte-identical afterwards
+-- imported jornadas keep their epochs: 2
+== events registered
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Diagnóstico de AdventureJournal 1.2.0-dev
+|cFFFFD700[Diario]|r Cliente: 1.60.1 (build 70755), interfaz 16001, WOW_PROJECT_ID 1
+|cFFFFD700[Diario]|r Detectado: IS_FOREVER=true, IS_CLASSIC_ERA=false, idioma esES
+|cFFFFD700[Diario]|r Instancia: false (none). Zona: nil / ""
+|cFFFFD700[Diario]|r Base de datos: versión 3, jornada actual 1, 1 jornadas, 0 entradas hoy
+|cFFFFD700[Diario]|r Lugares visitados: 0. Mensajes en el chat: important
+|cFFFFD700[Diario]|r Tipos desactivados: ninguno. Ánimo en el libro: no
+|cFFFFD700[Diario]|r Perfil: ampliado. Botín desde calidad 3. Diario de la versión de Chema: no
+|cFFFFD700[Diario]|r Conversaciones: no. Eventos de chat registrados: 0 de 12
+|cFFFFD700[Diario]|r AJProbe: presente, 6 registros de actividad y 0 mensajes (/diario importar los lee, sin modificarlos)
+|cFFFFD700[Diario]|r Lectura de fechas (time{...}, la usa /diario importar): OK
+|cFFFFD700[Diario]|r Panel de opciones: panel registrado (categoría 100)
+|cFFFFD700[Diario]|r Índice del libro: el libro aún no se ha abierto
+|cFFFFD700[Diario]|r Menú de addons (AddonCompartmentFunc): TOC = AdventureJournal_OnAddonCompartmentClick, función global = sí
+|cFFFFD700[Diario]|r Patrones de botín propio: 4 (0 = se acepta todo el botín)
+|cFFFFD700[Diario]|r issecretvalue: sí (issecretvalue('x') = false)
+|cFFFFD700[Diario]|r C_Secrets / C_RestrictedActions: NO / NO
+|cFFFFD700[Diario]|r Info de objetos: C_Item.GetItemInfo (primero)
+|cFFFFD700[Diario]|r GetItemInfo global: NO
+|cFFFFD700[Diario]|r C_Item.RequestLoadItemDataByID: sí
+|cFFFFD700[Diario]|r Título de misión: C_QuestLog.GetTitleForQuestID
+|cFFFFD700[Diario]|r C_EventUtils.IsEventValid: sí
+|cFFFFD700[Diario]|r C_AddOns.GetAddOnMetadata / GetAddOnMetadata: sí / NO
+|cFFFFD700[Diario]|r GetRealZoneText / GetSubZoneText: sí / sí
+|cFFFFD700[Diario]|r Textos del juego que reconocen los tipos nuevos (M6): /diario diag mensajes los repite solos.
+|cFFFFD700[Diario]|r   Mensajes de grupo (de 6): ERR_JOINED_GROUP_S, ERR_RAID_MEMBER_ADDED_S, ERR_LEFT_GROUP_S, ERR_RAID_MEMBER_REMOVED_S, ERR_LEFT_GROUP_YOU, ERR_GROUP_DISBANDED
+|cFFFFD700[Diario]|r   Mensajes de reputación: subidas: FACTION_STANDING_INCREASED
+|cFFFFD700[Diario]|r   Mensajes de reputación: cambios de nivel: FACTION_STANDING_CHANGED
+|cFFFFD700[Diario]|r   Mensajes de habilidades: ERR_SKILL_UP_SI [rank], ERR_SKILL_GAINED_S [new]
+|cFFFFD700[Diario]|r   Mensajes de hechizos (de 3): ERR_LEARN_SPELL_S, ERR_LEARN_ABILITY_S, ERR_LEARN_PASSIVE_S
+|cFFFFD700[Diario]|r Interfaz (M5):
+|cFFFFD700[Diario]|r   Settings.RegisterCanvasLayoutCategory: sí
+|cFFFFD700[Diario]|r   Settings.RegisterVerticalLayoutCategory: sí
+|cFFFFD700[Diario]|r   Settings.RegisterAddOnCategory: sí
+|cFFFFD700[Diario]|r   Settings.OpenToCategory: sí
+|cFFFFD700[Diario]|r   Settings.RegisterAddOnSetting: sí
+|cFFFFD700[Diario]|r   Settings.RegisterProxySetting: sí
+|cFFFFD700[Diario]|r   Settings.CreateCheckbox: sí
+|cFFFFD700[Diario]|r   Settings.CreateDropdown: sí
+|cFFFFD700[Diario]|r   Settings.VarType: sí
+|cFFFFD700[Diario]|r   SettingsPanel: sí
+|cFFFFD700[Diario]|r   InterfaceOptions_AddCategory: NO
+|cFFFFD700[Diario]|r   CreateScrollBoxListLinearView: sí
+|cFFFFD700[Diario]|r   CreateDataProvider: sí
+|cFFFFD700[Diario]|r   ScrollUtil.InitScrollBoxListWithScrollBar: sí
+|cFFFFD700[Diario]|r   AddonCompartmentFrame: NO
+|cFFFFD700[Diario]|r   plantilla UICheckButtonTemplate: sí
+|cFFFFD700[Diario]|r   plantilla InterfaceOptionsCheckButtonTemplate: sí
+|cFFFFD700[Diario]|r   plantilla UIPanelButtonTemplate: sí
+|cFFFFD700[Diario]|r   plantilla WowScrollBoxList: sí
+|cFFFFD700[Diario]|r   plantilla MinimalScrollBar: sí
+|cFFFFD700[Diario]|r   prueba de ScrollBox: OK
+|cFFFFD700[Diario]|r Eventos registrados (20): ADDON_LOADED, PLAYER_ENTERING_WORLD, PLAYER_LOGOUT, QUEST_TURNED_IN, BOSS_KILL, ENCOUNTER_END, PLAYER_DEAD, CHAT_MSG_LOOT, GET_ITEM_INFO_RECEIVED, ITEM_DATA_LOAD_RESULT, ZONE_CHANGED_NEW_AREA, ZONE_CHANGED, ZONE_CHANGED_INDOORS, GOSSIP_SHOW, CHAT_MSG_WHISPER, PLAYER_LEVEL_UP, CHAT_MSG_SYSTEM, GROUP_JOINED, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_SKILL
+|cFFFFD700[Diario]|r Eventos NO registrados (1): MINIMAP_ZONE_CHANGED (el cliente no conoce este evento)
+|cFFFFD700[Diario]|r Errores en manejadores: ninguno
+|cFFFFD700[Diario]|r Depuración: apagada, secretos simulados: apagados
+|cFFFFD700[Diario]|r Importación desde AJProbe: 6 registros de actividad (6 de este personaje, 0 de otros) y 0 mensajes de chat.
+|cFFFFD700[Diario]|r Añadidos: 2 acontecimientos (QUEST 1, DEATH 1) y 0 conversaciones. Jornadas nuevas: 2.
+|cFFFFD700[Diario]|r Omitidos: 0 duplicados, 0 con valores secretos (0 con texto neutro), 0 de tipos desactivados, 0 botines sin calidad conocida, 0 lugares ya conocidos o sin subzona; 4 registros no generan entrada.
+|cFFFFD700[Diario]|r Resumen: +2 acontecimientos, +0 conversaciones, 2 jornadas nuevas, 0 duplicados omitidos.
+|cFFFFD700[Diario]|r Importación desde AJProbe: 6 registros de actividad (6 de este personaje, 0 de otros) y 0 mensajes de chat.
+|cFFFFD700[Diario]|r Añadidos: 0 acontecimientos y 0 conversaciones. Jornadas nuevas: 0.
+|cFFFFD700[Diario]|r Omitidos: 2 duplicados, 0 con valores secretos (0 con texto neutro), 0 de tipos desactivados, 0 botines sin calidad conocida, 0 lugares ya conocidos o sin subzona; 4 registros no generan entrada.
+|cFFFFD700[Diario]|r Resumen: +0 acontecimientos, +0 conversaciones, 0 jornadas nuevas, 2 duplicados omitidos. No había nada nuevo que importar.
+|cFFFFD700[Diario]|r Importación desde AJProbe: 6 registros de actividad (6 de este personaje, 0 de otros) y 0 mensajes de chat.
+|cFFFFD700[Diario]|r Añadidos: 0 acontecimientos y 0 conversaciones. Jornadas nuevas: 0.
+|cFFFFD700[Diario]|r Omitidos: 2 duplicados, 0 con valores secretos (0 con texto neutro), 0 de tipos desactivados, 0 botines sin calidad conocida, 0 lugares ya conocidos o sin subzona; 4 registros no generan entrada.
+|cFFFFD700[Diario]|r Resumen: +0 acontecimientos, +0 conversaciones, 0 jornadas nuevas, 2 duplicados omitidos. No había nada nuevo que importar.
+== AdventureJournalDB
+{
+  ["currentDay"] = 3,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endTs"] = 1793765300,
+      ["endedAt"] = "2026-11-04 04:08:20",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "En Valle de los Retos, Durotar terminé la tarea «Misión sin fecha». Con más ironía que paciencia y la esperanza puesta en la recompensa. No parece que las obligaciones vayan a darme tregua.",
+          ["questID"] = 100,
+          ["seed"] = 1,
+          ["source"] = "ajprobe",
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Misión sin fecha",
+          ["time"] = "04:03:30",
+          ["timestamp"] = 1793765010,
+          ["type"] = "QUEST",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["source"] = "ajprobe",
+      ["startTs"] = 1793765000,
+      ["startedAt"] = "2026-11-04 04:03:20",
+    },
+    [2] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endTs"] = 1793770100,
+      ["endedAt"] = "2026-11-04 05:28:20",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["seed"] = 1,
+          ["source"] = "ajprobe",
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "05:26:50",
+          ["timestamp"] = 1793770010,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["source"] = "ajprobe",
+      ["startTs"] = 1793770000,
+      ["startedAt"] = "2026-11-04 05:26:40",
+    },
+    [3] = {
+      ["dateLabel"] = "x",
+      ["endedAt"] = "2026-11-04 04:08:20",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 04:03:20",
+    },
+  },
+  ["settings"] = {
+    ["chat"] = "important",
+    ["conversations"] = false,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["BOSS"] = true,
+      ["CHAT"] = true,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["REPUTATION"] = true,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {},
+}

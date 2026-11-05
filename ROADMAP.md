@@ -86,7 +86,7 @@ Goal: code that should run on Forever on day one, with tools to diagnose it quic
 - [x] **Debug mode `/diario debug on|off`.** Prints the payload of each handled event with `[SECRET]` markers, plus a line whenever a fallback is taken. Session only (never saved).
 - [x] **Simulated secrets `/diario debug secrets [off]`.** Event payload strings and `UnitName` results become proxies that error on everything a real secret forbids; `ns.IsSecret` recognises them. It also turns debug on; `/diario debug off` or `/reload` turns it off.
 - [x] **Error isolation.** Every handler runs under `pcall`. The first error per event name goes to the game's error handler (so `scriptErrors` / BugSack show it, tagged with the event name); repeats are only counted. `/diario diag` lists them.
-- [x] **Harness.** Third scenario `scenario_secrets.lua` (secret NPC name, whisper sender, loot message, boss names, quest ID, zone text, in an instance), a stub secret that errors like a real one, a DB scan that fails the run if a secret reaches SavedVariables. Limits are in [tools/README.md](../tools/README.md).
+- [x] **Harness.** Third scenario `scenario_secrets.lua` (secret NPC name, whisper sender, loot message, boss names, quest ID, zone text, in an instance), a stub secret that errors like a real one, a DB scan that fails the run if a secret reaches SavedVariables. Limits are in [tools/README.md](tools/README.md).
 
 **Done when:** on Classic Era the M0 checklist passes in normal mode, and also with simulated secrets: no errors, and fallback text appears in the entries. The Forever TOC is in place, ready for launch.
 
@@ -225,7 +225,7 @@ Open decisions: **D1** the profile of a fresh install (for now: ampliado, i.e. u
 - [ ] Update `LEEME.txt` (Spanish): install for both clients (`_forever_` and `_classic_era_`), the new commands, options, entry types, in-game export.
 - [ ] `CHANGELOG.md`.
 - [ ] Final checklist on both clients from a clean SavedVariables, and from an M0-era v1 diary (migration test), with every M6 type on and off.
-- [ ] Package: zip the **folder**; exclude `README.md`, `ROADMAP.md` and dev files. Tag game versions **1.60.1** (Forever) and **1.15.9** (Classic Era) on CurseForge/Wago.
+- [ ] Package: zip the **folder**; exclude `README.md`, `ROADMAP.md` and dev files (`tools/`, `.gitignore`, the other `.md` files). Tag game versions **1.60.1** (Forever) and **1.15.9** (Classic Era) on CurseForge/Wago.
 
 ---
 

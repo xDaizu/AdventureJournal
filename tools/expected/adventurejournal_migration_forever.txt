@@ -1,0 +1,149 @@
+##### forever: fresh login #####
+== scenario log
+-- after load: version = 3, currentDay = 3, settings.chat = important, visited places = 2
+-- old jornadas keep their entries: 3 / 0 / 1
+-- loading twice: version = 3
+-- new jornada: 4 with 1 entries
+-- book on jornada 1 (an old v1 jornada):
+|cFF8A5A2418:57:25|r
+Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+
+|cFF8A5A2419:01:27|r
+La jornada me llevó a resolver «Tu lugar en el mundo» en El Cubil, Durotar. con más ironía que paciencia. Al menos hoy he cumplido con mi parte.
+
+|cFF8A5A2419:01:20|r
+Mis pasos me condujeron hasta El Cubil, Durotar.
+== events registered
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 4. Tu historia continúa.
+== AdventureJournalDB
+{
+  ["currentDay"] = 4,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 19:18:57",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "tierras desconocidas",
+          ["prose"] = "Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "18:57:25",
+          ["timestamp"] = 1793815045,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "La jornada me llevó a resolver «Tu lugar en el mundo» en El Cubil, Durotar. con más ironía que paciencia. Al menos hoy he cumplido con mi parte.",
+          ["questID"] = 4641,
+          ["seed"] = 2,
+          ["subZone"] = "El Cubil",
+          ["text"] = "Tu lugar en el mundo",
+          ["time"] = "19:01:27",
+          ["timestamp"] = 1793815287,
+          ["type"] = "QUEST",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Mis pasos me condujeron hasta El Cubil, Durotar.",
+          ["seed"] = 3,
+          ["subZone"] = "El Cubil",
+          ["text"] = "El Cubil, Durotar",
+          ["time"] = "19:01:20",
+          ["timestamp"] = 1793815280,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 18:57:25",
+    },
+    [2] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 19:20:45",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 19:19:51",
+    },
+    [3] = {
+      ["dateLabel"] = "04/11/2026",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Entusiasmado",
+          ["contextualTone"] = "con la agradable impresión de que el viaje empieza a dar sus frutos",
+          ["itemID"] = 1234,
+          ["itemLink"] = "|cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r",
+          ["itemQuality"] = 3,
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La fortuna se dejó notar en Valle de los Retos, Durotar: apareció Escudo azul. con la agradable impresión de que el viaje empieza a dar sus frutos.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "|cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r",
+          ["time"] = "19:33:10",
+          ["timestamp"] = 1793817190,
+          ["type"] = "LOOT",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 19:32:54",
+    },
+    [4] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:57:10",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "Orgrimmar",
+          ["prose"] = "Mis pasos me condujeron hasta Orgrimmar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["seed"] = 1,
+          ["subZone"] = "",
+          ["text"] = "Orgrimmar",
+          ["time"] = "17:57:00",
+          ["timestamp"] = 1793815020,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Orgrimmar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["settings"] = {
+    ["chat"] = "important",
+    ["conversations"] = false,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["BOSS"] = true,
+      ["CHAT"] = true,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["REPUTATION"] = true,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["El Cubil, Durotar"] = true,
+    ["Orgrimmar"] = true,
+    ["Valle de los Retos, Durotar"] = true,
+  },
+}

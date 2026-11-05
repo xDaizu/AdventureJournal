@@ -1,0 +1,390 @@
+##### classic: fresh login #####
+== scenario log
+-- setup: jornada 4 is the live one, 2 live entries, 2 live conversation lines
+-- == dry run
+-- dry run: the diary is byte-identical afterwards
+-- == DISCOVERY switched off
+-- visited is untouched while DISCOVERY is off = true
+-- diary: currentDay = 5, jornadas in days = 5
+--   jornada 1: 2026-11-03 14:10:00 -> 2026-11-03 14:20:00, 5 entradas [DI NP QU LO* DE*], 1 conversaciones
+--   jornada 2: 2026-11-03 15:10:00 -> 2026-11-03 15:11:40, 1 entradas [LO], 0 conversaciones
+--   jornada 3: 2026-11-03 15:11:42 -> 2026-11-03 15:15:00, 2 entradas [DE BO*], 0 conversaciones
+--   jornada 4: 2026-11-03 16:10:00 -> 2026-11-03 16:15:00, 1 entradas [QU*], 1 conversaciones, source=ajprobe
+--   jornada 5: 2026-11-04 17:56:40 -> nil, 3 entradas [NP CH DE*], 3 conversaciones
+-- == DISCOVERY back on: the places arrive now
+-- diary: currentDay = 5, jornadas in days = 5
+--   jornada 1: 2026-11-03 14:10:00 -> 2026-11-03 14:20:00, 5 entradas [DI NP QU LO* DE*], 1 conversaciones
+--   jornada 2: 2026-11-03 15:10:00 -> 2026-11-03 15:11:40, 2 entradas [LO DI*], 0 conversaciones
+--   jornada 3: 2026-11-03 15:11:42 -> 2026-11-03 15:15:00, 2 entradas [DE BO*], 0 conversaciones
+--   jornada 4: 2026-11-03 16:10:00 -> 2026-11-03 16:15:00, 2 entradas [QU* DI*], 1 conversaciones, source=ajprobe
+--   jornada 5: 2026-11-04 17:56:40 -> nil, 3 entradas [NP CH DE*], 3 conversaciones
+-- == repeat: nothing new
+-- repeat: the diary is byte-identical afterwards
+-- existing jornadas and their 5 entries: all present and byte-identical
+-- the live jornada is still the last one: currentDay = 5, its startedAt = 2026-11-04 17:56:40
+-- AJProbeDB is byte-identical after every import
+-- a live death after the import goes into jornada 5: 4 entries
+== events registered
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_BN_WHISPER, CHAT_MSG_BN_WHISPER_INFORM, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_EMOTE, CHAT_MSG_LOOT, CHAT_MSG_PARTY, CHAT_MSG_PARTY_LEADER, CHAT_MSG_RAID, CHAT_MSG_RAID_LEADER, CHAT_MSG_SAY, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_TEXT_EMOTE, CHAT_MSG_WHISPER, CHAT_MSG_WHISPER, CHAT_MSG_WHISPER_INFORM, CHAT_MSG_YELL, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Conversaciones: sí. Desde ahora se guardan en el diario los susurros (también de Battle.net), el chat de grupo y banda, y lo que digáis, gritéis o hagáis tú, tu grupo y tus amigos. Es texto de otros jugadores: /diario conversaciones off lo detiene. Dentro de instancias el chat es secreto y no se guarda.
+|cFFFFD700[Diario]|r Comienza la jornada 4. Tu historia continúa.
+|cFFFFD700[Diario]|r Importación desde AJProbe (PRUEBA): 23 registros de actividad (23 de este personaje, 0 de otros) y 5 mensajes de chat.
+|cFFFFD700[Diario]|r Se añadirían: 7 acontecimientos (QUEST 1, BOSS 1, DEATH 2, LOOT 1, DISCOVERY 2) y 3 conversaciones. Jornadas nuevas: 1.
+|cFFFFD700[Diario]|r Omitidos: 6 duplicados, 0 con valores secretos (0 con texto neutro), 0 de tipos desactivados, 0 botines sin calidad conocida, 1 lugares ya conocidos o sin subzona; 9 registros no generan entrada.
+|cFFFFD700[Diario]|r Conversaciones: 2 duplicadas, 0 secretas, 0 fuera de los canales guardados, 0 sin jornada.
+|cFFFFD700[Diario]|r PRUEBA: no se ha guardado nada. Resumen: +7 acontecimientos, +3 conversaciones, 6 duplicados. Escribe /diario importar para importar de verdad.
+|cFFFFD700[Diario]|r DISCOVERY: NO se anota.
+|cFFFFD700[Diario]|r Importación desde AJProbe: 23 registros de actividad (23 de este personaje, 0 de otros) y 5 mensajes de chat.
+|cFFFFD700[Diario]|r Añadidos: 5 acontecimientos (QUEST 1, BOSS 1, DEATH 2, LOOT 1) y 3 conversaciones. Jornadas nuevas: 1.
+|cFFFFD700[Diario]|r Omitidos: 6 duplicados, 0 con valores secretos (0 con texto neutro), 3 de tipos desactivados, 0 botines sin calidad conocida, 0 lugares ya conocidos o sin subzona; 9 registros no generan entrada.
+|cFFFFD700[Diario]|r Conversaciones: 2 duplicadas, 0 secretas, 0 fuera de los canales guardados, 0 sin jornada.
+|cFFFFD700[Diario]|r Resumen: +5 acontecimientos, +3 conversaciones, 1 jornadas nuevas, 6 duplicados omitidos.
+|cFFFFD700[Diario]|r DISCOVERY: se anota.
+|cFFFFD700[Diario]|r Importación desde AJProbe: 23 registros de actividad (23 de este personaje, 0 de otros) y 5 mensajes de chat.
+|cFFFFD700[Diario]|r Añadidos: 2 acontecimientos (DISCOVERY 2) y 0 conversaciones. Jornadas nuevas: 0.
+|cFFFFD700[Diario]|r Omitidos: 11 duplicados, 0 con valores secretos (0 con texto neutro), 0 de tipos desactivados, 0 botines sin calidad conocida, 1 lugares ya conocidos o sin subzona; 9 registros no generan entrada.
+|cFFFFD700[Diario]|r Conversaciones: 5 duplicadas, 0 secretas, 0 fuera de los canales guardados, 0 sin jornada.
+|cFFFFD700[Diario]|r Resumen: +2 acontecimientos, +0 conversaciones, 0 jornadas nuevas, 11 duplicados omitidos.
+|cFFFFD700[Diario]|r Importación desde AJProbe: 23 registros de actividad (23 de este personaje, 0 de otros) y 5 mensajes de chat.
+|cFFFFD700[Diario]|r Añadidos: 0 acontecimientos y 0 conversaciones. Jornadas nuevas: 0.
+|cFFFFD700[Diario]|r Omitidos: 11 duplicados, 0 con valores secretos (0 con texto neutro), 0 de tipos desactivados, 0 botines sin calidad conocida, 3 lugares ya conocidos o sin subzona; 9 registros no generan entrada.
+|cFFFFD700[Diario]|r Conversaciones: 5 duplicadas, 0 secretas, 0 fuera de los canales guardados, 0 sin jornada.
+|cFFFFD700[Diario]|r Resumen: +0 acontecimientos, +0 conversaciones, 0 jornadas nuevas, 11 duplicados omitidos. No había nada nuevo que importar.
+|cFF00FF00[Diario]|r He caído en combate
+== AdventureJournalDB
+{
+  ["currentDay"] = 5,
+  ["days"] = {
+    [1] = {
+      ["conversations"] = {
+        [1] = {
+          ["channel"] = "WHISPER",
+          ["lang"] = "Orco",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["source"] = "ajprobe",
+          ["text"] = "Un susurro de aquel día",
+          ["time"] = "14:12:30",
+          ["timestamp"] = 1793715150,
+          ["who"] = "Amigo",
+        },
+      },
+      ["dateLabel"] = "01/01/2000",
+      ["endedAt"] = "2026-11-03 14:20:00",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Prosa guardada de Valle de los Retos, Durotar",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "14:10:02",
+          ["timestamp"] = 1793715002,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Prosa guardada de Gornek",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Gornek",
+          ["time"] = "14:11:40",
+          ["timestamp"] = 1793715100,
+          ["type"] = "NPC",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Prosa guardada de Tu lugar en el mundo",
+          ["questID"] = 4641,
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Tu lugar en el mundo",
+          ["time"] = "14:13:20",
+          ["timestamp"] = 1793715200,
+          ["type"] = "QUEST",
+          ["zone"] = "Durotar",
+        },
+        [4] = {
+          ["characterProfile"] = "Entusiasmado",
+          ["contextualTone"] = "con la agradable impresión de que el viaje empieza a dar sus frutos",
+          ["itemID"] = 1234,
+          ["itemLink"] = "|cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r",
+          ["itemQuality"] = 3,
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.",
+          ["seed"] = 4,
+          ["source"] = "ajprobe",
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "|cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r",
+          ["time"] = "14:15:00",
+          ["timestamp"] = 1793715300,
+          ["type"] = "LOOT",
+          ["zone"] = "Durotar",
+        },
+        [5] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["seed"] = 5,
+          ["source"] = "ajprobe",
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "14:16:40",
+          ["timestamp"] = 1793715400,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-03 14:10:00",
+    },
+    [2] = {
+      ["dateLabel"] = "01/01/2000",
+      ["endedAt"] = "2026-11-03 15:11:40",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme",
+          ["itemID"] = 5555,
+          ["itemLink"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
+          ["itemQuality"] = 4,
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Prosa guardada de |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
+          ["time"] = "15:10:50",
+          ["timestamp"] = 1793718650,
+          ["type"] = "LOOT",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["seed"] = 2,
+          ["source"] = "ajprobe",
+          ["subZone"] = "El Cubil",
+          ["text"] = "El Cubil, Durotar",
+          ["time"] = "15:11:00",
+          ["timestamp"] = 1793718660,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-03 15:10:00",
+    },
+    [3] = {
+      ["dateLabel"] = "01/01/2000",
+      ["endedAt"] = "2026-11-03 15:15:00",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Prosa guardada de He caído en combate",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "15:13:20",
+          ["timestamp"] = 1793718800,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Aliviado",
+          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["seed"] = 2,
+          ["source"] = "ajprobe",
+          ["subZone"] = "El Cubil",
+          ["text"] = "Jefe de prueba",
+          ["time"] = "15:14:10",
+          ["timestamp"] = 1793718850,
+          ["type"] = "BOSS",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-03 15:11:42",
+    },
+    [4] = {
+      ["conversations"] = {
+        [1] = {
+          ["channel"] = "SAY",
+          ["lang"] = "Orco",
+          ["place"] = "Orgrimmar",
+          ["rel"] = "me",
+          ["source"] = "ajprobe",
+          ["text"] = "Ya estoy en Orgrimmar",
+          ["time"] = "16:10:30",
+          ["timestamp"] = 1793722230,
+          ["who"] = "Volgajin",
+        },
+      },
+      ["dateLabel"] = "03/11/2026",
+      ["endTs"] = 1793722500,
+      ["endedAt"] = "2026-11-03 16:15:00",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["place"] = "tierras desconocidas",
+          ["prose"] = "En tierras desconocidas terminé la tarea «Misión nueva». Atento a los detalles y tratando de comprender lo ocurrido. No parece que las obligaciones vayan a darme tregua.",
+          ["questID"] = 100,
+          ["seed"] = 1,
+          ["source"] = "ajprobe",
+          ["subZone"] = "",
+          ["text"] = "Misión nueva",
+          ["time"] = "16:10:10",
+          ["timestamp"] = 1793722210,
+          ["type"] = "QUEST",
+          ["zone"] = "Desconocido",
+        },
+        [2] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "Orgrimmar",
+          ["prose"] = "Mis pasos me condujeron hasta Orgrimmar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["seed"] = 2,
+          ["source"] = "ajprobe",
+          ["subZone"] = "",
+          ["text"] = "Orgrimmar",
+          ["time"] = "16:10:20",
+          ["timestamp"] = 1793722220,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Orgrimmar",
+        },
+      },
+      ["source"] = "ajprobe",
+      ["startTs"] = 1793722200,
+      ["startedAt"] = "2026-11-03 16:10:00",
+    },
+    [5] = {
+      ["conversations"] = {
+        [1] = {
+          ["channel"] = "WHISPER",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Hola desde el juego",
+          ["time"] = "17:56:52",
+          ["timestamp"] = 1793815012,
+          ["who"] = "Amigo",
+        },
+        [2] = {
+          ["channel"] = "WHISPER_INFORM",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Respuesta en vivo",
+          ["time"] = "17:56:52",
+          ["timestamp"] = 1793815012,
+          ["who"] = "Amigo",
+        },
+        [3] = {
+          ["channel"] = "WHISPER",
+          ["lang"] = "Orco",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["source"] = "ajprobe",
+          ["text"] = "Esto solo lo vio AJProbe",
+          ["time"] = "17:57:17",
+          ["timestamp"] = 1793815037,
+          ["who"] = "Amigo",
+        },
+      },
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:58:10",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Gornek",
+          ["time"] = "17:56:50",
+          ["timestamp"] = 1793815010,
+          ["type"] = "NPC",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 2,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:56:52",
+          ["timestamp"] = 1793815012,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["seed"] = 3,
+          ["source"] = "ajprobe",
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "17:57:12",
+          ["timestamp"] = 1793815032,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+        [4] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["seed"] = 4,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "17:58:10",
+          ["timestamp"] = 1793815090,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["settings"] = {
+    ["chat"] = "important",
+    ["conversations"] = true,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["BOSS"] = true,
+      ["CHAT"] = true,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["REPUTATION"] = true,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["El Cubil, Durotar"] = true,
+    ["Orgrimmar"] = true,
+    ["Valle de los Retos, Durotar"] = true,
+  },
+}

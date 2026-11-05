@@ -1,0 +1,268 @@
+##### forever: fresh login #####
+== scenario log
+-- old events: 7 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0
+-- new type events: 10 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=2 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- LEVEL entries: He alcanzado el nivel 2 | He alcanzado el nivel 3
+-- GROUP entries: un grupo
+-- REPUTATION entries: 
+-- SKILL entries: 
+-- SPELL entries: 
+-- LEVEL off: 10 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=2 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- LEVEL on again: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- GROUP off: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- GROUP on again: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- REPUTATION off: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- REPUTATION on again: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- SKILL off: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- SKILL on again: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- SPELL off: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- SPELL on again: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
+-- book body:
+|cFF8A5A2417:56:40|r
+Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+
+|cFF8A5A2417:56:50|r
+En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+
+|cFF8A5A2417:56:55|r
+Queda atrás una tarea más: «una misión (ID 4641)», completada en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.
+
+|cFF8A5A2417:57:00|r
+La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.
+
+|cFF8A5A2417:57:05|r
+Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+
+|cFF8A5A2417:57:10|r
+Recibí noticias de Amigo mientras me encontraba en El Cubil, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.
+
+|cFF8A5A2417:57:15|r
+En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.
+
+|cFF8A5A2417:57:18|r
+Subí al nivel 2 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+
+|cFF8A5A2418:04:00|r
+El nivel 3 llegó cuando menos lo esperaba, en El Cubil, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+
+|cFF8A5A2418:06:13|r
+En El Cubil, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.
+
+|cFF8A5A2418:25:08|r
+Subí al nivel 6 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+== events registered
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 1. Tu historia continúa.
+|cFF00FF00[Diario]|r He caído en combate
+|cFF00FF00[Diario]|r Jefe de prueba
+|cFFFFD700[Diario]|r LEVEL: NO se anota.
+|cFFFFD700[Diario]|r LEVEL: se anota.
+|cFFFFD700[Diario]|r GROUP: NO se anota.
+|cFFFFD700[Diario]|r GROUP: se anota.
+|cFFFFD700[Diario]|r REPUTATION: NO se anota.
+|cFFFFD700[Diario]|r REPUTATION: se anota.
+|cFFFFD700[Diario]|r SKILL: NO se anota.
+|cFFFFD700[Diario]|r SKILL: se anota.
+|cFFFFD700[Diario]|r SPELL: NO se anota.
+|cFFFFD700[Diario]|r SPELL: se anota.
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): sí; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): sí; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos> <on|off>
+|cFFFFD700[Diario]|r Textos del juego que reconocen los tipos nuevos (nivel, grupo, reputación, habilidades, hechizos):
+|cFFFFD700[Diario]|r   Mensajes de grupo (de 6): ninguna
+|cFFFFD700[Diario]|r   Mensajes de reputación: subidas: ninguna
+|cFFFFD700[Diario]|r   Mensajes de reputación: cambios de nivel: ninguna
+|cFFFFD700[Diario]|r   Mensajes de habilidades: ninguna
+|cFFFFD700[Diario]|r   Mensajes de hechizos (de 3): ninguna
+|cFFFFD700[Diario]|r Prueba de ida y vuelta (una frase inventada con cada texto del juego, pasada por el mismo lector; no anota nada):
+|cFFFFD700[Diario]|r Si alguna línea dice «ninguna», ese tipo no puede reconocer nada en este cliente.
+|cFFFFD700[Diario]|r RESULTADO: todos los textos se reconocen.
+== AdventureJournalDB
+{
+  ["currentDay"] = 1,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 18:28:28",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "17:56:40",
+          ["timestamp"] = 1793815000,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["seed"] = 2,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Gornek",
+          ["time"] = "17:56:50",
+          ["timestamp"] = 1793815010,
+          ["type"] = "NPC",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Queda atrás una tarea más: «una misión (ID 4641)», completada en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["questID"] = 4641,
+          ["seed"] = 3,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "una misión (ID 4641)",
+          ["time"] = "17:56:55",
+          ["timestamp"] = 1793815015,
+          ["type"] = "QUEST",
+          ["zone"] = "Durotar",
+        },
+        [4] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["seed"] = 4,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "17:57:00",
+          ["timestamp"] = 1793815020,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+        [5] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["seed"] = 5,
+          ["subZone"] = "El Cubil",
+          ["text"] = "El Cubil, Durotar",
+          ["time"] = "17:57:05",
+          ["timestamp"] = 1793815025,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+        [6] = {
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en El Cubil, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 6,
+          ["subZone"] = "El Cubil",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:10",
+          ["timestamp"] = 1793815030,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [7] = {
+          ["characterProfile"] = "Aliviado",
+          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["seed"] = 7,
+          ["subZone"] = "El Cubil",
+          ["text"] = "Jefe de prueba",
+          ["time"] = "17:57:15",
+          ["timestamp"] = 1793815035,
+          ["type"] = "BOSS",
+          ["zone"] = "Durotar",
+        },
+        [8] = {
+          ["characterProfile"] = "Orgulloso",
+          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["level"] = 2,
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Subí al nivel 2 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["seed"] = 8,
+          ["subZone"] = "El Cubil",
+          ["text"] = "He alcanzado el nivel 2",
+          ["time"] = "17:57:18",
+          ["timestamp"] = 1793815038,
+          ["type"] = "LEVEL",
+          ["zone"] = "Durotar",
+        },
+        [9] = {
+          ["characterProfile"] = "Orgulloso",
+          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["level"] = 3,
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "El nivel 3 llegó cuando menos lo esperaba, en El Cubil, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["seed"] = 9,
+          ["subZone"] = "El Cubil",
+          ["text"] = "He alcanzado el nivel 3",
+          ["time"] = "18:04:00",
+          ["timestamp"] = 1793815440,
+          ["type"] = "LEVEL",
+          ["zone"] = "Durotar",
+        },
+        [10] = {
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["groupEvent"] = "youjoin",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "En El Cubil, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.",
+          ["seed"] = 10,
+          ["subZone"] = "El Cubil",
+          ["text"] = "un grupo",
+          ["time"] = "18:06:13",
+          ["timestamp"] = 1793815573,
+          ["type"] = "GROUP",
+          ["zone"] = "Durotar",
+        },
+        [11] = {
+          ["characterProfile"] = "Orgulloso",
+          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["level"] = 6,
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Subí al nivel 6 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["seed"] = 11,
+          ["subZone"] = "El Cubil",
+          ["text"] = "He alcanzado el nivel 6",
+          ["time"] = "18:25:08",
+          ["timestamp"] = 1793816708,
+          ["type"] = "LEVEL",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["settings"] = {
+    ["chat"] = "important",
+    ["conversations"] = false,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["BOSS"] = true,
+      ["CHAT"] = true,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["REPUTATION"] = true,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["El Cubil, Durotar"] = true,
+    ["Valle de los Retos, Durotar"] = true,
+  },
+}

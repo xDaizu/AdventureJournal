@@ -285,13 +285,13 @@ foreach ($flavor in "_forever_", "_classic_era_") {
 }
 ```
 
-Before any in-game test, run the local checks (Lua 5.1 syntax, and a scripted session against stubbed WoW globals, compared with the accepted reports). See [tools/README.md](../tools/README.md):
+Before any in-game test, run the local checks (Lua 5.1 syntax, and a scripted session against stubbed WoW globals, compared with the accepted reports). The harness lives in this folder's `tools/`, so it is part of the addon's repository. See [tools/README.md](tools/README.md):
 
 ```
-cd tools && npm test
+cd AdventureJournal/tools && npm test
 ```
 
-A deliberate behaviour change needs `npm run update-expected`, and the diff of `tools/expected/` should show exactly that change. Scenarios per client: normal play, a session with secret values in an instance (`scenario_secrets.lua`), a schema v1 diary (`scenario_migration.lua`), every M5 option through the panel and the slash commands with persistence across `/reload` and a second login (`scenario_options.lua`, also with no Settings API and with `OpenToCategory` needing the category object), a generated 250-jornada diary checking that the index creates a bounded number of frames (`scenario_bigdiary.lua`, also with no ScrollBox functions and with no ScrollBox templates), and for M4b `/diario importar` against a synthetic `AJProbeDB` (`scenario_import.lua`: an empty diary, a diary whose jornadas overlap the log, no AJProbe, a client where `time{...}` does not work) and the live conversation log (`scenario_conversations.lua`, also with no `C_FriendList` / `C_BattleNet`). `tools/import-dryrun.js` rehearses the import on copies of real SavedVariables files, in memory, printing counts only. The stubs cannot reproduce everything about real secrets, layout or the real Settings and ScrollBox behaviour; see the limits in [tools/README.md](../tools/README.md).
+A deliberate behaviour change needs `npm run update-expected`, and the diff of `tools/expected/` should show exactly that change. Scenarios per client: normal play, a session with secret values in an instance (`scenario_secrets.lua`), a schema v1 diary (`scenario_migration.lua`), every M5 option through the panel and the slash commands with persistence across `/reload` and a second login (`scenario_options.lua`, also with no Settings API and with `OpenToCategory` needing the category object), a generated 250-jornada diary checking that the index creates a bounded number of frames (`scenario_bigdiary.lua`, also with no ScrollBox functions and with no ScrollBox templates), and for M4b `/diario importar` against a synthetic `AJProbeDB` (`scenario_import.lua`: an empty diary, a diary whose jornadas overlap the log, no AJProbe, a client where `time{...}` does not work) and the live conversation log (`scenario_conversations.lua`, also with no `C_FriendList` / `C_BattleNet`). `tools/import-dryrun.js` rehearses the import on copies of real SavedVariables files, in memory, printing counts only. The stubs cannot reproduce everything about real secrets, layout or the real Settings and ScrollBox behaviour; see the limits in [tools/README.md](tools/README.md).
 
 Test checklist before calling a change done:
 
