@@ -164,7 +164,7 @@ local function BuildDemoDiary(dayCount, perDay)
             if day % 2 == 0 then
                 entry.characterProfile, entry.contextualTone = "Heroico", "con el ánimo firme"
             end
-            entry.prose = ns.ComposeEntry(entry)
+            entry.prose, entry.header = ns.ComposeEntry(entry)
             events[index] = entry
         end
         demo.days[day] = { dateLabel = "PRUEBA", events = events }

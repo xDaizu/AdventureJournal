@@ -620,7 +620,7 @@ function ns.ApplyImport(plan)
         day.events = day.events or {}
         entry.seed = InsertByTime(day.events, entry)
         entry.characterProfile, entry.contextualTone = ns.ChooseMood(entry.type)
-        entry.prose = ns.ComposeEntry(entry)
+        entry.prose, entry.header = ns.ComposeEntry(entry)
         if entry.type == "DISCOVERY" then DB.visited[entry.text] = true end
     end
     for _, op in ipairs(plan.convOps) do

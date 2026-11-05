@@ -104,9 +104,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Orgrimmar",
           ["place"] = "Orgrimmar",
-          ["prose"] = "Mis pasos me condujeron hasta Orgrimmar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Orgrimmar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
           ["seed"] = 1,
           ["subZone"] = "",
           ["text"] = "Orgrimmar",

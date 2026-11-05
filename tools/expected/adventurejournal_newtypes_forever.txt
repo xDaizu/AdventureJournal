@@ -19,112 +19,112 @@
 -- SPELL on again: 36 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=10 REPUTATION=4 SKILL=6 SPELL=6
 -- book body:
 |cFF8A5A2417:56:40|r
-Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.
 
 |cFF8A5A2417:56:50|r
-En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Con la mente puesta en la siguiente meta.
 
 |cFF8A5A2417:56:55|r
-Queda atrás una tarea más: «una misión (ID 4641)», completada en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.
+Cerré un asunto pendiente mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.
 
 |cFF8A5A2417:57:00|r
-La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.
+Un descuido en Valle de los Retos, Durotar bastó para acabar conmigo. Guardando un silencio sombrío mientras recupero el aliento.
 
 |cFF8A5A2417:57:05|r
-Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Con el mapa en mente y la mirada en el horizonte.
 
 |cFF8A5A2417:57:10|r
-Recibí noticias de Amigo mientras me encontraba en El Cubil, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.
+Anoté que Amigo me buscó con un susurro en El Cubil, Durotar. Con los nervios despiertos y la mano en la empuñadura.
 
 |cFF8A5A2417:57:15|r
-En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.
+El suelo de El Cubil, Durotar se estremeció durante la batalla contra Jefe de prueba, pero mi determinación no cedió. Con la templanza que otorga el hábito de viajar.
 
 |cFF8A5A2417:57:18|r
-Subí al nivel 2 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+Un destello de energía me envolvió en El Cubil, Durotar: ya soy nivel 2. Con la determinación intacta a pesar de las dificultades.
 
 |cFF8A5A2418:04:00|r
-El nivel 3 llegó cuando menos lo esperaba, en El Cubil, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+Con el nivel 3 recién adquirido en El Cubil, Durotar, me preparo para mayores retos. Reflexionando sobre los acontecimientos recientes.
 
 |cFF8A5A2418:04:22|r
-En El Cubil, Durotar se sumó Dips Jawshatter a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.
+En El Cubil, Durotar se sumó Dips Jawshatter a mi grupo. Caminar en compañía cambia el sabor de cualquier aventura.
 
 |cFF8A5A2418:04:33|r
 Bizare Deathplay se unió a mi grupo en El Cubil, Durotar. No es poca cosa tener a alguien que te cubra la espalda.
 
 |cFF8A5A2418:04:43|r
-Mi grupo creció en El Cubil, Durotar: Pedro se nos unió. Veremos qué da de sí la compañía.
+Mi grupo creció en El Cubil, Durotar: Pedro se unió a la marcha. Procurando no confiarme demasiado.
 
 |cFF8A5A2418:04:53|r
-En El Cubil, Durotar se sumó Lucía a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.
+Acogí a Lucía en mi grupo mientras recorría El Cubil, Durotar. Con el pensamiento puesto en el descanso de la próxima posada.
 
 |cFF8A5A2418:05:03|r
-Dips Jawshatter se separó de mi grupo en El Cubil, Durotar. Cada cual sigue su propio rumbo.
+Dips Jawshatter tomó otro rumbo al dejar el grupo en El Cubil, Durotar. Con el espíritu preparado para cualquier eventualidad.
 
 |cFF8A5A2418:05:13|r
-Mi grupo creció en El Cubil, Durotar: Mara se nos unió. Veremos qué da de sí la compañía.
+Desde El Cubil, Durotar, Mara comparte camino conmigo. Pensando en el largo camino que aún me aguarda.
 
 |cFF8A5A2418:05:23|r
-En El Cubil, Durotar dejé el grupo y seguí mi propio camino. Sin bajar la guardia y procurando no confiarme.
+Me separé del grupo en las tierras de El Cubil, Durotar. Avanzando sin prisa pero sin pausa.
 
 |cFF8A5A2418:05:33|r
-En El Cubil, Durotar el grupo se disolvió y cada cual tomó su rumbo. Pensando en el largo camino recorrido y en quienes quedaron atrás.
+El grupo se deshizo en El Cubil, Durotar, y con él la compañía de estos días. Contemplando el horizonte con determinación.
 
 |cFF8A5A2418:06:13|r
-En El Cubil, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.
+En El Cubil, Durotar me sumé a un grupo recién formado para afrontar una instancia.
 
 |cFF8A5A2418:06:34|r
-En El Cubil, Durotar empecé a ganarme la confianza de Entrañas. Con más ironía que paciencia y la esperanza puesta en la recompensa.
+Mi reputación con Entrañas creció en El Cubil, Durotar. Sopesando cada decisión antes de actuar.
 
 |cFF8A5A2418:06:44|r
-Mis actos en El Cubil, Durotar no pasaron desapercibidos para Orgrimmar: su opinión de mí empieza a mejorar.
+En El Cubil, Durotar empecé a ganarme la confianza de Orgrimmar. Con el ánimo firme y la mente despejada.
 
 |cFF8A5A2418:07:49|r
-Entrañas me tiene ahora por Amistoso; lo comprobé en El Cubil, Durotar.
+Ante Entrañas ya soy Amistoso. Lo supe en El Cubil, Durotar, y no es poca cosa.
 
 |cFF8A5A2418:08:18|r
-En El Cubil, Durotar mi destreza en Dagas llegó a 25. Se nota la práctica. Sin bajar la guardia y procurando no confiarme.
+A fuerza de insistir, mi habilidad en Dagas subió a 25 en El Cubil, Durotar.
 
 |cFF8A5A2418:09:22|r
-Dagas ya está en 50. Lo noté en El Cubil, Durotar: la repetición acaba dando sus frutos.
+Alcancé 50 puntos en Dagas durante mi estancia en El Cubil, Durotar. Con más ironía que paciencia.
 
 |cFF8A5A2418:09:27|r
-A fuerza de insistir, mi habilidad en Defensa subió a 75 en El Cubil, Durotar.
+La práctica constante en El Cubil, Durotar llevó mi dominio de Defensa hasta 75. Sintiendo el cansancio acumulado en las piernas.
 
 |cFF8A5A2418:09:37|r
-En El Cubil, Durotar aprendí algo que no sabía: Herboristería. Con más ironía que paciencia y la esperanza puesta en la recompensa.
+Un nuevo saber para mi cuaderno: Herboristería. Lo anoté en El Cubil, Durotar.
 
 |cFF8A5A2418:10:17|r
-Una habilidad nueva se suma a mi repertorio en El Cubil, Durotar: Herboristería.
+Mi repertorio creció en El Cubil, Durotar con Herboristería. Con los nervios despiertos y la mano en la empuñadura.
 
 |cFF8A5A2418:10:57|r
-Inmolar entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en El Cubil, Durotar).
+En las tierras de El Cubil, Durotar desentrañé los secretos de Inmolar. Con la templanza que otorga el hábito de viajar.
 
 |cFF8A5A2418:11:08|r
-En El Cubil, Durotar aprendí un nuevo hechizo: Inmolar (Rango 2). Sin bajar la guardia y procurando no confiarme.
+Anoté en mi cuaderno un nuevo hechizo, fruto de mi paso por El Cubil, Durotar: Inmolar (Rango 2).
 
 |cFF8A5A2418:11:18|r
-Hay una nueva habilidad más en mi repertorio: Vida de conducto. Lo aprendí en El Cubil, Durotar.
+Sumé una nueva habilidad a mi repertorio en El Cubil, Durotar: Vida de conducto. Reflexionando sobre los acontecimientos recientes.
 
 |cFF8A5A2418:11:28|r
-Disparo con varita entra a formar parte de lo que sé hacer (una nueva habilidad pasiva, aprendido en El Cubil, Durotar).
+En El Cubil, Durotar aprendí una nueva habilidad pasiva: Disparo con varita. Manteniendo una actitud serena ante la adversidad.
 
 |cFF8A5A2418:11:38|r
-En El Cubil, Durotar aprendí un nuevo hechizo: Bola de fuego. Con más ironía que paciencia y la esperanza puesta en la recompensa.
+Mi repertorio suma un nuevo hechizo: Bola de fuego. Fue en El Cubil, Durotar.
 
 |cFF8A5A2418:25:08|r
-Subí al nivel 6 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+Superé mis propios límites en El Cubil, Durotar y alcancé el nivel 6. Procurando no confiarme demasiado.
 
 |cFF8A5A2418:25:48|r
-Mi grupo creció en El Cubil, Durotar: Yan se nos unió. Veremos qué da de sí la compañía.
+Acogí a Yan en mi grupo mientras recorría El Cubil, Durotar. Con el pensamiento puesto en el descanso de la próxima posada.
 
 |cFF8A5A2418:26:28|r
-En El Cubil, Durotar empecé a ganarme la confianza de Facción Z. Atento a los detalles y tratando de comprender lo ocurrido.
+Gané el favor de Facción Z durante mi paso por El Cubil, Durotar. Con el espíritu preparado para cualquier eventualidad.
 
 |cFF8A5A2418:27:48|r
-Mazas ya está en 125. Lo noté en El Cubil, Durotar: la repetición acaba dando sus frutos.
+Un avance notable en Mazas: 125 puntos, logrados en El Cubil, Durotar.
 
 |cFF8A5A2418:28:28|r
-Agonía entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en El Cubil, Durotar).
+Un nuevo saber me acompaña desde El Cubil, Durotar: Agonía. Avanzando sin prisa pero sin pausa.
 == events registered
 ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon
@@ -177,9 +177,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Valle de los Retos, Durotar",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
           ["seed"] = 1,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Valle de los Retos, Durotar",
@@ -189,10 +190,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [2] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Con la mente puesta en la siguiente meta.",
           ["seed"] = 2,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Gornek",
@@ -202,10 +203,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [3] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Queda atrás una tarea más: «una misión (ID 4641)», completada en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Cerré un asunto pendiente mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.",
           ["questID"] = 4641,
           ["seed"] = 3,
           ["subZone"] = "Valle de los Retos",
@@ -217,9 +218,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [4] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["contextualTone"] = "guardando un silencio sombrío mientras recupero el aliento",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["prose"] = "Un descuido en Valle de los Retos, Durotar bastó para acabar conmigo. Guardando un silencio sombrío mientras recupero el aliento.",
           ["seed"] = 4,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He caído en combate",
@@ -230,9 +231,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [5] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "con el mapa en mente y la mirada en el horizonte",
+          ["header"] = "Explorando El Cubil, Durotar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Con el mapa en mente y la mirada en el horizonte.",
           ["seed"] = 5,
           ["subZone"] = "El Cubil",
           ["text"] = "El Cubil, Durotar",
@@ -242,10 +244,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [6] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en El Cubil, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["prose"] = "Anoté que Amigo me buscó con un susurro en El Cubil, Durotar. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 6,
           ["subZone"] = "El Cubil",
           ["text"] = "Amigo",
@@ -256,9 +258,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [7] = {
           ["characterProfile"] = "Aliviado",
-          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["prose"] = "El suelo de El Cubil, Durotar se estremeció durante la batalla contra Jefe de prueba, pero mi determinación no cedió. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 7,
           ["subZone"] = "El Cubil",
           ["text"] = "Jefe de prueba",
@@ -269,10 +271,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [8] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["level"] = 2,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Subí al nivel 2 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Un destello de energía me envolvió en El Cubil, Durotar: ya soy nivel 2. Con la determinación intacta a pesar de las dificultades.",
           ["seed"] = 8,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 2",
@@ -283,10 +285,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [9] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["level"] = 3,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "El nivel 3 llegó cuando menos lo esperaba, en El Cubil, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Con el nivel 3 recién adquirido en El Cubil, Durotar, me preparo para mayores retos. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 9,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 3",
@@ -296,11 +298,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [10] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar se sumó Dips Jawshatter a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.",
+          ["prose"] = "En El Cubil, Durotar se sumó Dips Jawshatter a mi grupo. Caminar en compañía cambia el sabor de cualquier aventura.",
           ["seed"] = 10,
           ["subZone"] = "El Cubil",
           ["text"] = "Dips Jawshatter",
@@ -310,8 +312,8 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [11] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
           ["prose"] = "Bizare Deathplay se unió a mi grupo en El Cubil, Durotar. No es poca cosa tener a alguien que te cubra la espalda.",
@@ -324,11 +326,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [12] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Pedro se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Pedro se unió a la marcha. Procurando no confiarme demasiado.",
           ["seed"] = 12,
           ["subZone"] = "El Cubil",
           ["text"] = "Pedro",
@@ -339,10 +341,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [13] = {
           ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar se sumó Lucía a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.",
+          ["prose"] = "Acogí a Lucía en mi grupo mientras recorría El Cubil, Durotar. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["seed"] = 13,
           ["subZone"] = "El Cubil",
           ["text"] = "Lucía",
@@ -352,11 +354,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [14] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["groupEvent"] = "leave",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Dips Jawshatter se separó de mi grupo en El Cubil, Durotar. Cada cual sigue su propio rumbo.",
+          ["prose"] = "Dips Jawshatter tomó otro rumbo al dejar el grupo en El Cubil, Durotar. Con el espíritu preparado para cualquier eventualidad.",
           ["seed"] = 14,
           ["subZone"] = "El Cubil",
           ["text"] = "Dips Jawshatter",
@@ -366,11 +368,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [15] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Mara se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Desde El Cubil, Durotar, Mara comparte camino conmigo. Pensando en el largo camino que aún me aguarda.",
           ["seed"] = 15,
           ["subZone"] = "El Cubil",
           ["text"] = "Mara",
@@ -381,10 +383,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [16] = {
           ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["groupEvent"] = "selfleave",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar dejé el grupo y seguí mi propio camino. Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "Me separé del grupo en las tierras de El Cubil, Durotar. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 16,
           ["subZone"] = "El Cubil",
           ["text"] = "He dejado el grupo",
@@ -394,11 +396,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [17] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "contemplando el horizonte con determinación",
           ["groupEvent"] = "disband",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar el grupo se disolvió y cada cual tomó su rumbo. Pensando en el largo camino recorrido y en quienes quedaron atrás.",
+          ["prose"] = "El grupo se deshizo en El Cubil, Durotar, y con él la compañía de estos días. Contemplando el horizonte con determinación.",
           ["seed"] = 17,
           ["subZone"] = "El Cubil",
           ["text"] = "Mi grupo se ha disuelto",
@@ -408,11 +410,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [18] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "observando con recelo las sombras del camino",
           ["groupEvent"] = "youjoin",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.",
+          ["prose"] = "En El Cubil, Durotar me sumé a un grupo recién formado para afrontar una instancia.",
           ["seed"] = 18,
           ["subZone"] = "El Cubil",
           ["text"] = "un grupo",
@@ -422,10 +424,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [19] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "sopesando cada decisión antes de actuar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Entrañas. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Mi reputación con Entrañas creció en El Cubil, Durotar. Sopesando cada decisión antes de actuar.",
           ["repEvent"] = "gain",
           ["seed"] = 19,
           ["subZone"] = "El Cubil",
@@ -436,10 +438,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [20] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme y la mente despejada",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mis actos en El Cubil, Durotar no pasaron desapercibidos para Orgrimmar: su opinión de mí empieza a mejorar.",
+          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Orgrimmar. Con el ánimo firme y la mente despejada.",
           ["repEvent"] = "gain",
           ["seed"] = 20,
           ["subZone"] = "El Cubil",
@@ -450,10 +452,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [21] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Entrañas me tiene ahora por Amistoso; lo comprobé en El Cubil, Durotar.",
+          ["prose"] = "Ante Entrañas ya soy Amistoso. Lo supe en El Cubil, Durotar, y no es poca cosa.",
           ["repEvent"] = "standing",
           ["seed"] = 21,
           ["standing"] = "Amistoso",
@@ -465,10 +467,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [22] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar mi destreza en Dagas llegó a 25. Se nota la práctica. Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "A fuerza de insistir, mi habilidad en Dagas subió a 25 en El Cubil, Durotar.",
           ["rank"] = 25,
           ["seed"] = 22,
           ["skillEvent"] = "rank",
@@ -480,10 +482,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [23] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Dagas ya está en 50. Lo noté en El Cubil, Durotar: la repetición acaba dando sus frutos.",
+          ["prose"] = "Alcancé 50 puntos en Dagas durante mi estancia en El Cubil, Durotar. Con más ironía que paciencia.",
           ["rank"] = 50,
           ["seed"] = 23,
           ["skillEvent"] = "rank",
@@ -495,10 +497,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [24] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "sintiendo el cansancio acumulado en las piernas",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "A fuerza de insistir, mi habilidad en Defensa subió a 75 en El Cubil, Durotar.",
+          ["prose"] = "La práctica constante en El Cubil, Durotar llevó mi dominio de Defensa hasta 75. Sintiendo el cansancio acumulado en las piernas.",
           ["rank"] = 75,
           ["seed"] = 24,
           ["skillEvent"] = "rank",
@@ -510,10 +512,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [25] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí algo que no sabía: Herboristería. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Un nuevo saber para mi cuaderno: Herboristería. Lo anoté en El Cubil, Durotar.",
           ["seed"] = 25,
           ["skillEvent"] = "new",
           ["subZone"] = "El Cubil",
@@ -525,9 +527,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [26] = {
           ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Una habilidad nueva se suma a mi repertorio en El Cubil, Durotar: Herboristería.",
+          ["prose"] = "Mi repertorio creció en El Cubil, Durotar con Herboristería. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 26,
           ["skillEvent"] = "new",
           ["subZone"] = "El Cubil",
@@ -539,10 +541,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [27] = {
           ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Inmolar entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en El Cubil, Durotar).",
+          ["prose"] = "En las tierras de El Cubil, Durotar desentrañé los secretos de Inmolar. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 27,
           ["spellID"] = 348,
           ["subZone"] = "El Cubil",
@@ -553,11 +555,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [28] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí un nuevo hechizo: Inmolar (Rango 2). Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "Anoté en mi cuaderno un nuevo hechizo, fruto de mi paso por El Cubil, Durotar: Inmolar (Rango 2).",
           ["seed"] = 28,
           ["spellID"] = 707,
           ["subZone"] = "El Cubil",
@@ -568,11 +570,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [29] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["learnKind"] = "ability",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Hay una nueva habilidad más en mi repertorio: Vida de conducto. Lo aprendí en El Cubil, Durotar.",
+          ["prose"] = "Sumé una nueva habilidad a mi repertorio en El Cubil, Durotar: Vida de conducto. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 29,
           ["spellID"] = 1454,
           ["subZone"] = "El Cubil",
@@ -584,10 +586,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [30] = {
           ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["learnKind"] = "passive",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Disparo con varita entra a formar parte de lo que sé hacer (una nueva habilidad pasiva, aprendido en El Cubil, Durotar).",
+          ["prose"] = "En El Cubil, Durotar aprendí una nueva habilidad pasiva: Disparo con varita. Manteniendo una actitud serena ante la adversidad.",
           ["seed"] = 30,
           ["spellID"] = 5019,
           ["subZone"] = "El Cubil",
@@ -598,11 +600,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [31] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí un nuevo hechizo: Bola de fuego. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Mi repertorio suma un nuevo hechizo: Bola de fuego. Fue en El Cubil, Durotar.",
           ["seed"] = 31,
           ["subZone"] = "El Cubil",
           ["text"] = "Bola de fuego",
@@ -613,10 +615,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [32] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["level"] = 6,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Subí al nivel 6 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Superé mis propios límites en El Cubil, Durotar y alcancé el nivel 6. Procurando no confiarme demasiado.",
           ["seed"] = 32,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 6",
@@ -626,11 +628,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [33] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Yan se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Acogí a Yan en mi grupo mientras recorría El Cubil, Durotar. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["seed"] = 33,
           ["subZone"] = "El Cubil",
           ["text"] = "Yan",
@@ -640,10 +642,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [34] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Facción Z. Atento a los detalles y tratando de comprender lo ocurrido.",
+          ["prose"] = "Gané el favor de Facción Z durante mi paso por El Cubil, Durotar. Con el espíritu preparado para cualquier eventualidad.",
           ["repEvent"] = "gain",
           ["seed"] = 34,
           ["subZone"] = "El Cubil",
@@ -654,10 +656,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [35] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mazas ya está en 125. Lo noté en El Cubil, Durotar: la repetición acaba dando sus frutos.",
+          ["prose"] = "Un avance notable en Mazas: 125 puntos, logrados en El Cubil, Durotar.",
           ["rank"] = 125,
           ["seed"] = 35,
           ["skillEvent"] = "rank",
@@ -669,11 +671,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [36] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Agonía entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en El Cubil, Durotar).",
+          ["prose"] = "Un nuevo saber me acompaña desde El Cubil, Durotar: Agonía. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 36,
           ["spellID"] = 980,
           ["subZone"] = "El Cubil",
@@ -735,9 +737,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Valle de los Retos, Durotar",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
           ["seed"] = 1,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Valle de los Retos, Durotar",
@@ -747,10 +750,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [2] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Con la mente puesta en la siguiente meta.",
           ["seed"] = 2,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Gornek",
@@ -760,10 +763,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [3] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Queda atrás una tarea más: «una misión (ID 4641)», completada en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Cerré un asunto pendiente mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.",
           ["questID"] = 4641,
           ["seed"] = 3,
           ["subZone"] = "Valle de los Retos",
@@ -775,9 +778,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [4] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["contextualTone"] = "guardando un silencio sombrío mientras recupero el aliento",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["prose"] = "Un descuido en Valle de los Retos, Durotar bastó para acabar conmigo. Guardando un silencio sombrío mientras recupero el aliento.",
           ["seed"] = 4,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He caído en combate",
@@ -788,9 +791,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [5] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "con el mapa en mente y la mirada en el horizonte",
+          ["header"] = "Explorando El Cubil, Durotar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Con el mapa en mente y la mirada en el horizonte.",
           ["seed"] = 5,
           ["subZone"] = "El Cubil",
           ["text"] = "El Cubil, Durotar",
@@ -800,10 +804,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [6] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en El Cubil, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["prose"] = "Anoté que Amigo me buscó con un susurro en El Cubil, Durotar. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 6,
           ["subZone"] = "El Cubil",
           ["text"] = "Amigo",
@@ -814,9 +818,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [7] = {
           ["characterProfile"] = "Aliviado",
-          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["prose"] = "El suelo de El Cubil, Durotar se estremeció durante la batalla contra Jefe de prueba, pero mi determinación no cedió. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 7,
           ["subZone"] = "El Cubil",
           ["text"] = "Jefe de prueba",
@@ -827,10 +831,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [8] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["level"] = 2,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Subí al nivel 2 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Un destello de energía me envolvió en El Cubil, Durotar: ya soy nivel 2. Con la determinación intacta a pesar de las dificultades.",
           ["seed"] = 8,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 2",
@@ -841,10 +845,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [9] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["level"] = 3,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "El nivel 3 llegó cuando menos lo esperaba, en El Cubil, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Con el nivel 3 recién adquirido en El Cubil, Durotar, me preparo para mayores retos. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 9,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 3",
@@ -854,11 +858,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [10] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar se sumó Dips Jawshatter a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.",
+          ["prose"] = "En El Cubil, Durotar se sumó Dips Jawshatter a mi grupo. Caminar en compañía cambia el sabor de cualquier aventura.",
           ["seed"] = 10,
           ["subZone"] = "El Cubil",
           ["text"] = "Dips Jawshatter",
@@ -868,8 +872,8 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [11] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
           ["prose"] = "Bizare Deathplay se unió a mi grupo en El Cubil, Durotar. No es poca cosa tener a alguien que te cubra la espalda.",
@@ -882,11 +886,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [12] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Pedro se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Pedro se unió a la marcha. Procurando no confiarme demasiado.",
           ["seed"] = 12,
           ["subZone"] = "El Cubil",
           ["text"] = "Pedro",
@@ -897,10 +901,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [13] = {
           ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar se sumó Lucía a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.",
+          ["prose"] = "Acogí a Lucía en mi grupo mientras recorría El Cubil, Durotar. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["seed"] = 13,
           ["subZone"] = "El Cubil",
           ["text"] = "Lucía",
@@ -910,11 +914,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [14] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["groupEvent"] = "leave",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Dips Jawshatter se separó de mi grupo en El Cubil, Durotar. Cada cual sigue su propio rumbo.",
+          ["prose"] = "Dips Jawshatter tomó otro rumbo al dejar el grupo en El Cubil, Durotar. Con el espíritu preparado para cualquier eventualidad.",
           ["seed"] = 14,
           ["subZone"] = "El Cubil",
           ["text"] = "Dips Jawshatter",
@@ -924,11 +928,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [15] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Mara se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Desde El Cubil, Durotar, Mara comparte camino conmigo. Pensando en el largo camino que aún me aguarda.",
           ["seed"] = 15,
           ["subZone"] = "El Cubil",
           ["text"] = "Mara",
@@ -939,10 +943,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [16] = {
           ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["groupEvent"] = "selfleave",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar dejé el grupo y seguí mi propio camino. Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "Me separé del grupo en las tierras de El Cubil, Durotar. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 16,
           ["subZone"] = "El Cubil",
           ["text"] = "He dejado el grupo",
@@ -952,11 +956,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [17] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "contemplando el horizonte con determinación",
           ["groupEvent"] = "disband",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar el grupo se disolvió y cada cual tomó su rumbo. Pensando en el largo camino recorrido y en quienes quedaron atrás.",
+          ["prose"] = "El grupo se deshizo en El Cubil, Durotar, y con él la compañía de estos días. Contemplando el horizonte con determinación.",
           ["seed"] = 17,
           ["subZone"] = "El Cubil",
           ["text"] = "Mi grupo se ha disuelto",
@@ -966,11 +970,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [18] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "observando con recelo las sombras del camino",
           ["groupEvent"] = "youjoin",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.",
+          ["prose"] = "En El Cubil, Durotar me sumé a un grupo recién formado para afrontar una instancia.",
           ["seed"] = 18,
           ["subZone"] = "El Cubil",
           ["text"] = "un grupo",
@@ -980,10 +984,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [19] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "sopesando cada decisión antes de actuar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Entrañas. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Mi reputación con Entrañas creció en El Cubil, Durotar. Sopesando cada decisión antes de actuar.",
           ["repEvent"] = "gain",
           ["seed"] = 19,
           ["subZone"] = "El Cubil",
@@ -994,10 +998,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [20] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme y la mente despejada",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mis actos en El Cubil, Durotar no pasaron desapercibidos para Orgrimmar: su opinión de mí empieza a mejorar.",
+          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Orgrimmar. Con el ánimo firme y la mente despejada.",
           ["repEvent"] = "gain",
           ["seed"] = 20,
           ["subZone"] = "El Cubil",
@@ -1008,10 +1012,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [21] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Entrañas me tiene ahora por Amistoso; lo comprobé en El Cubil, Durotar.",
+          ["prose"] = "Ante Entrañas ya soy Amistoso. Lo supe en El Cubil, Durotar, y no es poca cosa.",
           ["repEvent"] = "standing",
           ["seed"] = 21,
           ["standing"] = "Amistoso",
@@ -1023,10 +1027,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [22] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar mi destreza en Dagas llegó a 25. Se nota la práctica. Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "A fuerza de insistir, mi habilidad en Dagas subió a 25 en El Cubil, Durotar.",
           ["rank"] = 25,
           ["seed"] = 22,
           ["skillEvent"] = "rank",
@@ -1038,10 +1042,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [23] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Dagas ya está en 50. Lo noté en El Cubil, Durotar: la repetición acaba dando sus frutos.",
+          ["prose"] = "Alcancé 50 puntos en Dagas durante mi estancia en El Cubil, Durotar. Con más ironía que paciencia.",
           ["rank"] = 50,
           ["seed"] = 23,
           ["skillEvent"] = "rank",
@@ -1053,10 +1057,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [24] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "sintiendo el cansancio acumulado en las piernas",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "A fuerza de insistir, mi habilidad en Defensa subió a 75 en El Cubil, Durotar.",
+          ["prose"] = "La práctica constante en El Cubil, Durotar llevó mi dominio de Defensa hasta 75. Sintiendo el cansancio acumulado en las piernas.",
           ["rank"] = 75,
           ["seed"] = 24,
           ["skillEvent"] = "rank",
@@ -1068,10 +1072,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [25] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí algo que no sabía: Herboristería. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Un nuevo saber para mi cuaderno: Herboristería. Lo anoté en El Cubil, Durotar.",
           ["seed"] = 25,
           ["skillEvent"] = "new",
           ["subZone"] = "El Cubil",
@@ -1083,9 +1087,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [26] = {
           ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Una habilidad nueva se suma a mi repertorio en El Cubil, Durotar: Herboristería.",
+          ["prose"] = "Mi repertorio creció en El Cubil, Durotar con Herboristería. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 26,
           ["skillEvent"] = "new",
           ["subZone"] = "El Cubil",
@@ -1097,10 +1101,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [27] = {
           ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Inmolar entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en El Cubil, Durotar).",
+          ["prose"] = "En las tierras de El Cubil, Durotar desentrañé los secretos de Inmolar. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 27,
           ["spellID"] = 348,
           ["subZone"] = "El Cubil",
@@ -1111,11 +1115,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [28] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí un nuevo hechizo: Inmolar (Rango 2). Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "Anoté en mi cuaderno un nuevo hechizo, fruto de mi paso por El Cubil, Durotar: Inmolar (Rango 2).",
           ["seed"] = 28,
           ["spellID"] = 707,
           ["subZone"] = "El Cubil",
@@ -1126,11 +1130,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [29] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["learnKind"] = "ability",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Hay una nueva habilidad más en mi repertorio: Vida de conducto. Lo aprendí en El Cubil, Durotar.",
+          ["prose"] = "Sumé una nueva habilidad a mi repertorio en El Cubil, Durotar: Vida de conducto. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 29,
           ["spellID"] = 1454,
           ["subZone"] = "El Cubil",
@@ -1142,10 +1146,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [30] = {
           ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["learnKind"] = "passive",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Disparo con varita entra a formar parte de lo que sé hacer (una nueva habilidad pasiva, aprendido en El Cubil, Durotar).",
+          ["prose"] = "En El Cubil, Durotar aprendí una nueva habilidad pasiva: Disparo con varita. Manteniendo una actitud serena ante la adversidad.",
           ["seed"] = 30,
           ["spellID"] = 5019,
           ["subZone"] = "El Cubil",
@@ -1156,11 +1160,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [31] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí un nuevo hechizo: Bola de fuego. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Mi repertorio suma un nuevo hechizo: Bola de fuego. Fue en El Cubil, Durotar.",
           ["seed"] = 31,
           ["subZone"] = "El Cubil",
           ["text"] = "Bola de fuego",
@@ -1171,10 +1175,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [32] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["level"] = 6,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Subí al nivel 6 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Superé mis propios límites en El Cubil, Durotar y alcancé el nivel 6. Procurando no confiarme demasiado.",
           ["seed"] = 32,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 6",
@@ -1184,11 +1188,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [33] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Yan se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Acogí a Yan en mi grupo mientras recorría El Cubil, Durotar. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["seed"] = 33,
           ["subZone"] = "El Cubil",
           ["text"] = "Yan",
@@ -1198,10 +1202,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [34] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Facción Z. Atento a los detalles y tratando de comprender lo ocurrido.",
+          ["prose"] = "Gané el favor de Facción Z durante mi paso por El Cubil, Durotar. Con el espíritu preparado para cualquier eventualidad.",
           ["repEvent"] = "gain",
           ["seed"] = 34,
           ["subZone"] = "El Cubil",
@@ -1212,10 +1216,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [35] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mazas ya está en 125. Lo noté en El Cubil, Durotar: la repetición acaba dando sus frutos.",
+          ["prose"] = "Un avance notable en Mazas: 125 puntos, logrados en El Cubil, Durotar.",
           ["rank"] = 125,
           ["seed"] = 35,
           ["skillEvent"] = "rank",
@@ -1227,11 +1231,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [36] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Agonía entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en El Cubil, Durotar).",
+          ["prose"] = "Un nuevo saber me acompaña desde El Cubil, Durotar: Agonía. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 36,
           ["spellID"] = 980,
           ["subZone"] = "El Cubil",
@@ -1243,10 +1247,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [37] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["level"] = 2,
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar noté cómo algo cambiaba por dentro: alcancé el nivel 2. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Un avance significativo en mis facultades tras alcanzar el nivel 2 en Valle de los Retos, Durotar. Ajustando mis pertrechos para lo que esté por venir.",
           ["seed"] = 37,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He alcanzado el nivel 2",
@@ -1257,10 +1261,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [38] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["level"] = 3,
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Subí al nivel 3 en Valle de los Retos, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "El constante aprendizaje en Valle de los Retos, Durotar dio sus frutos al subir al nivel 3. Con la mente puesta en la siguiente meta.",
           ["seed"] = 38,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He alcanzado el nivel 3",
@@ -1271,10 +1275,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [39] = {
           ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mi grupo creció en Valle de los Retos, Durotar: Dips Jawshatter se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Anoté la llegada de Dips Jawshatter a mi grupo en Valle de los Retos, Durotar. Con más ironía que paciencia.",
           ["seed"] = 39,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Dips Jawshatter",
@@ -1284,11 +1288,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [40] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "sintiendo el cansancio acumulado en las piernas",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar se sumó Bizare Deathplay a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.",
+          ["prose"] = "En Valle de los Retos, Durotar se sumó Bizare Deathplay a mi grupo. Caminar en compañía cambia el sabor de cualquier aventura.",
           ["seed"] = 40,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Bizare Deathplay",
@@ -1298,8 +1302,8 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [41] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
           ["prose"] = "Pedro se unió a mi grupo en Valle de los Retos, Durotar. No es poca cosa tener a alguien que te cubra la espalda.",
@@ -1312,11 +1316,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [42] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mi grupo creció en Valle de los Retos, Durotar: Lucía se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Mi grupo creció en Valle de los Retos, Durotar: Lucía se unió a la marcha. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 42,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Lucía",
@@ -1326,11 +1330,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [43] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["groupEvent"] = "leave",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar, Dips Jawshatter dejó el grupo. El camino volvió a quedarse un poco más solo.",
+          ["prose"] = "Me despedí de Dips Jawshatter en Valle de los Retos, Durotar, donde nuestros caminos se separaron. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 43,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Dips Jawshatter",
@@ -1341,10 +1345,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [44] = {
           ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mara se unió a mi grupo en Valle de los Retos, Durotar. No es poca cosa tener a alguien que te cubra la espalda.",
+          ["prose"] = "Un nuevo par de manos para la causa: Mara se unió a nosotros en Valle de los Retos, Durotar.",
           ["seed"] = 44,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Mara",
@@ -1354,11 +1358,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [45] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["groupEvent"] = "selfleave",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Dejé el grupo en Valle de los Retos, Durotar. A veces el mejor paso es el que se da en solitario.",
+          ["prose"] = "Tomé mi propio rumbo en Valle de los Retos, Durotar, lejos del grupo. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 45,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He dejado el grupo",
@@ -1368,11 +1372,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [46] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["groupEvent"] = "disband",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar el grupo se disolvió y cada cual tomó su rumbo. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Cada miembro del grupo siguió su camino tras separarnos en Valle de los Retos, Durotar.",
           ["seed"] = 46,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Mi grupo se ha disuelto",
@@ -1382,11 +1386,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [47] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["groupEvent"] = "youjoin",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.",
+          ["prose"] = "Respondí a la convocatoria de un grupo en Valle de los Retos, Durotar. Escuchando el rumor del viento entre la vegetación.",
           ["seed"] = 47,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "un grupo",
@@ -1397,9 +1401,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [48] = {
           ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Entrañas me tiene ahora por Amistoso; lo comprobé en Valle de los Retos, Durotar.",
+          ["prose"] = "Ser Amistoso ante Entrañas: eso me deparó mi paso por Valle de los Retos, Durotar. Procurando no confiarme demasiado.",
           ["repEvent"] = "standing",
           ["seed"] = 48,
           ["standing"] = "Amistoso",
@@ -1411,10 +1415,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [49] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar mi destreza en Dagas llegó a 25. Se nota la práctica. Pensando en el largo camino recorrido y en quienes quedaron atrás.",
+          ["prose"] = "En las tierras de Valle de los Retos, Durotar, mi dominio de Dagas alcanzó 25. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["rank"] = 25,
           ["seed"] = 49,
           ["skillEvent"] = "rank",
@@ -1426,10 +1430,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [50] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Dagas ya está en 50. Lo noté en Valle de los Retos, Durotar: la repetición acaba dando sus frutos.",
+          ["prose"] = "En Valle de los Retos, Durotar mi destreza en Dagas llegó a 50. Se nota la práctica. Con el espíritu preparado para cualquier eventualidad.",
           ["rank"] = 50,
           ["seed"] = 50,
           ["skillEvent"] = "rank",
@@ -1441,10 +1445,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [51] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "A fuerza de insistir, mi habilidad en Defensa subió a 75 en Valle de los Retos, Durotar.",
+          ["prose"] = "Mi habilidad en Defensa ya está en 75. Lo noté en Valle de los Retos, Durotar: la repetición acaba dando sus frutos.",
           ["rank"] = 75,
           ["seed"] = 51,
           ["skillEvent"] = "rank",
@@ -1456,10 +1460,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [52] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar aprendí algo que no sabía: Herboristería. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Empecé a dar mis primeros pasos en Herboristería durante mi estancia en Valle de los Retos, Durotar. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 52,
           ["skillEvent"] = "new",
           ["subZone"] = "Valle de los Retos",
@@ -1470,10 +1474,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [53] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "contemplando el horizonte con determinación",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Una habilidad nueva se suma a mi repertorio en Valle de los Retos, Durotar: Herboristería.",
+          ["prose"] = "Añadí Herboristería a mis conocimientos mientras recorría Valle de los Retos, Durotar. Contemplando el horizonte con determinación.",
           ["seed"] = 53,
           ["skillEvent"] = "new",
           ["subZone"] = "Valle de los Retos",
@@ -1485,10 +1489,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [54] = {
           ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["contextualTone"] = "observando con recelo las sombras del camino",
           ["learnKind"] = "spell",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Inmolar entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en Valle de los Retos, Durotar).",
+          ["prose"] = "Mis estudios en Valle de los Retos, Durotar dieron fruto con un nuevo hechizo: Inmolar.",
           ["seed"] = 54,
           ["spellID"] = 348,
           ["subZone"] = "Valle de los Retos",
@@ -1499,11 +1503,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [55] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "sopesando cada decisión antes de actuar",
           ["learnKind"] = "spell",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar aprendí un nuevo hechizo: Inmolar (Rango 2). Pensando en el largo camino recorrido y en quienes quedaron atrás.",
+          ["prose"] = "Incorporé Inmolar (Rango 2) a mis artes mientras recorría Valle de los Retos, Durotar. Sopesando cada decisión antes de actuar.",
           ["seed"] = 55,
           ["spellID"] = 707,
           ["subZone"] = "Valle de los Retos",
@@ -1515,10 +1519,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [56] = {
           ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["contextualTone"] = "con el ánimo firme y la mente despejada",
           ["learnKind"] = "ability",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Hay una nueva habilidad más en mi repertorio: Vida de conducto. Lo aprendí en Valle de los Retos, Durotar.",
+          ["prose"] = "Un nuevo saber me acompaña desde Valle de los Retos, Durotar: Vida de conducto. Con el ánimo firme y la mente despejada.",
           ["seed"] = 56,
           ["spellID"] = 1454,
           ["subZone"] = "Valle de los Retos",
@@ -1529,11 +1533,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [57] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["learnKind"] = "passive",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Disparo con varita entra a formar parte de lo que sé hacer (una nueva habilidad pasiva, aprendido en Valle de los Retos, Durotar).",
+          ["prose"] = "En las tierras de Valle de los Retos, Durotar desentrañé los secretos de Disparo con varita. Ajustando mis pertrechos para lo que esté por venir.",
           ["seed"] = 57,
           ["spellID"] = 5019,
           ["subZone"] = "Valle de los Retos",
@@ -1544,11 +1548,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [58] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["learnKind"] = "spell",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar aprendí un nuevo hechizo: Bola de fuego. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Anoté en mi cuaderno un nuevo hechizo, fruto de mi paso por Valle de los Retos, Durotar: Bola de fuego.",
           ["seed"] = 58,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Bola de fuego",
@@ -1609,9 +1613,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Valle de los Retos, Durotar",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
           ["seed"] = 1,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Valle de los Retos, Durotar",
@@ -1621,10 +1626,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [2] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Con la mente puesta en la siguiente meta.",
           ["seed"] = 2,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Gornek",
@@ -1634,10 +1639,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [3] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Queda atrás una tarea más: «una misión (ID 4641)», completada en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Cerré un asunto pendiente mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.",
           ["questID"] = 4641,
           ["seed"] = 3,
           ["subZone"] = "Valle de los Retos",
@@ -1649,9 +1654,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [4] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["contextualTone"] = "guardando un silencio sombrío mientras recupero el aliento",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["prose"] = "Un descuido en Valle de los Retos, Durotar bastó para acabar conmigo. Guardando un silencio sombrío mientras recupero el aliento.",
           ["seed"] = 4,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He caído en combate",
@@ -1662,9 +1667,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [5] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "con el mapa en mente y la mirada en el horizonte",
+          ["header"] = "Explorando El Cubil, Durotar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Con el mapa en mente y la mirada en el horizonte.",
           ["seed"] = 5,
           ["subZone"] = "El Cubil",
           ["text"] = "El Cubil, Durotar",
@@ -1674,10 +1680,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [6] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en El Cubil, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["prose"] = "Anoté que Amigo me buscó con un susurro en El Cubil, Durotar. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 6,
           ["subZone"] = "El Cubil",
           ["text"] = "Amigo",
@@ -1688,9 +1694,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [7] = {
           ["characterProfile"] = "Aliviado",
-          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["prose"] = "El suelo de El Cubil, Durotar se estremeció durante la batalla contra Jefe de prueba, pero mi determinación no cedió. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 7,
           ["subZone"] = "El Cubil",
           ["text"] = "Jefe de prueba",
@@ -1701,10 +1707,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [8] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["level"] = 2,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Subí al nivel 2 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Un destello de energía me envolvió en El Cubil, Durotar: ya soy nivel 2. Con la determinación intacta a pesar de las dificultades.",
           ["seed"] = 8,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 2",
@@ -1715,10 +1721,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [9] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["level"] = 3,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "El nivel 3 llegó cuando menos lo esperaba, en El Cubil, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Con el nivel 3 recién adquirido en El Cubil, Durotar, me preparo para mayores retos. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 9,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 3",
@@ -1728,11 +1734,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [10] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar se sumó Dips Jawshatter a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.",
+          ["prose"] = "En El Cubil, Durotar se sumó Dips Jawshatter a mi grupo. Caminar en compañía cambia el sabor de cualquier aventura.",
           ["seed"] = 10,
           ["subZone"] = "El Cubil",
           ["text"] = "Dips Jawshatter",
@@ -1742,8 +1748,8 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [11] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
           ["prose"] = "Bizare Deathplay se unió a mi grupo en El Cubil, Durotar. No es poca cosa tener a alguien que te cubra la espalda.",
@@ -1756,11 +1762,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [12] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Pedro se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Pedro se unió a la marcha. Procurando no confiarme demasiado.",
           ["seed"] = 12,
           ["subZone"] = "El Cubil",
           ["text"] = "Pedro",
@@ -1771,10 +1777,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [13] = {
           ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar se sumó Lucía a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.",
+          ["prose"] = "Acogí a Lucía en mi grupo mientras recorría El Cubil, Durotar. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["seed"] = 13,
           ["subZone"] = "El Cubil",
           ["text"] = "Lucía",
@@ -1784,11 +1790,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [14] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["groupEvent"] = "leave",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Dips Jawshatter se separó de mi grupo en El Cubil, Durotar. Cada cual sigue su propio rumbo.",
+          ["prose"] = "Dips Jawshatter tomó otro rumbo al dejar el grupo en El Cubil, Durotar. Con el espíritu preparado para cualquier eventualidad.",
           ["seed"] = 14,
           ["subZone"] = "El Cubil",
           ["text"] = "Dips Jawshatter",
@@ -1798,11 +1804,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [15] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Mara se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Desde El Cubil, Durotar, Mara comparte camino conmigo. Pensando en el largo camino que aún me aguarda.",
           ["seed"] = 15,
           ["subZone"] = "El Cubil",
           ["text"] = "Mara",
@@ -1813,10 +1819,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [16] = {
           ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["groupEvent"] = "selfleave",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar dejé el grupo y seguí mi propio camino. Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "Me separé del grupo en las tierras de El Cubil, Durotar. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 16,
           ["subZone"] = "El Cubil",
           ["text"] = "He dejado el grupo",
@@ -1826,11 +1832,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [17] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "contemplando el horizonte con determinación",
           ["groupEvent"] = "disband",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar el grupo se disolvió y cada cual tomó su rumbo. Pensando en el largo camino recorrido y en quienes quedaron atrás.",
+          ["prose"] = "El grupo se deshizo en El Cubil, Durotar, y con él la compañía de estos días. Contemplando el horizonte con determinación.",
           ["seed"] = 17,
           ["subZone"] = "El Cubil",
           ["text"] = "Mi grupo se ha disuelto",
@@ -1840,11 +1846,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [18] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "observando con recelo las sombras del camino",
           ["groupEvent"] = "youjoin",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.",
+          ["prose"] = "En El Cubil, Durotar me sumé a un grupo recién formado para afrontar una instancia.",
           ["seed"] = 18,
           ["subZone"] = "El Cubil",
           ["text"] = "un grupo",
@@ -1854,10 +1860,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [19] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "sopesando cada decisión antes de actuar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Entrañas. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Mi reputación con Entrañas creció en El Cubil, Durotar. Sopesando cada decisión antes de actuar.",
           ["repEvent"] = "gain",
           ["seed"] = 19,
           ["subZone"] = "El Cubil",
@@ -1868,10 +1874,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [20] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme y la mente despejada",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mis actos en El Cubil, Durotar no pasaron desapercibidos para Orgrimmar: su opinión de mí empieza a mejorar.",
+          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Orgrimmar. Con el ánimo firme y la mente despejada.",
           ["repEvent"] = "gain",
           ["seed"] = 20,
           ["subZone"] = "El Cubil",
@@ -1882,10 +1888,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [21] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Entrañas me tiene ahora por Amistoso; lo comprobé en El Cubil, Durotar.",
+          ["prose"] = "Ante Entrañas ya soy Amistoso. Lo supe en El Cubil, Durotar, y no es poca cosa.",
           ["repEvent"] = "standing",
           ["seed"] = 21,
           ["standing"] = "Amistoso",
@@ -1897,10 +1903,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [22] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar mi destreza en Dagas llegó a 25. Se nota la práctica. Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "A fuerza de insistir, mi habilidad en Dagas subió a 25 en El Cubil, Durotar.",
           ["rank"] = 25,
           ["seed"] = 22,
           ["skillEvent"] = "rank",
@@ -1912,10 +1918,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [23] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Dagas ya está en 50. Lo noté en El Cubil, Durotar: la repetición acaba dando sus frutos.",
+          ["prose"] = "Alcancé 50 puntos en Dagas durante mi estancia en El Cubil, Durotar. Con más ironía que paciencia.",
           ["rank"] = 50,
           ["seed"] = 23,
           ["skillEvent"] = "rank",
@@ -1927,10 +1933,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [24] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "sintiendo el cansancio acumulado en las piernas",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "A fuerza de insistir, mi habilidad en Defensa subió a 75 en El Cubil, Durotar.",
+          ["prose"] = "La práctica constante en El Cubil, Durotar llevó mi dominio de Defensa hasta 75. Sintiendo el cansancio acumulado en las piernas.",
           ["rank"] = 75,
           ["seed"] = 24,
           ["skillEvent"] = "rank",
@@ -1942,10 +1948,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [25] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí algo que no sabía: Herboristería. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Un nuevo saber para mi cuaderno: Herboristería. Lo anoté en El Cubil, Durotar.",
           ["seed"] = 25,
           ["skillEvent"] = "new",
           ["subZone"] = "El Cubil",
@@ -1957,9 +1963,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [26] = {
           ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Una habilidad nueva se suma a mi repertorio en El Cubil, Durotar: Herboristería.",
+          ["prose"] = "Mi repertorio creció en El Cubil, Durotar con Herboristería. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 26,
           ["skillEvent"] = "new",
           ["subZone"] = "El Cubil",
@@ -1971,10 +1977,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [27] = {
           ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Inmolar entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en El Cubil, Durotar).",
+          ["prose"] = "En las tierras de El Cubil, Durotar desentrañé los secretos de Inmolar. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 27,
           ["spellID"] = 348,
           ["subZone"] = "El Cubil",
@@ -1985,11 +1991,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [28] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí un nuevo hechizo: Inmolar (Rango 2). Sin bajar la guardia y procurando no confiarme.",
+          ["prose"] = "Anoté en mi cuaderno un nuevo hechizo, fruto de mi paso por El Cubil, Durotar: Inmolar (Rango 2).",
           ["seed"] = 28,
           ["spellID"] = 707,
           ["subZone"] = "El Cubil",
@@ -2000,11 +2006,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [29] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["learnKind"] = "ability",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Hay una nueva habilidad más en mi repertorio: Vida de conducto. Lo aprendí en El Cubil, Durotar.",
+          ["prose"] = "Sumé una nueva habilidad a mi repertorio en El Cubil, Durotar: Vida de conducto. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 29,
           ["spellID"] = 1454,
           ["subZone"] = "El Cubil",
@@ -2016,10 +2022,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [30] = {
           ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["learnKind"] = "passive",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Disparo con varita entra a formar parte de lo que sé hacer (una nueva habilidad pasiva, aprendido en El Cubil, Durotar).",
+          ["prose"] = "En El Cubil, Durotar aprendí una nueva habilidad pasiva: Disparo con varita. Manteniendo una actitud serena ante la adversidad.",
           ["seed"] = 30,
           ["spellID"] = 5019,
           ["subZone"] = "El Cubil",
@@ -2030,11 +2036,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [31] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar aprendí un nuevo hechizo: Bola de fuego. Con más ironía que paciencia y la esperanza puesta en la recompensa.",
+          ["prose"] = "Mi repertorio suma un nuevo hechizo: Bola de fuego. Fue en El Cubil, Durotar.",
           ["seed"] = 31,
           ["subZone"] = "El Cubil",
           ["text"] = "Bola de fuego",
@@ -2045,10 +2051,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [32] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["level"] = 6,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Subí al nivel 6 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Superé mis propios límites en El Cubil, Durotar y alcancé el nivel 6. Procurando no confiarme demasiado.",
           ["seed"] = 32,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 6",
@@ -2058,11 +2064,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [33] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["groupEvent"] = "join",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mi grupo creció en El Cubil, Durotar: Yan se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Acogí a Yan en mi grupo mientras recorría El Cubil, Durotar. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["seed"] = 33,
           ["subZone"] = "El Cubil",
           ["text"] = "Yan",
@@ -2072,10 +2078,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [34] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar empecé a ganarme la confianza de Facción Z. Atento a los detalles y tratando de comprender lo ocurrido.",
+          ["prose"] = "Gané el favor de Facción Z durante mi paso por El Cubil, Durotar. Con el espíritu preparado para cualquier eventualidad.",
           ["repEvent"] = "gain",
           ["seed"] = 34,
           ["subZone"] = "El Cubil",
@@ -2086,10 +2092,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [35] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mazas ya está en 125. Lo noté en El Cubil, Durotar: la repetición acaba dando sus frutos.",
+          ["prose"] = "Un avance notable en Mazas: 125 puntos, logrados en El Cubil, Durotar.",
           ["rank"] = 125,
           ["seed"] = 35,
           ["skillEvent"] = "rank",
@@ -2101,11 +2107,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [36] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["learnKind"] = "spell",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Agonía entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en El Cubil, Durotar).",
+          ["prose"] = "Un nuevo saber me acompaña desde El Cubil, Durotar: Agonía. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 36,
           ["spellID"] = 980,
           ["subZone"] = "El Cubil",
@@ -2117,10 +2123,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [37] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["level"] = 2,
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar noté cómo algo cambiaba por dentro: alcancé el nivel 2. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Un avance significativo en mis facultades tras alcanzar el nivel 2 en Valle de los Retos, Durotar. Ajustando mis pertrechos para lo que esté por venir.",
           ["seed"] = 37,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He alcanzado el nivel 2",
@@ -2131,10 +2137,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [38] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["level"] = 3,
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Subí al nivel 3 en Valle de los Retos, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "El constante aprendizaje en Valle de los Retos, Durotar dio sus frutos al subir al nivel 3. Con la mente puesta en la siguiente meta.",
           ["seed"] = 38,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He alcanzado el nivel 3",
@@ -2145,10 +2151,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [39] = {
           ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mi grupo creció en Valle de los Retos, Durotar: Dips Jawshatter se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Anoté la llegada de Dips Jawshatter a mi grupo en Valle de los Retos, Durotar. Con más ironía que paciencia.",
           ["seed"] = 39,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Dips Jawshatter",
@@ -2158,11 +2164,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [40] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "sintiendo el cansancio acumulado en las piernas",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar se sumó Bizare Deathplay a mi grupo. Caminar acompañado cambia el sabor de cualquier aventura.",
+          ["prose"] = "En Valle de los Retos, Durotar se sumó Bizare Deathplay a mi grupo. Caminar en compañía cambia el sabor de cualquier aventura.",
           ["seed"] = 40,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Bizare Deathplay",
@@ -2172,8 +2178,8 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [41] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
           ["prose"] = "Pedro se unió a mi grupo en Valle de los Retos, Durotar. No es poca cosa tener a alguien que te cubra la espalda.",
@@ -2186,11 +2192,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [42] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mi grupo creció en Valle de los Retos, Durotar: Lucía se nos unió. Veremos qué da de sí la compañía.",
+          ["prose"] = "Mi grupo creció en Valle de los Retos, Durotar: Lucía se unió a la marcha. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 42,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Lucía",
@@ -2200,11 +2206,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [43] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["groupEvent"] = "leave",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar, Dips Jawshatter dejó el grupo. El camino volvió a quedarse un poco más solo.",
+          ["prose"] = "Me despedí de Dips Jawshatter en Valle de los Retos, Durotar, donde nuestros caminos se separaron. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 43,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Dips Jawshatter",
@@ -2215,10 +2221,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [44] = {
           ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mara se unió a mi grupo en Valle de los Retos, Durotar. No es poca cosa tener a alguien que te cubra la espalda.",
+          ["prose"] = "Un nuevo par de manos para la causa: Mara se unió a nosotros en Valle de los Retos, Durotar.",
           ["seed"] = 44,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Mara",
@@ -2228,11 +2234,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [45] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["groupEvent"] = "selfleave",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Dejé el grupo en Valle de los Retos, Durotar. A veces el mejor paso es el que se da en solitario.",
+          ["prose"] = "Tomé mi propio rumbo en Valle de los Retos, Durotar, lejos del grupo. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 45,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He dejado el grupo",
@@ -2242,11 +2248,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [46] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["groupEvent"] = "disband",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar el grupo se disolvió y cada cual tomó su rumbo. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Cada miembro del grupo siguió su camino tras separarnos en Valle de los Retos, Durotar.",
           ["seed"] = 46,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Mi grupo se ha disuelto",
@@ -2256,11 +2262,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [47] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["groupEvent"] = "youjoin",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.",
+          ["prose"] = "Respondí a la convocatoria de un grupo en Valle de los Retos, Durotar. Escuchando el rumor del viento entre la vegetación.",
           ["seed"] = 47,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "un grupo",
@@ -2271,9 +2277,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [48] = {
           ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Entrañas me tiene ahora por Amistoso; lo comprobé en Valle de los Retos, Durotar.",
+          ["prose"] = "Ser Amistoso ante Entrañas: eso me deparó mi paso por Valle de los Retos, Durotar. Procurando no confiarme demasiado.",
           ["repEvent"] = "standing",
           ["seed"] = 48,
           ["standing"] = "Amistoso",
@@ -2285,10 +2291,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [49] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar mi destreza en Dagas llegó a 25. Se nota la práctica. Pensando en el largo camino recorrido y en quienes quedaron atrás.",
+          ["prose"] = "En las tierras de Valle de los Retos, Durotar, mi dominio de Dagas alcanzó 25. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["rank"] = 25,
           ["seed"] = 49,
           ["skillEvent"] = "rank",
@@ -2300,10 +2306,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [50] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Dagas ya está en 50. Lo noté en Valle de los Retos, Durotar: la repetición acaba dando sus frutos.",
+          ["prose"] = "En Valle de los Retos, Durotar mi destreza en Dagas llegó a 50. Se nota la práctica. Con el espíritu preparado para cualquier eventualidad.",
           ["rank"] = 50,
           ["seed"] = 50,
           ["skillEvent"] = "rank",
@@ -2315,10 +2321,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [51] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "A fuerza de insistir, mi habilidad en Defensa subió a 75 en Valle de los Retos, Durotar.",
+          ["prose"] = "Mi habilidad en Defensa ya está en 75. Lo noté en Valle de los Retos, Durotar: la repetición acaba dando sus frutos.",
           ["rank"] = 75,
           ["seed"] = 51,
           ["skillEvent"] = "rank",
@@ -2330,10 +2336,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [52] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar aprendí algo que no sabía: Herboristería. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Empecé a dar mis primeros pasos en Herboristería durante mi estancia en Valle de los Retos, Durotar. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 52,
           ["skillEvent"] = "new",
           ["subZone"] = "Valle de los Retos",
@@ -2344,10 +2350,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [53] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "contemplando el horizonte con determinación",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Una habilidad nueva se suma a mi repertorio en Valle de los Retos, Durotar: Herboristería.",
+          ["prose"] = "Añadí Herboristería a mis conocimientos mientras recorría Valle de los Retos, Durotar. Contemplando el horizonte con determinación.",
           ["seed"] = 53,
           ["skillEvent"] = "new",
           ["subZone"] = "Valle de los Retos",
@@ -2359,10 +2365,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [54] = {
           ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["contextualTone"] = "observando con recelo las sombras del camino",
           ["learnKind"] = "spell",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Inmolar entra a formar parte de lo que sé hacer (un nuevo hechizo, aprendido en Valle de los Retos, Durotar).",
+          ["prose"] = "Mis estudios en Valle de los Retos, Durotar dieron fruto con un nuevo hechizo: Inmolar.",
           ["seed"] = 54,
           ["spellID"] = 348,
           ["subZone"] = "Valle de los Retos",
@@ -2373,11 +2379,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [55] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "sopesando cada decisión antes de actuar",
           ["learnKind"] = "spell",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar aprendí un nuevo hechizo: Inmolar (Rango 2). Pensando en el largo camino recorrido y en quienes quedaron atrás.",
+          ["prose"] = "Incorporé Inmolar (Rango 2) a mis artes mientras recorría Valle de los Retos, Durotar. Sopesando cada decisión antes de actuar.",
           ["seed"] = 55,
           ["spellID"] = 707,
           ["subZone"] = "Valle de los Retos",
@@ -2389,10 +2395,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [56] = {
           ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["contextualTone"] = "con el ánimo firme y la mente despejada",
           ["learnKind"] = "ability",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Hay una nueva habilidad más en mi repertorio: Vida de conducto. Lo aprendí en Valle de los Retos, Durotar.",
+          ["prose"] = "Un nuevo saber me acompaña desde Valle de los Retos, Durotar: Vida de conducto. Con el ánimo firme y la mente despejada.",
           ["seed"] = 56,
           ["spellID"] = 1454,
           ["subZone"] = "Valle de los Retos",
@@ -2403,11 +2409,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [57] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["learnKind"] = "passive",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Disparo con varita entra a formar parte de lo que sé hacer (una nueva habilidad pasiva, aprendido en Valle de los Retos, Durotar).",
+          ["prose"] = "En las tierras de Valle de los Retos, Durotar desentrañé los secretos de Disparo con varita. Ajustando mis pertrechos para lo que esté por venir.",
           ["seed"] = 57,
           ["spellID"] = 5019,
           ["subZone"] = "Valle de los Retos",
@@ -2418,11 +2424,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [58] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["learnKind"] = "spell",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar aprendí un nuevo hechizo: Bola de fuego. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Anoté en mi cuaderno un nuevo hechizo, fruto de mi paso por Valle de los Retos, Durotar: Bola de fuego.",
           ["seed"] = 58,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Bola de fuego",
@@ -2440,10 +2446,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["level"] = 4,
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar noté cómo algo cambiaba por dentro: alcancé el nivel 4. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Sopló un viento de renovación en Valle de los Retos, Durotar: ¡he ascendido al nivel 4! Ajustando mis pertrechos para lo que esté por venir.",
           ["seed"] = 1,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He alcanzado el nivel 4",
@@ -2453,11 +2459,11 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [2] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["groupEvent"] = "join",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Dips Jawshatter se unió a mi grupo en Valle de los Retos, Durotar. No es poca cosa tener a alguien que te cubra la espalda.",
+          ["prose"] = "Mi grupo creció en Valle de los Retos, Durotar: Dips Jawshatter se unió a la marcha. Con la mente puesta en la siguiente meta.",
           ["seed"] = 2,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Dips Jawshatter",
@@ -2467,10 +2473,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [3] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Entrañas empieza a mirarme con mejores ojos, y todo ocurrió en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Mi nombre empieza a sonar entre las filas de Entrañas tras lo ocurrido en Valle de los Retos, Durotar. Con más ironía que paciencia.",
           ["repEvent"] = "gain",
           ["seed"] = 3,
           ["subZone"] = "Valle de los Retos",

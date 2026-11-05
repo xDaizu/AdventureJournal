@@ -62,6 +62,8 @@ const SCENARIOS = [
   // T1: diaries written by Chema's Forever line (1.1.0-Forever): migration, the "clasico" profile, round trip.
   { name: 'adventurejournal_chemadiary', file: 'scenario_chemadiary.lua', modes: ['login', 'reload', 'relogin'], variant: 'chema' },
   { name: 'adventurejournal_chemadiary_roundtrip', file: 'scenario_chemadiary.lua', modes: ['login'], variant: 'roundtrip' },
+  // T2: every prose template of every type, both sexes; fails on a leftover placeholder or bad punctuation.
+  { name: 'adventurejournal_prose', file: 'scenario_prose.lua', modes: ['login'] },
 ];
 
 const MODE_TITLES = { login: 'fresh login', reload: '/reload', relogin: 'second login' };

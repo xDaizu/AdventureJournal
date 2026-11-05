@@ -27,58 +27,58 @@
 -- repeat: the diary is byte-identical afterwards
 -- book, events view, jornada 2:
 |cFF8A5A2411:23:21|r
-Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Estudiando los relieves del terreno con cautela.
 
 |cFF8A5A2411:23:30|r
-En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Notando el peso de la armadura sobre los hombros.
 
 |cFF8A5A2411:23:40|r
-Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.
+En Valle de los Retos, Durotar recibí un mensaje de Amigo. Con los nervios despiertos y la mano en la empuñadura.
 
 |cFF8A5A2411:23:41|r
-Recibí noticias de alguien mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.
+Las palabras de alguien llegaron hasta mí en Valle de los Retos, Durotar. Con la templanza que otorga el hábito de viajar.
 
 |cFF8A5A2411:24:05|r
-En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+Intercambié noticias sobre los caminos con Gornek en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
 
 |cFF8A5A2411:24:10|r
-En Valle de los Retos, Durotar crucé unas palabras con un habitante de la zona. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+Consulté ciertos detalles con un habitante de la zona mientras permanecía en Valle de los Retos, Durotar. Reflexionando sobre los acontecimientos recientes.
 
 |cFF8A5A2411:24:20|r
-En Valle de los Retos, Durotar terminé la tarea «Tu lugar en el mundo». Con más ironía que paciencia y la esperanza puesta en la recompensa. No parece que las obligaciones vayan a darme tregua.
+Cumplí hasta el último detalle del encargo «Tu lugar en el mundo» en tierras de Valle de los Retos, Durotar. Manteniendo una actitud serena ante la adversidad.
 
 |cFF8A5A2411:24:30|r
-La jornada me llevó a resolver «una misión cuyo nombre no he podido recuperar» en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza. Al menos hoy he cumplido con mi parte.
+El deber me reclamó en Valle de los Retos, Durotar y respondí completando una misión más. Escuchando el rumor del viento entre la vegetación.
 
 |cFF8A5A2411:24:40|r
-Queda atrás una tarea más: «una misión (ID 9999)», completada en Valle de los Retos, Durotar. Atento a los detalles y tratando de comprender lo ocurrido.
+La promesa hecha en Valle de los Retos, Durotar quedó saldada, aunque el nombre del encargo se me escapa. Procurando no confiarme demasiado.
 
 |cFF8A5A2411:24:50|r
-La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.
+Mi paciencia en Valle de los Retos, Durotar dio frutos al reclamar |cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r. Con el pensamiento puesto en el descanso de la próxima posada.
 
 |cFF8A5A2411:24:53|r
-La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.
+Guardé con cuidado |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r en mi mochila mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.
 
 |cFF8A5A2411:25:00|r
-En Valle de los Retos, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.
+El enfrentamiento contra Jefe de prueba en Valle de los Retos, Durotar exigió hasta el último de mis recursos, pero la victoria fue mía. Con el espíritu preparado para cualquier eventualidad.
 
 |cFF8A5A2411:25:30|r
-En Valle de los Retos, Durotar me enfrenté a Otro jefe. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.
+Tras un cruce de golpes legendario en Valle de los Retos, Durotar, Otro jefe acabó rindiendo el aliento. Pensando en el largo camino que aún me aguarda.
 
 |cFF8A5A2411:25:32|r
-En Valle de los Retos, Durotar me enfrenté a una criatura temible. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.
+Añadí la derrota de una criatura temible a mi historial de grandes gestas en Valle de los Retos, Durotar. Avanzando sin prisa pero sin pausa.
 
 |cFF8A5A2411:25:40|r
-La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.
+Pagué con mi vida un exceso de confianza en Valle de los Retos, Durotar. Apretando los dientes ante un final imprevisto.
 
 |cFF8A5A2411:25:50|r
-El nivel 2 llegó cuando menos lo esperaba, en Valle de los Retos, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+El camino en Valle de los Retos, Durotar me ha curtido lo suficiente como para ascender al nivel 2. Observando con recelo las sombras del camino.
 
 |cFF8A5A2411:26:00|r
-Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Avanzando con paso medido por estas tierras vírgenes.
 
 |cFF8A5A2411:26:50|r
-La jornada me llevó a resolver «Otra misión» en Valle de los Retos, Durotar. Sin bajar la guardia y procurando no confiarme. Al menos hoy he cumplido con mi parte.
+Un nuevo logro anotado en mi haber tras finalizar «Otra misión» en Valle de los Retos, Durotar. Con el ánimo firme y la mente despejada.
 -- book, conversations view, jornada 2:
 |cFF8A5A2411:23:40|r  Amigo te susurra (Orco): «Hola, ¿vienes a Orgrimmar?»
 
@@ -169,9 +169,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Poblado Sen'jin, Durotar",
           ["place"] = "Poblado Sen'jin, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta Poblado Sen'jin, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Poblado Sen'jin, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
           ["seed"] = 1,
           ["source"] = "ajprobe",
           ["subZone"] = "Poblado Sen'jin",
@@ -183,9 +184,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [2] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["contextualTone"] = "con la fría promesa de un retorno implacable",
           ["place"] = "Poblado Sen'jin, Durotar",
-          ["prose"] = "La aventura se detuvo en Poblado Sen'jin, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["prose"] = "El camino se tiñó de peligro en Poblado Sen'jin, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.",
           ["seed"] = 2,
           ["source"] = "ajprobe",
           ["subZone"] = "Poblado Sen'jin",
@@ -197,9 +198,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [3] = {
           ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "Poblado Sen'jin, Durotar",
-          ["prose"] = "En Poblado Sen'jin, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Escuché atentamente lo que Gornek tenía que decir en Poblado Sen'jin, Durotar. Con más ironía que paciencia.",
           ["seed"] = 3,
           ["source"] = "ajprobe",
           ["subZone"] = "Poblado Sen'jin",
@@ -318,9 +319,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "estudiando los relieves del terreno con cautela",
+          ["header"] = "Nuevos Horizontes: Valle de los Retos, Durotar",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Estudiando los relieves del terreno con cautela.",
           ["seed"] = 1,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -331,10 +333,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [2] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Notando el peso de la armadura sobre los hombros.",
           ["seed"] = 2,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -345,10 +347,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [3] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["prose"] = "En Valle de los Retos, Durotar recibí un mensaje de Amigo. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 3,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -359,10 +361,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [4] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Recibí noticias de alguien mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["prose"] = "Las palabras de alguien llegaron hasta mí en Valle de los Retos, Durotar. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 4,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -373,10 +375,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [5] = {
-          ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Intercambié noticias sobre los caminos con Gornek en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.",
           ["seed"] = 5,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -387,10 +389,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [6] = {
-          ["characterProfile"] = "Heroico",
-          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con un habitante de la zona. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Consulté ciertos detalles con un habitante de la zona mientras permanecía en Valle de los Retos, Durotar. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 6,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -401,10 +403,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [7] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar terminé la tarea «Tu lugar en el mundo». Con más ironía que paciencia y la esperanza puesta en la recompensa. No parece que las obligaciones vayan a darme tregua.",
+          ["prose"] = "Cumplí hasta el último detalle del encargo «Tu lugar en el mundo» en tierras de Valle de los Retos, Durotar. Manteniendo una actitud serena ante la adversidad.",
           ["questID"] = 4641,
           ["seed"] = 7,
           ["source"] = "ajprobe",
@@ -417,9 +419,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [8] = {
           ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La jornada me llevó a resolver «una misión cuyo nombre no he podido recuperar» en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza. Al menos hoy he cumplido con mi parte.",
+          ["prose"] = "El deber me reclamó en Valle de los Retos, Durotar y respondí completando una misión más. Escuchando el rumor del viento entre la vegetación.",
           ["seed"] = 8,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -430,10 +432,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [9] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "procurando no confiarme demasiado",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Queda atrás una tarea más: «una misión (ID 9999)», completada en Valle de los Retos, Durotar. Atento a los detalles y tratando de comprender lo ocurrido.",
+          ["prose"] = "La promesa hecha en Valle de los Retos, Durotar quedó saldada, aunque el nombre del encargo se me escapa. Procurando no confiarme demasiado.",
           ["questID"] = 9999,
           ["seed"] = 9,
           ["source"] = "ajprobe",
@@ -446,12 +448,12 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [10] = {
           ["characterProfile"] = "Entusiasmado",
-          ["contextualTone"] = "con la agradable impresión de que el viaje empieza a dar sus frutos",
+          ["contextualTone"] = "con el pensamiento puesto en el descanso de la próxima posada",
           ["itemID"] = 1234,
           ["itemLink"] = "|cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r",
           ["itemQuality"] = 3,
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.",
+          ["prose"] = "Mi paciencia en Valle de los Retos, Durotar dio frutos al reclamar |cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r. Con el pensamiento puesto en el descanso de la próxima posada.",
           ["seed"] = 10,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -463,12 +465,12 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [11] = {
           ["characterProfile"] = "Entusiasmado",
-          ["contextualTone"] = "con la agradable impresión de que el viaje empieza a dar sus frutos",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["itemID"] = 5555,
           ["itemLink"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
           ["itemQuality"] = 4,
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.",
+          ["prose"] = "Guardé con cuidado |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r en mi mochila mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.",
           ["seed"] = 11,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -480,9 +482,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [12] = {
           ["characterProfile"] = "Aliviado",
-          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["contextualTone"] = "con el espíritu preparado para cualquier eventualidad",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["prose"] = "El enfrentamiento contra Jefe de prueba en Valle de los Retos, Durotar exigió hasta el último de mis recursos, pero la victoria fue mía. Con el espíritu preparado para cualquier eventualidad.",
           ["seed"] = 11,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -494,9 +496,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [13] = {
           ["characterProfile"] = "Aliviado",
-          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["contextualTone"] = "pensando en el largo camino que aún me aguarda",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar me enfrenté a Otro jefe. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["prose"] = "Tras un cruce de golpes legendario en Valle de los Retos, Durotar, Otro jefe acabó rindiendo el aliento. Pensando en el largo camino que aún me aguarda.",
           ["seed"] = 12,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -508,9 +510,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [14] = {
           ["characterProfile"] = "Aliviado",
-          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["contextualTone"] = "avanzando sin prisa pero sin pausa",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar me enfrenté a una criatura temible. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["prose"] = "Añadí la derrota de una criatura temible a mi historial de grandes gestas en Valle de los Retos, Durotar. Avanzando sin prisa pero sin pausa.",
           ["seed"] = 13,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -522,9 +524,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [15] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["contextualTone"] = "apretando los dientes ante un final imprevisto",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["prose"] = "Pagué con mi vida un exceso de confianza en Valle de los Retos, Durotar. Apretando los dientes ante un final imprevisto.",
           ["seed"] = 14,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -536,10 +538,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [16] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "observando con recelo las sombras del camino",
           ["level"] = 2,
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "El nivel 2 llegó cuando menos lo esperaba, en Valle de los Retos, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "El camino en Valle de los Retos, Durotar me ha curtido lo suficiente como para ascender al nivel 2. Observando con recelo las sombras del camino.",
           ["seed"] = 15,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",
@@ -551,9 +553,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [17] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "avanzando con paso medido por estas tierras vírgenes",
+          ["header"] = "Nuevos Horizontes: El Cubil, Durotar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Avanzando con paso medido por estas tierras vírgenes.",
           ["seed"] = 16,
           ["source"] = "ajprobe",
           ["subZone"] = "El Cubil",
@@ -564,10 +567,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [18] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme y la mente despejada",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La jornada me llevó a resolver «Otra misión» en Valle de los Retos, Durotar. Sin bajar la guardia y procurando no confiarme. Al menos hoy he cumplido con mi parte.",
+          ["prose"] = "Un nuevo logro anotado en mi haber tras finalizar «Otra misión» en Valle de los Retos, Durotar. Con el ánimo firme y la mente despejada.",
           ["questID"] = 7000,
           ["seed"] = 17,
           ["source"] = "ajprobe",
@@ -602,9 +605,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Orgrimmar",
           ["place"] = "Orgrimmar",
-          ["prose"] = "Mis pasos me condujeron hasta Orgrimmar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Orgrimmar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
           ["seed"] = 1,
           ["source"] = "ajprobe",
           ["subZone"] = "",
@@ -616,9 +620,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [2] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "sorprendido por los paisajes que se abren ante mí",
+          ["header"] = "Explorando Valle de la Fuerza, Orgrimmar",
           ["place"] = "Valle de la Fuerza, Orgrimmar",
-          ["prose"] = "Mis pasos me condujeron hasta Valle de la Fuerza, Orgrimmar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Valle de la Fuerza, Orgrimmar a pie de camino. Sorprendido por los paisajes que se abren ante mí.",
           ["seed"] = 2,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de la Fuerza",
@@ -648,9 +653,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Melancólico",
-          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["contextualTone"] = "sintiendo el cansancio acumulado en las piernas",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Durante mi paso por Valle de los Retos, Durotar mantuve una breve conversación con Gornek. Sintiendo el cansancio acumulado en las piernas.",
           ["seed"] = 1,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Gornek",
