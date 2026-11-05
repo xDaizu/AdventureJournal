@@ -565,6 +565,22 @@ T.GUILD_leave = {
     "Dejé de caminar bajo la bandera de «{name}».",
 }
 
+-- The guild's name is unknown (T4a: the system messages do not carry it as far as is known).
+T.GUILD_join_unnamed = {
+    "He pasado a formar parte oficialmente de una hermandad. La aventura en solitario da paso al trabajo en equipo.",
+    "Uní mis fuerzas a las de una hermandad para afrontar mayores desafíos.",
+    "Acepté una invitación y ahora comparto estandarte con nuevos compañeros.",
+    "Un nuevo capítulo comienza tras incorporarme a las filas de una hermandad.",
+    "Encontré cobijo y camaradería entre los integrantes de una hermandad.",
+}
+T.GUILD_leave_unnamed = {
+    "Dejé atrás mi hermandad. Toca seguir el camino bajo otra bandera, o bajo ninguna.",
+    "Me despedí de mis compañeros de hermandad y abandoné sus filas.",
+    "Mi estandarte ya no es el de mi antigua hermandad.",
+    "Un capítulo se cierra: ya no formo parte de una hermandad.",
+    "Salí de las filas de mi hermandad, con la mirada puesta en nuevos rumbos.",
+}
+
 T.ACHIEVEMENT = {
     "Completé con éxito el logro «{name}» mientras exploraba {place}.",
     "Anoté una proeza en mi expediente tras conseguir el logro «{name}» en {place}.",
@@ -669,7 +685,8 @@ function ns.ComposeEntry(entry, female)
         list, unnamed = T.BOSS, name == NEUTRAL.BOSS
     elseif kind == "DEATH" then
         local killer = SafeString(entry.killer, "")
-        values.killer = killer
+        -- No combat log: this is the enemy fought when combat began, not a known killer.
+        values.killer = killer ~= "" and ("«" .. killer .. "» (el último enemigo al que me enfrenté)") or ""
         list, unnamed = T.DEATH, killer == ""
     elseif kind == "LOOT" or kind == "NPC" or kind == "CHAT" or kind == "MOUNT"
         or kind == "FLIGHT_POINT" or kind == "ACHIEVEMENT" then
@@ -702,7 +719,12 @@ function ns.ComposeEntry(entry, female)
         values.what = SPELL_WHAT[entry.learnKind] or SPELL_WHAT.spell
         list = T.SPELL
     elseif kind == "GUILD" then
-        list = entry.guildEvent == "leave" and T.GUILD_leave or T.GUILD_join
+        local leave = entry.guildEvent == "leave"
+        if name == NEUTRAL.GUILD then
+            list = leave and T.GUILD_leave_unnamed or T.GUILD_join_unnamed
+        else
+            list = leave and T.GUILD_leave or T.GUILD_join
+        end
     end
 
     if not list then return name end

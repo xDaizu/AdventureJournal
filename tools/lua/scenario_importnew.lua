@@ -14,9 +14,19 @@ local H = ...
 local S, fire, advance, slash, note, ns = H.S, H.fire, H.advance, H.slash, H.note, H.ns
 local F = dofile(string.match(SCENARIO, "^(.*)/[^/]*$") .. "/fixture_ajprobe.lua")
 local Snap = F.Snapshot
-local NEW_TYPES = { "LEVEL", "GROUP", "REPUTATION", "SKILL", "SPELL" }
+-- T4a adds QUEST_ACCEPT and GUILD (REVISIT and the death killer are not in AJProbe's records: nothing to import).
+local NEW_TYPES = { "LEVEL", "GROUP", "REPUTATION", "SKILL", "SPELL", "QUEST_ACCEPT", "GUILD" }
 -- The fields, besides type and text, that each new type stores in an entry (compared live vs imported).
-local EXTRA_FIELDS = { "level", "groupEvent", "repEvent", "standing", "skillEvent", "rank", "spellID", "learnKind" }
+local EXTRA_FIELDS = { "level", "groupEvent", "repEvent", "standing", "skillEvent", "rank", "spellID", "learnKind", "questID", "guildEvent" }
+
+S.questTitles[4641] = "Tu lugar en el mundo"
+S.questTitles[4642] = "Cuernos rotos"
+S.questLog = { { title = "Tu lugar en el mundo", questID = 4641 }, { title = "Cuernos rotos", questID = 4642 } }
+-- QUEST_ACCEPTED as AJProbe records it: a = { questID } on Forever (observed), { questLogIndex, questID } on Classic.
+local function AcceptedArgs(id, index)
+    if FLAVOR == "classic" then return { index or 1, id } end
+    return { id }
+end
 
 -- Messages as each client words them (see scenario_newtypes.lua).
 local function Gain(faction, amount) return (string.format(FACTION_STANDING_INCREASED, faction, amount)) end
@@ -151,6 +161,20 @@ local function NewRecords(fixture, T)
     fixture.Log(T + 192, "CHAT_MSG_SYSTEM", { a = { "Has aprendido un nuevo hechizo: " .. Spell(707, "Inmolar (Rango 2)") .. "." } })
     fixture.Log(T + 193, "CHAT_MSG_SYSTEM", { a = { "Has aprendido un nuevo hechizo: Bola de fuego." } })
     fixture.Log(T + 194, "CHAT_MSG_SYSTEM", { a = { "Has aprendido una nueva facultad: " .. Spell(2383, "Buscar hierbas") .. "." } })   -- the esES word, seen on Forever
+    -- QUEST_ACCEPT (no giver: AJProbe does not record QUEST_DETAIL)
+    fixture.Log(T + 160, "QUEST_ACCEPTED", { a = AcceptedArgs(4641), title = "Tu lugar en el mundo" })
+    fixture.Log(T + 161, "QUEST_ACCEPTED", { a = AcceptedArgs(4641), title = "Tu lugar en el mundo" })   -- twice: one entry
+    fixture.Log(T + 350, "QUEST_ACCEPTED", { a = AcceptedArgs(4642, 2), title = "Cuernos rotos" })
+    fixture.Log(T + 351, "QUEST_ACCEPTED", { a = AcceptedArgs(99999, 3), title = "<nil>" })             -- no title: "una misión (ID n)"
+    fixture.Log(T + 352, "QUEST_ACCEPTED", { a = AcceptedArgs(98765, 3), title = "[SECRET]" })          -- secret title: neutral text
+    fixture.Log(T + 353, "QUEST_ACCEPTED", { a = { "[SECRET]" }, title = "<nil>" })                    -- nothing readable: neutral text
+    -- GUILD: system messages about the player (invented wording, see stubs.lua), none about others
+    fixture.Log(T + 370, "CHAT_MSG_SYSTEM", { a = { "Volgajin se ha unido a la hermandad." } })
+    fixture.Log(T + 371, "CHAT_MSG_SYSTEM", { a = { "Volgajin se ha unido a la hermandad." } })        -- twice: one entry
+    fixture.Log(T + 380, "CHAT_MSG_SYSTEM", { a = { "Garona se ha unido a la hermandad." } })          -- someone else: none
+    fixture.Log(T + 385, "CHAT_MSG_SYSTEM", { a = { "Has invitado a Garona a unirse a tu hermandad." } })   -- an invitation: none
+    fixture.Log(T + 390, "CHAT_MSG_SYSTEM", { a = { "Has dejado la hermandad." } })
+    fixture.Log(T + 395, "CHAT_MSG_SYSTEM", { a = { "[SECRET]" } })
 end
 
 -- ===================================================================================
@@ -221,6 +245,8 @@ if H.variant == "types" then
             Entry("REPUTATION", "Entrañas", T1 + 118, { repEvent = "gain" }),
             Entry("SKILL", "Dagas", T1 + 151, { skillEvent = "rank", rank = 25 }),
             Entry("SPELL", "Inmolar", T1 + 190, { spellID = 348, learnKind = "spell" }),
+            Entry("QUEST_ACCEPT", "Tu lugar en el mundo", T1 + 162, { questID = 4641, npc = "Gornek" }),
+            Entry("GUILD", "una hermandad", T1 + 372, { guildEvent = "join" }),
         }
         AdventureJournalDB.currentDay = 1
         AdventureJournalDB.days[1] = { startedAt = Stamp(T1 - 5), endedAt = Stamp(T1 + 905), dateLabel = "x", events = {} }
@@ -231,19 +257,21 @@ if H.variant == "types" then
         RunImport("the diary already holds a LEVEL 3 and a GROUP join made live")
         for index, entry in ipairs(live) do assert(Snap(entry) == before[index], "an existing entry was modified") end
         local _, counts = Counts()
-        local joins, gains, daggers, immolates = 0, 0, 0, 0
+        local joins, gains, daggers, immolates, accepts, guildJoins = 0, 0, 0, 0, 0, 0
         for index = 1, AdventureJournalDB.currentDay do
             for _, entry in ipairs(AdventureJournalDB.days[index].events) do
                 if entry.type == "GROUP" and entry.groupEvent == "join" and entry.text == "Dips Jawshatter" then joins = joins + 1 end
                 if entry.type == "REPUTATION" and entry.repEvent == "gain" and entry.text == "Entrañas" then gains = gains + 1 end
                 if entry.type == "SKILL" and entry.text == "Dagas" and entry.rank == 25 then daggers = daggers + 1 end
                 if entry.type == "SPELL" and entry.spellID == 348 then immolates = immolates + 1 end
+                if entry.type == "QUEST_ACCEPT" and entry.questID == 4641 then accepts = accepts + 1 end
+                if entry.type == "GUILD" and entry.guildEvent == "join" then guildJoins = guildJoins + 1 end
             end
         end
         note("existing entries kept; LEVEL entries = " .. (counts.LEVEL or 0) .. " (3 expected: one was there), Dips joins = " .. joins
             .. ", Entrañas first gains = " .. gains .. " (2 expected: the first jornada's was there, the next jornada gets its own), Dagas 25 = "
-            .. daggers .. ", Inmolar = " .. immolates)
-        assert(counts.LEVEL == 3 and joins == 1 and gains == 2 and daggers == 1 and immolates == 1,
+            .. daggers .. ", Inmolar = " .. immolates .. ", quest 4641 accepted = " .. accepts .. ", guild joins = " .. guildJoins)
+        assert(counts.LEVEL == 3 and joins == 1 and gains == 2 and daggers == 1 and immolates == 1 and accepts == 1 and guildJoins == 1,
             "live entries were not recognised as duplicates")
         RunImport("repeat", nil, false)
     end
@@ -275,6 +303,12 @@ if H.variant == "types" then
     advance(20); fire("CHAT_MSG_SYSTEM", "Has aprendido un nuevo hechizo: " .. Spell(707, "Inmolar (Rango 2)") .. ".")
     advance(20); fire("CHAT_MSG_SYSTEM", "Has aprendido un nuevo hechizo: Bola de fuego.")
     advance(20); fire("CHAT_MSG_SYSTEM", "Has aprendido una nueva facultad: " .. Spell(2383, "Buscar hierbas") .. ".")
+    -- QUEST_ACCEPT and GUILD live. No QUEST_DETAIL, so no giver (the import has none either), and no guild known.
+    S.guildName = nil
+    advance(20); if FLAVOR == "classic" then fire("QUEST_ACCEPTED", 1, 4641) else fire("QUEST_ACCEPTED", 4641) end
+    advance(20); if FLAVOR == "classic" then fire("QUEST_ACCEPTED", 2, 4642) else fire("QUEST_ACCEPTED", 4642) end
+    advance(20); fire("CHAT_MSG_SYSTEM", "Volgajin se ha unido a la hermandad.")
+    advance(20); fire("CHAT_MSG_SYSTEM", "Has dejado la hermandad.")
     local compared = 0
     for _, live in ipairs(AdventureJournalDB.days[AdventureJournalDB.currentDay].events) do
         if live.type ~= "DISCOVERY" then

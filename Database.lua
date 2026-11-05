@@ -28,6 +28,11 @@ ns.TYPE_INFO = {
     { key = "REPUTATION", label = "Reputación con facciones", words = { "reputacion", "reputación", "facciones", "reputation" } },
     { key = "SKILL",     label = "Habilidades nuevas o mejoradas", words = { "habilidades", "habilidad", "skill", "skills" } },
     { key = "SPELL",     label = "Hechizos aprendidos",   words = { "hechizos", "hechizo", "spell", "spells" } },
+    -- T4a: the types of Chema's line that work on both clients. REVISIT is noisy (every place seen
+    -- before), so it is off unless the "clasico" profile or the player turns it on.
+    { key = "QUEST_ACCEPT", label = "Misiones aceptadas",  words = { "aceptadas", "aceptada", "aceptar", "quest_accept", "questaccept" } },
+    { key = "REVISIT",   label = "Lugares que vuelves a visitar", words = { "revisitas", "revisita", "volver", "revisit" }, default = false },
+    { key = "GUILD",     label = "Hermandad: entrar y salir", words = { "hermandad", "hermandades", "guild" } },
 }
 
 -- Names of the chat echo modes, for messages and the options panel.
@@ -43,6 +48,8 @@ ns.CHAT_MODE_NAMES = { all = "todo", important = "importante", off = "nada" }
 --   conversations  M4b: record RP conversations; off by default
 --   lootQuality    T1: lowest item quality logged as LOOT (3 = rare, 4 = epic)
 --   profile        T1: the profile last applied ("ampliado" or "clasico"); a record, see PROFILES
+--   deathKiller    T4a: name, in a death entry, the last enemy fought (the target when combat began;
+--                  there is no combat log to know the real killer)
 ns.DEFAULT_SETTINGS = {
     chat = "important",
     types = {},
@@ -50,6 +57,7 @@ ns.DEFAULT_SETTINGS = {
     conversations = false,
     lootQuality = 3,
     profile = "ampliado",
+    deathKiller = false,
 }
 ns.TYPE_DEFAULT = {}   -- [key] = true/false, from TYPE_INFO
 for _, info in ipairs(ns.TYPE_INFO) do
@@ -68,6 +76,7 @@ ns.PROFILES = {
     clasico = {
         chat = "all",
         lootQuality = 4,
+        deathKiller = true,
         types = {
             QUEST = true, BOSS = true, DEATH = true, LOOT = true, DISCOVERY = true,
             NPC = false, CHAT = false, LEVEL = false, GROUP = false, REPUTATION = false, SKILL = false, SPELL = false,
@@ -77,6 +86,7 @@ ns.PROFILES = {
     ampliado = {
         chat = "important",
         lootQuality = 3,
+        deathKiller = false,
         -- types: every TYPE_INFO type at its default (filled in by ApplyProfileTo)
     },
 }
@@ -87,6 +97,7 @@ local function ApplyProfileTo(settings, name)
     if not profile then return false end
     settings.chat = profile.chat
     settings.lootQuality = profile.lootQuality
+    settings.deathKiller = profile.deathKiller == true
     if type(settings.types) ~= "table" then settings.types = {} end
     if profile.types then
         for key, enabled in pairs(profile.types) do settings.types[key] = enabled end
@@ -143,6 +154,8 @@ local LOOT_QUALITIES = { [2] = true, [3] = true, [4] = true, [5] = true }
 -- Fills in defaults without touching values the player set. A value of the wrong
 -- type (a hand-edited file) is replaced by the default.
 local function NormaliseSettings(settings)
+    -- A diary that took the "clasico" profile before deathKiller existed (T1..T3) gets what that profile says.
+    if settings.deathKiller == nil and settings.profile == "clasico" then settings.deathKiller = true end
     for key, default in pairs(ns.DEFAULT_SETTINGS) do
         if type(default) == "table" then
             if type(settings[key]) ~= "table" then settings[key] = {} end

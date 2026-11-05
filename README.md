@@ -60,7 +60,7 @@ All changes must keep both clients working. A change that fixes Forever and brea
 |---|---|---|
 | `QUEST` | `QUEST_TURNED_IN` | Repeats of the same quest ID within 3 s are ignored. The title comes from `C_QuestLog.GetTitleForQuestID`, falling back to the quest log, then to the quest ID. |
 | `BOSS` | `BOSS_KILL`, `ENCOUNTER_END` (`success == 1`) | Repeats of the same name within 5 s are ignored, because both events can fire for one kill. |
-| `DEATH` | `PLAYER_DEAD` | |
+| `DEATH` | `PLAYER_DEAD` (and, for `settings.deathKiller`, `PLAYER_REGEN_DISABLED` / `PLAYER_REGEN_ENABLED`) | T4a: with `deathKiller` on, the entry names the hostile non-player target the player had when combat began (`killer`), worded "el último enemigo al que me enfrenté" because there is no combat log to know the real killer. Cleared when combat ends with the player alive. A secret name or test: no name. Off by default (the `clasico` profile turns it on). |
 | `LOOT` | `CHAT_MSG_LOOT`, plus `GET_ITEM_INFO_RECEIVED` / `ITEM_DATA_LOAD_RESULT` for items not yet cached | Only the player's own loot (messages matching the locale's `LOOT_ITEM_SELF*` / `LOOT_ITEM_PUSHED_SELF*` strings) and only quality ≥ `settings.lootQuality` (T1: 3 = rare or better by default, 4 = epic in the *clásico* profile; the import uses the same threshold). Parses the first item link in the message. |
 | `DISCOVERY` | `ZONE_CHANGED*`, `MINIMAP_ZONE_CHANGED` | Only the first time a "subzone, zone" is seen (`visited`). Ignored while the zone text is nil or secret. Zone-only places count too: "Durotar" and "Valle de los Retos, Durotar" are different places. |
 | `NPC` | `GOSSIP_SHOW` | Uses `UnitName("npc")`. Repeats of the same NPC within 20 s are ignored. |
@@ -69,6 +69,9 @@ All changes must keep both clients working. A change that fixes Forever and brea
 | `REPUTATION` | `CHAT_MSG_COMBAT_FACTION_CHANGE` | M6. `repEvent = "gain"`: only the **first** gain with each faction in each jornada, no figures. `repEvent = "standing"`: every change of standing (`FACTION_STANDING_CHANGED*`; this sentence was never captured, harness-only until verified). |
 | `SKILL` | `CHAT_MSG_SKILL` | M6. `skillEvent = "new"` for a new skill, `"rank"` when a skill reaches a multiple of 25 (`ns.SKILL_STEP`). Stateless, so live and import agree. |
 | `SPELL` | `CHAT_MSG_SYSTEM` | M6. "Has aprendido un nuevo hechizo / una nueva facultad: [link]." (`ERR_LEARN_SPELL_S`, `_ABILITY_S`, `_PASSIVE_S`). One entry per spell ID (each rank is its own); `spellID`, `learnKind`. |
+| `QUEST_ACCEPT` | `QUEST_DETAIL`, `QUEST_ACCEPTED` | T4a. The giver (`npc`) is the NPC at `QUEST_DETAIL`, used only if the quest is accepted within 120 s and the name was readable; otherwise the entry says "un habitante de la zona". The quest ID is the payload: `(questID)` on Forever (observed in AJProbe's records), `(questLogIndex, questID)` on Classic Era per Warcraft Wiki (not observed yet): with two arguments the second one is the ID. Same quest within 3 s: one entry. The import has no giver (AJProbe does not record `QUEST_DETAIL`). |
+| `REVISIT` | `ZONE_CHANGED*`, `UNIT_SPELLCAST_SUCCEEDED` (player), `UnitOnTaxi` | T4a, **off by default** (the `clasico` profile turns it on). A place already in `visited`. Every place change (and every DISCOVERY) also stores `travelMethod`: `TAXI` if `UnitOnTaxi("player")` at that moment, else `HEARTHSTONE` / `TELEPORT` if the player cast a spell of `ns.TRAVEL_SPELLS` (by spell ID, not name) in the last 60 s, else `ON_FOOT`. The list of spell IDs is a starting point (hearthstone, Astral Recall, the vanilla mage teleports and portals, Moonglade, Death Gate); extend it after seeing a cast with `/diario debug on`. Not imported (AJProbe records neither the casts nor which places were already known). |
+| `GUILD` | `CHAT_MSG_SYSTEM`, `PLAYER_GUILD_UPDATE` | T4a. The player joining or leaving a guild, from the client's own `ERR_GUILD_*` strings: a name containing `JOIN` is a join, `LEAVE` or `QUIT` a leave, anything else is ignored; a message with a player name counts only when it is the player's own. **The global names are not verified** (no guild message was ever recorded): `/diario diag` and `/diario diag mensajes` list the ones this client has. The guild's name comes from `GetGuildInfo` (a join) or the last name remembered (a leave); without one the entry says "una hermandad". Chema's line polled `GetGuildInfo` on roster updates and logged a join at every login; this one only reacts to the messages. |
 | `CHAT` | `CHAT_MSG_WHISPER` | Stores the **sender name only**, never the message text. This is the default and is unchanged. The text of conversations is a separate **opt-in, off by default** feature ([Backfill and conversations](#backfill-and-conversations-m4b)). |
 
 Each type can be switched off in the options (M5, `settings.types`). `AddEntry` is the single gate: a disabled type is dropped there, **after** the handler has updated its dedupe state and `visited`, so switching a type back on does not replay what happened while it was off, and the secret guards are unchanged. `CHAT_MSG_LOOT` returns early when `LOOT` is off, so no item lookups are requested.
@@ -133,10 +136,12 @@ AdventureJournalDB = {
     chat          = "important",  -- "all" | "important" | "off"
     types         = { QUEST = true, BOSS = true, DEATH = true, LOOT = true,
                       DISCOVERY = true, NPC = true, CHAT = true,
-                      LEVEL = true, GROUP = true, REPUTATION = true, SKILL = true, SPELL = true },  -- which types are logged (M6 added the last five)
+                      LEVEL = true, GROUP = true, REPUTATION = true, SKILL = true, SPELL = true,  -- M6
+                      QUEST_ACCEPT = true, REVISIT = false, GUILD = true },  -- T4a (REVISIT off by default)
     showProfile   = false,        -- show the mood (characterProfile) in the book's entry header
     conversations = false,        -- M4b: record RP conversations (opt-in, off by default)
     lootQuality   = 3,            -- T1: lowest item quality logged as LOOT (2..5; 3 rare, 4 epic)
+    deathKiller   = false,        -- T4a: name the last enemy fought in a death entry ("clasico" turns it on)
     profile       = "ampliado",   -- T1: the profile last applied, "ampliado" | "clasico" (a record)
   },
   -- T1: kept untouched when the diary comes from Chema's Forever line (1.1.0-Forever), never written here:
@@ -150,7 +155,7 @@ AdventureJournalDB = {
       startTs, endTs,                -- M4b, optional: epochs, only on those jornadas
       events = {
         {
-          type, text, prose,           -- type is QUEST|BOSS|DEATH|LOOT|DISCOVERY|NPC|CHAT, and (M6) LEVEL|GROUP|REPUTATION|SKILL|SPELL
+          type, text, prose,           -- type is QUEST|BOSS|DEATH|LOOT|DISCOVERY|NPC|CHAT, (M6) LEVEL|GROUP|REPUTATION|SKILL|SPELL, (T4a) QUEST_ACCEPT|REVISIT|GUILD
           place, zone, subZone,
           time = "HH:MM:SS", timestamp = <epoch>,
           characterProfile, contextualTone, seed,
@@ -162,6 +167,11 @@ AdventureJournalDB = {
           repEvent, standing,          -- M6, REPUTATION: "gain" | "standing"; text is the faction, standing the new standing
           skillEvent, rank,            -- M6, SKILL: "new" | "rank"; text is the skill
           spellID, learnKind,          -- M6, SPELL: learnKind "spell" | "ability" | "passive"; text is the spell name
+          header,                      -- T2, optional: the red place header (DISCOVERY, REVISIT)
+          travelMethod,                -- T4a, DISCOVERY and REVISIT: "ON_FOOT" | "HEARTHSTONE" | "TELEPORT" | "TAXI"
+          npc,                         -- T4a, QUEST_ACCEPT: the quest giver, when known (questID as for QUEST)
+          guildEvent,                  -- T4a, GUILD: "join" | "leave"; text is the guild's name
+          killer,                      -- T4a, DEATH, only with settings.deathKiller: the last enemy fought, not a known killer
           source = "ajprobe",          -- M4b, optional: entries added by /diario importar
         },
       },
@@ -267,6 +277,7 @@ Entries marked "verify" have not been checked in game. Confirm them with `/dump`
 | Options panel | Observed in game (`/run` check, 2026-11-04): `Settings.RegisterAddOnCategory`, `OpenToCategory`, `RegisterAddOnSetting`, `RegisterProxySetting`, `CreateCheckbox`, `CreateDropdown`, `VarType` and `SettingsPanel` all exist, plus `RegisterCanvasLayoutCategory` / `RegisterVerticalLayoutCategory` (M0); `InterfaceOptions_AddCategory` is missing. Templates `UICheckButtonTemplate`, `InterfaceOptionsCheckButtonTemplate` and `UIPanelButtonTemplate` work. **Call signatures are not observable**; the canvas path used here needs only the category functions and `OpenToCategory` | `Settings` API (**verify in M3**). Expected to match the Mainline docs: [api-quick-reference.md](../docs/api-quick-reference.md) |
 | ScrollBox | `CreateScrollBoxListLinearView`, `CreateDataProvider`, `ScrollUtil.InitScrollBoxListWithScrollBar` and the templates `WowScrollBoxList` and `MinimalScrollBar` all work; a full build in a hidden frame succeeded (observed). Row layout and scrolling: verify in game | **Verify in M3** (`/diario diag` runs the same probe) |
 | Message strings (M6) | Group: `ERR_JOINED_GROUP_S`, `ERR_LEFT_GROUP_S`, `ERR_LEFT_GROUP_YOU`, `ERR_GROUP_DISBANDED`, `ERR_RAID_MEMBER_ADDED_S`, `ERR_RAID_MEMBER_REMOVED_S`; skills `ERR_SKILL_UP_SI`, `ERR_SKILL_GAINED_S` (and every `ERR_SKILL_*`); spells `ERR_LEARN_SPELL_S`, `_ABILITY_S`, `_PASSIVE_S`; reputation every `FACTION_STANDING_INCREASED*` / `FACTION_STANDING_CHANGED*`. Names confirmed by Warcraft Wiki: `ERR_JOINED_GROUP_S`, `ERR_LEFT_GROUP_S`, `ERR_LEFT_GROUP_YOU`, `ERR_SKILL_UP_SI`, `ERR_SKILL_GAINED_S`; the others are from memory and found by the prefix scan where possible. **The esES sentences match what AJProbe recorded on Forever** (join, leave, you leave, disbanded, spell, ability "facultad", skill up and gained, reputation). Classic Era words the reputation increase differently from Forever (`ha aumentado. (+N)` vs `ha aumentado en N.`); both are built from the client's own string. Not captured anywhere yet: the standing-changed sentence, the raid and passive strings. Check with `/diario diag mensajes` | Same strings; **verify in M3** with `/diario diag mensajes` (section 3d of the runbook) |
+| Quest accepted, travel, deaths, guild (T4a) | `QUEST_DETAIL`, `QUEST_ACCEPTED`, `UNIT_SPELLCAST_SUCCEEDED` (registered with `RegisterUnitEvent` for the player), `PLAYER_REGEN_DISABLED`, `PLAYER_REGEN_ENABLED`, `PLAYER_GUILD_UPDATE`, `UnitOnTaxi`, `UnitCanAttack`, `UnitIsPlayer`, `UnitIsDeadOrGhost`, `GetGuildInfo`, the `ERR_GUILD_*` strings. All exist on Classic Era per Warcraft Wiki. **Observed:** `QUEST_ACCEPTED` on Forever is `(questID)`. **Not observed on either client:** the Classic payload, any `ERR_GUILD_*` wording, `UNIT_SPELLCAST_SUCCEEDED` spell IDs of teleports, whether `UnitName("target")` or `UnitIsPlayer` are secret in instances (guarded: a secret means no enemy is named) | Same. Verify with `/diario debug on`, `/diario diag mensajes` |
 | Date parsing (import) | `time{year=...}` converts the saved local-time strings back to epochs; checked by converting back, with the stored epochs as fallback. `/diario diag` shows "Lectura de fechas" (**verify in game**) | Same (**verify in M3**) |
 | Chat for conversations | `CHAT_MSG_WHISPER`, `_WHISPER_INFORM`, `_BN_WHISPER`, `_BN_WHISPER_INFORM`, `_PARTY(_LEADER)`, `_RAID(_LEADER)`, `_SAY`, `_YELL`, `_EMOTE`, `_TEXT_EMOTE` all register (observed in AJProbe's `env.events`). The GUID is argument 12, the Battle.net sender ID argument 13; the author carries the realm (observed). AJProbe's data shows `rel = "me"` working; the friend and Battle.net lookups (`C_FriendList.IsFriend`, `C_BattleNet.*`) have not been seen to return anything yet (**verify in game**) | Same events. **Text and author may be secret in instances** (verify in M3). `C_FriendList` / `C_BattleNet` signatures: verify |
 | Group lookups (conversations) | `UnitGUID`, `GetNumGroupMembers`, `IsInRaid` | Same; unit GUIDs may be secret inside instances (guarded) |

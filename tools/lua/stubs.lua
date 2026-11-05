@@ -224,6 +224,13 @@ LOOT_ITEM_MULTIPLE = "%s recibe el botín: %sx%d."
 -- passive and "standing changed" strings were never seen: their wording here is invented, only
 -- their shape (which arguments, in which order) is used to test the pattern builder.
 if not FLAGS.nomessages then
+    -- T4a guild strings: INVENTED in this wording (no guild message has been recorded on any client yet);
+    -- they have the names and shapes the parser looks for, plus ones it must ignore.
+    ERR_GUILD_JOIN_S = "%s se ha unido a la hermandad."
+    ERR_GUILD_LEAVE_S = "%s ha dejado la hermandad."
+    ERR_GUILD_QUIT_S = "Has dejado la hermandad."
+    ERR_GUILD_INVITE_S = "Has invitado a %s a unirse a tu hermandad."
+    ERR_GUILD_PERMISSIONS = "No tienes permiso para hacer eso."
     ERR_JOINED_GROUP_S = "%s se une al grupo."
     ERR_LEFT_GROUP_S = "%s deja el grupo."
     ERR_LEFT_GROUP_YOU = "Dejas el grupo."
@@ -267,11 +274,21 @@ if not FLAGS.nosocial then
         GetAccountInfoByID = function(id) return S.bnAccounts[id] end,
     }
 end
+S.target = nil         -- T4a: { name = "...", hostile = bool, player = bool }; name may be S.SECRET
+S.guildName = nil      -- GetGuildInfo("player"): nil while the player has no guild
+S.onTaxi = false
+S.dead = false
 function UnitName(unit)
     if unit == "player" then return S.playerName end
     if unit == "npc" then return S.npcName end
+    if unit == "target" then return S.target and S.target.name or nil end
     return nil
 end
+function UnitCanAttack(_, unit) return unit == "target" and S.target ~= nil and S.target.hostile == true end
+function UnitIsPlayer(unit) return unit == "target" and S.target ~= nil and S.target.player == true end
+function UnitIsDeadOrGhost() return S.dead end
+function UnitOnTaxi() return S.onTaxi end
+function GetGuildInfo(unit) if unit == "player" then return S.guildName, "Miembro", 5 end return nil end
 function InCombatLockdown() return false end
 S.inInstance = false
 function IsInInstance() return S.inInstance, S.inInstance and "party" or "none" end

@@ -13,7 +13,7 @@ local addonName, ns = ...
 
 -- Seconds within which two entries of the same type and subject are the same event. Used by the
 -- live handlers and, for the import, against both the diary and the records of the same run.
-ns.DEDUPE_WINDOW = { LEVEL = 10, GROUP = 3, REPUTATION = 10, SKILL = 30, SPELL = 5 }
+ns.DEDUPE_WINDOW = { LEVEL = 10, GROUP = 3, REPUTATION = 10, SKILL = 30, SPELL = 5, GUILD = 10, QUEST_ACCEPT = 3 }
 
 -- A skill entry is made for a new skill and every time a skill reaches a multiple of this
 -- (user's choice 2026-11-05: "new + every 25 points"). Stateless on purpose: the live game and the
@@ -38,6 +38,11 @@ function ns.NewTypeSubject(kind, text, source)
         if type(source.spellID) == "number" then return "spell:" .. source.spellID end
         return text
     end
+    if kind == "GUILD" then return (source.guildEvent or "") .. "\1" .. text end
+    if kind == "QUEST_ACCEPT" then
+        if type(source.questID) == "number" then return "quest:" .. source.questID end
+        return text
+    end
     return nil
 end
 
@@ -60,9 +65,10 @@ end
 
 -- A message from the system chat (CHAT_MSG_SYSTEM) -> a candidate for one of the types below, or nil.
 -- Never called with a secret; the caller checks.
-function ns.SystemMessageCandidate(message)
+-- `context` (optional): { playerName = "...", guildName = "..." }, for the guild messages.
+function ns.SystemMessageCandidate(message, context)
     if type(message) ~= "string" then return nil end
-    return ns.GroupCandidate(message) or ns.SpellCandidate(message)
+    return ns.GroupCandidate(message) or ns.SpellCandidate(message) or ns.GuildCandidate(message, context)
 end
 
 -- LEVEL -------------------------------------------------------------------------------
@@ -223,6 +229,69 @@ function ns.SpellCandidate(message)
     return { type = "SPELL", text = name, extra = { spellID = spellID, learnKind = SPELL_KIND[item.name] } }
 end
 
+-- QUEST_ACCEPT (T4a) -----------------------------------------------------------------
+-- QUEST_ACCEPTED is (questID) on Mainline (observed on Forever: AJProbe's records have a = { questID })
+-- and (questLogIndex, questID) on Classic Era per Warcraft Wiki (not observed yet). The quest ID is the
+-- second argument when there is one, else the first. Nil when neither is a readable number.
+function ns.QuestIDFromAccepted(first, second)
+    if second ~= nil then
+        -- Two arguments: the first is a log index, never an ID. An unreadable second one leaves no ID.
+        if not ns.IsSecret(second) and type(second) == "number" then return second end
+        return nil
+    end
+    if not ns.IsSecret(first) and type(first) == "number" then return first end
+    return nil
+end
+
+-- GUILD (T4a) --------------------------------------------------------------------------
+-- The player joining or leaving a guild, from the client's own system messages. The global names are
+-- NOT verified on either client (no guild message has been recorded yet), so every ERR_GUILD_* string
+-- is read and classified by its name and its arguments, and /diario diag mensajes shows what this
+-- client has:
+--   a name containing JOIN means "join"; LEAVE or QUIT means "leave"; anything else is ignored
+--   (invitations, kicks, errors, other members' ranks...)
+--   no argument: the message is about the player; one argument: a player name, accepted only when it
+--   is the player's own (so "Garona has joined the guild" is not "I joined"); more arguments: ignored
+-- The guild's name is not in these messages as far as is known: the caller passes the one it knows
+-- (the guild the player was in, for a leave); without one the entry says "una hermandad".
+local GUILD_KIND_WORDS = { { "JOIN", "join" }, { "LEAVE", "leave" }, { "QUIT", "leave" } }
+
+local function GuildKind(name)
+    for _, pair in ipairs(GUILD_KIND_WORDS) do
+        if string.find(name, pair[1], 1, true) then return pair[2] end
+    end
+    return nil
+end
+
+-- The formats this client has for guild joins and leaves, each with its kind.
+function ns.GetGuildFormats()
+    local out = {}
+    for _, item in ipairs(ns.GlobalFormats("guild", {}, "ERR_GUILD_")) do
+        local kind = GuildKind(item.name)
+        if kind and #item.compiled.order <= 1 then
+            item.guildKind = kind
+            out[#out + 1] = item
+        end
+    end
+    return out
+end
+
+function ns.GuildCandidate(message, context)
+    if type(message) ~= "string" then return nil end
+    local item, values = ns.MatchFormats(ns.GetGuildFormats(), message)
+    if not item then return nil end
+    if #item.compiled.order == 1 then
+        local who = ns.PlayerNameFromText(values[1])
+        local me = context and context.playerName
+        if not who or not me or who ~= me then return nil end
+    end
+    -- A join names the guild the player is in now; a leave names the one remembered from before.
+    local guild
+    if context then guild = item.guildKind == "leave" and context.lastGuildName or context.guildName end
+    if type(guild) ~= "string" or guild == "" then guild = ns.NEUTRAL_TEXT.GUILD end
+    return { type = "GUILD", text = guild, extra = { guildEvent = item.guildKind } }
+end
+
 -- Diagnostics (/diario diag): which of the client's strings each M6 type found. A type with "ninguna"
 -- cannot match anything on this client, so check the global names with /dump.
 function ns.GetMessageStatus()
@@ -238,6 +307,8 @@ function ns.GetMessageStatus()
         { "Mensajes de reputación: cambios de nivel", names(changes) },
         { "Mensajes de habilidades", names(ns.GetSkillFormats(), function(item) return " [" .. tostring(item.skillKind or "no se usa") .. "]" end) },
         { "Mensajes de hechizos (de 3)", names(ns.GlobalFormats("spell", { "ERR_LEARN_SPELL_S", "ERR_LEARN_ABILITY_S", "ERR_LEARN_PASSIVE_S" })) },
+        { "Mensajes de hermandad (de " .. #ns.GlobalFormats("guild", {}, "ERR_GUILD_") .. " ERR_GUILD_*, se usan los de entrar y salir)",
+            names(ns.GetGuildFormats(), function(item) return " [" .. item.guildKind .. "]" end) },
     }
 end
 
@@ -264,7 +335,7 @@ function ns.SelfTestMessages()
     local function describe(candidate)
         if not candidate then return "NO lo reconoce", false end
         local detail = candidate.type .. " " .. tostring(candidate.extra and (candidate.extra.groupEvent or candidate.extra.repEvent
-            or candidate.extra.skillEvent or candidate.extra.learnKind) or "") .. " «" .. tostring(candidate.text) .. "»"
+            or candidate.extra.skillEvent or candidate.extra.learnKind or candidate.extra.guildEvent) or "") .. " «" .. tostring(candidate.text) .. "»"
         if candidate.extra and candidate.extra.standing then detail = detail .. " (nivel «" .. candidate.extra.standing .. "»)" end
         if candidate.extra and candidate.extra.rank then detail = detail .. " (" .. candidate.extra.rank .. ")" end
         return detail, true
@@ -302,6 +373,19 @@ function ns.SelfTestMessages()
             local candidate = ns.SpellCandidate(sample)
             local result, ok = describe(candidate)
             add(name, sample, result, ok and candidate.text == "Prueba" and candidate.extra.spellID == 1)
+        end
+    end
+    -- Guild: a sample about the player (accepted) and, for one-argument formats, about someone else (refused).
+    local me = ns.SafeString(ns.UnitNameSafe("player"), "Prueba")
+    for _, item in ipairs(ns.GetGuildFormats()) do
+        local mine = FillFormat(item.format, { me })
+        local candidate = ns.GuildCandidate(mine, { playerName = me, guildName = "Prueba", lastGuildName = "Prueba" })
+        local result, ok = describe(candidate)
+        add(item.name, mine, result, ok and candidate.extra.guildEvent == item.guildKind)
+        if #item.compiled.order == 1 then
+            local other = FillFormat(item.format, { "Otro" })
+            local ignored = ns.GuildCandidate(other, { playerName = me, guildName = "Prueba", lastGuildName = "Prueba" }) == nil
+            add(item.name .. " (otro jugador)", other, ignored and "ignorado, como debe" or "NO lo ignora", ignored)
         end
     end
     return rows

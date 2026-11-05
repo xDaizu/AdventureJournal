@@ -9,6 +9,11 @@ local lastQuestID, lastQuestAt
 local lastBossName, lastBossAt
 local lastNPCName, lastNPCTime
 local pendingLoot = {}   -- [itemID] = itemLink, waiting for GET_ITEM_INFO_RECEIVED
+local pendingGiver       -- T4a: { name, at } the quest giver seen at QUEST_DETAIL
+local lastAcceptID, lastAcceptAt
+local transport          -- T4a: { method, expires } the last hearthstone / teleport cast
+local lastEnemy          -- T4a: name of the hostile non-player target when combat began
+local sessionGuild       -- T4a: the last guild name read, so a leave can say which guild
 
 -- Chat echo policy (bug: spam). settings.chat: "all", "important" (default) or "off".
 -- Important = boss kills, deaths and epic (or better) loot.
@@ -147,6 +152,7 @@ handlers.ADDON_LOADED = function(loadedName)
 end
 
 handlers.PLAYER_ENTERING_WORLD = function(_, isReloadingUi)
+    sessionGuild = ns.CurrentGuildName() or sessionGuild
     StartSession(isReloadingUi == true)
 end
 
@@ -199,7 +205,37 @@ handlers.ENCOUNTER_END = function(_, encounterName, _, _, success)
 end
 
 handlers.PLAYER_DEAD = function()
-    ns.AddEntry("DEATH", "He caído en combate")
+    -- deathKiller (T4a): the enemy fought when combat began. There is no combat log, so it is not
+    -- known to be the killer; the prose says so. With the setting off nothing is added.
+    local extra
+    if lastEnemy and ns.GetSetting("deathKiller") == true then extra = { killer = lastEnemy } end
+    lastEnemy = nil
+    ns.AddEntry("DEATH", "He caído en combate", extra)
+end
+
+-- T4a: the last hostile non-player target when combat starts. UnitName and the unit tests can be
+-- secret inside instances: then nothing is kept and the death entry names no one.
+handlers.PLAYER_REGEN_DISABLED = function()
+    lastEnemy = nil
+    if ns.GetSetting("deathKiller") ~= true then return end
+    if not (UnitCanAttack and UnitIsPlayer) then return end
+    local name = ns.UnitNameSafe("target")
+    if ns.IsSecret(name) or type(name) ~= "string" or name == "" then return end
+    local okAttack, canAttack = pcall(UnitCanAttack, "player", "target")
+    local okPlayer, isPlayer = pcall(UnitIsPlayer, "target")
+    if not (okAttack and okPlayer) or ns.IsSecret(canAttack) or ns.IsSecret(isPlayer) then return end
+    if canAttack == true and isPlayer ~= true and isPlayer ~= 1 then lastEnemy = name end
+end
+
+-- Combat ended without dying: the enemy no longer explains a later death (a fall, say). If the
+-- player is dead here, PLAYER_DEAD still needs it.
+handlers.PLAYER_REGEN_ENABLED = function()
+    local dead = false
+    if UnitIsDeadOrGhost then
+        local ok, result = pcall(UnitIsDeadOrGhost, "player")
+        dead = ok and not ns.IsSecret(result) and result == true
+    end
+    if not dead then lastEnemy = nil end
 end
 
 handlers.CHAT_MSG_LOOT = function(message)
@@ -241,7 +277,44 @@ handlers.GET_ITEM_INFO_RECEIVED = function(itemID, success)
 end
 handlers.ITEM_DATA_LOAD_RESULT = handlers.GET_ITEM_INFO_RECEIVED
 
--- A DISCOVERY is logged only the first time a place is seen (DB.visited).
+-- T4a: how the player got here. Hearthstone and teleports are casts (by spell ID, not name), seen
+-- at UNIT_SPELLCAST_SUCCEEDED and valid for a minute (Chema's line never expired them). A taxi is
+-- read from UnitOnTaxi at the zone change. The list is a starting point: a cast that is not in it
+-- reads as on foot; add its ID after seeing it with /diario debug on.
+local TRAVEL_SPELLS = {
+    [8690] = "HEARTHSTONE",     -- Hearthstone
+    [556] = "HEARTHSTONE",      -- Astral Recall
+    [3561] = "TELEPORT", [3562] = "TELEPORT", [3563] = "TELEPORT", [3565] = "TELEPORT",
+    [3566] = "TELEPORT", [3567] = "TELEPORT",                      -- mage teleports (vanilla cities)
+    [10059] = "TELEPORT", [11416] = "TELEPORT", [11417] = "TELEPORT", [11418] = "TELEPORT",
+    [11419] = "TELEPORT", [11420] = "TELEPORT",                    -- mage portals (vanilla cities)
+    [18960] = "TELEPORT",       -- Teleport: Moonglade
+    [50977] = "TELEPORT",       -- Death Gate
+}
+ns.TRAVEL_SPELLS = TRAVEL_SPELLS
+local TRANSPORT_SECONDS = 60
+
+handlers.UNIT_SPELLCAST_SUCCEEDED = function(unit, _, spellID)
+    if ns.IsSecret(unit) or unit ~= "player" then return end
+    if ns.IsSecret(spellID) or type(spellID) ~= "number" then return end
+    local method = TRAVEL_SPELLS[spellID]
+    if method then transport = { method = method, expires = time() + TRANSPORT_SECONDS } end
+end
+
+-- The travel method of this place change; every change uses up the last cast.
+local function TakeTravelMethod()
+    local method = "ON_FOOT"
+    if ns.IsPlayerOnTaxi() then
+        method = "TAXI"
+    elseif transport and time() <= transport.expires then
+        method = transport.method
+    end
+    transport = nil
+    return method
+end
+
+-- A DISCOVERY is logged only the first time a place is seen (DB.visited); a place seen before is a
+-- REVISIT (off by default).
 local function OnZoneChanged()
     -- An unreadable zone is not a discovery: skip it instead of logging "unknown lands".
     local zone = ns.GetZoneText()
@@ -254,10 +327,15 @@ local function OnZoneChanged()
     local newPlace = ns.GetPlace()
     if newPlace ~= currentPlace then
         currentPlace = newPlace
+        local method = TakeTravelMethod()
         local visited = ns.DB and ns.DB.visited
-        if visited and not visited[newPlace] then
-            visited[newPlace] = true
-            ns.AddEntry("DISCOVERY", newPlace)
+        if visited then
+            if not visited[newPlace] then
+                visited[newPlace] = true
+                ns.AddEntry("DISCOVERY", newPlace, { travelMethod = method })
+            else
+                ns.AddEntry("REVISIT", newPlace, { travelMethod = method })
+            end
         end
     end
 end
@@ -265,6 +343,39 @@ handlers.ZONE_CHANGED_NEW_AREA = OnZoneChanged
 handlers.ZONE_CHANGED = OnZoneChanged
 handlers.ZONE_CHANGED_INDOORS = OnZoneChanged
 handlers.MINIMAP_ZONE_CHANGED = OnZoneChanged
+
+-- T4a: the quest giver, kept from the moment the quest is offered until it is accepted. A quest
+-- with no NPC (from an item) clears it, so a giver is never carried over to another quest.
+handlers.QUEST_DETAIL = function()
+    pendingGiver = nil
+    local name = ns.UnitNameSafe("npc")
+    if ns.IsSecret(name) then
+        ns.Debug("QUEST_DETAIL: nombre del PNJ secreto, no se guarda")
+        return
+    end
+    if type(name) == "string" and name ~= "" then pendingGiver = { name = name, at = time() } end
+end
+
+local GIVER_SECONDS = 120
+
+handlers.QUEST_ACCEPTED = function(first, second)
+    local questID = ns.QuestIDFromAccepted(first, second)
+    if ns.IsSecret(first) or ns.IsSecret(second) then ns.Debug("QUEST_ACCEPTED: argumento secreto") end
+    local giver = pendingGiver
+    pendingGiver = nil
+    if questID and questID == lastAcceptID and lastAcceptAt and time() - lastAcceptAt <= ns.DEDUPE_WINDOW.QUEST_ACCEPT then
+        return
+    end
+    lastAcceptID, lastAcceptAt = questID, time()
+    local extra = { questID = questID }
+    if giver and time() - giver.at <= GIVER_SECONDS then extra.npc = giver.name end
+    ns.AddEntry("QUEST_ACCEPT", ns.GetQuestTitle(questID), extra)
+end
+
+-- T4a: the guild's name, kept so that leaving can say which guild it was.
+handlers.PLAYER_GUILD_UPDATE = function()
+    sessionGuild = ns.CurrentGuildName() or sessionGuild
+end
 
 handlers.GOSSIP_SHOW = function()
     local rawName = ns.UnitNameSafe("npc")
@@ -297,12 +408,24 @@ end
 -- M6: the system chat. Group joins and leaves arrive here by name. Skipped when unreadable (a secret
 -- message in an instance), so nothing is guessed.
 handlers.CHAT_MSG_SYSTEM = function(message)
-    if not (ns.IsTypeEnabled("GROUP") or ns.IsTypeEnabled("SPELL")) then return end
+    if not (ns.IsTypeEnabled("GROUP") or ns.IsTypeEnabled("SPELL") or ns.IsTypeEnabled("GUILD")) then return end
     if ns.IsSecret(message) then
         ns.Debug("CHAT_MSG_SYSTEM: mensaje secreto, se omite")
         return
     end
-    local candidate = ns.SystemMessageCandidate(message)
+    local candidate = ns.SystemMessageCandidate(message, {
+        playerName = ns.SafeString(ns.UnitNameSafe("player"), nil),
+        guildName = ns.CurrentGuildName(),
+        lastGuildName = sessionGuild,
+    })
+    if candidate and candidate.type == "GUILD" then
+        -- Remember which guild the next leave is about.
+        if candidate.extra.guildEvent == "leave" then
+            sessionGuild = nil
+        elseif candidate.text ~= ns.NEUTRAL_TEXT.GUILD then
+            sessionGuild = candidate.text
+        end
+    end
     if candidate and ns.IsTypeEnabled(candidate.type) then LogCandidate(candidate) end
 end
 
@@ -374,9 +497,12 @@ local EVENTS = {
     "GOSSIP_SHOW", "CHAT_MSG_WHISPER",
     "PLAYER_LEVEL_UP", "CHAT_MSG_SYSTEM", "GROUP_JOINED",
     "CHAT_MSG_COMBAT_FACTION_CHANGE", "CHAT_MSG_SKILL",
+    "QUEST_DETAIL", "QUEST_ACCEPTED", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED", "PLAYER_GUILD_UPDATE",
 }
 ns.EVENTS = EVENTS
 for _, eventName in ipairs(EVENTS) do ns.RegisterEventSafe(eventFrame, eventName) end
+-- Casts of the player only (hearthstone, teleports): a unit event, so no other unit's casts arrive.
+ns.RegisterUnitEventSafe(eventFrame, "UNIT_SPELLCAST_SUCCEEDED", "player")
 
 -- Error isolation: a failing handler never stops the others. Each event name is
 -- reported once to the game's error handler (so scriptErrors / BugSack show it);

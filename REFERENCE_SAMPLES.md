@@ -81,3 +81,8 @@ To capture in M3. What is already known from AJProbe's first Forever file (2026-
 | `PLAYER_LEVEL_UP` | `level` = the new level (2 to 6 in the first session) |
 
 Never captured: the sentence for a change of standing ("Eres ahora ... con ..."), the raid join and leave strings, the passive-ability string, anything from an instance group.
+
+
+## QUEST_ACCEPTED on Forever (2026-11-05, AJProbe, T4a)
+
+`a = { questID }`: a single argument, the quest ID (1470, 364), with the title the probe looked up (`title`). It is preceded by a `CHAT_MSG_SYSTEM` record in the same second (the "Misión aceptada" line). Classic Era's `(questLogIndex, questID)` is documented by Warcraft Wiki but has not been seen in a record. No `ERR_GUILD_*` message appears in any recorded file.
