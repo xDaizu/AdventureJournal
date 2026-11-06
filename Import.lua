@@ -128,6 +128,23 @@ HANDLERS.QUEST_TURNED_IN = function(record)
              secret = title == nil and (secretTitle or record.quest == "[SECRET]") }
 end
 
+-- T4a: QUEST_ACCEPTED. AJProbe records the quest ID (a[1], or a[2] on Classic) and the title, but not the
+-- NPC that offered it (QUEST_DETAIL is not recorded), so an imported entry has no giver.
+HANDLERS.QUEST_ACCEPTED = function(record)
+    local args = type(record.a) == "table" and record.a or {}
+    local id = ns.QuestIDFromAccepted(args[1], args[2])   -- "[SECRET]" strings are not numbers: skipped
+    local title, secretTitle = Text(record.title)
+    local text
+    if title then
+        text = title
+    elseif id then
+        text = "una misión (ID " .. id .. ")"
+    else
+        text = ns.NEUTRAL_TEXT.QUEST
+    end
+    return { type = "QUEST_ACCEPT", text = text, extra = { questID = id }, secret = title == nil and secretTitle }
+end
+
 HANDLERS.GOSSIP_SHOW = function(record)
     local name, secret = Text(record.npc)
     return { type = "NPC", text = name or ns.NEUTRAL_TEXT.NPC, secret = name == nil and secret }
@@ -149,11 +166,11 @@ local function FirstArg(record)
 end
 
 -- M6: CHAT_MSG_SYSTEM carries the group joins and leaves (by name) in a[1].
-HANDLERS.CHAT_MSG_SYSTEM = function(record)
+HANDLERS.CHAT_MSG_SYSTEM = function(record, context)
     local message, secret = Text(FirstArg(record))
     if secret then return nil, "secret" end
     if not message then return nil, "ignored" end
-    local candidate = ns.SystemMessageCandidate(message)
+    local candidate = ns.SystemMessageCandidate(message, { playerName = context and context.playerName })
     if not candidate then return nil, "ignored" end
     return candidate
 end

@@ -5,7 +5,7 @@
 -- login: after ADDON_LOADED: visited places = 3
 -- login: after load: visitedZones, knownMounts, knownAchievements and jornadas 1, 2, 3 are byte-identical to the diary as it was saved before this load
 -- login: currentDay 4 (a new jornada after Chema's three)
--- login: jornada 4 has 3 entries: DISCOVERY «El Cruce, Los Baldíos»; LOOT «|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r»; DEATH «He caído en combate»
+-- login: jornada 4 has 6 entries: REVISIT «Valle de los Retos, Durotar»; REVISIT «El Cubil, Durotar»; REVISIT «Orgrimmar»; DISCOVERY «El Cruce, Los Baldíos»; LOOT «|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r»; DEATH «He caído en combate»
 -- login: /diario hoy (with a trailing space) shows: Jornada 4, shown=true
 -- login: book on jornada 2 (Chema's):
 |cFFFF3333Vuelo hacia Orgrimmar|r
@@ -15,20 +15,23 @@
 
 |cFF8A5A2419:31:00|r  Completé con éxito el logro «Acontecimiento sin descripción» mientras exploraba Orgrimmar.
 -- login: index rows (button | subtitle):
-Jornada 4 | El Cruce, Los Baldíos  ·  04/11/2026
+Jornada 4 | Valle de los Retos, Durotar  ·  04/11/2026
 Jornada 3 | Orgrimmar  ·  04/11/2026
 Jornada 2 | Orgrimmar  ·  04/11/2026
 Jornada 1 | Valle de los Retos, Durotar  ·  04/11/2026
 -- login: ScrollBox row spacing 24, element extent 24 (48 per row)
 -- login: AdventureJournal_Toggle() -> shown=false
--- login: /ajdiag printed 60 chat lines so far (see chat output)
+-- login: /ajdiag printed 64 chat lines so far (see chat output)
 -- login: end of session: visitedZones, knownMounts, knownAchievements and jornadas 1, 2, 3 are byte-identical to the diary as it was saved before this load
 == events registered
-ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon
 AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
 == chat output
 |cFFFFD700[Diario]|r Comienza la jornada 4. Tu historia continúa.
+|cFF00FF00[Diario]|r Valle de los Retos, Durotar
+|cFF00FF00[Diario]|r El Cubil, Durotar
+|cFF00FF00[Diario]|r Orgrimmar
 |cFF00FF00[Diario]|r El Cruce, Los Baldíos
 |cFF00FF00[Diario]|r |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r
 |cFF00FF00[Diario]|r He caído en combate
@@ -36,7 +39,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 |cFFFFD700[Diario]|r Cliente: 1.15.9 (build 70576), interfaz 11509, WOW_PROJECT_ID 2
 |cFFFFD700[Diario]|r Detectado: IS_FOREVER=false, IS_CLASSIC_ERA=true, idioma esES
 |cFFFFD700[Diario]|r Instancia: false (none). Zona: "Los Baldíos" / "El Cruce"
-|cFFFFD700[Diario]|r Base de datos: versión 3, jornada actual 4, 4 jornadas, 3 entradas hoy
+|cFFFFD700[Diario]|r Base de datos: versión 3, jornada actual 4, 4 jornadas, 6 entradas hoy
 |cFFFFD700[Diario]|r Lugares visitados: 4. Mensajes en el chat: all
 |cFFFFD700[Diario]|r Tipos desactivados: NPC, CHAT, LEVEL, GROUP, REPUTATION, SKILL, SPELL. Ánimo en el libro: no
 |cFFFFD700[Diario]|r Perfil: clasico. Botín desde calidad 4. Diario de la versión de Chema: sí (3 lugares, 1 monturas y 1 logros conservados)
@@ -62,6 +65,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 |cFFFFD700[Diario]|r   Mensajes de reputación: cambios de nivel: FACTION_STANDING_CHANGED
 |cFFFFD700[Diario]|r   Mensajes de habilidades: ERR_SKILL_UP_SI [rank], ERR_SKILL_GAINED_S [new]
 |cFFFFD700[Diario]|r   Mensajes de hechizos (de 3): ERR_LEARN_SPELL_S, ERR_LEARN_ABILITY_S, ERR_LEARN_PASSIVE_S
+|cFFFFD700[Diario]|r   Mensajes de hermandad (de 5 ERR_GUILD_*, se usan los de entrar y salir): ERR_GUILD_JOIN_S [join], ERR_GUILD_LEAVE_S [leave], ERR_GUILD_QUIT_S [leave]
 |cFFFFD700[Diario]|r Interfaz (M5):
 |cFFFFD700[Diario]|r   Settings.RegisterCanvasLayoutCategory: sí
 |cFFFFD700[Diario]|r   Settings.RegisterVerticalLayoutCategory: sí
@@ -84,7 +88,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 |cFFFFD700[Diario]|r   plantilla WowScrollBoxList: sí
 |cFFFFD700[Diario]|r   plantilla MinimalScrollBar: sí
 |cFFFFD700[Diario]|r   prueba de ScrollBox: OK
-|cFFFFD700[Diario]|r Eventos registrados (20): ADDON_LOADED, PLAYER_ENTERING_WORLD, PLAYER_LOGOUT, QUEST_TURNED_IN, BOSS_KILL, ENCOUNTER_END, PLAYER_DEAD, CHAT_MSG_LOOT, GET_ITEM_INFO_RECEIVED, ITEM_DATA_LOAD_RESULT, ZONE_CHANGED_NEW_AREA, ZONE_CHANGED, ZONE_CHANGED_INDOORS, GOSSIP_SHOW, CHAT_MSG_WHISPER, PLAYER_LEVEL_UP, CHAT_MSG_SYSTEM, GROUP_JOINED, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_SKILL
+|cFFFFD700[Diario]|r Eventos registrados (25): ADDON_LOADED, PLAYER_ENTERING_WORLD, PLAYER_LOGOUT, QUEST_TURNED_IN, BOSS_KILL, ENCOUNTER_END, PLAYER_DEAD, CHAT_MSG_LOOT, GET_ITEM_INFO_RECEIVED, ITEM_DATA_LOAD_RESULT, ZONE_CHANGED_NEW_AREA, ZONE_CHANGED, ZONE_CHANGED_INDOORS, GOSSIP_SHOW, CHAT_MSG_WHISPER, PLAYER_LEVEL_UP, CHAT_MSG_SYSTEM, GROUP_JOINED, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_SKILL, QUEST_DETAIL, QUEST_ACCEPTED, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, PLAYER_GUILD_UPDATE
 |cFFFFD700[Diario]|r Eventos NO registrados (1): MINIMAP_ZONE_CHANGED (el cliente no conoce este evento)
 |cFFFFD700[Diario]|r Errores en manejadores: ninguno
 |cFFFFD700[Diario]|r Depuración: apagada, secretos simulados: apagados
@@ -252,28 +256,74 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["endedAt"] = "2026-11-04 17:58:10",
       ["events"] = {
         [1] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "reconociendo las referencias del paisaje a cada trecho",
+          ["header"] = "Viejos Caminos en Valle de los Retos, Durotar",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Volví a recorrer a pie las tierras de Valle de los Retos, Durotar. Reconociendo las referencias del paisaje a cada trecho.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "17:56:40",
+          ["timestamp"] = 1793815000,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "comprobando si las sombras de antaño aún habitan el lugar",
+          ["header"] = "Explorando El Cubil, Durotar",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Volví a recorrer a pie las tierras de El Cubil, Durotar. Comprobando si las sombras de antaño aún habitan el lugar.",
+          ["seed"] = 2,
+          ["subZone"] = "El Cubil",
+          ["text"] = "El Cubil, Durotar",
+          ["time"] = "17:56:50",
+          ["timestamp"] = 1793815010,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "con la tranquilidad de quien ya conoce los peligros del terreno",
+          ["header"] = "Regreso a Orgrimmar",
+          ["place"] = "Orgrimmar",
+          ["prose"] = "Volví a recorrer a pie las tierras de Orgrimmar. Con la tranquilidad de quien ya conoce los peligros del terreno.",
+          ["seed"] = 3,
+          ["subZone"] = "",
+          ["text"] = "Orgrimmar",
+          ["time"] = "17:57:00",
+          ["timestamp"] = 1793815020,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Orgrimmar",
+        },
+        [4] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["contextualTone"] = "estudiando los relieves del terreno con cautela",
           ["header"] = "Nuevos Horizontes: El Cruce, Los Baldíos",
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Descubrí por primera vez la región de El Cruce, Los Baldíos a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
-          ["seed"] = 1,
+          ["prose"] = "Descubrí por primera vez la región de El Cruce, Los Baldíos a pie de camino. Estudiando los relieves del terreno con cautela.",
+          ["seed"] = 4,
           ["subZone"] = "El Cruce",
           ["text"] = "El Cruce, Los Baldíos",
           ["time"] = "17:57:10",
           ["timestamp"] = 1793815030,
+          ["travelMethod"] = "ON_FOOT",
           ["type"] = "DISCOVERY",
           ["zone"] = "Los Baldíos",
         },
-        [2] = {
+        [5] = {
           ["characterProfile"] = "Entusiasmado",
-          ["contextualTone"] = "con la mente puesta en la siguiente meta",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["itemID"] = 5555,
           ["itemLink"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
           ["itemQuality"] = 4,
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Un hallazgo notable en El Cruce, Los Baldíos: |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r ha pasado a mi posesión. Con la mente puesta en la siguiente meta.",
-          ["seed"] = 2,
+          ["prose"] = "Las tierras de El Cruce, Los Baldíos me regalaron un descubrimiento interesante: |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Notando el peso de la armadura sobre los hombros.",
+          ["seed"] = 5,
           ["subZone"] = "El Cruce",
           ["text"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
           ["time"] = "17:58:05",
@@ -281,12 +331,12 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["type"] = "LOOT",
           ["zone"] = "Los Baldíos",
         },
-        [3] = {
+        [6] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "maldiciendo mi suerte y jurando venganza",
+          ["contextualTone"] = "con la lección aprendida a un precio demasiado alto",
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Caí derrotado en El Cruce, Los Baldíos. Regresaré para saldar esta cuenta. Maldiciendo mi suerte y jurando venganza.",
-          ["seed"] = 3,
+          ["prose"] = "Mordí el polvo en El Cruce, Los Baldíos tras un choque fatal. Con la lección aprendida a un precio demasiado alto.",
+          ["seed"] = 6,
           ["subZone"] = "El Cruce",
           ["text"] = "He caído en combate",
           ["time"] = "17:58:10",
@@ -308,6 +358,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
   ["settings"] = {
     ["chat"] = "important",
     ["conversations"] = false,
+    ["deathKiller"] = true,
     ["lootQuality"] = 4,
     ["profile"] = "clasico",
     ["showProfile"] = false,
@@ -354,7 +405,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 -- reload: currentDay 4, chat stays as the player set it: important
 -- reload: end of session: visitedZones, knownMounts, knownAchievements and jornadas 1, 2, 3 are byte-identical to the diary as it was saved before this load
 == events registered
-ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon
 AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
 == chat output
@@ -522,28 +573,74 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["endedAt"] = "2026-11-04 17:56:40",
       ["events"] = {
         [1] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "reconociendo las referencias del paisaje a cada trecho",
+          ["header"] = "Viejos Caminos en Valle de los Retos, Durotar",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Volví a recorrer a pie las tierras de Valle de los Retos, Durotar. Reconociendo las referencias del paisaje a cada trecho.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "17:56:40",
+          ["timestamp"] = 1793815000,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "comprobando si las sombras de antaño aún habitan el lugar",
+          ["header"] = "Explorando El Cubil, Durotar",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Volví a recorrer a pie las tierras de El Cubil, Durotar. Comprobando si las sombras de antaño aún habitan el lugar.",
+          ["seed"] = 2,
+          ["subZone"] = "El Cubil",
+          ["text"] = "El Cubil, Durotar",
+          ["time"] = "17:56:50",
+          ["timestamp"] = 1793815010,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "con la tranquilidad de quien ya conoce los peligros del terreno",
+          ["header"] = "Regreso a Orgrimmar",
+          ["place"] = "Orgrimmar",
+          ["prose"] = "Volví a recorrer a pie las tierras de Orgrimmar. Con la tranquilidad de quien ya conoce los peligros del terreno.",
+          ["seed"] = 3,
+          ["subZone"] = "",
+          ["text"] = "Orgrimmar",
+          ["time"] = "17:57:00",
+          ["timestamp"] = 1793815020,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Orgrimmar",
+        },
+        [4] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["contextualTone"] = "estudiando los relieves del terreno con cautela",
           ["header"] = "Nuevos Horizontes: El Cruce, Los Baldíos",
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Descubrí por primera vez la región de El Cruce, Los Baldíos a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
-          ["seed"] = 1,
+          ["prose"] = "Descubrí por primera vez la región de El Cruce, Los Baldíos a pie de camino. Estudiando los relieves del terreno con cautela.",
+          ["seed"] = 4,
           ["subZone"] = "El Cruce",
           ["text"] = "El Cruce, Los Baldíos",
           ["time"] = "17:57:10",
           ["timestamp"] = 1793815030,
+          ["travelMethod"] = "ON_FOOT",
           ["type"] = "DISCOVERY",
           ["zone"] = "Los Baldíos",
         },
-        [2] = {
+        [5] = {
           ["characterProfile"] = "Entusiasmado",
-          ["contextualTone"] = "con la mente puesta en la siguiente meta",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["itemID"] = 5555,
           ["itemLink"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
           ["itemQuality"] = 4,
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Un hallazgo notable en El Cruce, Los Baldíos: |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r ha pasado a mi posesión. Con la mente puesta en la siguiente meta.",
-          ["seed"] = 2,
+          ["prose"] = "Las tierras de El Cruce, Los Baldíos me regalaron un descubrimiento interesante: |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Notando el peso de la armadura sobre los hombros.",
+          ["seed"] = 5,
           ["subZone"] = "El Cruce",
           ["text"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
           ["time"] = "17:58:05",
@@ -551,12 +648,12 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["type"] = "LOOT",
           ["zone"] = "Los Baldíos",
         },
-        [3] = {
+        [6] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "maldiciendo mi suerte y jurando venganza",
+          ["contextualTone"] = "con la lección aprendida a un precio demasiado alto",
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Caí derrotado en El Cruce, Los Baldíos. Regresaré para saldar esta cuenta. Maldiciendo mi suerte y jurando venganza.",
-          ["seed"] = 3,
+          ["prose"] = "Mordí el polvo en El Cruce, Los Baldíos tras un choque fatal. Con la lección aprendida a un precio demasiado alto.",
+          ["seed"] = 6,
           ["subZone"] = "El Cruce",
           ["text"] = "He caído en combate",
           ["time"] = "17:58:10",
@@ -578,6 +675,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
   ["settings"] = {
     ["chat"] = "important",
     ["conversations"] = false,
+    ["deathKiller"] = true,
     ["lootQuality"] = 4,
     ["profile"] = "clasico",
     ["showProfile"] = false,
@@ -621,10 +719,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 -- relogin: after ADDON_LOADED: types off = NPC, CHAT, LEVEL, GROUP, REPUTATION, SKILL, SPELL; Chema's types (for T4): QUEST_ACCEPT=true, REVISIT=true, MOUNT=true, ACHIEVEMENT=true, GUILD=true
 -- relogin: after ADDON_LOADED: visited places = 4
 -- relogin: after load: visitedZones, knownMounts, knownAchievements and jornadas 1, 2, 3 are byte-identical to the diary as it was saved before this load
--- relogin: jornada 5 has 0 entries: 
+-- relogin: jornada 5 has 2 entries: REVISIT «El Cubil, Durotar»; REVISIT «El Cruce, Los Baldíos»
 -- relogin: end of session: visitedZones, knownMounts, knownAchievements and jornadas 1, 2, 3 are byte-identical to the diary as it was saved before this load
 == events registered
-ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon
 AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
 == chat output
@@ -792,28 +890,74 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["endedAt"] = "2026-11-04 17:56:40",
       ["events"] = {
         [1] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "reconociendo las referencias del paisaje a cada trecho",
+          ["header"] = "Viejos Caminos en Valle de los Retos, Durotar",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Volví a recorrer a pie las tierras de Valle de los Retos, Durotar. Reconociendo las referencias del paisaje a cada trecho.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "17:56:40",
+          ["timestamp"] = 1793815000,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "comprobando si las sombras de antaño aún habitan el lugar",
+          ["header"] = "Explorando El Cubil, Durotar",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Volví a recorrer a pie las tierras de El Cubil, Durotar. Comprobando si las sombras de antaño aún habitan el lugar.",
+          ["seed"] = 2,
+          ["subZone"] = "El Cubil",
+          ["text"] = "El Cubil, Durotar",
+          ["time"] = "17:56:50",
+          ["timestamp"] = 1793815010,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "con la tranquilidad de quien ya conoce los peligros del terreno",
+          ["header"] = "Regreso a Orgrimmar",
+          ["place"] = "Orgrimmar",
+          ["prose"] = "Volví a recorrer a pie las tierras de Orgrimmar. Con la tranquilidad de quien ya conoce los peligros del terreno.",
+          ["seed"] = 3,
+          ["subZone"] = "",
+          ["text"] = "Orgrimmar",
+          ["time"] = "17:57:00",
+          ["timestamp"] = 1793815020,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Orgrimmar",
+        },
+        [4] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["contextualTone"] = "estudiando los relieves del terreno con cautela",
           ["header"] = "Nuevos Horizontes: El Cruce, Los Baldíos",
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Descubrí por primera vez la región de El Cruce, Los Baldíos a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
-          ["seed"] = 1,
+          ["prose"] = "Descubrí por primera vez la región de El Cruce, Los Baldíos a pie de camino. Estudiando los relieves del terreno con cautela.",
+          ["seed"] = 4,
           ["subZone"] = "El Cruce",
           ["text"] = "El Cruce, Los Baldíos",
           ["time"] = "17:57:10",
           ["timestamp"] = 1793815030,
+          ["travelMethod"] = "ON_FOOT",
           ["type"] = "DISCOVERY",
           ["zone"] = "Los Baldíos",
         },
-        [2] = {
+        [5] = {
           ["characterProfile"] = "Entusiasmado",
-          ["contextualTone"] = "con la mente puesta en la siguiente meta",
+          ["contextualTone"] = "notando el peso de la armadura sobre los hombros",
           ["itemID"] = 5555,
           ["itemLink"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
           ["itemQuality"] = 4,
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Un hallazgo notable en El Cruce, Los Baldíos: |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r ha pasado a mi posesión. Con la mente puesta en la siguiente meta.",
-          ["seed"] = 2,
+          ["prose"] = "Las tierras de El Cruce, Los Baldíos me regalaron un descubrimiento interesante: |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Notando el peso de la armadura sobre los hombros.",
+          ["seed"] = 5,
           ["subZone"] = "El Cruce",
           ["text"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
           ["time"] = "17:58:05",
@@ -821,12 +965,12 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["type"] = "LOOT",
           ["zone"] = "Los Baldíos",
         },
-        [3] = {
+        [6] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "maldiciendo mi suerte y jurando venganza",
+          ["contextualTone"] = "con la lección aprendida a un precio demasiado alto",
           ["place"] = "El Cruce, Los Baldíos",
-          ["prose"] = "Caí derrotado en El Cruce, Los Baldíos. Regresaré para saldar esta cuenta. Maldiciendo mi suerte y jurando venganza.",
-          ["seed"] = 3,
+          ["prose"] = "Mordí el polvo en El Cruce, Los Baldíos tras un choque fatal. Con la lección aprendida a un precio demasiado alto.",
+          ["seed"] = 6,
           ["subZone"] = "El Cruce",
           ["text"] = "He caído en combate",
           ["time"] = "17:58:10",
@@ -840,7 +984,38 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     [5] = {
       ["dateLabel"] = "04/11/2026",
       ["endedAt"] = "2026-11-04 17:56:50",
-      ["events"] = {},
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "reconociendo las referencias del paisaje a cada trecho",
+          ["header"] = "Viejos Caminos en El Cubil, Durotar",
+          ["place"] = "El Cubil, Durotar",
+          ["prose"] = "Volví a recorrer a pie las tierras de El Cubil, Durotar. Reconociendo las referencias del paisaje a cada trecho.",
+          ["seed"] = 1,
+          ["subZone"] = "El Cubil",
+          ["text"] = "El Cubil, Durotar",
+          ["time"] = "17:56:40",
+          ["timestamp"] = 1793815000,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Viajero",
+          ["contextualTone"] = "comprobando si las sombras de antaño aún habitan el lugar",
+          ["header"] = "Explorando El Cruce, Los Baldíos",
+          ["place"] = "El Cruce, Los Baldíos",
+          ["prose"] = "Volví a recorrer a pie las tierras de El Cruce, Los Baldíos. Comprobando si las sombras de antaño aún habitan el lugar.",
+          ["seed"] = 2,
+          ["subZone"] = "El Cruce",
+          ["text"] = "El Cruce, Los Baldíos",
+          ["time"] = "17:56:50",
+          ["timestamp"] = 1793815010,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "REVISIT",
+          ["zone"] = "Los Baldíos",
+        },
+      },
       ["startedAt"] = "2026-11-04 17:56:40",
     },
   },
@@ -854,6 +1029,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
   ["settings"] = {
     ["chat"] = "important",
     ["conversations"] = false,
+    ["deathKiller"] = true,
     ["lootQuality"] = 4,
     ["profile"] = "clasico",
     ["showProfile"] = false,

@@ -62,6 +62,12 @@ const SCENARIOS = [
   // T1: diaries written by Chema's Forever line (1.1.0-Forever): migration, the "clasico" profile, round trip.
   { name: 'adventurejournal_chemadiary', file: 'scenario_chemadiary.lua', modes: ['login', 'reload', 'relogin'], variant: 'chema' },
   { name: 'adventurejournal_chemadiary_roundtrip', file: 'scenario_chemadiary.lua', modes: ['login'], variant: 'roundtrip' },
+  // T4a: QUEST_ACCEPT (with the giver), REVISIT with the travel method, the enemy named in a death, GUILD.
+  { name: 'adventurejournal_t4a', file: 'scenario_t4a.lua', modes: ['login', 'reload', 'relogin'], variant: 'live' },
+  { name: 'adventurejournal_t4a_secrets', file: 'scenario_t4a.lua', modes: ['login'], variant: 'secrets' },
+  { name: 'adventurejournal_t4a_nomessages', file: 'scenario_t4a.lua', modes: ['login'], variant: 'live', stub: 'nomessages' },
+  { name: 'adventurejournal_t4a_off_without', file: 'scenario_t4a.lua', modes: ['login'], variant: 'off_without' },
+  { name: 'adventurejournal_t4a_off_with', file: 'scenario_t4a.lua', modes: ['login'], variant: 'off_with', sameDiaryAs: 'adventurejournal_t4a_off_without' },
   // T2: every prose template of every type, both sexes; fails on a leftover placeholder or bad punctuation.
   { name: 'adventurejournal_prose', file: 'scenario_prose.lua', modes: ['login'] },
 ];

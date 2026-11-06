@@ -127,6 +127,7 @@ ns.NEUTRAL_TEXT = {
     QUEST = "una misión cuyo nombre no he podido recuperar",
     SENDER = "alguien",
     LEVEL = "He subido de nivel",
+    GUILD = "una hermandad",
 }
 
 -- "Name-Realm" -> "Name" (chat authors carry the realm, observed in M0).
@@ -178,6 +179,39 @@ function ns.UnitNameSafe(unit)
     local ok, name = pcall(UnitName, unit)
     if ok then return ns.Taint(name) end
     return nil
+end
+
+-- T4a: whether the player is on a flight path. Missing, failing or secret: not on one.
+function ns.IsPlayerOnTaxi()
+    if not UnitOnTaxi then return false end
+    local ok, onTaxi = pcall(UnitOnTaxi, "player")
+    if not ok or ns.IsSecret(onTaxi) then return false end
+    return onTaxi == true or onTaxi == 1
+end
+
+-- T4a: the name of the player's guild, or nil (no guild, not loaded yet, a secret).
+function ns.CurrentGuildName()
+    if not GetGuildInfo then return nil end
+    local ok, name = pcall(GetGuildInfo, "player")
+    if not ok or ns.IsSecret(name) or type(name) ~= "string" or name == "" then return nil end
+    return name
+end
+
+-- T4a: registers a unit event for one unit (RegisterUnitEvent), so the handler is never called for
+-- other units. Same status table as RegisterEventSafe.
+function ns.RegisterUnitEventSafe(frame, event, unit, status)
+    status = status or ns.eventStatus
+    if C_EventUtils and C_EventUtils.IsEventValid and not C_EventUtils.IsEventValid(event) then
+        status[event] = "el cliente no conoce este evento"
+        return false
+    end
+    if not frame.RegisterUnitEvent then
+        status[event] = "no existe RegisterUnitEvent"
+        return false
+    end
+    local ok = pcall(frame.RegisterUnitEvent, frame, event, unit)
+    status[event] = ok or "RegisterUnitEvent falló"
+    return ok
 end
 
 -- Quests -------------------------------------------------------------------------
