@@ -11,6 +11,8 @@
 --   notimetable         time{year=...} ignores its table and returns the clock (M4b: date parsing falls back)
 --   nomessages          none of the game's message strings of M6 exist (group, reputation, skill, spell):
 --                       the handlers must find no pattern and do nothing, without errors
+--   nopopup             StaticPopupDialogs and StaticPopup_Show do not exist (T5: the panel's profile
+--                       buttons ask for a second click instead)
 local FLAGS = {}
 for flag in string.gmatch(STUB_OPTIONS or "", "[^,]+") do FLAGS[flag] = true end
 
@@ -397,6 +399,33 @@ if not FLAGS.nosettings then
         CreateDropdown = Unstubbed("CreateDropdown"),
         VarType = { Boolean = "boolean", String = "string", Number = "number" },
     }
+end
+
+-- StaticPopup (T5: the panel's profile confirmation) -------------------------------
+-- StaticPopup_Show records the dialog (S.popups) and returns a frame-like table whose `data` is the
+-- fourth argument, as the real one does; the scenario presses a button with S.PressPopup. The text is
+-- formatted with the two text arguments, as the game does. Option `nopopup`: neither exists.
+S.popups = {}
+if not FLAGS.nopopup then
+    StaticPopupDialogs = {}
+    ACCEPT, CANCEL = "Aceptar", "Cancelar"
+    function StaticPopup_Show(which, textArg1, textArg2, data)
+        local info = StaticPopupDialogs[which]
+        if not info then return nil end
+        local dialog = { which = which, data = data, text = string.format(info.text, textArg1, textArg2), shown = true }
+        table.insert(S.popups, dialog)
+        return dialog
+    end
+end
+-- button: "accept" (button1) or "cancel" (button2). Returns false when no dialog is shown.
+function S.PressPopup(button)
+    local dialog = S.popups[#S.popups]
+    if not dialog or not dialog.shown then return false end
+    dialog.shown = false
+    local info = StaticPopupDialogs[dialog.which]
+    if button == "accept" and info.OnAccept then info.OnAccept(dialog, dialog.data) end
+    if button == "cancel" and info.OnCancel then info.OnCancel(dialog, dialog.data) end
+    return true
 end
 
 -- ScrollBox (the jornada index) --------------------------------------------------

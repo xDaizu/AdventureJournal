@@ -24,6 +24,7 @@ ns.TYPE_INFO = {
     { key = "QUEST",     label = "Misiones completadas", words = { "misiones", "mision", "misión", "quest" } },
     { key = "BOSS",      label = "Jefes derrotados",     words = { "jefes", "jefe", "boss" } },
     { key = "DEATH",     label = "Muertes",              words = { "muertes", "muerte", "death" } },
+    -- The panel and /diario tipos show ns.TypeLabel(info), which follows settings.lootQuality (T5).
     { key = "LOOT",      label = "Botín raro o mejor",   words = { "botin", "botín", "loot" } },
     { key = "DISCOVERY", label = "Lugares descubiertos", words = { "lugares", "lugar", "descubrimientos", "discovery" } },
     { key = "NPC",       label = "Charlas con PNJ",      words = { "pnj", "npc" } },
@@ -100,8 +101,9 @@ end
 -- logged and echoed: every entry echoed to chat, epic or better loot, and none of the types that
 -- line never produced. "ampliado" is this line's own defaults. A diary written by Chema's line gets
 -- "clasico" the first time it loads here; every other diary keeps its settings.
--- Chema's own types (QUEST_ACCEPT, REVISIT, MOUNT, ACHIEVEMENT, GUILD) arrive in T4. "clasico" sets
--- them now, so a later `default = false` (REVISIT) cannot switch them off for these players.
+-- "clasico" lists Chema's own types (QUEST_ACCEPT, REVISIT, MOUNT, ACHIEVEMENT, GUILD) as on, so the
+-- `default = false` of REVISIT does not switch it off for these players. A type a profile does not
+-- list gets its TYPE_INFO default. The panel and /diario perfil apply a profile (T5).
 ns.PROFILES = {
     clasico = {
         chat = "all",
@@ -121,6 +123,18 @@ ns.PROFILES = {
     },
 }
 
+-- How the profiles are named to the player (T5), in the order the panel and the commands show them.
+ns.PROFILE_ORDER = { "clasico", "ampliado" }
+ns.PROFILE_NAMES = { clasico = "Clásico", ampliado = "Ampliado" }
+
+-- What a profile sets for entry type `key`: its own value, else the type's TYPE_INFO default (so a
+-- type added later, and missing from a profile's list, gets its default in every profile).
+local function ProfileTypeValue(profile, key)
+    local value = profile.types and profile.types[key]
+    if value == nil then value = ns.TYPE_DEFAULT[key] end
+    return value ~= false
+end
+
 -- Writes profile `name` into a settings table. Returns false for an unknown name.
 local function ApplyProfileTo(settings, name)
     local profile = ns.PROFILES[name]
@@ -129,11 +143,7 @@ local function ApplyProfileTo(settings, name)
     settings.lootQuality = profile.lootQuality
     settings.deathKiller = profile.deathKiller == true
     if type(settings.types) ~= "table" then settings.types = {} end
-    if profile.types then
-        for key, enabled in pairs(profile.types) do settings.types[key] = enabled end
-    else
-        for key, enabled in pairs(ns.TYPE_DEFAULT) do settings.types[key] = enabled end
-    end
+    for key in pairs(ns.TYPE_DEFAULT) do settings.types[key] = ProfileTypeValue(profile, key) end
     settings.profile = name
     return true
 end
@@ -225,12 +235,70 @@ function ns.EnsureDatabase()
     return db
 end
 
--- Applies a profile to this character's settings (T1; the panel and a command come in T5).
--- Returns true, or false for an unknown name.
+-- What the player sees of the settings a profile writes: the chat echo, the loot threshold, the enemy
+-- in a death, and every type this client can log (a hidden type, such as MOUNT on Classic Era, is
+-- left out, so it never makes a profile look changed).
+local function ProfileSnapshot(settings)
+    local snapshot = {
+        chat = settings.chat,
+        lootQuality = LOOT_QUALITIES[settings.lootQuality] and settings.lootQuality or ns.DEFAULT_SETTINGS.lootQuality,
+        deathKiller = settings.deathKiller == true,
+        types = {},
+    }
+    for _, info in ipairs(ns.VisibleTypes()) do
+        local value = type(settings.types) == "table" and settings.types[info.key]
+        if value ~= true and value ~= false then value = ns.TYPE_DEFAULT[info.key] ~= false end
+        snapshot.types[info.key] = value
+    end
+    return snapshot
+end
+
+-- Whether this character's settings are exactly what profile `name` writes (T5).
+function ns.SettingsMatchProfile(name)
+    local profile = ns.PROFILES[name]
+    if not profile then return false end
+    local current = ProfileSnapshot(ns.EnsureDatabase().settings)
+    if current.chat ~= profile.chat or current.lootQuality ~= profile.lootQuality
+        or current.deathKiller ~= (profile.deathKiller == true) then
+        return false
+    end
+    for key, enabled in pairs(current.types) do
+        if enabled ~= ProfileTypeValue(profile, key) then return false end
+    end
+    return true
+end
+
+-- The profile as the panel and the commands name it (T5): "Clásico", "Ampliado", or the last one
+-- applied followed by ", con cambios" once the player has changed one of its settings. Settings that
+-- happen to equal the other profile are named after it. Second result: true when "con cambios".
+function ns.ProfileStatus()
+    local last = ns.GetSetting("profile")
+    if ns.SettingsMatchProfile(last) then return ns.PROFILE_NAMES[last], false end
+    for _, name in ipairs(ns.PROFILE_ORDER) do
+        if ns.SettingsMatchProfile(name) then return ns.PROFILE_NAMES[name], false end
+    end
+    return (ns.PROFILE_NAMES[last] or tostring(last)) .. ", con cambios", true
+end
+
+-- Applies a profile to this character's settings (T1; the panel and /diario perfil since T5).
+-- Returns true and what changed, as a list of { kind, before, after } (kind: "chat", "lootQuality",
+-- "deathKiller" or a type key; only what the player can see), or false for an unknown name.
 function ns.ApplyProfile(name)
-    local ok = ApplyProfileTo(ns.EnsureDatabase().settings, name)
-    if ok then ns.OnSettingsChanged() end
-    return ok
+    local settings = ns.EnsureDatabase().settings
+    local before = ProfileSnapshot(settings)
+    if not ApplyProfileTo(settings, name) then return false end
+    local after = ProfileSnapshot(settings)
+    local changes = {}
+    for _, kind in ipairs({ "chat", "lootQuality", "deathKiller" }) do
+        if before[kind] ~= after[kind] then changes[#changes + 1] = { kind, before[kind], after[kind] } end
+    end
+    for _, info in ipairs(ns.VisibleTypes()) do
+        if before.types[info.key] ~= after.types[info.key] then
+            changes[#changes + 1] = { info.key, before.types[info.key], after.types[info.key] }
+        end
+    end
+    ns.OnSettingsChanged()
+    return true, changes
 end
 
 -- The lowest item quality logged as LOOT.
@@ -238,6 +306,19 @@ function ns.GetLootQuality()
     local value = ns.GetSetting("lootQuality")
     if LOOT_QUALITIES[value] then return value end
     return ns.DEFAULT_SETTINGS.lootQuality
+end
+
+-- T5: the qualities `lootQuality` can take, in order, and their names (the panel button cycles through
+-- them, /diario botin accepts them, and the LOOT label follows the setting).
+ns.LOOT_QUALITY_ORDER = { 2, 3, 4, 5 }
+ns.LOOT_QUALITY_NAMES = { [2] = "poco común", [3] = "raro", [4] = "épico", [5] = "legendario" }
+
+-- The label of a type in the panel and /diario tipos. LOOT names the quality it starts at.
+function ns.TypeLabel(info)
+    if info.key == "LOOT" then
+        return "Botín " .. (ns.LOOT_QUALITY_NAMES[ns.GetLootQuality()] or "raro") .. " o mejor"
+    end
+    return info.label
 end
 
 -- Settings helpers ----------------------------------------------------------------

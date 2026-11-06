@@ -32,7 +32,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 |cFFFFD700[Diario]|r No puedo leer el nombre de este personaje ahora mismo. Inténtalo de nuevo fuera de combate. No he cambiado nada.
 |cFFFFD700[Diario]|r No puedo leer el nombre de este personaje ahora mismo. Inténtalo de nuevo fuera de combate. No he cambiado nada.
 |cFFFFD700[Diario]|r Usa /diario importar (lee AJProbe y rellena el diario) o /diario importar prueba (solo cuenta, no guarda nada).
-|cFFFFD700[Diario]|r Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario chat, /diario tipos, /diario animo, /diario conversaciones, /diario importar, /diario diag o /diario debug.
+|cFFFFD700[Diario]|r Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario perfil, /diario chat, /diario tipos, /diario botin, /diario enemigo, /diario animo, /diario conversaciones, /diario importar, /diario diag o /diario debug.
 == AdventureJournalDB
 {
   ["currentDay"] = 1,

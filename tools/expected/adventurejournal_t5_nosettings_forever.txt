@@ -1,0 +1,160 @@
+##### forever: fresh login #####
+== scenario log
+-- popup available = true; panel = false
+-- fresh diary: profile=ampliado status="Ampliado" chat=important lootQuality=3 deathKiller=false typesOff=[REVISIT]
+-- controls: (no options panel)
+-- rare item with the threshold at rare: LOOT entries = 1
+-- threshold to epic: (no options panel)
+-- rare item with the threshold at epic: LOOT entries = 1
+-- epic item with the threshold at epic: LOOT entries = 2
+-- after the commands: profile=ampliado status="Ampliado, con cambios" chat=important lootQuality=4 deathKiller=false typesOff=[REVISIT]
+-- controls: (no options panel)
+-- enemy in deaths on: profile=ampliado status="Ampliado, con cambios" chat=important lootQuality=4 deathKiller=true typesOff=[REVISIT]
+-- controls: (no options panel)
+-- applied by command: profile=clasico status="Clásico" chat=all lootQuality=4 deathKiller=true typesOff=[NPC,CHAT,LEVEL,GROUP,REPUTATION,SKILL,SPELL]
+-- LEVEL on by hand: profile=clasico status="Clásico, con cambios" chat=all lootQuality=4 deathKiller=true typesOff=[NPC,CHAT,GROUP,REPUTATION,SKILL,SPELL]
+-- controls: (no options panel)
+-- LEVEL off again: profile=clasico status="Clásico" chat=all lootQuality=4 deathKiller=true typesOff=[NPC,CHAT,LEVEL,GROUP,REPUTATION,SKILL,SPELL]
+-- commands:
+   |cFFFFD700[Diario]|r Perfil: Clásico.
+   |cFFFFD700[Diario]|r Clásico: lo que anotaba la versión 1.1.0-Forever de Chema: cada anotación en el chat, botín épico o mejor, el enemigo en las muertes y los lugares que vuelves a visitar; sin nivel, grupo, reputación, habilidades, hechizos, charlas con PNJ ni susurros.
+   |cFFFFD700[Diario]|r Ampliado: todo lo que anota esta versión: solo lo importante en el chat, botín raro o mejor, sin el enemigo en las muertes ni los lugares que vuelves a visitar.
+   |cFFFFD700[Diario]|r Cambiar: /diario perfil clasico o /diario perfil ampliado (cambia de una vez los ajustes de arriba; luego puedes tocar cada uno).
+   |cFFFFD700[Diario]|r No conozco el perfil «raro».
+   |cFFFFD700[Diario]|r Perfil: Clásico.
+   |cFFFFD700[Diario]|r Clásico: lo que anotaba la versión 1.1.0-Forever de Chema: cada anotación en el chat, botín épico o mejor, el enemigo en las muertes y los lugares que vuelves a visitar; sin nivel, grupo, reputación, habilidades, hechizos, charlas con PNJ ni susurros.
+   |cFFFFD700[Diario]|r Ampliado: todo lo que anota esta versión: solo lo importante en el chat, botín raro o mejor, sin el enemigo en las muertes ni los lugares que vuelves a visitar.
+   |cFFFFD700[Diario]|r Cambiar: /diario perfil clasico o /diario perfil ampliado (cambia de una vez los ajustes de arriba; luego puedes tocar cada uno).
+   |cFFFFD700[Diario]|r Perfil Clásico aplicado. Tus jornadas no cambian.
+   |cFFFFD700[Diario]|r Ya tenías esos ajustes: no ha cambiado nada.
+   |cFFFFD700[Diario]|r Perfil Ampliado aplicado. Tus jornadas no cambian.
+   |cFFFFD700[Diario]|r Cambiado: mensajes en el chat: importante (antes todo); botín desde raro (antes épico); enemigo en las muertes: no (antes sí).
+   |cFFFFD700[Diario]|r Ahora se anota: Charlas con PNJ, Susurros recibidos, Subidas de nivel, Grupo: quién entra y sale, Reputación con facciones, Habilidades nuevas o mejoradas, Hechizos aprendidos.
+   |cFFFFD700[Diario]|r Ya no se anota: Lugares que vuelves a visitar.
+-- after /diario perfil ampliado: profile=ampliado status="Ampliado" chat=important lootQuality=3 deathKiller=false typesOff=[REVISIT]
+-- controls: (no options panel)
+-- record says clasico, settings are ampliado's: status Ampliado
+-- end of login: profile=clasico status="Clásico, con cambios" chat=all lootQuality=5 deathKiller=true typesOff=[NPC,CHAT,LEVEL,GROUP,REPUTATION,SKILL,SPELL]
+== events registered
+ACHIEVEMENT_EARNED, ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, NEW_MOUNT_ADDED, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 1. Tu historia continúa.
+|cFFFFD700[Diario]|r No he podido abrir el panel de opciones (la API Settings no existe en este cliente). Si no aparece, búscalo en Esc > Opciones > AddOns > Diario de Aventuras. Mientras tanto, todo se puede cambiar con comandos:
+|cFFFFD700[Diario]|r /diario perfil <clasico|ampliado>  ·  /diario chat <todo|importante|nada>  ·  /diario tipos <tipo> <on|off>  ·  /diario botin <raro|épico|...>  ·  /diario enemigo <on|off>  ·  /diario animo <on|off>  ·  /diario conversaciones <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): sí; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): sí; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
+|cFFFFD700[Diario]|r Botín: se anota desde épico (Botín épico o mejor).
+|cFF00FF00[Diario]|r |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r
+|cFFFFD700[Diario]|r Botín: se anota desde raro (Botín raro o mejor).
+|cFFFFD700[Diario]|r Botín: se anota desde poco común (Botín poco común o mejor).
+|cFFFFD700[Diario]|r Botín: se anota desde poco común. Usa /diario botin poco común, /diario botin raro, /diario botin épico o /diario botin legendario.
+|cFFFFD700[Diario]|r Botín: se anota desde poco común. Usa /diario botin poco común, /diario botin raro, /diario botin épico o /diario botin legendario.
+|cFFFFD700[Diario]|r Botín: se anota desde épico (Botín épico o mejor).
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín épico o mejor (botin): sí; Lugares descubiertos (lugares): sí; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): sí; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
+|cFFFFD700[Diario]|r Enemigo en las muertes: sí.
+|cFFFFD700[Diario]|r Enemigo en las muertes: sí. Usa /diario enemigo on o /diario enemigo off. Sin registro de combate, es el último enemigo con el que luchaste, no siempre quien te mató.
+|cFFFFD700[Diario]|r Enemigo en las muertes: no.
+|cFFFFD700[Diario]|r Enemigo en las muertes: sí.
+|cFFFFD700[Diario]|r Perfil Clásico aplicado. Tus jornadas no cambian.
+|cFFFFD700[Diario]|r Cambiado: mensajes en el chat: todo (antes importante).
+|cFFFFD700[Diario]|r Ahora se anota: Lugares que vuelves a visitar.
+|cFFFFD700[Diario]|r Ya no se anota: Charlas con PNJ, Susurros recibidos, Subidas de nivel, Grupo: quién entra y sale, Reputación con facciones, Habilidades nuevas o mejoradas, Hechizos aprendidos.
+|cFFFFD700[Diario]|r LEVEL: se anota.
+|cFFFFD700[Diario]|r LEVEL: NO se anota.
+|cFFFFD700[Diario]|r Perfil: Clásico.
+|cFFFFD700[Diario]|r Clásico: lo que anotaba la versión 1.1.0-Forever de Chema: cada anotación en el chat, botín épico o mejor, el enemigo en las muertes y los lugares que vuelves a visitar; sin nivel, grupo, reputación, habilidades, hechizos, charlas con PNJ ni susurros.
+|cFFFFD700[Diario]|r Ampliado: todo lo que anota esta versión: solo lo importante en el chat, botín raro o mejor, sin el enemigo en las muertes ni los lugares que vuelves a visitar.
+|cFFFFD700[Diario]|r Cambiar: /diario perfil clasico o /diario perfil ampliado (cambia de una vez los ajustes de arriba; luego puedes tocar cada uno).
+|cFFFFD700[Diario]|r No conozco el perfil «raro».
+|cFFFFD700[Diario]|r Perfil: Clásico.
+|cFFFFD700[Diario]|r Clásico: lo que anotaba la versión 1.1.0-Forever de Chema: cada anotación en el chat, botín épico o mejor, el enemigo en las muertes y los lugares que vuelves a visitar; sin nivel, grupo, reputación, habilidades, hechizos, charlas con PNJ ni susurros.
+|cFFFFD700[Diario]|r Ampliado: todo lo que anota esta versión: solo lo importante en el chat, botín raro o mejor, sin el enemigo en las muertes ni los lugares que vuelves a visitar.
+|cFFFFD700[Diario]|r Cambiar: /diario perfil clasico o /diario perfil ampliado (cambia de una vez los ajustes de arriba; luego puedes tocar cada uno).
+|cFFFFD700[Diario]|r Perfil Clásico aplicado. Tus jornadas no cambian.
+|cFFFFD700[Diario]|r Ya tenías esos ajustes: no ha cambiado nada.
+|cFFFFD700[Diario]|r Perfil Ampliado aplicado. Tus jornadas no cambian.
+|cFFFFD700[Diario]|r Cambiado: mensajes en el chat: importante (antes todo); botín desde raro (antes épico); enemigo en las muertes: no (antes sí).
+|cFFFFD700[Diario]|r Ahora se anota: Charlas con PNJ, Susurros recibidos, Subidas de nivel, Grupo: quién entra y sale, Reputación con facciones, Habilidades nuevas o mejoradas, Hechizos aprendidos.
+|cFFFFD700[Diario]|r Ya no se anota: Lugares que vuelves a visitar.
+|cFFFFD700[Diario]|r Perfil Clásico aplicado. Tus jornadas no cambian.
+|cFFFFD700[Diario]|r Cambiado: mensajes en el chat: todo (antes importante); botín desde épico (antes raro); enemigo en las muertes: sí (antes no).
+|cFFFFD700[Diario]|r Ahora se anota: Lugares que vuelves a visitar.
+|cFFFFD700[Diario]|r Ya no se anota: Charlas con PNJ, Susurros recibidos, Subidas de nivel, Grupo: quién entra y sale, Reputación con facciones, Habilidades nuevas o mejoradas, Hechizos aprendidos.
+|cFFFFD700[Diario]|r Botín: se anota desde legendario (Botín legendario o mejor).
+== AdventureJournalDB
+{
+  ["currentDay"] = 1,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:56:55",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Entusiasmado",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
+          ["itemID"] = 1234,
+          ["itemLink"] = "|cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r",
+          ["itemQuality"] = 3,
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Entre los restos hallados en Valle de los Retos, Durotar encontré un valioso botín: |cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r. Ajustando mis pertrechos para lo que esté por venir.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "|cff0070dd|Hitem:1234::::::::1::::::::::|h[Escudo azul]|h|r",
+          ["time"] = "17:56:45",
+          ["timestamp"] = 1793815005,
+          ["type"] = "LOOT",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Entusiasmado",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
+          ["itemID"] = 5555,
+          ["itemLink"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
+          ["itemQuality"] = 4,
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Un hallazgo notable en Valle de los Retos, Durotar: |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r ha pasado a mi posesión. Con la mente puesta en la siguiente meta.",
+          ["seed"] = 2,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
+          ["time"] = "17:56:55",
+          ["timestamp"] = 1793815015,
+          ["type"] = "LOOT",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["settings"] = {
+    ["chat"] = "all",
+    ["conversations"] = false,
+    ["deathKiller"] = true,
+    ["lootQuality"] = 5,
+    ["profile"] = "clasico",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["ACHIEVEMENT"] = true,
+      ["BOSS"] = true,
+      ["CHAT"] = false,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = false,
+      ["GUILD"] = true,
+      ["LEVEL"] = false,
+      ["LOOT"] = true,
+      ["MOUNT"] = true,
+      ["NPC"] = false,
+      ["QUEST"] = true,
+      ["QUEST_ACCEPT"] = true,
+      ["REPUTATION"] = false,
+      ["REVISIT"] = true,
+      ["SKILL"] = false,
+      ["SPELL"] = false,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {},
+}

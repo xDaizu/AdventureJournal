@@ -71,7 +71,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 |cFFFFD700[Diario]|r Mensajes en el chat: importante.
 |cFF00FF00[Diario]|r He caído en combate
 |cFFFFD700[Diario]|r Mensajes en el chat: importante. Usa /diario chat todo, /diario chat importante (jefes, muertes y botín épico) o /diario chat nada.
-|cFFFFD700[Diario]|r Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario chat, /diario tipos, /diario animo, /diario conversaciones, /diario importar, /diario diag o /diario debug.
+|cFFFFD700[Diario]|r Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario perfil, /diario chat, /diario tipos, /diario botin, /diario enemigo, /diario animo, /diario conversaciones, /diario importar, /diario diag o /diario debug.
 == AdventureJournalDB
 {
   ["currentDay"] = 1,

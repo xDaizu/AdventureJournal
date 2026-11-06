@@ -26,15 +26,32 @@ function ns.OnSettingsChanged()
     ns.RefreshIfVisible()
 end
 
+-- The loot button's text per quality (string.upper cannot capitalise "é": Lua works on bytes).
+local LOOT_BUTTON_TEXT = { [2] = "Poco común", [3] = "Raro", [4] = "Épico", [5] = "Legendario" }
+
+-- The text of a profile button: its name, or the second-click prompt while it is armed (the
+-- confirmation used when this client has no StaticPopup; see AskProfile).
+local function ProfileButtonText(name)
+    if controls.armedProfile == name then return "¿Seguro? Otra vez" end
+    return ns.PROFILE_NAMES[name]
+end
+
 function ns.RefreshOptionsPanel()
     if not panel then return end
     ns.EnsureDatabase()
+    controls.profileStatus:SetText("Perfil actual: " .. ns.ProfileStatus())
+    for name, button in pairs(controls.profileButtons) do button:SetText(ProfileButtonText(name)) end
     controls.chat:SetText(ns.CHAT_MODE_NAMES[ns.GetSetting("chat")] or "?")
     for _, info in ipairs(ns.VisibleTypes()) do
         -- A type that became visible after the panel was built has no checkbox (until the next /reload).
         local control = controls.types[info.key]
-        if control then control:SetChecked(ns.IsTypeEnabled(info.key)) end
+        if control then
+            control:SetChecked(ns.IsTypeEnabled(info.key))
+            control.label:SetText(ns.TypeLabel(info))   -- LOOT follows the loot threshold (T5)
+        end
     end
+    controls.loot:SetText(LOOT_BUTTON_TEXT[ns.GetLootQuality()] or "?")
+    controls.deathKiller:SetChecked(ns.GetSetting("deathKiller") == true)
     controls.profile:SetChecked(ns.GetSetting("showProfile") == true)
     controls.conversations:SetChecked(ns.ConversationsEnabled())
 end
@@ -79,59 +96,165 @@ end
 
 local CHAT_CYCLE = { all = "important", important = "off", off = "all" }
 
+-- Profiles (T5) ----------------------------------------------------------------------------
+local POPUP = "ADVENTUREJOURNAL_APPLY_PROFILE"
+
+local function ApplyFromPanel(name)
+    controls.armedProfile = nil
+    ns.ApplyProfileAndReport(name)   -- says in the chat what changed; refreshes the panel
+    ns.RefreshOptionsPanel()
+end
+
+-- A profile rewrites several settings at once, so the panel asks first. StaticPopup exists on both
+-- clients (the dialog's OnAccept receives the `data` given to StaticPopup_Show); where it is missing
+-- or fails to show, the button asks for a second click instead.
+local function AskProfile(name)
+    if StaticPopupDialogs and StaticPopup_Show then
+        if not StaticPopupDialogs[POPUP] then
+            StaticPopupDialogs[POPUP] = {
+                text = "%s",
+                button1 = ACCEPT or "Aceptar",
+                button2 = CANCEL or "Cancelar",
+                OnAccept = function(_, data) ApplyFromPanel(data) end,
+                timeout = 0, whileDead = true, hideOnEscape = true, preferredIndex = 3,
+            }
+        end
+        local question = "¿Aplicar el perfil " .. ns.PROFILE_NAMES[name] .. "?\n\n"
+            .. ns.PROFILE_NAMES[name] .. ": " .. ns.PROFILE_DESCRIPTIONS[name] .. ".\n\n"
+            .. "Cambia de una vez el chat, el botín, el enemigo en las muertes y lo que se anota; "
+            .. "luego puedes cambiar cada cosa. Tus jornadas no se tocan."
+        local ok, dialog = pcall(StaticPopup_Show, POPUP, question, nil, name)
+        if ok and dialog then return end
+    end
+    if controls.armedProfile == name then
+        ApplyFromPanel(name)
+    else
+        controls.armedProfile = name
+        ns.RefreshOptionsPanel()
+    end
+end
+
+-- The panel ---------------------------------------------------------------------------------
+-- T5 made it taller than the settings window on some screens, so it sits in a ScrollFrame when
+-- the template exists (both clients have it; the book's index falls back to it too), and directly
+-- on the canvas otherwise.
+local CONTENT_WIDTH = 580
+
+local function CreateContent(frame)
+    local ok, scroll = pcall(CreateFrame, "ScrollFrame", nil, frame, "UIPanelScrollFrameTemplate")
+    if not ok or not scroll then return frame end
+    scroll:SetPoint("TOPLEFT", 0, -4)
+    scroll:SetPoint("BOTTOMRIGHT", -28, 4)
+    local content = CreateFrame("Frame", nil, scroll)
+    content:SetSize(CONTENT_WIDTH, 10)
+    scroll:SetScrollChild(content)
+    controls.scroll = scroll
+    return content
+end
+
 local function BuildPanel()
     local frame = CreateFrame("Frame")
-    AddText(frame, "GameFontNormalLarge", 16, -16, PANEL_TITLE)
-    AddText(frame, "GameFontHighlightSmall", 16, -42,
+    local content = CreateContent(frame)
+    AddText(content, "GameFontNormalLarge", 16, -16, PANEL_TITLE)
+    AddText(content, "GameFontHighlightSmall", 16, -42,
         "Los cambios se aplican al momento y se guardan para este personaje.", 540)
 
+    -- T5: the profile (settings.profile and everything it writes). Each button asks before applying.
+    AddText(content, "GameFontNormal", 16, -74, "Perfil")
+    controls.profileStatus = AddText(content, "GameFontHighlight", 20, -102, "Perfil actual:", 250)
+    controls.profileButtons = {}
+    for index, name in ipairs(ns.PROFILE_ORDER) do
+        local button = CreateFrame("Button", nil, content, "UIPanelButtonTemplate")
+        button:SetSize(140, 24)
+        button:SetPoint("TOPLEFT", 270 + (index - 1) * 150, -98)
+        button:SetScript("OnClick", function() AskProfile(name) end)
+        controls.profileButtons[name] = button
+    end
+    AddText(content, "GameFontHighlightSmall", 20, -128,
+        "Clásico: lo que anotaba la versión 1.1.0-Forever de Chema. Ampliado: todo lo que anota esta versión. "
+        .. "Un perfil cambia de una vez los ajustes de abajo (te pide confirmación); después puedes cambiar cada uno.", 520)
+
     -- Chat echo (settings.chat): a button that cycles todo > importante > nada.
-    AddText(frame, "GameFontNormal", 16, -74, "Mensajes en el chat")
-    AddText(frame, "GameFontHighlight", 20, -102, "Mostrar en el chat:")
-    local chatButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+    AddText(content, "GameFontNormal", 16, -170, "Mensajes en el chat")
+    AddText(content, "GameFontHighlight", 20, -198, "Mostrar en el chat:")
+    local chatButton = CreateFrame("Button", nil, content, "UIPanelButtonTemplate")
     chatButton:SetSize(140, 24)
-    chatButton:SetPoint("TOPLEFT", 190, -98)
+    chatButton:SetPoint("TOPLEFT", 190, -194)
     chatButton:SetScript("OnClick", function()
         ns.SetSetting("chat", CHAT_CYCLE[ns.GetSetting("chat")] or "important")
     end)
     controls.chat = chatButton
-    AddText(frame, "GameFontHighlightSmall", 20, -128,
+    AddText(content, "GameFontHighlightSmall", 20, -224,
         "todo: cada anotación  ·  importante: jefes, muertes y botín épico  ·  nada: ninguna. Pulsa el botón para cambiar.", 520)
 
     -- Which entry types are logged (settings.types).
-    AddText(frame, "GameFontNormal", 16, -166, "Qué se anota en el diario")
-    -- Two columns, so that the twelve types (M6) do not push the rest of the panel out of view.
+    AddText(content, "GameFontNormal", 16, -262, "Qué se anota en el diario")
+    -- Two columns, so that the types (M6, T4) do not make the panel too long.
     local visibleTypes = ns.VisibleTypes()
     local rows = math.ceil(#visibleTypes / 2)
-    local y = -190
+    local y = -286
     for index, info in ipairs(visibleTypes) do
         local key = info.key
         local column = index > rows and 1 or 0
         local row = (index - 1) % rows
-        controls.types[key] = AddCheck(frame, y - row * 24, info.label,
+        controls.types[key] = AddCheck(content, y - row * 24, ns.TypeLabel(info),
             function(enabled) ns.SetTypeEnabled(key, enabled) end, 20 + column * 270)
     end
-    y = y - rows * 24
+    y = y - rows * 24 - 8
+
+    -- T5: the loot threshold (settings.lootQuality), cycling poco común > raro > épico > legendario.
+    AddText(content, "GameFontHighlight", 20, y - 4, "Botín: anotar desde la calidad")
+    local lootButton = CreateFrame("Button", nil, content, "UIPanelButtonTemplate")
+    lootButton:SetSize(140, 24)
+    lootButton:SetPoint("TOPLEFT", 290, y)
+    lootButton:SetScript("OnClick", function()
+        local order, current = ns.LOOT_QUALITY_ORDER, ns.GetLootQuality()
+        local nextQuality = order[1]
+        for index, quality in ipairs(order) do
+            if quality == current then nextQuality = order[index + 1] or order[1] end
+        end
+        ns.SetSetting("lootQuality", nextQuality)
+    end)
+    controls.loot = lootButton
+    y = y - 30
+
+    -- T4a setting, given a control in T5 (settings.deathKiller).
+    controls.deathKiller = AddCheck(content, y, "En una muerte, nombrar al último enemigo con el que luché",
+        function(enabled) ns.SetSetting("deathKiller", enabled) end)
+    y = y - 24
+    AddText(content, "GameFontHighlightSmall", 50, y - 2,
+        "Sin registro de combate no se sabe quién te mató: es el último enemigo al que te enfrentaste.", 490)
+    y = y - 22
 
     -- The book (settings.showProfile).
-    AddText(frame, "GameFontNormal", 16, y - 14, "El libro")
+    AddText(content, "GameFontNormal", 16, y - 14, "El libro")
     y = y - 38
-    controls.profile = AddCheck(frame, y, "Mostrar el ánimo del personaje en cada anotación",
+    controls.profile = AddCheck(content, y, "Mostrar el ánimo del personaje en cada anotación",
         function(enabled) ns.SetSetting("showProfile", enabled) end)
     y = y - 40
 
     -- M4b: RP conversations (settings.conversations). Off by default, because it stores other
     -- players' words. /diario conversaciones on|off does the same.
-    AddText(frame, "GameFontNormal", 16, y, "Conversaciones de rol")
+    AddText(content, "GameFontNormal", 16, y, "Conversaciones de rol")
     y = y - 24
-    controls.conversations = AddCheck(frame, y, "Guardar las conversaciones de rol",
+    controls.conversations = AddCheck(content, y, "Guardar las conversaciones de rol",
         function(enabled) ns.SetSetting("conversations", enabled) end)
-    AddText(frame, "GameFontHighlightSmall", 20, y - 28,
+    AddText(content, "GameFontHighlightSmall", 20, y - 28,
         "Guarda susurros, chat de grupo y banda, y lo que dicen tú, tu grupo y tus amigos. Son palabras de otros jugadores: "
         .. "por eso está desactivado por defecto. Desmarcada, no se guarda ni se muestra nada (lo guardado se conserva). "
         .. "En instancias el chat es secreto y no se guarda.", 520)
+    y = y - 80
+    if content ~= frame then content:SetHeight(-y) end
+    controls.contentHeight = -y
 
     frame:SetScript("OnShow", function() ns.RefreshOptionsPanel() end)
+    -- A profile button armed for a second click (no StaticPopup) is disarmed when the panel closes.
+    frame:SetScript("OnHide", function()
+        if controls.armedProfile then
+            controls.armedProfile = nil
+            ns.RefreshOptionsPanel()
+        end
+    end)
     return frame
 end
 

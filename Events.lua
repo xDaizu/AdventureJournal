@@ -188,6 +188,8 @@ handlers.PLAYER_ENTERING_WORLD = function(_, isReloadingUi)
     sessionGuild = ns.CurrentGuildName() or sessionGuild
     StartSession(isReloadingUi == true)
     ScheduleMountSeed()
+    -- T5: a diary from Chema's version is told once what changed and how to see more.
+    if ns.ShowChemaHintOnce then ns.ShowChemaHintOnce() end
 end
 
 handlers.PLAYER_LOGOUT = function()

@@ -97,6 +97,21 @@ Five new entry types, all on by default (`/diario tipos` lists them). Everything
 
 Send back: the screenshot of `/diario diag mensajes`, the `/run print(...)` lines, the grey debug lines of the dungeon, the standing-change sentence, and the import summaries.
 
+## 3e. T5 checks (profile UI), both clients
+Only on branch `transition-t5-profile-ui`. **R** and **F**: do it once on Classic Era and once on Forever. Changing a profile rewrites settings, never jornadas; to go back to where you were, apply the other profile and fix what the chat lists.
+
+| Step | What to do | You should see |
+|---|---|---|
+| Panel | `/diario opciones` (screenshot) | *Perfil* at the top: "Perfil actual: Ampliado" and two buttons *Clásico* / *Ampliado*. Under the types: "Botín: anotar desde la calidad" with a *Raro* button, and the check box "En una muerte, nombrar al último enemigo...". If the bottom (*Conversaciones de rol*) is cut off, the mouse wheel or a scroll bar on the right should reach it. Say if anything overlaps or does not fit |
+| Loot | Click the loot button a few times | It goes Raro > Épico > Legendario > Poco común > Raro, and the LOOT check box's label changes with it ("Botín épico o mejor"). Leave it on Raro |
+| Confirmation | Click *Clásico* | A dialog "¿Aplicar el perfil Clásico?" with what it does, above the settings window. Press *Cancelar*: nothing changes. Click again and *Aceptar*: chat lines "Perfil Clásico aplicado", "Cambiado: ...", "Ahora se anota: ...", "Ya no se anota: ..." and the panel shows "Perfil actual: Clásico" |
+| Back | Click *Ampliado*, accept | "Perfil actual: Ampliado"; your types are as before (unless you had changed some: the chat says which) |
+| Con cambios | Untick one type | "Perfil actual: Ampliado, con cambios". Tick it again: "Ampliado" |
+| Commands | `/diario perfil`, `/diario botin épico`, `/diario botin raro`, `/diario enemigo` | The status and both descriptions; the loot threshold changes and the panel follows; the enemy setting |
+| Errors | After all this | No Lua error, no "AddOn action blocked" / taint message (screenshot if there is one) |
+
+The one-time hint only appears for a diary that came from Chema's version (`origin = "chema"` in `/diario diag`: "Diario de la versión de Chema: sí"). If you have one, back it up first; at the first login after updating you should see two lines starting "Tu diario viene de la versión 1.1.0-Forever", and never again.
+
 ## 4. Inside a dungeon (5-player)
 1. Before entering, type `/diario debug on`. From now on grey `[Diario debug]` lines print every event's payload, with `[SECRET]` where the game hides the value.
 2. Inside: talk to an NPC, get a whisper (or a message in party chat), loot something, and kill a boss.
