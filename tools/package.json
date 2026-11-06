@@ -1,0 +1,14 @@
+{
+  "name": "wow-addons-tools",
+  "private": true,
+  "description": "Static checks and a stubbed-WoW test harness for the addons in this repo.",
+  "scripts": {
+    "syntax": "node check-syntax.js",
+    "test": "node check-syntax.js && node run.js --check",
+    "update-expected": "node run.js --update"
+  },
+  "devDependencies": {
+    "fengari": "0.1.4",
+    "luaparse": "0.3.1"
+  }
+}

@@ -1,0 +1,150 @@
+##### forever: fresh login #####
+== scenario log
+-- after ADDON_LOADED: version=3 origin=nil profile=ampliado chat=off lootQuality=3 showProfile=true conversations=false
+-- after ADDON_LOADED: types off = LOOT; Chema's types (for T4): QUEST_ACCEPT=nil, REVISIT=nil, MOUNT=nil, ACHIEVEMENT=nil, GUILD=nil
+-- after ADDON_LOADED: visited places = 2
+-- after load: visitedZones, knownMounts, knownAchievements and jornadas 1, 2 are byte-identical to the diary as it was saved before this load
+-- roundtrip: jornada 3 has 1 entries: DISCOVERY «Razor Hill, Durotar»
+-- ApplyProfile('clasico') -> true
+-- after clasico: version=3 origin=nil profile=clasico chat=all lootQuality=4 showProfile=true conversations=false
+-- after clasico: types off = NPC, CHAT, LEVEL, GROUP, REPUTATION, SKILL, SPELL; Chema's types (for T4): QUEST_ACCEPT=true, REVISIT=true, MOUNT=true, ACHIEVEMENT=true, GUILD=true
+-- after clasico: visited places = 3
+-- ApplyProfile('ampliado') -> true
+-- after ampliado: version=3 origin=nil profile=ampliado chat=important lootQuality=3 showProfile=true conversations=false
+-- after ampliado: types off = none; Chema's types (for T4): QUEST_ACCEPT=true, REVISIT=true, MOUNT=true, ACHIEVEMENT=true, GUILD=true
+-- after ampliado: visited places = 3
+-- ApplyProfile('otro') -> false, profile stays ampliado
+-- hand-edited lootQuality "4" and profile "raro" -> 3, ampliado
+-- hand-edited lootQuality 9 -> 3
+-- end of session: visitedZones, knownMounts, knownAchievements and jornadas 1, 2 are byte-identical to the diary as it was saved before this load
+== events registered
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 3. Tu historia continúa.
+== AdventureJournalDB
+{
+  ["currentDay"] = 3,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 19:18:57",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "18:57:25",
+          ["timestamp"] = 1793815045,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 18:57:25",
+    },
+    [2] = {
+      ["dateLabel"] = "04/11/2026",
+      ["events"] = {
+        [1] = {
+          ["contextualTone"] = "maravillado por la atmósfera singular de este paraje.",
+          ["header"] = "Vuelo hacia Orgrimmar",
+          ["place"] = "Orgrimmar",
+          ["prose"] = "Aterricé en Orgrimmar tras completar la travesía en grifo/mantícora. maravillado por la atmósfera singular de este paraje.",
+          ["seed"] = 31,
+          ["text"] = "Orgrimmar",
+          ["time"] = "19:22:10",
+          ["timestamp"] = 1793816530,
+          ["travelMethod"] = "TAXI",
+          ["type"] = "DISCOVERY",
+        },
+        [2] = {
+          ["contextualTone"] = "con el ánimo firme y la mente despejada.",
+          ["mountID"] = 6,
+          ["place"] = "Orgrimmar",
+          ["prose"] = "Conseguí la montura Lobo de las nieves en Orgrimmar. Una adición notable para las largas travesías.",
+          ["seed"] = 4,
+          ["text"] = "Lobo de las nieves",
+          ["time"] = "19:30:00",
+          ["timestamp"] = 1793817000,
+          ["type"] = "MOUNT",
+        },
+        [3] = {
+          ["achievementID"] = 6,
+          ["contextualTone"] = "con el ánimo firme y la mente despejada.",
+          ["place"] = "Orgrimmar",
+          ["prose"] = "Completé con éxito el logro «Acontecimiento sin descripción» mientras exploraba Orgrimmar.",
+          ["seed"] = 77,
+          ["text"] = "Acontecimiento sin descripción",
+          ["time"] = "19:31:00",
+          ["timestamp"] = 1793817060,
+          ["type"] = "ACHIEVEMENT",
+        },
+      },
+      ["mainZone"] = "Orgrimmar",
+      ["startedAt"] = "2026-11-04 19:20:03",
+    },
+    [3] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:56:55",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["place"] = "Razor Hill, Durotar",
+          ["prose"] = "Mis pasos me condujeron hasta Razor Hill, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["seed"] = 1,
+          ["subZone"] = "Razor Hill",
+          ["text"] = "Razor Hill, Durotar",
+          ["time"] = "17:56:50",
+          ["timestamp"] = 1793815010,
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["knownAchievements"] = {},
+  ["knownMounts"] = {},
+  ["settings"] = {
+    ["chat"] = "important",
+    ["conversations"] = false,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = true,
+    ["types"] = {
+      ["ACHIEVEMENT"] = true,
+      ["BOSS"] = true,
+      ["CHAT"] = true,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = true,
+      ["GUILD"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["MOUNT"] = true,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["QUEST_ACCEPT"] = true,
+      ["REPUTATION"] = true,
+      ["REVISIT"] = true,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["Orgrimmar"] = true,
+    ["Razor Hill, Durotar"] = true,
+    ["Valle de los Retos, Durotar"] = true,
+  },
+  ["visitedZones"] = {
+    ["Orgrimmar"] = true,
+    ["Valle de los Retos, Durotar"] = true,
+  },
+}

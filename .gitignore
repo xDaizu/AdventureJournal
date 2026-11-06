@@ -1,0 +1,11 @@
+# The addon's own repository (github.com/xDaizu/AdventureJournal) gets this folder only,
+# so it needs its own ignore rules.
+
+# Dev tooling (tools/)
+node_modules/
+actual_*.txt
+__pycache__/
+
+# Exporter output and packaging
+Diario_*.txt
+*.zip

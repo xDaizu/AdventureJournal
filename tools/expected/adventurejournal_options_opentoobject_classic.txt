@@ -1,0 +1,268 @@
+##### classic: fresh login #####
+== scenario log
+-- options panel: panel registrado (categoría 100)
+-- Settings category "Diario de Aventuras": kind=canvas registered=true
+-- registered via Settings.RegisterAddOnCategory: Diario de Aventuras
+-- TOC AddonCompartmentFunc = nil; the global function exists = true
+-- defaults: chat=important showProfile=false conversations=false typesOff=[]
+-- Settings.OpenToCategory was called with: ID 100, category object; settings window shown = true
+-- panel controls: chat button = importante, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=on, NPC=on, CHAT=on, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, mood=off, conversations=off (usable)
+-- panel: chat -> off after 1 click(s), button reads "nada"
+-- after changes: chat=off showProfile=true conversations=false typesOff=[DISCOVERY,NPC,CHAT]
+-- panel controls: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=off, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, mood=on, conversations=off (usable)
+-- entries after events: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0
+-- chat lines printed while chat = nada: 0
+-- the place was still marked visited while DISCOVERY was off: true
+-- NPC on again, same NPC 5 s after the one seen while off (dedupe): QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0
+-- NPC on again, 30 s later: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0
+-- panel controls follow the commands: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, mood=on, conversations=off (usable)
+-- panel after /diario chat todo: chat button = todo, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, mood=on, conversations=off (usable)
+-- LOOT off, uncached epic, then cached: QUEST=1 BOSS=0 DEATH=2 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0
+-- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0
+-- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0; handler errors = 0
+-- book with the mood shown:
+|cFF8A5A2417:57:05  ·  Cínico|r
+En Valle de los Retos, Durotar terminé la tarea «Tu lugar en el mundo». Con más ironía que paciencia y la esperanza puesta en la recompensa. No parece que las obligaciones vayan a darme tregua.
+
+|cFF8A5A2417:57:10  ·  Derrotado|r
+La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.
+
+|cFF8A5A2417:57:15  ·  Entusiasmado|r
+La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.
+
+|cFF8A5A2417:58:20  ·  Salvaje|r
+En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+
+|cFF8A5A2417:58:25  ·  Derrotado|r
+La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.
+
+|cFF8A5A2417:58:35  ·  Entusiasmado|r
+La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.
+
+|cFF8A5A2417:59:35  ·  Erudito|r
+En Valle de los Retos, Durotar crucé unas palabras con un habitante de la zona. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+
+|cFF8A5A2417:59:35  ·  Cauteloso|r
+Recibí noticias de alguien mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.
+-- book with the mood hidden:
+|cFF8A5A2417:57:05|r
+En Valle de los Retos, Durotar terminé la tarea «Tu lugar en el mundo». Con más ironía que paciencia y la esperanza puesta en la recompensa. No parece que las obligaciones vayan a darme tregua.
+
+|cFF8A5A2417:57:10|r
+La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.
+
+|cFF8A5A2417:57:15|r
+La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.
+
+|cFF8A5A2417:58:20|r
+En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+
+|cFF8A5A2417:58:25|r
+La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.
+
+|cFF8A5A2417:58:35|r
+La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.
+
+|cFF8A5A2417:59:35|r
+En Valle de los Retos, Durotar crucé unas palabras con un habitante de la zona. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+
+|cFF8A5A2417:59:35|r
+Recibí noticias de alguien mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.
+-- book index: ScrollBox
+-- no compartment entry in this client's TOC: nothing to click
+-- demo: book shows Jornada 250, page 250 / 250, PRUEBA     ·     20 acontecimientos     ·     DATOS DE PRUEBA (no se guardan)
+-- demo: new frames = 14, index mode: ScrollBox
+-- demo: an entry made meanwhile went to the real diary (8 -> 9 entries); the real diary still has 1 jornada(s)
+-- demo off: book shows Jornada 1, page 1 / 1
+-- end of login: chat=all showProfile=true conversations=false typesOff=[DISCOVERY,CHAT]
+== events registered
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 1. Tu historia continúa.
+|cFFFFD700[Diario]|r NPC: se anota.
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos> <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos> <on|off>
+|cFFFFD700[Diario]|r No conozco el tipo «xyz».
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos> <on|off>
+|cFFFFD700[Diario]|r Mensajes en el chat: todo.
+|cFF00FF00[Diario]|r He caído en combate
+|cFFFFD700[Diario]|r Mensajes en el chat: importante.
+|cFFFFD700[Diario]|r LOOT: NO se anota.
+|cFFFFD700[Diario]|r LOOT: se anota.
+|cFF00FF00[Diario]|r |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r
+|cFFFFD700[Diario]|r Ánimo en el libro: sí. Usa /diario animo on o /diario animo off.
+|cFFFFD700[Diario]|r Ánimo en el libro: no.
+|cFFFFD700[Diario]|r Ánimo en el libro: no. Usa /diario animo on o /diario animo off.
+|cFFFFD700[Diario]|r Ánimo en el libro: sí.
+|cFFFFD700[Diario]|r Depuración, secretos simulados y datos de prueba desactivados.
+|cFFFFD700[Diario]|r El libro muestra 250 jornadas de PRUEBA (solo en pantalla: no se guardan y tu diario no se toca). /diario debug demo off o /reload lo retira.
+|cFF00FF00[Diario]|r He caído en combate
+|cFFFFD700[Diario]|r Datos de prueba retirados: el libro vuelve a mostrar tu diario.
+|cFFFFD700[Diario]|r Mensajes en el chat: todo.
+== AdventureJournalDB
+{
+  ["currentDay"] = 1,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:59:40",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "En Valle de los Retos, Durotar terminé la tarea «Tu lugar en el mundo». Con más ironía que paciencia y la esperanza puesta en la recompensa. No parece que las obligaciones vayan a darme tregua.",
+          ["questID"] = 4641,
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Tu lugar en el mundo",
+          ["time"] = "17:57:05",
+          ["timestamp"] = 1793815025,
+          ["type"] = "QUEST",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["seed"] = 2,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "17:57:10",
+          ["timestamp"] = 1793815030,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Entusiasmado",
+          ["contextualTone"] = "con la agradable impresión de que el viaje empieza a dar sus frutos",
+          ["itemID"] = 5555,
+          ["itemLink"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
+          ["itemQuality"] = 4,
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.",
+          ["seed"] = 3,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r",
+          ["time"] = "17:57:15",
+          ["timestamp"] = 1793815035,
+          ["type"] = "LOOT",
+          ["zone"] = "Durotar",
+        },
+        [4] = {
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["seed"] = 4,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Gornek",
+          ["time"] = "17:58:20",
+          ["timestamp"] = 1793815100,
+          ["type"] = "NPC",
+          ["zone"] = "Durotar",
+        },
+        [5] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["seed"] = 5,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "17:58:25",
+          ["timestamp"] = 1793815105,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+        [6] = {
+          ["characterProfile"] = "Entusiasmado",
+          ["contextualTone"] = "con la agradable impresión de que el viaje empieza a dar sus frutos",
+          ["itemID"] = 5556,
+          ["itemLink"] = "|cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r",
+          ["itemQuality"] = 4,
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La fortuna se dejó notar en Valle de los Retos, Durotar: apareció |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con la agradable impresión de que el viaje empieza a dar sus frutos.",
+          ["seed"] = 6,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "|cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r",
+          ["time"] = "17:58:35",
+          ["timestamp"] = 1793815115,
+          ["type"] = "LOOT",
+          ["zone"] = "Durotar",
+        },
+        [7] = {
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con un habitante de la zona. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["seed"] = 7,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "un habitante de la zona",
+          ["time"] = "17:59:35",
+          ["timestamp"] = 1793815175,
+          ["type"] = "NPC",
+          ["zone"] = "Durotar",
+        },
+        [8] = {
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de alguien mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 8,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "alguien",
+          ["time"] = "17:59:35",
+          ["timestamp"] = 1793815175,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [9] = {
+          ["characterProfile"] = "Derrotado",
+          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["seed"] = 9,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "He caído en combate",
+          ["time"] = "17:59:40",
+          ["timestamp"] = 1793815180,
+          ["type"] = "DEATH",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["settings"] = {
+    ["chat"] = "all",
+    ["conversations"] = false,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = true,
+    ["types"] = {
+      ["BOSS"] = true,
+      ["CHAT"] = false,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = false,
+      ["GROUP"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["REPUTATION"] = true,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["Valle de los Retos, Durotar"] = true,
+  },
+}

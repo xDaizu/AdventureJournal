@@ -1,0 +1,484 @@
+##### classic: fresh login #####
+== scenario log
+-- default: conversations = false; channel events registered (12 digits, one per event) = 100000000000
+-- CHAT_MSG_WHISPER is still registered once, for the CHAT entry: 1
+-- diag status while off: 0 registered
+-- off: 0 conversation lines, 1 CHAT entries (sender name only)
+-- off: asked for the conversations view: view button shown = false, body contains conversation text = false
+-- off: conversations check box: unchecked, usable
+-- on: setting = true; channel events registered = 211111111111; conversations check box: checked, usable
+-- diag status on: 12 registered
+-- on: 12 conversation lines, 2 CHAT entries, 0 handler errors
+--    17:56:52 WHISPER who=Amigo rel=nil lang=nil place="Valle de los Retos, Durotar" text="Hola, ¿qué tal?"
+--    17:56:53 WHISPER_INFORM who=Amigo rel=nil lang=nil place="Valle de los Retos, Durotar" text="Bien, gracias"
+--    17:56:54 BN_WHISPER who=nil rel=nil lang=nil place="Valle de los Retos, Durotar" text="Eh, ¿juegas?"
+--    17:56:55 BN_WHISPER_INFORM who=nil rel=nil lang=nil place="Valle de los Retos, Durotar" text="Ahora no"
+--    17:56:56 PARTY who=Jaina rel=group lang=Orco place="Valle de los Retos, Durotar" text="Listos"
+--    17:56:57 PARTY_LEADER who=Jaina rel=group lang=Orco place="Valle de los Retos, Durotar" text="Adelante"
+--    17:56:58 RAID who=Thrall rel=group lang=Orco place="Valle de los Retos, Durotar" text="Cuidado con la ola"
+--    17:56:58 RAID_LEADER who=Jaina rel=group lang=Orco place="Valle de los Retos, Durotar" text="Todos juntos"
+--    17:56:59 SAY who=Volgajin rel=me lang=Orco place="Valle de los Retos, Durotar" text="¡Por la Horda!"
+--    17:57:03 YELL who=Jaina rel=group lang=Orco place="Valle de los Retos, Durotar" text="¡Cuidado!"
+--    17:57:04 EMOTE who=Volgajin rel=me lang=nil place="Valle de los Retos, Durotar" text="saluda con la cabeza."
+--    17:57:05 TEXT_EMOTE who=Volgajin rel=me lang=nil place="Valle de los Retos, Durotar" text="Volgajin saluda a Gornek."
+-- secrets: 1 new line (secret language and GUID only), 0 handler errors
+-- in an instance, all secret: 0 new lines, 0 handler errors
+-- simulated secrets: 0 new lines, 0 handler errors
+-- on: view button shown = true, reads 'Conversaciones'
+-- conversations view: button reads 'Acontecimientos'; 04/11/2026     ·     13 conversaciones
+-- body:
+|cFF8A5A2417:56:52|r  Amigo te susurra: «Hola, ¿qué tal?»
+
+|cFF8A5A2417:56:53|r  Susurras a Amigo: «Bien, gracias»
+
+|cFF8A5A2417:56:54|r  alguien te susurra por Battle.net: «Eh, ¿juegas?»
+
+|cFF8A5A2417:56:55|r  Susurras a alguien por Battle.net: «Ahora no»
+
+|cFF8A5A2417:56:56|r  Jaina, en el grupo (Orco): «Listos»
+
+|cFF8A5A2417:56:57|r  Jaina, en el grupo (Orco): «Adelante»
+
+|cFF8A5A2417:56:58|r  Thrall, en la banda (Orco): «Cuidado con la ola»
+
+|cFF8A5A2417:56:58|r  Jaina, en la banda (Orco): «Todos juntos»
+
+|cFF8A5A2417:56:59|r  Volgajin dice (Orco): «¡Por la Horda!»
+
+|cFF8A5A2417:57:03|r  Jaina grita (Orco): «¡Cuidado!»
+
+|cFF8A5A2417:57:04|r  Volgajin saluda con la cabeza.
+
+|cFF8A5A2417:57:05|r  Volgajin saluda a Gornek.
+
+|cFF8A5A2417:57:07|r  Amigo te susurra: «Texto claro 2»
+-- paging, 4 per page: 04/11/2026     ·     13 conversaciones     ·     página 1 de 4 | prev false next true (prev/next shown: true/true)
+-- page 2: 04/11/2026     ·     13 conversaciones     ·     página 2 de 4 | first line: Jaina, en el grupo (Orco): «Listos»
+-- last page: 04/11/2026     ·     13 conversaciones     ·     página 4 de 4 | next enabled = false
+-- view button toggles back: Conversaciones; body has conversations = false
+-- limit: 15 lines (limit 15), 1 notices printed
+-- off again: channel events registered = 100000000000; conversations check box: unchecked, usable; CHAT_MSG_WHISPER still registered once = 1
+-- off again: 15 lines stored (unchanged), book view = events, body shows conversation text = false, view button shown = false
+-- on again: 16 lines; channel events registered = 211111111111
+== events registered
+ADDON_LOADED, BOSS_KILL, CHAT_MSG_BN_WHISPER, CHAT_MSG_BN_WHISPER_INFORM, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_EMOTE, CHAT_MSG_LOOT, CHAT_MSG_PARTY, CHAT_MSG_PARTY_LEADER, CHAT_MSG_RAID, CHAT_MSG_RAID_LEADER, CHAT_MSG_SAY, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_TEXT_EMOTE, CHAT_MSG_WHISPER, CHAT_MSG_WHISPER, CHAT_MSG_WHISPER_INFORM, CHAT_MSG_YELL, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 1. Tu historia continúa.
+|cFFFFD700[Diario]|r Secretos simulados ACTIVADOS (y la depuración). Los textos de los eventos se tratan como secretos. /diario debug secrets off o /reload lo apaga.
+|cFF888888[Diario debug]|r CHAT_MSG_WHISPER([SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], nil)
+|cFF888888[Diario debug]|r CHAT_MSG_WHISPER: remitente secreto, se usa el texto neutro
+|cFF888888[Diario debug]|r CHAT_MSG_WHISPER([SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], nil)
+|cFF888888[Diario debug]|r CHAT_MSG_WHISPER: conversación omitida (texto secreto)
+|cFF888888[Diario debug]|r CHAT_MSG_PARTY([SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], [SECRET], nil)
+|cFF888888[Diario debug]|r CHAT_MSG_PARTY: conversación omitida (texto secreto)
+|cFFFFD700[Diario]|r Depuración, secretos simulados y datos de prueba desactivados.
+|cFFFFD700[Diario]|r Esta jornada ya guarda 15 conversaciones: no se anotan más hasta la próxima.
+|cFFFFD700[Diario]|r Conversaciones: no. Ya no se guarda ni se muestra nada de esto (lo ya guardado se conserva en el archivo, oculto).
+|cFFFFD700[Diario]|r Conversaciones: no. Usa /diario conversaciones on o /diario conversaciones off.
+|cFFFFD700[Diario]|r Conversaciones: no. Usa /diario conversaciones on o /diario conversaciones off.
+|cFFFFD700[Diario]|r Conversaciones: sí. Desde ahora se guardan en el diario los susurros (también de Battle.net), el chat de grupo y banda, y lo que digáis, gritéis o hagáis tú, tu grupo y tus amigos. Es texto de otros jugadores: /diario conversaciones off lo detiene. Dentro de instancias el chat es secreto y no se guarda.
+|cFFFFD700[Diario]|r Diagnóstico de AdventureJournal 1.2.0-dev
+|cFFFFD700[Diario]|r Cliente: 1.15.9 (build 70576), interfaz 11509, WOW_PROJECT_ID 2
+|cFFFFD700[Diario]|r Detectado: IS_FOREVER=false, IS_CLASSIC_ERA=true, idioma esES
+|cFFFFD700[Diario]|r Instancia: false (none). Zona: "Durotar" / "Valle de los Retos"
+|cFFFFD700[Diario]|r Base de datos: versión 3, jornada actual 1, 1 jornadas, 13 entradas hoy
+|cFFFFD700[Diario]|r Lugares visitados: 0. Mensajes en el chat: important
+|cFFFFD700[Diario]|r Tipos desactivados: ninguno. Ánimo en el libro: no
+|cFFFFD700[Diario]|r Perfil: ampliado. Botín desde calidad 3. Diario de la versión de Chema: no
+|cFFFFD700[Diario]|r Conversaciones: SÍ (se guardan). Eventos de chat registrados: 12 de 12
+|cFFFFD700[Diario]|r AJProbe: no está cargado (/diario importar no tendría de dónde leer)
+|cFFFFD700[Diario]|r Lectura de fechas (time{...}, la usa /diario importar): OK
+|cFFFFD700[Diario]|r Panel de opciones: panel registrado (categoría 100)
+|cFFFFD700[Diario]|r Índice del libro: ScrollBox
+|cFFFFD700[Diario]|r Menú de addons (AddonCompartmentFunc): TOC = no declarado o no legible, función global = sí
+|cFFFFD700[Diario]|r Patrones de botín propio: 4 (0 = se acepta todo el botín)
+|cFFFFD700[Diario]|r issecretvalue: sí (issecretvalue('x') = false)
+|cFFFFD700[Diario]|r C_Secrets / C_RestrictedActions: NO / NO
+|cFFFFD700[Diario]|r Info de objetos: C_Item.GetItemInfo (primero)
+|cFFFFD700[Diario]|r GetItemInfo global: sí
+|cFFFFD700[Diario]|r C_Item.RequestLoadItemDataByID: sí
+|cFFFFD700[Diario]|r Título de misión: recorrer el registro de misiones
+|cFFFFD700[Diario]|r C_EventUtils.IsEventValid: sí
+|cFFFFD700[Diario]|r C_AddOns.GetAddOnMetadata / GetAddOnMetadata: sí / NO
+|cFFFFD700[Diario]|r GetRealZoneText / GetSubZoneText: sí / sí
+|cFFFFD700[Diario]|r Textos del juego que reconocen los tipos nuevos (M6): /diario diag mensajes los repite solos.
+|cFFFFD700[Diario]|r   Mensajes de grupo (de 6): ERR_JOINED_GROUP_S, ERR_RAID_MEMBER_ADDED_S, ERR_LEFT_GROUP_S, ERR_RAID_MEMBER_REMOVED_S, ERR_LEFT_GROUP_YOU, ERR_GROUP_DISBANDED
+|cFFFFD700[Diario]|r   Mensajes de reputación: subidas: FACTION_STANDING_INCREASED
+|cFFFFD700[Diario]|r   Mensajes de reputación: cambios de nivel: FACTION_STANDING_CHANGED
+|cFFFFD700[Diario]|r   Mensajes de habilidades: ERR_SKILL_UP_SI [rank], ERR_SKILL_GAINED_S [new]
+|cFFFFD700[Diario]|r   Mensajes de hechizos (de 3): ERR_LEARN_SPELL_S, ERR_LEARN_ABILITY_S, ERR_LEARN_PASSIVE_S
+|cFFFFD700[Diario]|r Interfaz (M5):
+|cFFFFD700[Diario]|r   Settings.RegisterCanvasLayoutCategory: sí
+|cFFFFD700[Diario]|r   Settings.RegisterVerticalLayoutCategory: sí
+|cFFFFD700[Diario]|r   Settings.RegisterAddOnCategory: sí
+|cFFFFD700[Diario]|r   Settings.OpenToCategory: sí
+|cFFFFD700[Diario]|r   Settings.RegisterAddOnSetting: sí
+|cFFFFD700[Diario]|r   Settings.RegisterProxySetting: sí
+|cFFFFD700[Diario]|r   Settings.CreateCheckbox: sí
+|cFFFFD700[Diario]|r   Settings.CreateDropdown: sí
+|cFFFFD700[Diario]|r   Settings.VarType: sí
+|cFFFFD700[Diario]|r   SettingsPanel: sí
+|cFFFFD700[Diario]|r   InterfaceOptions_AddCategory: NO
+|cFFFFD700[Diario]|r   CreateScrollBoxListLinearView: sí
+|cFFFFD700[Diario]|r   CreateDataProvider: sí
+|cFFFFD700[Diario]|r   ScrollUtil.InitScrollBoxListWithScrollBar: sí
+|cFFFFD700[Diario]|r   AddonCompartmentFrame: NO
+|cFFFFD700[Diario]|r   plantilla UICheckButtonTemplate: sí
+|cFFFFD700[Diario]|r   plantilla InterfaceOptionsCheckButtonTemplate: sí
+|cFFFFD700[Diario]|r   plantilla UIPanelButtonTemplate: sí
+|cFFFFD700[Diario]|r   plantilla WowScrollBoxList: sí
+|cFFFFD700[Diario]|r   plantilla MinimalScrollBar: sí
+|cFFFFD700[Diario]|r   prueba de ScrollBox: OK
+|cFFFFD700[Diario]|r Eventos registrados (20): ADDON_LOADED, PLAYER_ENTERING_WORLD, PLAYER_LOGOUT, QUEST_TURNED_IN, BOSS_KILL, ENCOUNTER_END, PLAYER_DEAD, CHAT_MSG_LOOT, GET_ITEM_INFO_RECEIVED, ITEM_DATA_LOAD_RESULT, ZONE_CHANGED_NEW_AREA, ZONE_CHANGED, ZONE_CHANGED_INDOORS, GOSSIP_SHOW, CHAT_MSG_WHISPER, PLAYER_LEVEL_UP, CHAT_MSG_SYSTEM, GROUP_JOINED, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_SKILL
+|cFFFFD700[Diario]|r Eventos NO registrados (1): MINIMAP_ZONE_CHANGED (el cliente no conoce este evento)
+|cFFFFD700[Diario]|r Errores en manejadores: ninguno
+|cFFFFD700[Diario]|r Depuración: apagada, secretos simulados: apagados
+== AdventureJournalDB
+{
+  ["currentDay"] = 1,
+  ["days"] = {
+    [1] = {
+      ["conversations"] = {
+        [1] = {
+          ["channel"] = "WHISPER",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Hola, ¿qué tal?",
+          ["time"] = "17:56:52",
+          ["timestamp"] = 1793815012,
+          ["who"] = "Amigo",
+        },
+        [2] = {
+          ["channel"] = "WHISPER_INFORM",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Bien, gracias",
+          ["time"] = "17:56:53",
+          ["timestamp"] = 1793815013,
+          ["who"] = "Amigo",
+        },
+        [3] = {
+          ["channel"] = "BN_WHISPER",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Eh, ¿juegas?",
+          ["time"] = "17:56:54",
+          ["timestamp"] = 1793815014,
+        },
+        [4] = {
+          ["channel"] = "BN_WHISPER_INFORM",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Ahora no",
+          ["time"] = "17:56:55",
+          ["timestamp"] = 1793815015,
+        },
+        [5] = {
+          ["channel"] = "PARTY",
+          ["lang"] = "Orco",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["rel"] = "group",
+          ["text"] = "Listos",
+          ["time"] = "17:56:56",
+          ["timestamp"] = 1793815016,
+          ["who"] = "Jaina",
+        },
+        [6] = {
+          ["channel"] = "PARTY_LEADER",
+          ["lang"] = "Orco",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["rel"] = "group",
+          ["text"] = "Adelante",
+          ["time"] = "17:56:57",
+          ["timestamp"] = 1793815017,
+          ["who"] = "Jaina",
+        },
+        [7] = {
+          ["channel"] = "RAID",
+          ["lang"] = "Orco",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["rel"] = "group",
+          ["text"] = "Cuidado con la ola",
+          ["time"] = "17:56:58",
+          ["timestamp"] = 1793815018,
+          ["who"] = "Thrall",
+        },
+        [8] = {
+          ["channel"] = "RAID_LEADER",
+          ["lang"] = "Orco",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["rel"] = "group",
+          ["text"] = "Todos juntos",
+          ["time"] = "17:56:58",
+          ["timestamp"] = 1793815018,
+          ["who"] = "Jaina",
+        },
+        [9] = {
+          ["channel"] = "SAY",
+          ["lang"] = "Orco",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["rel"] = "me",
+          ["text"] = "¡Por la Horda!",
+          ["time"] = "17:56:59",
+          ["timestamp"] = 1793815019,
+          ["who"] = "Volgajin",
+        },
+        [10] = {
+          ["channel"] = "YELL",
+          ["lang"] = "Orco",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["rel"] = "group",
+          ["text"] = "¡Cuidado!",
+          ["time"] = "17:57:03",
+          ["timestamp"] = 1793815023,
+          ["who"] = "Jaina",
+        },
+        [11] = {
+          ["channel"] = "EMOTE",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["rel"] = "me",
+          ["text"] = "saluda con la cabeza.",
+          ["time"] = "17:57:04",
+          ["timestamp"] = 1793815024,
+          ["who"] = "Volgajin",
+        },
+        [12] = {
+          ["channel"] = "TEXT_EMOTE",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["rel"] = "me",
+          ["text"] = "Volgajin saluda a Gornek.",
+          ["time"] = "17:57:05",
+          ["timestamp"] = 1793815025,
+          ["who"] = "Volgajin",
+        },
+        [13] = {
+          ["channel"] = "WHISPER",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Texto claro 2",
+          ["time"] = "17:57:07",
+          ["timestamp"] = 1793815027,
+          ["who"] = "Amigo",
+        },
+        [14] = {
+          ["channel"] = "WHISPER",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Mensaje 1",
+          ["time"] = "17:57:08",
+          ["timestamp"] = 1793815028,
+          ["who"] = "Amigo",
+        },
+        [15] = {
+          ["channel"] = "WHISPER",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Mensaje 2",
+          ["time"] = "17:57:09",
+          ["timestamp"] = 1793815029,
+          ["who"] = "Amigo",
+        },
+        [16] = {
+          ["channel"] = "WHISPER",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["text"] = "Otra vez encendido",
+          ["time"] = "17:57:22",
+          ["timestamp"] = 1793815042,
+          ["who"] = "Amigo",
+        },
+      },
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:57:22",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:56:45",
+          ["timestamp"] = 1793815005,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 2,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:56:52",
+          ["timestamp"] = 1793815012,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [3] = {
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 3,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:07",
+          ["timestamp"] = 1793815027,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [4] = {
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de alguien mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 4,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "alguien",
+          ["time"] = "17:57:07",
+          ["timestamp"] = 1793815027,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [5] = {
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 5,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:07",
+          ["timestamp"] = 1793815027,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [6] = {
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de alguien mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 6,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "alguien",
+          ["time"] = "17:57:07",
+          ["timestamp"] = 1793815027,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [7] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 7,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:08",
+          ["timestamp"] = 1793815028,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [8] = {
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 8,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:09",
+          ["timestamp"] = 1793815029,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [9] = {
+          ["characterProfile"] = "Erudito",
+          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 9,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:10",
+          ["timestamp"] = 1793815030,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [10] = {
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 10,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:11",
+          ["timestamp"] = 1793815031,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [11] = {
+          ["characterProfile"] = "Melancólico",
+          ["contextualTone"] = "pensando en el largo camino recorrido y en quienes quedaron atrás",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 11,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:12",
+          ["timestamp"] = 1793815032,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [12] = {
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con el ánimo firme y la sensación de que aún queda mucho por hacer",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 12,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:17",
+          ["timestamp"] = 1793815037,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+        [13] = {
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en Valle de los Retos, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["seed"] = 13,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Amigo",
+          ["time"] = "17:57:22",
+          ["timestamp"] = 1793815042,
+          ["type"] = "CHAT",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["settings"] = {
+    ["chat"] = "important",
+    ["conversations"] = true,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["BOSS"] = true,
+      ["CHAT"] = true,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["REPUTATION"] = true,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {},
+}

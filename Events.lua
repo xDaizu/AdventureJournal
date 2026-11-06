@@ -1,1120 +1,429 @@
-local addonName, addon = ...
+-- Events.lua: event registration and handlers, entry creation, session start/end.
+local addonName, ns = ...
+local SafeString = ns.SafeString
 
-addon = addon or {}
-
--- =========================================================
--- DIARIO DE AVENTURAS - EVENTOS
--- =========================================================
-
-local DB
 local eventFrame = CreateFrame("Frame")
-
 local currentPlace = ""
 local sessionStarted = false
-
 local lastQuestID, lastQuestAt
-local lastAcceptedQuestID, lastAcceptedQuestAt
-local lastCompletedQuestTitle, lastCompletedQuestAt
+local lastBossName, lastBossAt
+local lastNPCName, lastNPCTime
+local pendingLoot = {}   -- [itemID] = itemLink, waiting for GET_ITEM_INFO_RECEIVED
 
-local pendingQuestTitles = {}
-
-local lastAttackerName
-local lastNPCName
-
-local knownGuildName
-local knownFriendsCount = 0
-
-local currentTransportMethod = "ON_FOOT"
-local transportGeneration = 0
-local transportExpiresAt = 0
-local pendingTaxiDestination
-
-local lastBossName
-local lastBossAt = 0
-
-local taxiHookInstalled = false
-
--- =========================================================
--- UTILIDADES
--- =========================================================
-
-local function SafeString(value, fallback)
-    if type(value) == "string" and value ~= "" then
-        return value
-    end
-
-    return fallback or "algo desconocido"
+-- Chat echo policy (bug: spam). settings.chat: "all", "important" (default) or "off".
+-- Important = boss kills, deaths and epic (or better) loot.
+function ns.ShouldEchoToChat(entry)
+    local settings = ns.DB and ns.DB.settings
+    local mode = settings and settings.chat or ns.DEFAULT_SETTINGS.chat
+    if mode == "all" then return true end
+    if mode == "off" then return false end
+    return entry.type == "BOSS" or entry.type == "DEATH"
+        or (entry.type == "LOOT" and (tonumber(entry.itemQuality) or 0) >= 4)
 end
 
-local function SafeCall(func, ...)
-    if type(func) ~= "function" then
-        return false
-    end
+function ns.AddEntry(eventType, description, extra)
+    local DB = ns.DB
+    if not DB then return end
+    local day = DB.days[DB.currentDay]
+    if not day then return end
 
-    local ok, a, b, c, d, e = pcall(func, ...)
-    return ok, a, b, c, d, e
-end
-
-local function ContainsText(text, pattern)
-    if type(text) ~= "string" or type(pattern) ~= "string" then
-        return false
-    end
-
-    return string.find(string.lower(text), pattern, 1, true) ~= nil
-end
-
-local function GetPlayerGUID()
-    if UnitGUID then
-        local ok, guid = SafeCall(UnitGUID, "player")
-        if ok then return guid end
-    end
-
-    return nil
-end
-
--- =========================================================
--- COMPATIBILIDAD DE HECHIZOS
--- =========================================================
-
-local function GetSpellName(spellID)
-    if not spellID then return nil end
-
-    if C_Spell and C_Spell.GetSpellInfo then
-        local ok, info = SafeCall(C_Spell.GetSpellInfo, spellID)
-
-        if ok and type(info) == "table" then
-            return info.name
-        end
-    end
-
-    if GetSpellInfo then
-        local ok, name = SafeCall(GetSpellInfo, spellID)
-
-        if ok and type(name) == "string" then
-            return name
-        end
-    end
-
-    return nil
-end
-
--- =========================================================
--- COMPATIBILIDAD DE MISIONES
--- =========================================================
-
-local function GetQuestTitle(questID)
-    if not questID then return nil end
-
-    if C_QuestLog and C_QuestLog.GetTitleForQuestID then
-        local ok, title = SafeCall(
-            C_QuestLog.GetTitleForQuestID,
-            questID
-        )
-
-        if ok and type(title) == "string" and title ~= "" then
-            return title
-        end
-    end
-
-    if GetQuestLogTitle and GetNumQuestLogEntries then
-        local ok, count = SafeCall(GetNumQuestLogEntries)
-
-        if ok and tonumber(count) then
-            for index = 1, count do
-                local success, title, _, _, _, _, _, id =
-                    SafeCall(GetQuestLogTitle, index)
-
-                if success and tonumber(id) == tonumber(questID) then
-                    return title
-                end
-            end
-        end
-    end
-
-    return pendingQuestTitles[questID]
-end
-
-local function GetQuestFrameTitle()
-    if GetTitleText then
-        local ok, title = SafeCall(GetTitleText)
-
-        if ok and type(title) == "string" and title ~= "" then
-            return title
-        end
-    end
-
-    return nil
-end
-
--- =========================================================
--- HERMANDADES Y AMIGOS
--- =========================================================
-
-local function GetCurrentGuild()
-    if GetGuildInfo then
-        local ok, guildName = SafeCall(GetGuildInfo, "player")
-
-        if ok then
-            return guildName
-        end
-    end
-
-    return nil
-end
-
-local function GetCurrentFriendsCount()
-    if C_FriendList and C_FriendList.GetNumFriends then
-        local ok, count = SafeCall(C_FriendList.GetNumFriends)
-
-        if ok then
-            return tonumber(count) or 0
-        end
-    end
-
-    if GetNumFriends then
-        local ok, count = SafeCall(GetNumFriends)
-
-        if ok then
-            return tonumber(count) or 0
-        end
-    end
-
-    return 0
-end
-
--- =========================================================
--- NPC
--- =========================================================
-
-local function GetTargetNPCName()
-    if UnitExists and UnitName then
-        if UnitExists("npc") then
-            local ok, name = SafeCall(UnitName, "npc")
-
-            if ok and name and name ~= "" then
-                return name
-            end
-        end
-
-        if UnitExists("target") then
-            local isPlayer = false
-
-            if UnitIsPlayer then
-                local ok, result = SafeCall(UnitIsPlayer, "target")
-                isPlayer = ok and result
-            end
-
-            if not isPlayer then
-                local ok, name = SafeCall(UnitName, "target")
-
-                if ok and name and name ~= "" then
-                    return name
-                end
-            end
-        end
-    end
-
-    return nil
-end
-
-local function CaptureNPC()
-    local npcName = GetTargetNPCName()
-
-    if npcName then
-        lastNPCName = npcName
-    end
-end
-
--- =========================================================
--- LOCALIZACIÓN
--- =========================================================
-
-function addon.GetPlace()
-    local zone = SafeString(
-        GetRealZoneText and GetRealZoneText(),
-        "tierras desconocidas"
-    )
-
-    local sub = SafeString(
-        GetSubZoneText and GetSubZoneText(),
-        ""
-    )
-
-    if sub ~= "" and sub ~= zone then
-        return sub .. ", " .. zone
-    end
-
-    return zone
-end
-
--- =========================================================
--- BASE DE DATOS
--- =========================================================
-
-function addon.EnsureDatabase()
-    if type(AdventureJournalDB) ~= "table" then
-        AdventureJournalDB = {
-            version = 2,
-            currentDay = 0,
-            days = {},
-            visitedZones = {},
-            knownMounts = {},
-            knownAchievements = {}
-        }
-    end
-
-    DB = AdventureJournalDB
-
-    DB.version = tonumber(DB.version) or 1
-    DB.currentDay = tonumber(DB.currentDay) or 0
-
-    if type(DB.days) ~= "table" then
-        DB.days = {}
-    end
-
-    if type(DB.visitedZones) ~= "table" then
-        DB.visitedZones = {}
-    end
-
-    if type(DB.knownMounts) ~= "table" then
-        DB.knownMounts = {}
-    end
-
-    if type(DB.knownAchievements) ~= "table" then
-        DB.knownAchievements = {}
-    end
-
-    for dayNumber, day in pairs(DB.days) do
-        if type(day) ~= "table" then
-            DB.days[dayNumber] = {
-                events = {},
-                dateLabel = "Fecha desconocida"
-            }
-        else
-            if type(day.events) ~= "table" then
-                day.events = {}
-            end
-        end
-    end
-
-    DB.version = 2
-end
-
--- =========================================================
--- CONTROL DE JORNADAS
--- =========================================================
-
-local function EnsureSessionStarted()
-    if sessionStarted then
+    -- A type the player switched off is not logged. The handlers have already updated
+    -- their dedupe state and the visited places by now, so switching a type on again
+    -- does not replay what happened while it was off.
+    if not ns.IsTypeEnabled(eventType) then
+        ns.Debug("AddEntry: tipo %s desactivado en las opciones, no se anota", tostring(eventType))
         return
     end
 
-    addon.EnsureDatabase()
+    local profile, tone = ns.ChooseMood(eventType)
+    local entry = {
+        type = eventType,
+        text = SafeString(description, "Acontecimiento sin descripción"),
+        place = ns.GetPlace(),
+        zone = SafeString(ns.GetZoneText(), "Desconocido"),
+        subZone = SafeString(ns.GetSubZoneText(), ""),
+        time = date("%H:%M:%S"),
+        timestamp = time(),
+        characterProfile = profile,
+        contextualTone = tone,
+        seed = #(day.events or {}) + 1,
+    }
+    if type(extra) == "table" then
+        for key, value in pairs(extra) do
+            -- Secrets cannot be saved (they would become nil); drop them.
+            if ns.IsSecret(value) then
+                ns.Debug("AddEntry: campo %s descartado por ser secreto", tostring(key))
+            else
+                entry[key] = value
+            end
+        end
+    end
+    entry.prose = ns.ComposeEntry(entry)
+    day.events = day.events or {}
+    table.insert(day.events, entry)
+    ns.RefreshIfVisible()
+    if ns.ShouldEchoToChat(entry) then
+        print(string.format("|cFF00FF00[Diario]|r %s", entry.text))
+    end
+end
 
+-- A real login starts a new jornada. A /reload continues the current one: the
+-- game fires PLAYER_LOGOUT on a reload, so `endedAt` is cleared again.
+-- PLAYER_ENTERING_WORLD(isInitialLogin, isReloadingUi) tells them apart; it also
+-- fires on every loading screen, hence the sessionStarted guard.
+local function StartSession(isReloadingUi)
+    if sessionStarted then return end
     sessionStarted = true
+    local DB = ns.EnsureDatabase()
+
+    local resumable = DB.days[DB.currentDay]
+    if isReloadingUi and DB.currentDay >= 1 and type(resumable) == "table" then
+        resumable.endedAt = nil
+        ns.selectedDay = DB.currentDay
+        currentPlace = ns.GetPlace()
+        if ns.GetZoneText() and not ns.IsSecret(ns.GetZoneText()) then DB.visited[currentPlace] = true end
+        print(string.format("|cFFFFD700[Diario]|r Continúas la jornada %d.", DB.currentDay))
+        return
+    end
+
     DB.currentDay = DB.currentDay + 1
-
     local n = DB.currentDay
-
     DB.days[n] = {
         startedAt = date("%Y-%m-%d %H:%M:%S"),
         dateLabel = date("%d/%m/%Y"),
         events = {},
-        mainZone = addon.GetPlace()
     }
-
-    print(string.format(
-        "|cFFFFD700[Diario]|r Comienza la jornada %d. Tu historia continúa.",
-        n
-    ))
+    ns.selectedDay = n
+    currentPlace = ns.GetPlace()
+    print(string.format("|cFFFFD700[Diario]|r Comienza la jornada %d. Tu historia continúa.", n))
 end
 
--- =========================================================
--- REGISTRO DE ENTRADAS
--- =========================================================
+-- Returns false only while the item is not cached yet (keep it pending). Returns
+-- true once it is settled: logged, or dropped for being below settings.lootQuality (bug #11;
+-- rare by default, epic in the "clasico" profile).
+local function TryLogLoot(itemLink, itemID)
+    local _, _, quality = ns.GetItemInfoSafe(itemLink or itemID)
+    if not quality then return false end
+    if quality >= ns.GetLootQuality() then
+        local displayLink = itemLink
+        if not displayLink then
+            local _, link = ns.GetItemInfoSafe(itemID)
+            displayLink = link
+        end
+        ns.AddEntry("LOOT", displayLink or ("un objeto (ID " .. tostring(itemID) .. ")"), {
+            itemQuality = quality,
+            itemLink = displayLink,
+            itemID = itemID,
+        })
+    end
+    return true
+end
 
-function addon.AddEntry(eventType, description, extra)
-    EnsureSessionStarted()
+-- Dedupe for the M6 types: the same subject within its window (ns.DEDUPE_WINDOW) is one event.
+local recentSubjects = {}
+local function IsRepeat(kind, subject)
+    local key = kind .. "" .. subject
+    local now = time()
+    local last = recentSubjects[key]
+    recentSubjects[key] = now
+    return last ~= nil and now - last <= (ns.DEDUPE_WINDOW[kind] or 5)
+end
 
-    local day = DB.days[DB.currentDay]
+-- Logs a candidate from Messages.lua unless it repeats a recent one.
+local function LogCandidate(candidate)
+    local subject = ns.NewTypeSubject(candidate.type, candidate.text, candidate.extra or {}) or candidate.text
+    if IsRepeat(candidate.type, subject) then return end
+    ns.AddEntry(candidate.type, candidate.text, candidate.extra)
+end
 
-    if not day then
+local handlers = {}
+
+handlers.ADDON_LOADED = function(loadedName)
+    if loadedName == addonName then
+        ns.EnsureDatabase()
+        -- M4b: the conversation events are registered only while the option is on.
+        if ns.UpdateConversationEvents then ns.UpdateConversationEvents() end
+    end
+end
+
+handlers.PLAYER_ENTERING_WORLD = function(_, isReloadingUi)
+    StartSession(isReloadingUi == true)
+end
+
+handlers.PLAYER_LOGOUT = function()
+    local DB = ns.DB
+    if DB and DB.days and DB.days[DB.currentDay] then
+        DB.days[DB.currentDay].endedAt = date("%Y-%m-%d %H:%M:%S")
+    end
+end
+
+handlers.QUEST_TURNED_IN = function(questID)
+    if ns.IsSecret(questID) then
+        ns.Debug("QUEST_TURNED_IN: questID secreto, se usa el texto neutro")
+        questID = nil
+    end
+    if not questID or questID ~= lastQuestID or not lastQuestAt or time() - lastQuestAt > 3 then
+        lastQuestID, lastQuestAt = questID, time()
+        ns.AddEntry("QUEST", ns.GetQuestTitle(questID), { questID = questID })
+    end
+end
+
+local UNKNOWN_BOSS = ns.NEUTRAL_TEXT.BOSS
+
+handlers.BOSS_KILL = function(_, bossName)
+    if ns.IsSecret(bossName) then ns.Debug("BOSS_KILL: nombre secreto, se usa el texto neutro") end
+    bossName = SafeString(bossName, UNKNOWN_BOSS)
+    if bossName ~= lastBossName or not lastBossAt or time() - lastBossAt > 5 then
+        lastBossName, lastBossAt = bossName, time()
+        ns.AddEntry("BOSS", bossName)
+    end
+end
+
+handlers.ENCOUNTER_END = function(_, encounterName, _, _, success)
+    -- Without a readable success flag we cannot tell a kill from a wipe. BOSS_KILL
+    -- covers the kill, so skip.
+    if ns.IsSecret(success) then
+        ns.Debug("ENCOUNTER_END: success secreto, se ignora")
         return
     end
-
-    day.events = day.events or {}
-
-    local entry = {
-        type = eventType,
-
-        text = SafeString(
-            description,
-            "Acontecimiento sin descripción"
-        ),
-
-        place = addon.GetPlace(),
-
-        time = date("%H:%M:%S"),
-
-        timestamp = time(),
-
-        contextualTone = (
-            addon.GetRandomMood
-            and addon.GetRandomMood(eventType)
-        ) or "con el ánimo firme",
-
-        seed = #day.events + 1 + math.random(1, 100)
-    }
-
-    if type(extra) == "table" then
-        for key, value in pairs(extra) do
-            entry[key] = value
+    if success == 1 and encounterName then
+        if ns.IsSecret(encounterName) then
+            ns.Debug("ENCOUNTER_END: nombre secreto, se usa el texto neutro")
+            encounterName = UNKNOWN_BOSS
         end
-    end
-
-    entry.type = eventType
-    entry.text = SafeString(entry.text, "Acontecimiento sin descripción")
-    entry.place = SafeString(entry.place, addon.GetPlace())
-
-    local header, bodyText
-
-    if addon.ComposeEntry then
-        local ok, generatedHeader, generatedBody =
-            pcall(addon.ComposeEntry, entry)
-
-        if ok then
-            header = generatedHeader
-            bodyText = generatedBody
-        end
-    end
-
-    entry.header = header
-    entry.prose = bodyText or entry.text
-
-    table.insert(day.events, entry)
-
-    if addon.RefreshUI then
-        addon:RefreshUI()
-    end
-
-    print(string.format(
-        "|cFF00FF00[Diario]|r %s",
-        entry.text
-    ))
-end
-
--- =========================================================
--- TRANSPORTES
--- =========================================================
-
-local function SetTransportMethod(method)
-    transportGeneration = transportGeneration + 1
-
-    currentTransportMethod = method
-
-    local now = GetTime and GetTime() or time()
-    transportExpiresAt = now + 60
-end
-
-local function ClearTransportMethod()
-    transportGeneration = transportGeneration + 1
-
-    currentTransportMethod = "ON_FOOT"
-    transportExpiresAt = 0
-    pendingTaxiDestination = nil
-end
-
-local function IsPlayerOnTaxi()
-    if UnitOnTaxi then
-        local ok, result = SafeCall(UnitOnTaxi, "player")
-
-        if ok then
-            return result and true or false
-        end
-    end
-
-    return false
-end
-
-local function GetTaxiNodeName(index)
-    if not index or not GetTaxiNodeInfo then
-        return nil
-    end
-
-    local ok, name = SafeCall(GetTaxiNodeInfo, index)
-
-    if ok and type(name) == "string" and name ~= "" then
-        return name
-    end
-
-    return nil
-end
-
-local function InstallTaxiHook()
-    -- Hook desactivado temporalmente.
-    -- Ya hemos comprobado que su desactivación no elimina el bloqueo.
-    taxiHookInstalled = true
-end
-
--- =========================================================
--- INICIALIZACIÓN
--- =========================================================
-
-local function InitSessionState()
-    addon.EnsureDatabase()
-
-    currentPlace = addon.GetPlace()
-
-    if currentPlace ~= "" and
-       currentPlace ~= "tierras desconocidas" then
-
-        DB.visitedZones[currentPlace] = true
-    end
-
-    knownFriendsCount = GetCurrentFriendsCount()
-    knownGuildName = GetCurrentGuild()
-
-    InstallTaxiHook()
-end
-
--- =========================================================
--- ZONAS
--- =========================================================
-
-local function HandleZoneChange()
-    local newPlace = addon.GetPlace()
-
-    if newPlace == currentPlace then
-        return
-    end
-
-    if newPlace == "" or
-       newPlace == "tierras desconocidas" then
-        return
-    end
-
-    currentPlace = newPlace
-
-    addon.EnsureDatabase()
-
-    if IsPlayerOnTaxi() then
-        currentTransportMethod = "TAXI"
-    end
-
-    local methodUsed = currentTransportMethod
-
-    ClearTransportMethod()
-
-    if not DB.visitedZones[newPlace] then
-        DB.visitedZones[newPlace] = true
-
-        addon.AddEntry(
-            "DISCOVERY",
-            newPlace,
-            {
-                travelMethod = methodUsed
-            }
-        )
-    else
-        addon.AddEntry(
-            "REVISIT",
-            newPlace,
-            {
-                travelMethod = methodUsed
-            }
-        )
-    end
-end
-
--- =========================================================
--- MISIONES
--- =========================================================
-
-local function HandleQuestTurnedIn(questID, suppliedTitle)
-    local title
-
-    if questID then
-        title = GetQuestTitle(questID)
-    end
-
-    if not title and suppliedTitle then
-        title = suppliedTitle
-    end
-
-    if not title then
-        title = GetQuestFrameTitle()
-    end
-
-    -- Evita duplicados por eventos equivalentes.
-    if questID and
-       questID == lastQuestID and
-       lastQuestAt and
-       time() - lastQuestAt <= 3 then
-        return
-    end
-
-    if title and
-       title == lastCompletedQuestTitle and
-       lastCompletedQuestAt and
-       time() - lastCompletedQuestAt <= 3 then
-        return
-    end
-
-    lastQuestID = questID
-    lastQuestAt = time()
-
-    lastCompletedQuestTitle = title
-    lastCompletedQuestAt = time()
-
-    addon.AddEntry(
-        "QUEST",
-        title or (
-            questID and ("misión " .. tostring(questID))
-        ) or "una misión completada"
-    )
-
-    if questID then
-        pendingQuestTitles[questID] = nil
-    end
-end
-
-local function HandleQuestAccepted(...)
-    local args = { ... }
-
-    local questID
-    local title
-
-    for i = 1, #args do
-        if type(args[i]) == "number" and not questID then
-            questID = args[i]
-        end
-
-        if type(args[i]) == "string" and args[i] ~= "" then
-            title = args[i]
-        end
-    end
-
-    if questID then
-        title = GetQuestTitle(questID) or title
-
-        if title then
-            pendingQuestTitles[questID] = title
-        end
-    end
-
-    if not title then
-        title = GetQuestFrameTitle()
-    end
-
-    if questID and
-       questID == lastAcceptedQuestID and
-       lastAcceptedQuestAt and
-       time() - lastAcceptedQuestAt <= 3 then
-        return
-    end
-
-    lastAcceptedQuestID = questID
-    lastAcceptedQuestAt = time()
-
-    CaptureNPC()
-
-    local npcGiver = lastNPCName or "un habitante local"
-
-    addon.AddEntry(
-        "QUEST_ACCEPT",
-        title or "una nueva misión",
-        {
-            npc = npcGiver,
-            questID = questID
-        }
-    )
-
-    lastNPCName = nil
-end
-
--- =========================================================
--- COMBATE Y MUERTES
--- =========================================================
-
-local function HandleCombatEvent(event, unit)
-    if event == "PLAYER_REGEN_DISABLED" then
-        if UnitExists("target") and
-           UnitName("target") and
-           not (UnitIsPlayer and UnitIsPlayer("target")) then
-
-            lastAttackerName = UnitName("target")
+        if encounterName ~= lastBossName or not lastBossAt or time() - lastBossAt > 5 then
+            lastBossName, lastBossAt = encounterName, time()
+            ns.AddEntry("BOSS", encounterName)
         end
     end
 end
 
-local function HandlePlayerDeath()
-    local killer = lastAttackerName or "un enemigo despiadado"
-
-    addon.AddEntry(
-        "DEATH",
-        "He caído en combate",
-        {
-            killer = killer
-        }
-    )
-
-    lastAttackerName = nil
+handlers.PLAYER_DEAD = function()
+    ns.AddEntry("DEATH", "He caído en combate")
 end
 
--- =========================================================
--- JEFES
--- =========================================================
-
-local function HandleBossKill(bossName)
-    bossName = SafeString(bossName, "un jefe poderoso")
-
-    -- BOSS_KILL y ENCOUNTER_END pueden informar del mismo combate.
-    if lastBossName == bossName and
-       time() - lastBossAt <= 5 then
+handlers.CHAT_MSG_LOOT = function(message)
+    if ns.IsSecret(message) then
+        -- The item cannot be read, so there is nothing to log.
+        ns.Debug("CHAT_MSG_LOOT: mensaje secreto, se omite")
         return
     end
-
-    lastBossName = bossName
-    lastBossAt = time()
-
-    addon.AddEntry(
-        "BOSS",
-        bossName
-    )
-end
-
--- =========================================================
--- BOTÍN ÉPICO Y LEGENDARIO
--- =========================================================
-
-local function HandleLoot(message)
-    if type(message) ~= "string" or message == "" then
+    -- Loot switched off: skip the item lookups (and the pending list) as well.
+    if not ns.IsTypeEnabled("LOOT") then
+        ns.Debug("CHAT_MSG_LOOT: botín desactivado en las opciones, se omite")
         return
     end
-
-    local itemLink = string.match(
-        message,
-        "(|c%x+|Hitem:.-|h%[.-%]|h|r)"
-    )
-
-    if not itemLink then
-        itemLink = string.match(
-            message,
-            "(|c%x+|Hitem:.-|h%[.-%]|h)"
-        )
-    end
-
-    if not itemLink then
-        return
-    end
-
-    local color = string.match(
-        itemLink,
-        "|c(%x%x%x%x%x%x%x%x)"
-    )
-
-    if not color then
-        return
-    end
-
-    color = string.lower(color)
-
-    -- Épico: a335ee
-    -- Legendario: ff8000
-    if color ~= "ffa335ee" and color ~= "ffff8000" then
-        return
-    end
-
-    addon.AddEntry(
-        "LOOT",
-        itemLink
-    )
-end
--- =========================================================
--- MONTURAS
--- =========================================================
-
-local function GetMountNameByID(mountID)
-    if not mountID then return nil end
-
-    if C_MountJournal and C_MountJournal.GetMountInfoByID then
-        local ok, name = SafeCall(
-            C_MountJournal.GetMountInfoByID,
-            mountID
-        )
-
-        if ok and type(name) == "string" then
-            return name
+    if type(message) == "string" then
+        if not ns.IsOwnLootMessage(message) then
+            ns.Debug("CHAT_MSG_LOOT: botín de otro jugador, se omite")
+            return
+        end
+        -- Any colour prefix: |cffRRGGBB (Classic Era) or |cnIQ<n>: (possibly Forever).
+        local itemLink = string.match(message, "|c[^|]*|Hitem:.-|h%[.-%]|h|r")
+        if itemLink then
+            local itemID = tonumber(string.match(itemLink, "|Hitem:(%d+)"))
+            if not TryLogLoot(itemLink, itemID) and itemID then
+                pendingLoot[itemID] = itemLink
+                ns.RequestItemData(itemID)
+            end
         end
     end
-
-    return nil
 end
 
-local function RegisterMount(mountID, mountName)
-    if not mountID and not mountName then
+-- Also handles ITEM_DATA_LOAD_RESULT (same arguments: itemID, success).
+handlers.GET_ITEM_INFO_RECEIVED = function(itemID, success)
+    if ns.IsSecret(itemID) or ns.IsSecret(success) then return end
+    local link = itemID and pendingLoot[itemID]
+    if link then
+        pendingLoot[itemID] = nil
+        if success then TryLogLoot(link, itemID) end
+    end
+end
+handlers.ITEM_DATA_LOAD_RESULT = handlers.GET_ITEM_INFO_RECEIVED
+
+-- A DISCOVERY is logged only the first time a place is seen (DB.visited).
+local function OnZoneChanged()
+    -- An unreadable zone is not a discovery: skip it instead of logging "unknown lands".
+    local zone = ns.GetZoneText()
+    if ns.IsSecret(zone) or ns.IsSecret(ns.GetSubZoneText()) then
+        ns.Debug("ZONE_CHANGED: nombre de zona secreto, se omite")
         return
     end
-
-    addon.EnsureDatabase()
-
-    local key = tostring(mountID or mountName)
-
-    if DB.knownMounts[key] then
-        return
+    -- GetRealZoneText() can be nil right after a fresh login (observed).
+    if not zone or zone == "" then return end
+    local newPlace = ns.GetPlace()
+    if newPlace ~= currentPlace then
+        currentPlace = newPlace
+        local visited = ns.DB and ns.DB.visited
+        if visited and not visited[newPlace] then
+            visited[newPlace] = true
+            ns.AddEntry("DISCOVERY", newPlace)
+        end
     end
+end
+handlers.ZONE_CHANGED_NEW_AREA = OnZoneChanged
+handlers.ZONE_CHANGED = OnZoneChanged
+handlers.ZONE_CHANGED_INDOORS = OnZoneChanged
+handlers.MINIMAP_ZONE_CHANGED = OnZoneChanged
 
-    DB.knownMounts[key] = true
-
-    addon.AddEntry(
-        "MOUNT",
-        mountName or "una nueva montura",
-        {
-            mountID = mountID
-        }
-    )
+handlers.GOSSIP_SHOW = function()
+    local rawName = ns.UnitNameSafe("npc")
+    if ns.IsSecret(rawName) then ns.Debug("GOSSIP_SHOW: nombre del PNJ secreto, se usa el texto neutro") end
+    local npcName = SafeString(rawName, ns.NEUTRAL_TEXT.NPC)
+    if npcName ~= lastNPCName or not lastNPCTime or time() - lastNPCTime > 20 then
+        lastNPCName, lastNPCTime = npcName, time()
+        ns.AddEntry("NPC", npcName)
+    end
 end
 
-local function ScanMounts(firstScan)
-    addon.EnsureDatabase()
+-- Stores the sender name only, never the message text (privacy; see README).
+handlers.CHAT_MSG_WHISPER = function(_, sender)
+    if ns.IsSecret(sender) then
+        ns.Debug("CHAT_MSG_WHISPER: remitente secreto, se usa el texto neutro")
+        ns.AddEntry("CHAT", ns.NEUTRAL_TEXT.SENDER)
+    elseif type(sender) == "string" and sender ~= "" then
+        sender = string.match(sender, "^([^%-]+)") or sender
+        ns.AddEntry("CHAT", sender)
+    end
+end
 
-    local discovered = {}
+-- M6: the level reached. The new level is the first argument.
+handlers.PLAYER_LEVEL_UP = function(level)
+    if not ns.IsTypeEnabled("LEVEL") then return end
+    if ns.IsSecret(level) then ns.Debug("PLAYER_LEVEL_UP: nivel secreto, se usa el texto neutro") end
+    LogCandidate(ns.LevelCandidate(level))
+end
 
-    -- API moderna de Mount Journal.
-    if C_MountJournal and C_MountJournal.GetMountIDs then
-        local ok, mountIDs = SafeCall(C_MountJournal.GetMountIDs)
+-- M6: the system chat. Group joins and leaves arrive here by name. Skipped when unreadable (a secret
+-- message in an instance), so nothing is guessed.
+handlers.CHAT_MSG_SYSTEM = function(message)
+    if not (ns.IsTypeEnabled("GROUP") or ns.IsTypeEnabled("SPELL")) then return end
+    if ns.IsSecret(message) then
+        ns.Debug("CHAT_MSG_SYSTEM: mensaje secreto, se omite")
+        return
+    end
+    local candidate = ns.SystemMessageCandidate(message)
+    if candidate and ns.IsTypeEnabled(candidate.type) then LogCandidate(candidate) end
+end
 
-        if ok and type(mountIDs) == "table" then
-            for _, mountID in ipairs(mountIDs) do
-                local name = GetMountNameByID(mountID)
+-- M6: reputation. The first gain with each faction in each jornada, and every change of standing.
+-- `firstGainSeen` remembers the factions already logged in the current jornada; it is rebuilt from
+-- the diary when the jornada changes, so a /reload does not log them a second time.
+local firstGainSeen = { day = nil, keys = {} }
 
-                local collected = false
-
-                if C_MountJournal.GetMountInfoByID then
-                    local success, _, _, _, _, _, _, _, _, isCollected =
-                        SafeCall(
-                            C_MountJournal.GetMountInfoByID,
-                            mountID
-                        )
-
-                    if success then
-                        collected = isCollected and true or false
-                    end
-                end
-
-                if collected then
-                    discovered[#discovered + 1] = {
-                        id = mountID,
-                        name = name
-                    }
+local function FirstGainKeys()
+    local DB = ns.DB
+    local day = DB and DB.days[DB.currentDay]
+    if firstGainSeen.day ~= day then
+        firstGainSeen.day, firstGainSeen.keys = day, {}
+        if day and type(day.events) == "table" then
+            for _, entry in ipairs(day.events) do
+                if type(entry) == "table" and type(entry.text) == "string" then
+                    local key = ns.OnceKey(entry.type, entry.text, entry)
+                    if key then firstGainSeen.keys[key] = true end
                 end
             end
         end
     end
-
-    -- API clásica de compañeros.
-    if GetNumCompanions and GetCompanionInfo then
-        local ok, count = SafeCall(GetNumCompanions, "MOUNT")
-
-        if ok and tonumber(count) then
-            for index = 1, count do
-                local success, creatureID, creatureName =
-                    SafeCall(GetCompanionInfo, "MOUNT", index)
-
-                if success and creatureID then
-                    discovered[#discovered + 1] = {
-                        id = creatureID,
-                        name = creatureName
-                    }
-                end
-            end
-        end
-    end
-
-    for _, mount in ipairs(discovered) do
-        local key = tostring(mount.id or mount.name)
-
-        if firstScan then
-            DB.knownMounts[key] = true
-        elseif not DB.knownMounts[key] then
-            RegisterMount(mount.id, mount.name)
-        end
-    end
+    return firstGainSeen.keys
 end
 
-local function HandleNewMount(mountID)
-    local mountName = GetMountNameByID(mountID)
-
-    RegisterMount(
-        mountID,
-        mountName or "una nueva montura"
-    )
-end
-
--- =========================================================
--- LOGROS
--- =========================================================
-
-local function GetAchievementName(achievementID)
-    if not achievementID then return nil end
-
-    if C_AchievementInfo and C_AchievementInfo.GetAchievementInfo then
-        local ok, info = SafeCall(
-            C_AchievementInfo.GetAchievementInfo,
-            achievementID
-        )
-
-        if ok then
-            if type(info) == "table" then
-                return info.name
-            elseif type(info) == "string" then
-                return info
-            end
-        end
-    end
-
-    if GetAchievementInfo then
-        local ok, name = SafeCall(
-            GetAchievementInfo,
-            achievementID
-        )
-
-        if ok then
-            return name
-        end
-    end
-
-    return nil
-end
-
-local function HandleAchievement(achievementID)
-    if not achievementID then
+handlers.CHAT_MSG_COMBAT_FACTION_CHANGE = function(message)
+    if not ns.IsTypeEnabled("REPUTATION") then return end
+    if ns.IsSecret(message) then
+        ns.Debug("CHAT_MSG_COMBAT_FACTION_CHANGE: mensaje secreto, se omite")
         return
     end
-
-    addon.EnsureDatabase()
-
-    local key = tostring(achievementID)
-
-    if DB.knownAchievements[key] then
-        return
+    local candidate = ns.ReputationCandidate(message)
+    if not candidate then return end
+    if candidate.once then
+        local keys = FirstGainKeys()
+        if keys[candidate.once] then return end
+        keys[candidate.once] = true
     end
-
-    local achievementName = GetAchievementName(achievementID)
-
-    DB.knownAchievements[key] = true
-
-    addon.AddEntry(
-        "ACHIEVEMENT",
-        achievementName or (
-            "logro " .. tostring(achievementID)
-        ),
-        {
-            achievementID = achievementID
-        }
-    )
+    LogCandidate(candidate)
 end
 
--- =========================================================
--- HERMANDADES
--- =========================================================
-
-local function HandleGuildUpdate()
-    local newGuildName = GetCurrentGuild()
-
-    if newGuildName == knownGuildName then
+-- M6: skills. A new skill, and a skill reaching a multiple of ns.SKILL_STEP.
+handlers.CHAT_MSG_SKILL = function(message)
+    if not ns.IsTypeEnabled("SKILL") then return end
+    if ns.IsSecret(message) then
+        ns.Debug("CHAT_MSG_SKILL: mensaje secreto, se omite")
         return
     end
-
-    if newGuildName and newGuildName ~= "" then
-        addon.AddEntry(
-            "GUILD",
-            newGuildName
-        )
-    elseif knownGuildName then
-        addon.AddEntry(
-            "GUILD",
-            "He abandonado la hermandad " .. knownGuildName
-        )
-    end
-
-    knownGuildName = newGuildName
+    local candidate = ns.SkillCandidate(message)
+    if candidate then LogCandidate(candidate) end
 end
 
--- =========================================================
--- AMIGOS
--- =========================================================
-
-local function HandleFriendsUpdate()
-    local newCount = GetCurrentFriendsCount()
-
-    knownFriendsCount = newCount
-end
-
--- =========================================================
--- TRANSPORTES Y HECHIZOS
--- =========================================================
-
-local function HandleSpellcast(unit, castGUID, spellID)
-    if unit ~= "player" then
+-- M6: GROUP_JOINED(partyCategory, partyGUID). Only a dungeon group is logged, without names.
+handlers.GROUP_JOINED = function(category)
+    if not ns.IsTypeEnabled("GROUP") then return end
+    if ns.IsSecret(category) then
+        ns.Debug("GROUP_JOINED: categoría secreta, se omite")
         return
     end
-
-    local spellName = GetSpellName(spellID)
-
-    if not spellName then
-        return
-    end
-
-    local lowerName = string.lower(spellName)
-
-    if ContainsText(lowerName, "piedra de hogar") or
-       ContainsText(lowerName, "hearthstone") then
-
-        SetTransportMethod("HEARTHSTONE")
-
-    elseif ContainsText(lowerName, "teletransporte") or
-           ContainsText(lowerName, "teleport") or
-           ContainsText(lowerName, "portal") then
-
-        SetTransportMethod("TELEPORT")
-    end
+    local candidate = ns.GroupJoinedCandidate(category)
+    if candidate then LogCandidate(candidate) end
 end
-
--- =========================================================
--- EVENTOS
--- =========================================================
 
 local EVENTS = {
-    "ADDON_LOADED",
-    "PLAYER_LOGIN",
-    "PLAYER_LOGOUT",
-    "PLAYER_ENTERING_WORLD",
-
-    "UNIT_SPELLCAST_SUCCEEDED",
-    "UNIT_SPELLCAST_START",
-
-    "QUEST_TURNED_IN",
-    "QUEST_ACCEPTED",
-    "QUEST_FINISHED",
-
-    "BOSS_KILL",
-    "ENCOUNTER_END",
-
-    "PLAYER_DEAD",
-    "CHAT_MSG_LOOT",
-
-    "ZONE_CHANGED_NEW_AREA",
-    "ZONE_CHANGED",
-    "ZONE_CHANGED_INDOORS",
-    "MINIMAP_ZONE_CHANGED",
-
-    "GOSSIP_SHOW",
-    "QUEST_DETAIL",
-    "QUEST_PROGRESS",
-
-    "PLAYER_LEVEL_UP",
-
-    "NEW_MOUNT_ADDED",
-    "COMPANION_UPDATE",
-
-    "TAXI_PATH_UPDATE",
-    "TAXIMAP_OPENED",
-    "TAXIMAP_CLOSED",
-
-    "FRIENDLIST_UPDATE",
-    "GUILD_ROSTER_UPDATE",
-
-    "ACHIEVEMENT_EARNED",
-
-
-"PLAYER_REGEN_DISABLED",
-
+    "ADDON_LOADED", "PLAYER_ENTERING_WORLD", "PLAYER_LOGOUT",
+    "QUEST_TURNED_IN", "BOSS_KILL", "ENCOUNTER_END", "PLAYER_DEAD",
+    "CHAT_MSG_LOOT", "GET_ITEM_INFO_RECEIVED", "ITEM_DATA_LOAD_RESULT",
+    "ZONE_CHANGED_NEW_AREA", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "MINIMAP_ZONE_CHANGED",
+    "GOSSIP_SHOW", "CHAT_MSG_WHISPER",
+    "PLAYER_LEVEL_UP", "CHAT_MSG_SYSTEM", "GROUP_JOINED",
+    "CHAT_MSG_COMBAT_FACTION_CHANGE", "CHAT_MSG_SKILL",
 }
+ns.EVENTS = EVENTS
+for _, eventName in ipairs(EVENTS) do ns.RegisterEventSafe(eventFrame, eventName) end
 
-for _, eventName in ipairs(EVENTS) do
-    pcall(
-        eventFrame.RegisterEvent,
-        eventFrame,
-        eventName
-    )
+-- Error isolation: a failing handler never stops the others. Each event name is
+-- reported once to the game's error handler (so scriptErrors / BugSack show it);
+-- later failures are only counted. /diario diag lists them.
+ns.handlerErrors = {}   -- [event] = { count = n, message = first error }
+
+local function ReportHandlerError(event, err)
+    local record = ns.handlerErrors[event]
+    if record then
+        record.count = record.count + 1
+        return
+    end
+    ns.handlerErrors[event] = { count = 1, message = tostring(err) }
+    local text = string.format("AdventureJournal: error en el manejador de %s: %s", event, tostring(err))
+    ns.Debug("%s", text)
+    local errorHandler = geterrorhandler and geterrorhandler()
+    if errorHandler then errorHandler(text) end
 end
 
--- =========================================================
--- CONTROLADOR DE EVENTOS
--- =========================================================
-
-eventFrame:SetScript("OnEvent", function(self, event, ...)
-    local arg1, arg2, arg3 = ...
-
-    if event == "ADDON_LOADED" then
-        if arg1 == addonName then
-            addon.EnsureDatabase()
-        end
-
-    elseif event == "PLAYER_LOGIN" then
-        InitSessionState()
-
-        -- Primera exploración de monturas.
-        ScanMounts(true)
-
-    elseif event == "PLAYER_ENTERING_WORLD" then
-        HandleZoneChange()
-
-    elseif event == "PLAYER_DEAD" then
-        HandlePlayerDeath()
-
-elseif event == "PLAYER_REGEN_DISABLED" then
-    HandleCombatEvent(event, arg1)
-
-    elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
-        HandleSpellcast(arg1, arg2, arg3)
-
-    elseif event == "QUEST_ACCEPTED" then
-        HandleQuestAccepted(...)
-
-    elseif event == "QUEST_TURNED_IN" then
-        HandleQuestTurnedIn(arg1, arg2)
-
-    elseif event == "QUEST_DETAIL" then
-        CaptureNPC()
-
-    elseif event == "BOSS_KILL" then
-        HandleBossKill(arg1)
-
-    elseif event == "ENCOUNTER_END" then
-        if arg5 == 1 then
-            HandleBossKill(arg2)
-        end
-
-    elseif event == "CHAT_MSG_LOOT" then
-        HandleLoot(arg1)
-
-    elseif event == "ZONE_CHANGED_NEW_AREA"
-        or event == "ZONE_CHANGED"
-        or event == "ZONE_CHANGED_INDOORS"
-        or event == "MINIMAP_ZONE_CHANGED" then
-
-        HandleZoneChange()
-
-    elseif event == "NEW_MOUNT_ADDED" then
-        HandleNewMount(arg1)
-
-    elseif event == "COMPANION_UPDATE" then
-        ScanMounts(false)
-
-    elseif event == "ACHIEVEMENT_EARNED" then
-        HandleAchievement(arg1)
-
-    elseif event == "GUILD_ROSTER_UPDATE" then
-        HandleGuildUpdate()
-
-    elseif event == "FRIENDLIST_UPDATE" then
-        HandleFriendsUpdate()
-
-    elseif event == "TAXI_PATH_UPDATE" then
-        if IsPlayerOnTaxi() then
-            SetTransportMethod("TAXI")
-        end
+local function LogPayload(event, ...)
+    local parts = {}
+    for index = 1, select("#", ...) do
+        parts[index] = ns.Describe((select(index, ...)))
     end
-end)
+    ns.Debug("%s(%s)", event, table.concat(parts, ", "))
+end
+
+-- One dispatcher per frame: it runs the handler for the event under pcall, applies the
+-- simulated secrets of `/diario debug secrets` and prints the payload in debug mode.
+-- Conversations.lua builds a second frame with it, so its handlers get the same treatment.
+function ns.MakeDispatcher(handlerTable)
+    return function(_, event, ...)
+        local handler = handlerTable[event]
+        if not handler then return end
+        local ok, err
+        if ns.debug.on or ns.debug.secrets then
+            local args = { n = select("#", ...), ... }
+            if ns.debug.secrets and event ~= "ADDON_LOADED" then
+                for index = 1, args.n do args[index] = ns.Taint(args[index]) end
+            end
+            if ns.debug.on then LogPayload(event, unpack(args, 1, args.n)) end
+            ok, err = pcall(handler, unpack(args, 1, args.n))
+        else
+            ok, err = pcall(handler, ...)
+        end
+        if not ok then ReportHandlerError(event, err) end
+    end
+end
+
+eventFrame:SetScript("OnEvent", ns.MakeDispatcher(handlers))
