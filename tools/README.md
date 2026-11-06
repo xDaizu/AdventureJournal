@@ -81,4 +81,10 @@ The stubs record calls; they do not render. Passing here says the addon **calls*
 - **`UnitSex` on Forever.** The stub returns what the scenario sets. The API is old and documented (1 unknown, 2 male, 3 female); confirm with `/dump UnitSex("player")`.
 - **Gender of other people.** Only the player's own sex is handled. Sentences about other characters (NPC, group members, bosses) avoid gendered words on purpose.
 
+## What the T3 stubs cannot verify
+
+- **The layout.** Widgets are stubs: nothing is drawn, sizes and anchors are not checked, so overlap (the title-bar controls, the conversations controls on the page title row, the subtitle under an index button) and clipping are only visible in game. Compare with Chema's screenshots.
+- **Row spacing.** The stub's `CreateScrollBoxListLinearView` records the `spacing` argument; whether both clients honour it (24 px button + 24 px = 48 px) is not tested. If rows overlap, the fix is a 48 px element with the button created inside.
+- **Textures.** `Textures/tiled.tga` is never loaded; a path typo would show as a missing (green) texture.
+
 Limits: fengari is Lua 5.3, so some runtime differences from WoW's Lua 5.1 slip through (number formatting such as `3.0`, integer division). The stubs only cover the APIs the addon uses; a missing stub shows up as "attempt to call a nil value". Passing here does not replace an in-game test.

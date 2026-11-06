@@ -1,4 +1,14 @@
--- UI.lua: the book window (index on the left page, the jornada's prose on the right).
+-- UI.lua: the book window.
+--
+-- T3: the look is Chema's (his AdventureJournal.lua at fa20e9f), for everyone: a dark frame with a
+-- gold title, an index of jornadas on the left, and a page with Textures\tiled.tga on the right
+-- (day title, date line, entries in QuestFont with red place headers). Sizes, positions, colours and
+-- fonts below are his. This line's engine stays underneath: the ScrollBox index with its button
+-- fallback, the conversations view, the demo diary, Escape to close.
+-- Controls his design does not have (decision D4, flagged for his review):
+--   previous / next jornada and the page number   in the title bar, left of the close button
+--   conversations toggle and its paging           on the day title row of the page (only while on)
+--   time (and the mood, with showProfile)          a muted prefix on each entry
 local addonName, ns = ...
 
 local journalFrame
@@ -22,12 +32,28 @@ local function ViewDB()
     return ns.demoDB or ns.EnsureDatabase()
 end
 
+-- Chema's colours.
+local FONT_COLOR = {
+    title = { 0.95, 0.82, 0.52 },
+    heading = { 0.25, 0.14, 0.02 },
+    metadata = { 0.40, 0.30, 0.20 },
+    body = { 0.18, 0.12, 0.06 },
+    secondary = { 0.75, 0.75, 0.75 },
+}
+local HEADER_COLOR = "|cFFFF3333"      -- red place headers
+local TIME_COLOR = "|cFF8A5A24"        -- muted prefix (time, mood)
+
+local function SetColor(fontString, color)
+    if fontString and color then fontString:SetTextColor(color[1], color[2], color[3], color[4] or 1) end
+end
+
 local function CreateText(parent, template, value, width)
     local fs = parent:CreateFontString(nil, "OVERLAY", template or "GameFontNormal")
     fs:SetText(value or "")
-    if width then fs:SetWidth(width) end
     fs:SetJustifyH("LEFT")
     fs:SetJustifyV("TOP")
+    if width then fs:SetWidth(width) end
+    if fs.SetWordWrap then fs:SetWordWrap(true) end
     return fs
 end
 
@@ -39,62 +65,75 @@ local function CreateBookButton(parent, label, width, height, callback)
     return button
 end
 
-local function SetPageBackdrop(frame, backgroundColor)
-    -- Conserva el borde de la página
-    frame:SetBackdrop({
-        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-        edgeSize = 12,
-        insets = { left = 0, right = 0, top = 0, bottom = 0 },
-    })
-
-    -- Crea el fondo una sola vez
-    if not frame.pageBackground then
-        frame.pageBackground = frame:CreateTexture(nil, "BACKGROUND")
-        frame.pageBackground:SetTexture("Interface\\QuestFrame\\QuestBG")
-
-        -- Recorta la parte transparente de la derecha de QuestBG.
-        -- El pergamino visible pasa a ocupar todo el ancho de la página.
-        frame.pageBackground:SetTexCoord(0, 0.60, 0, 0.6)
-
-        -- Hace que la textura se adapte a todo el marco
-        frame.pageBackground:SetAllPoints(frame)
-    end
-
-    frame.pageBackground:SetVertexColor(
-        backgroundColor[1],
-        backgroundColor[2],
-        backgroundColor[3],
-        1
-    )
+-- A backdrop can fail on a client without BackdropTemplate; the book is still usable without it.
+local function SafeBackdrop(frame, settings, r, g, b, a)
+    if not frame or not frame.SetBackdrop then return end
+    pcall(function()
+        frame:SetBackdrop(settings)
+        if r then frame:SetBackdropColor(r, g, b, a or 1) end
+    end)
 end
 
--- Jornada index (left page) ----------------------------------------------------------
+local function CreatePanel(parent, width, height)
+    local frame = CreateFrame("Frame", nil, parent, "BackdropTemplate")
+    frame:SetSize(width, height)
+    SafeBackdrop(frame, {
+        bgFile = "Interface\\Buttons\\WHITE8X8",
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        edgeSize = 12,
+        insets = { left = 2, right = 2, top = 2, bottom = 2 },
+    }, 0.08, 0.05, 0.04, 0.95)
+    return frame
+end
+
+-- Jornada index (left panel) -----------------------------------------------------------
 -- Preferred: a ScrollBox, which only creates frames for the rows on screen, so 250+
 -- jornadas cost the same as 10. Fallback: the original ScrollFrame with one Button per
 -- jornada. The ScrollBox is used only if the functions AND the templates exist and the
 -- whole build succeeds (M5: "the function exists" does not mean "the template exists").
-local ROW_HEIGHT = 27
+-- A row is Chema's: a 195 x 24 button "Jornada N" and, under it, "lugar · fecha"; 48 px per row.
+local BUTTON_WIDTH, BUTTON_HEIGHT, ROW_STEP = 195, 24, 48
 
-local function DayLabel(dayNumber)
+-- Chema's index line: the main place of the jornada (his diaries store it), else the place of the
+-- first entry, else "Aventura"; then the date.
+local function DaySubtitle(dayNumber)
     local day = ViewDB().days[dayNumber]
-    local count
-    if CurrentView() == "conversations" then
-        count = ns.CountConversations(day)
-    else
-        count = day and type(day.events) == "table" and #day.events or 0
+    day = type(day) == "table" and day or {}
+    local events = type(day.events) == "table" and day.events or {}
+    local place = day.mainZone
+    if type(place) ~= "string" or place == "" then
+        place = type(events[1]) == "table" and events[1].place or nil
     end
-    return string.format("Jornada %d  ·  %d", dayNumber, count)
+    if type(place) ~= "string" or place == "" then place = "Aventura" end
+    return string.format("%s  ·  %s", place, tostring(day.dateLabel or "Fecha desconocida"))
+end
+
+-- Fills one index row (a ScrollBox element or a fallback button). The subtitle FontString is
+-- added the first time the row is used and hangs under the button, in the space the view leaves.
+local function FillIndexRow(button, dayNumber)
+    button:SetText(string.format("Jornada %d", dayNumber))
+    if not button.subtitle then
+        local subtitle = button:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        subtitle:SetPoint("TOPLEFT", button, "BOTTOMLEFT", 4, -3)
+        subtitle:SetWidth(BUTTON_WIDTH - 5)
+        subtitle:SetJustifyH("LEFT")
+        subtitle:SetJustifyV("TOP")
+        SetColor(subtitle, FONT_COLOR.secondary)
+        button.subtitle = subtitle
+    end
+    button.subtitle:SetText(DaySubtitle(dayNumber))
+    button:SetScript("OnClick", function() ns.SelectDay(dayNumber) end)
 end
 
 -- Raises if anything is missing; the half-built frames are hidden first.
-local function BuildScrollBoxIndex(f, leftPage)
+local function BuildScrollBoxIndex(f, leftPanel)
     if not (CreateScrollBoxListLinearView and CreateDataProvider and ScrollUtil
             and ScrollUtil.InitScrollBoxListWithScrollBar) then
         error("faltan las funciones de ScrollBox", 0)
     end
-    local holder = CreateFrame("Frame", nil, leftPage)
-    holder:SetPoint("TOPLEFT", 10, -45)
-    holder:SetPoint("BOTTOMRIGHT", -10, 12)
+    local holder = CreateFrame("Frame", nil, leftPanel)
+    holder:SetPoint("TOPLEFT", 8, -8)
+    holder:SetPoint("BOTTOMRIGHT", -8, 8)
     local box
     local ok, err = pcall(function()
         box = CreateFrame("Frame", nil, holder, "WowScrollBoxList")
@@ -103,12 +142,12 @@ local function BuildScrollBoxIndex(f, leftPage)
         local bar = CreateFrame("EventFrame", nil, holder, "MinimalScrollBar")
         bar:SetPoint("TOPLEFT", box, "TOPRIGHT", 4, 0)
         bar:SetPoint("BOTTOMLEFT", box, "BOTTOMRIGHT", 4, 0)
-        local view = CreateScrollBoxListLinearView()
-        view:SetElementExtent(ROW_HEIGHT)
-        view:SetElementInitializer("UIPanelButtonTemplate", function(button, dayNumber)
-            button:SetText(DayLabel(dayNumber))
-            button:SetScript("OnClick", function() ns.SelectDay(dayNumber) end)
-        end)
+        -- Rows are 24 px buttons with 24 px of spacing: 48 px per row, the subtitle in the gap.
+        -- (UNVERIFIED on the clients: the spacing argument; see README, "Book".)
+        local view = CreateScrollBoxListLinearView(0, 0, 0, 0, ROW_STEP - BUTTON_HEIGHT)
+        if view.SetPadding then view:SetPadding(0, 0, 0, 0, ROW_STEP - BUTTON_HEIGHT) end
+        view:SetElementExtent(BUTTON_HEIGHT)
+        view:SetElementInitializer("UIPanelButtonTemplate", FillIndexRow)
         ScrollUtil.InitScrollBoxListWithScrollBar(box, bar, view)
     end)
     if not ok then
@@ -119,26 +158,26 @@ local function BuildScrollBoxIndex(f, leftPage)
 end
 
 -- The original index: a ScrollFrame whose child holds one Button per jornada.
-local function BuildButtonIndex(f, leftPage)
-    local indexScroll = CreateFrame("ScrollFrame", nil, leftPage, "UIPanelScrollFrameTemplate")
-    indexScroll:SetPoint("TOPLEFT", 10, -45)
-    indexScroll:SetPoint("BOTTOMRIGHT", -27, 12)
+local function BuildButtonIndex(f, leftPanel)
+    local indexScroll = CreateFrame("ScrollFrame", nil, leftPanel, "UIPanelScrollFrameTemplate")
+    indexScroll:SetPoint("TOPLEFT", 8, -8)
+    indexScroll:SetPoint("BOTTOMRIGHT", -26, 8)
     local indexChild = CreateFrame("Frame", nil, indexScroll)
-    indexChild:SetSize(165, 1)
+    indexChild:SetSize(BUTTON_WIDTH, 1)
     indexScroll:SetScrollChild(indexChild)
     f.indexChild, f.indexScroll, f.indexMode = indexChild, indexScroll, "buttons"
 end
 
-local function BuildIndex(f, leftPage)
+local function BuildIndex(f, leftPanel)
     if ns.debug.buttons then
         f.indexFallbackReason = "forzado con /diario debug buttons"
     else
-        local ok, err = pcall(BuildScrollBoxIndex, f, leftPage)
+        local ok, err = pcall(BuildScrollBoxIndex, f, leftPanel)
         if ok then return end
         f.indexFallbackReason = string.sub(ns.StripPosition(err), 1, 120)
         ns.Debug("índice: sin ScrollBox (%s), se usan botones", f.indexFallbackReason)
     end
-    BuildButtonIndex(f, leftPage)
+    BuildButtonIndex(f, leftPanel)
 end
 
 local function RefreshScrollBoxIndex(f, total)
@@ -150,25 +189,27 @@ end
 
 local function RefreshButtonIndex(f, total)
     local buttons = f.dayButtons or {}
-    for _, button in pairs(buttons) do button:Hide() end
-    local y = -2
+    for _, button in pairs(buttons) do
+        button:Hide()
+        if button.subtitle then button.subtitle:Hide() end
+    end
+    local y = 0
     for dayNumber = total, 1, -1 do
         local button = buttons[dayNumber]
         if not button then
             button = CreateFrame("Button", nil, f.indexChild, "UIPanelButtonTemplate")
-            button:SetSize(160, 24)
+            button:SetSize(BUTTON_WIDTH, BUTTON_HEIGHT)
             buttons[dayNumber] = button
         end
         button:ClearAllPoints()
         button:SetPoint("TOPLEFT", 0, y)
-        button:SetText(DayLabel(dayNumber))
-        local chosenDay = dayNumber
-        button:SetScript("OnClick", function() ns.SelectDay(chosenDay) end)
+        FillIndexRow(button, dayNumber)
         button:Show()
-        y = y - 27
+        button.subtitle:Show()
+        y = y - ROW_STEP
     end
     f.dayButtons = buttons
-    f.indexChild:SetHeight(math.max(1, -y + 4))
+    f.indexChild:SetHeight(math.max(1, -y + 5))
 end
 
 -- A broken index must not take the right page with it: report the first error to
@@ -199,99 +240,129 @@ end
 local function BuildUI()
     if journalFrame then return end
 
+    -- Main frame: dark background, dialog border.
     local f = CreateFrame("Frame", "AdventureJournalBookFrame", UIParent, "BackdropTemplate")
     journalFrame = f
-    f:SetSize(780, 545)
+    f:SetSize(820, 560)
     f:SetPoint("CENTER")
     f:SetFrameStrata("DIALOG")
+    if f.SetFrameLevel then f:SetFrameLevel(20) end
     f:SetMovable(true)
     f:EnableMouse(true)
     f:RegisterForDrag("LeftButton")
-    f:SetScript("OnDragStart", f.StartMoving)
-    f:SetScript("OnDragStop", f.StopMovingOrSizing)
+    f:SetScript("OnDragStart", function(self)
+        if not (InCombatLockdown and InCombatLockdown()) then self:StartMoving() end
+    end)
+    f:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
     if f.SetClampedToScreen then f:SetClampedToScreen(true) end
-    f:SetBackdrop({
-        bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+    local background = f:CreateTexture(nil, "BACKGROUND")
+    background:SetTexture("Interface\\Buttons\\WHITE8X8")
+    background:SetAllPoints(f)
+    background:SetVertexColor(0.12, 0.08, 0.06, 0.98)
+    f.mainBackground = background
+    SafeBackdrop(f, {
         edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
-        tile = true, tileSize = 32, edgeSize = 32,
-        insets = { left = 11, right = 12, top = 12, bottom = 11 },
+        edgeSize = 24,
+        insets = { left = 5, right = 5, top = 5, bottom = 5 },
     })
-    f:SetBackdropColor(0.78, 0.68, 0.48, 1)
 
-    local title = CreateText(f, "GameFontNormalLarge", "Diario de aventuras", 600)
-    title:SetPoint("TOP", 0, -20)
-    title:SetTextColor(0.95, 0.82, 0.52)
-    local character = CreateText(f, "GameFontHighlightSmall", ns.UnitNameSafe("player") or "Aventurero", 300)
-    character:SetPoint("TOP", title, "BOTTOM", 0, -4)
+    -- Title and close button.
+    local title = CreateText(f, "GameFontNormalLarge",
+        "Diario de Aventura - " .. ns.SafeString(ns.UnitNameSafe("player"), "Aventurero"), 400)
+    title:SetPoint("TOPLEFT", f, "TOPLEFT", 20, -15)
+    SetColor(title, FONT_COLOR.title)
+    f.title = title
 
-    local close = CreateFrame("Button", nil, f, "UIPanelCloseButton")
-    close:SetPoint("TOPRIGHT", -7, -7)
+    local close = CreateFrame("Button", nil, f)
+    close:SetSize(32, 32)
+    close:SetPoint("TOPRIGHT", f, "TOPRIGHT", -8, -8)
+    close:SetNormalTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up")
+    close:SetPushedTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Down")
+    close:SetHighlightTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Highlight", "ADD")
+    close:SetScript("OnClick", function() f:Hide() end)
 
-    -- Libro abierto: índice en la hoja izquierda y relato en la hoja derecha.
-    local leftPage = CreateFrame("Frame", nil, f, "BackdropTemplate")
-    leftPage:SetPoint("TOPLEFT", 22, -72)
-    leftPage:SetSize(205, 420)
-    SetPageBackdrop(leftPage, { 0.94, 0.87, 0.68 })
+    -- Previous / next jornada and the page number (not in Chema's design; D4): the title bar.
+    local nextButton = CreateBookButton(f, "Siguiente >", 84, 24, function() ns.SelectDay(ns.selectedDay + 1) end)
+    nextButton:SetPoint("TOPRIGHT", f, "TOPRIGHT", -46, -11)
+    f.nextButton = nextButton
+    local pageNumber = CreateText(f, "GameFontHighlightSmall", "", 56)
+    pageNumber:SetPoint("RIGHT", nextButton, "LEFT", -6, 0)
+    pageNumber:SetJustifyH("CENTER")
+    SetColor(pageNumber, FONT_COLOR.title)
+    f.pageNumber = pageNumber
+    local previous = CreateBookButton(f, "< Anterior", 84, 24, function() ns.SelectDay(ns.selectedDay - 1) end)
+    previous:SetPoint("RIGHT", pageNumber, "LEFT", -6, 0)
+    f.prevButton = previous
 
+    -- Left panel: the index of jornadas.
+    local leftPanel = CreatePanel(f, 240, 495)
+    leftPanel:SetPoint("TOPLEFT", f, "TOPLEFT", 15, -45)
+    f.leftPanel = leftPanel
+    BuildIndex(f, leftPanel)
+
+    -- Right page: tiled.tga with a tooltip border.
     local rightPage = CreateFrame("Frame", nil, f, "BackdropTemplate")
-    rightPage:SetPoint("TOPLEFT", leftPage, "TOPRIGHT", 5, 0)
-    rightPage:SetSize(525, 420)
-    SetPageBackdrop(rightPage, { 0.94, 0.87, 0.68 })
+    rightPage:SetPoint("TOPLEFT", leftPanel, "TOPRIGHT", 10, 0)
+    rightPage:SetSize(538, 495)
+    SafeBackdrop(rightPage, {
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        edgeSize = 12,
+        insets = { left = 0, right = 0, top = 0, bottom = 0 },
+    })
+    local paper = rightPage:CreateTexture(nil, "BACKGROUND")
+    paper:SetTexture("Interface\\AddOns\\AdventureJournal\\Textures\\tiled.tga")
+    paper:SetAllPoints(rightPage)
+    rightPage.pageBackground = paper
+    f.rightPage = rightPage
 
-    local indexTitle = CreateText(leftPage, "GameFontNormalLarge", "Índice", 175)
-    indexTitle:SetPoint("TOPLEFT", 13, -14)
-    indexTitle:SetTextColor(0.25, 0.16, 0.08)
-
-    BuildIndex(f, leftPage)
-
-    local dayTitle = CreateText(rightPage, "GameFontNormalLarge", "Jornada", 470)
-    dayTitle:SetPoint("TOPLEFT", 20, -17)
-    dayTitle:SetTextColor(0.25, 0.16, 0.08)
+    local dayTitle = CreateText(rightPage, "QuestTitleFont", "Jornada", 250)
+    dayTitle:SetPoint("TOPLEFT", rightPage, "TOPLEFT", 20, -15)
+    SetColor(dayTitle, FONT_COLOR.heading)
     f.dayTitle = dayTitle
-    local dayMeta = CreateText(rightPage, "GameFontHighlightSmall", "", 470)
-    dayMeta:SetPoint("TOPLEFT", dayTitle, "BOTTOMLEFT", 0, -6)
-    dayMeta:SetTextColor(0.35, 0.27, 0.17)
+
+    local dayMeta = CreateText(rightPage, "GameFontHighlightSmall", "", 490)
+    dayMeta:SetPoint("TOPLEFT", dayTitle, "BOTTOMLEFT", 0, -4)
+    SetColor(dayMeta, FONT_COLOR.metadata)
     f.dayMeta = dayMeta
 
-    local contentScroll = CreateFrame("ScrollFrame", nil, rightPage, "UIPanelScrollFrameTemplate")
-    contentScroll:SetPoint("TOPLEFT", 19, -65)
-    contentScroll:SetPoint("BOTTOMRIGHT", -30, 15)
-    local contentChild = CreateFrame("Frame", nil, contentScroll)
-    contentChild:SetSize(455, 1)
-    contentScroll:SetScrollChild(contentChild)
-    local body = CreateText(contentChild, "GameFontNormal", "", 445)
-    body:SetPoint("TOPLEFT", 0, 0)
-    body:SetTextColor(0.20, 0.15, 0.10)
-    if body.SetSpacing then body:SetSpacing(5) end
-    f.contentChild, f.contentScroll, f.body = contentChild, contentScroll, body
-
-    local previous = CreateBookButton(f, "< Anterior", 120, 24, function() ns.SelectDay(ns.selectedDay - 1) end)
-    previous:SetPoint("BOTTOMLEFT", 35, 20)
-    f.prevButton = previous
-    local nextButton = CreateBookButton(f, "Siguiente >", 120, 24, function() ns.SelectDay(ns.selectedDay + 1) end)
-    nextButton:SetPoint("BOTTOMRIGHT", -35, 20)
-    f.nextButton = nextButton
-    -- M4b: events <-> conversations, and the pages of a long conversation list. Shown only
-    -- while the conversations option is on (RefreshUI).
-    local viewButton = CreateBookButton(f, "Conversaciones", 110, 24, function()
+    -- M4b: events <-> conversations, and the pages of a long conversation list, on the title row.
+    -- Shown only while the conversations option is on (RefreshUI).
+    local viewButton = CreateBookButton(rightPage, "Conversaciones", 100, 22, function()
         ns.SetBookView(CurrentView() == "conversations" and "events" or "conversations")
     end)
-    viewButton:SetPoint("BOTTOM", 170, 20)
+    viewButton:SetPoint("TOPRIGHT", rightPage, "TOPRIGHT", -14, -14)
     viewButton:Hide()
     f.viewButton = viewButton
-    local conversationPrev = CreateBookButton(f, "< Antes", 64, 24, function() ns.SetConversationPage(ns.conversationPage - 1) end)
-    conversationPrev:SetPoint("BOTTOM", -200, 20)
-    conversationPrev:Hide()
-    f.conversationPrev = conversationPrev
-    local conversationNext = CreateBookButton(f, "Después >", 64, 24, function() ns.SetConversationPage(ns.conversationPage + 1) end)
-    conversationNext:SetPoint("BOTTOM", -130, 20)
+    local conversationNext = CreateBookButton(rightPage, "Después >", 62, 22, function() ns.SetConversationPage(ns.conversationPage + 1) end)
+    conversationNext:SetPoint("RIGHT", viewButton, "LEFT", -4, 0)
     conversationNext:Hide()
     f.conversationNext = conversationNext
-    local pageNumber = CreateText(f, "GameFontHighlightSmall", "", 180)
-    pageNumber:SetPoint("BOTTOM", 0, 25)
-    pageNumber:SetJustifyH("CENTER")
-    pageNumber:SetTextColor(0.95, 0.82, 0.52)
-    f.pageNumber = pageNumber
+    local conversationPageText = CreateText(rightPage, "GameFontHighlightSmall", "", 36)
+    conversationPageText:SetPoint("RIGHT", conversationNext, "LEFT", -2, 0)
+    conversationPageText:SetJustifyH("CENTER")
+    SetColor(conversationPageText, FONT_COLOR.metadata)
+    conversationPageText:Hide()
+    f.conversationPageText = conversationPageText
+    local conversationPrev = CreateBookButton(rightPage, "< Antes", 56, 22, function() ns.SetConversationPage(ns.conversationPage - 1) end)
+    conversationPrev:SetPoint("RIGHT", conversationPageText, "LEFT", -2, 0)
+    conversationPrev:Hide()
+    f.conversationPrev = conversationPrev
+
+    -- The entries.
+    local contentScroll = CreateFrame("ScrollFrame", nil, rightPage, "UIPanelScrollFrameTemplate")
+    contentScroll:SetPoint("TOPLEFT", rightPage, "TOPLEFT", 20, -55)
+    contentScroll:SetPoint("BOTTOMRIGHT", rightPage, "BOTTOMRIGHT", -28, 15)
+    local contentChild = CreateFrame("Frame", nil, contentScroll)
+    contentChild:SetSize(470, 1)
+    contentScroll:SetScrollChild(contentChild)
+    local body = CreateText(contentChild, "QuestFont", "", 450)
+    body:SetPoint("TOPLEFT", contentChild, "TOPLEFT", 10, -10)
+    body:SetPoint("TOPRIGHT", contentChild, "TOPRIGHT", -10, -10)
+    SetColor(body, FONT_COLOR.body)
+    if body.SetShadowColor then body:SetShadowColor(0, 0, 0, 0.3) end
+    if body.SetShadowOffset then body:SetShadowOffset(1, -1) end
+    if body.SetSpacing then body:SetSpacing(4) end
+    f.contentChild, f.contentScroll, f.body = contentChild, contentScroll, body
 
     f:SetScript("OnShow", function() ns.RefreshUI() end)
 
@@ -327,6 +398,30 @@ function ns.SetConversationPage(page)
     if journalFrame then ns.RefreshUI() end
 end
 
+-- One entry as Chema writes it: a red header for entries that have one (places), "En <lugar>" on a
+-- first entry without one, no header otherwise. The time (and the mood with showProfile) is a muted
+-- prefix of the text: his design has none, this line keeps them (decision D4).
+local function EntryParagraph(day, index, entry, showProfile)
+    local prose, header = entry.prose, entry.header
+    if type(prose) ~= "string" or prose == "" then
+        local composed, composedHeader = ns.ComposeEntry(entry)
+        prose, header = composed, header or composedHeader
+    end
+    if type(header) ~= "string" or header == "" then header = nil end
+    if index == 1 and not header then
+        local place = type(entry.place) == "string" and entry.place ~= "" and entry.place
+            or type(day.mainZone) == "string" and day.mainZone ~= "" and day.mainZone or "Azeroth"
+        header = "En " .. place
+    end
+    local meta = type(entry.time) == "string" and entry.time or ""
+    if showProfile and type(entry.characterProfile) == "string" and entry.characterProfile ~= "" then
+        meta = meta == "" and entry.characterProfile or (meta .. "  ·  " .. entry.characterProfile)
+    end
+    if meta ~= "" then prose = TIME_COLOR .. meta .. "|r  " .. prose end
+    if header then return string.format("%s%s|r\n%s", HEADER_COLOR, header, prose) end
+    return prose
+end
+
 function ns.RefreshUI()
     if not journalFrame then return end
     local DB = ViewDB()
@@ -337,7 +432,7 @@ function ns.RefreshUI()
         journalFrame.dayTitle:SetText("Aún no hay jornadas")
         journalFrame.dayMeta:SetText("")
         journalFrame.body:SetText("Tu historia comienza cuando salgas a explorar.")
-        journalFrame.contentChild:SetHeight(80)
+        journalFrame.contentChild:SetHeight(150)
         journalFrame.pageNumber:SetText("Sin páginas")
         journalFrame.prevButton:Disable()
         journalFrame.nextButton:Disable()
@@ -358,24 +453,18 @@ function ns.RefreshUI()
         local page
         paragraphs, pages, page = ns.ConversationParagraphs(day, ns.conversationPage)
         ns.conversationPage = page
-        journalFrame.dayMeta:SetText(string.format("%s     ·     %d conversaciones%s%s", day.dateLabel or "Fecha desconocida",
-            ns.CountConversations(day), pages > 1 and string.format("     ·     página %d de %d", page, pages) or "",
-            ns.demoDB and "     ·     DATOS DE PRUEBA (no se guardan)" or ""))
+        journalFrame.dayMeta:SetText(string.format("%s     ·     %d conversaciones%s", day.dateLabel or "Fecha desconocida",
+            ns.CountConversations(day), ns.demoDB and "     ·     DATOS DE PRUEBA (no se guardan)" or ""))
+        journalFrame.conversationPageText:SetText(string.format("%d / %d", page, pages))
         if #paragraphs == 0 then
             paragraphs[1] = "No hay conversaciones guardadas en esta jornada."
         end
     elseif #events == 0 then
         paragraphs[1] = "No dejé constancia de grandes gestas durante esta jornada. Quizá fue un día de descanso, preparativos o caminos tranquilos. Incluso las pausas forman parte de una aventura."
     else
-        -- The header is the time, plus the mood when the player turned that option on.
-        -- Entries saved before the mood existed simply have no profile: header unchanged.
         local showProfile = ns.GetSetting("showProfile") == true
-        for _, entry in ipairs(events) do
-            local header = entry.time or ""
-            if showProfile and type(entry.characterProfile) == "string" and entry.characterProfile ~= "" then
-                header = header == "" and entry.characterProfile or (header .. "  ·  " .. entry.characterProfile)
-            end
-            table.insert(paragraphs, string.format("|cFF8A5A24%s|r\n%s", header, entry.prose or ns.ComposeEntry(entry)))
+        for index, entry in ipairs(events) do
+            table.insert(paragraphs, EntryParagraph(day, index, entry, showProfile))
         end
     end
     -- The conversations view and its buttons exist only while the option is on.
@@ -388,11 +477,13 @@ function ns.RefreshUI()
     if view == "conversations" and pages > 1 then
         journalFrame.conversationPrev:Show()
         journalFrame.conversationNext:Show()
+        journalFrame.conversationPageText:Show()
         if ns.conversationPage <= 1 then journalFrame.conversationPrev:Disable() else journalFrame.conversationPrev:Enable() end
         if ns.conversationPage >= pages then journalFrame.conversationNext:Disable() else journalFrame.conversationNext:Enable() end
     else
         journalFrame.conversationPrev:Hide()
         journalFrame.conversationNext:Hide()
+        journalFrame.conversationPageText:Hide()
     end
     journalFrame.body:SetText(table.concat(paragraphs, "\n\n"))
     journalFrame.contentChild:SetHeight(math.max(100, journalFrame.body:GetStringHeight() + 20))

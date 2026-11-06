@@ -5,14 +5,12 @@
 -- loading twice: version = 3
 -- new jornada: 4 with 1 entries
 -- book on jornada 1 (an old v1 jornada):
-|cFF8A5A2418:57:25|r
-Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+|cFFFF3333En tierras desconocidas|r
+|cFF8A5A2418:57:25|r  Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
 
-|cFF8A5A2419:01:27|r
-La jornada me llevó a resolver «Tu lugar en el mundo» en El Cubil, Durotar. con más ironía que paciencia. Al menos hoy he cumplido con mi parte.
+|cFF8A5A2419:01:27|r  La jornada me llevó a resolver «Tu lugar en el mundo» en El Cubil, Durotar. con más ironía que paciencia. Al menos hoy he cumplido con mi parte.
 
-|cFF8A5A2419:01:20|r
-Mis pasos me condujeron hasta El Cubil, Durotar.
+|cFF8A5A2419:01:20|r  Mis pasos me condujeron hasta El Cubil, Durotar.
 == events registered
 ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon

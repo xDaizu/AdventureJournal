@@ -52,9 +52,9 @@
 |cFF8A5A2417:57:05|r  Volgajin saluda a Gornek.
 
 |cFF8A5A2417:57:07|r  Amigo te susurra: «Texto claro 2»
--- paging, 4 per page: 04/11/2026     ·     13 conversaciones     ·     página 1 de 4 | prev false next true (prev/next shown: true/true)
--- page 2: 04/11/2026     ·     13 conversaciones     ·     página 2 de 4 | first line: Jaina, en el grupo (Orco): «Listos»
--- last page: 04/11/2026     ·     13 conversaciones     ·     página 4 de 4 | next enabled = false
+-- paging, 4 per page: 04/11/2026     ·     13 conversaciones [label 1 / 4] | prev false next true (prev/next shown: true/true)
+-- page 2: 04/11/2026     ·     13 conversaciones [label 2 / 4] | first line: Jaina, en el grupo (Orco): «Listos»
+-- last page: 04/11/2026     ·     13 conversaciones [label 4 / 4] | next enabled = false
 -- view button toggles back: Conversaciones; body has conversations = false
 -- limit: 15 lines (limit 15), 1 notices printed
 -- off again: channel events registered = 100000000000; conversations check box: unchecked, usable; CHAT_MSG_WHISPER still registered once = 1

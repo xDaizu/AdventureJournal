@@ -189,6 +189,25 @@ if H.variant == "chema" then
             .. ", shown=" .. tostring(_G.AdventureJournalBookFrame.shown))
         H.ns.OpenAtDay(2)
         note("login: book on jornada 2 (Chema's):\n" .. tostring(_G.AdventureJournalBookFrame.body.text))
+        -- T3: the index rows are Chema's: "Jornada N" and, under it, "lugar · fecha" (his diaries store mainZone).
+        do
+            local book = _G.AdventureJournalBookFrame
+            local rows = book.indexBox and book.indexBox.pool or {}
+            if not book.indexBox then
+                rows = {}
+                for _, button in pairs(book.dayButtons or {}) do rows[#rows + 1] = button end
+            end
+            local lines = {}
+            for _, row in ipairs(rows) do
+                if row.shown and row.subtitle then lines[#lines + 1] = tostring(row.text) .. " | " .. tostring(row.subtitle.text) end
+            end
+            table.sort(lines, function(a, b) return a > b end)
+            note("login: index rows (button | subtitle):\n" .. table.concat(lines, "\n"))
+            if book.indexBox then
+                note("login: ScrollBox row spacing " .. tostring(book.indexBox.view.spacing) .. ", element extent "
+                    .. tostring(book.indexBox.view.extent) .. " (48 per row)")
+            end
+        end
         AdventureJournal_Toggle()   -- Chema's global name for the toggle
         note("login: AdventureJournal_Toggle() -> shown=" .. tostring(_G.AdventureJournalBookFrame.shown))
         SlashCmdList["ADVENTUREJOURNALDIAG"]("")   -- /ajdiag, Chema's diagnostic command

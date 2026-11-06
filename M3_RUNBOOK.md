@@ -31,7 +31,7 @@ After each step, type `/diario diag` only if something looked wrong. Otherwise j
 | Loot | Loot a blue (rare) item | `[Diario]` with the item link, shown as a clickable link. If nothing appears, run `/diario diag` ("Patrones de botín propio" should say 4) and `/diario debug on`, then loot again: a line saying "botín de otro jugador" means the loot message did not match your client's own-loot strings |
 | Group loot | In a group, let someone else loot | Nothing (M4: only your own loot counts) |
 | Whisper | Have a friend whisper you | `[Diario]` with the sender name |
-| UI | Type `/diario` | The book opens on the first press (M4). Buttons read `< Anterior` / `Siguiente >`. Press Escape: the book closes. Does the paper background render? |
+| UI | Type `/diario` | The book opens on the first press (M4). Buttons read `< Anterior` / `Siguiente >`. Press Escape: the book closes. Does the paper background (Textures/tiled.tga) render? Is each index row a "Jornada N" button with "lugar · fecha" under it? |
 | Binding | Press the key bound to the diary, if you set one | The book toggles |
 | Reload | `/reload`, then `/diario hoy` | Chat says `Continúas la jornada N` (same N as before, M4). Entries read as text, no `nil`. Log out and in again: now a **new** jornada starts |
 

@@ -8,14 +8,18 @@
 -- login: jornada 4 has 3 entries: DISCOVERY «El Cruce, Los Baldíos»; LOOT «|cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r»; DEATH «He caído en combate»
 -- login: /diario hoy (with a trailing space) shows: Jornada 4, shown=true
 -- login: book on jornada 2 (Chema's):
-|cFF8A5A2419:22:10|r
-Aterricé en Orgrimmar tras completar la travesía en grifo/mantícora. maravillado por la atmósfera singular de este paraje.
+|cFFFF3333Vuelo hacia Orgrimmar|r
+|cFF8A5A2419:22:10|r  Aterricé en Orgrimmar tras completar la travesía en grifo/mantícora. maravillado por la atmósfera singular de este paraje.
 
-|cFF8A5A2419:30:00|r
-Conseguí la montura Lobo de las nieves en Orgrimmar. Una adición notable para las largas travesías.
+|cFF8A5A2419:30:00|r  Conseguí la montura Lobo de las nieves en Orgrimmar. Una adición notable para las largas travesías.
 
-|cFF8A5A2419:31:00|r
-Completé con éxito el logro «Acontecimiento sin descripción» mientras exploraba Orgrimmar.
+|cFF8A5A2419:31:00|r  Completé con éxito el logro «Acontecimiento sin descripción» mientras exploraba Orgrimmar.
+-- login: index rows (button | subtitle):
+Jornada 4 | El Cruce, Los Baldíos  ·  04/11/2026
+Jornada 3 | Orgrimmar  ·  04/11/2026
+Jornada 2 | Orgrimmar  ·  04/11/2026
+Jornada 1 | Valle de los Retos, Durotar  ·  04/11/2026
+-- login: ScrollBox row spacing 24, element extent 24 (48 per row)
 -- login: AdventureJournal_Toggle() -> shown=false
 -- login: /ajdiag printed 60 chat lines so far (see chat output)
 -- login: end of session: visitedZones, knownMounts, knownAchievements and jornadas 1, 2, 3 are byte-identical to the diary as it was saved before this load

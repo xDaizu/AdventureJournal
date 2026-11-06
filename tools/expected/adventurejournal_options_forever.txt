@@ -21,58 +21,44 @@
 -- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0
 -- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0; handler errors = 0
 -- book with the mood shown:
-|cFF8A5A2417:57:05  ·  Cauteloso|r
-La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
+|cFFFF3333En Valle de los Retos, Durotar|r
+|cFF8A5A2417:57:05  ·  Cauteloso|r  La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
 
-|cFF8A5A2417:57:10  ·  Derrotado|r
-El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.
+|cFF8A5A2417:57:10  ·  Derrotado|r  El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.
 
-|cFF8A5A2417:57:15  ·  Entusiasmado|r
-El camino recompensó mis esfuerzos en Valle de los Retos, Durotar con |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con más ironía que paciencia.
+|cFF8A5A2417:57:15  ·  Entusiasmado|r  El camino recompensó mis esfuerzos en Valle de los Retos, Durotar con |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con más ironía que paciencia.
 
-|cFF8A5A2417:58:20  ·  Melancólico|r
-Un encuentro curioso en Valle de los Retos, Durotar: entablé contacto con Gornek. Sintiendo el cansancio acumulado en las piernas.
+|cFF8A5A2417:58:20  ·  Melancólico|r  Un encuentro curioso en Valle de los Retos, Durotar: entablé contacto con Gornek. Sintiendo el cansancio acumulado en las piernas.
 
-|cFF8A5A2417:58:25  ·  Derrotado|r
-La muerte me alcanzó en Valle de los Retos, Durotar. Sabiendo que cada caída solo me hace más fuerte.
+|cFF8A5A2417:58:25  ·  Derrotado|r  La muerte me alcanzó en Valle de los Retos, Durotar. Sabiendo que cada caída solo me hace más fuerte.
 
-|cFF8A5A2417:58:35  ·  Entusiasmado|r
-La suerte estuvo de mi lado en Valle de los Retos, Durotar al conseguir |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con los nervios despiertos y la mano en la empuñadura.
+|cFF8A5A2417:58:35  ·  Entusiasmado|r  La suerte estuvo de mi lado en Valle de los Retos, Durotar al conseguir |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con los nervios despiertos y la mano en la empuñadura.
 
-|cFF8A5A2417:59:35  ·  Erudito|r
-En pleno Valle de los Retos, Durotar me crucé con un habitante de la zona, quien me ofreció su particular punto de vista. Con la templanza que otorga el hábito de viajar.
+|cFF8A5A2417:59:35  ·  Erudito|r  En pleno Valle de los Retos, Durotar me crucé con un habitante de la zona, quien me ofreció su particular punto de vista. Con la templanza que otorga el hábito de viajar.
 
-|cFF8A5A2417:59:35  ·  Heroico|r
-Un mensaje discreto de alguien me encontró en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
+|cFF8A5A2417:59:35  ·  Heroico|r  Un mensaje discreto de alguien me encontró en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
 -- book with the mood hidden:
-|cFF8A5A2417:57:05|r
-La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
+|cFFFF3333En Valle de los Retos, Durotar|r
+|cFF8A5A2417:57:05|r  La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
 
-|cFF8A5A2417:57:10|r
-El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.
+|cFF8A5A2417:57:10|r  El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.
 
-|cFF8A5A2417:57:15|r
-El camino recompensó mis esfuerzos en Valle de los Retos, Durotar con |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con más ironía que paciencia.
+|cFF8A5A2417:57:15|r  El camino recompensó mis esfuerzos en Valle de los Retos, Durotar con |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con más ironía que paciencia.
 
-|cFF8A5A2417:58:20|r
-Un encuentro curioso en Valle de los Retos, Durotar: entablé contacto con Gornek. Sintiendo el cansancio acumulado en las piernas.
+|cFF8A5A2417:58:20|r  Un encuentro curioso en Valle de los Retos, Durotar: entablé contacto con Gornek. Sintiendo el cansancio acumulado en las piernas.
 
-|cFF8A5A2417:58:25|r
-La muerte me alcanzó en Valle de los Retos, Durotar. Sabiendo que cada caída solo me hace más fuerte.
+|cFF8A5A2417:58:25|r  La muerte me alcanzó en Valle de los Retos, Durotar. Sabiendo que cada caída solo me hace más fuerte.
 
-|cFF8A5A2417:58:35|r
-La suerte estuvo de mi lado en Valle de los Retos, Durotar al conseguir |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con los nervios despiertos y la mano en la empuñadura.
+|cFF8A5A2417:58:35|r  La suerte estuvo de mi lado en Valle de los Retos, Durotar al conseguir |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con los nervios despiertos y la mano en la empuñadura.
 
-|cFF8A5A2417:59:35|r
-En pleno Valle de los Retos, Durotar me crucé con un habitante de la zona, quien me ofreció su particular punto de vista. Con la templanza que otorga el hábito de viajar.
+|cFF8A5A2417:59:35|r  En pleno Valle de los Retos, Durotar me crucé con un habitante de la zona, quien me ofreció su particular punto de vista. Con la templanza que otorga el hábito de viajar.
 
-|cFF8A5A2417:59:35|r
-Un mensaje discreto de alguien me encontró en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
+|cFF8A5A2417:59:35|r  Un mensaje discreto de alguien me encontró en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
 -- book index: ScrollBox
 -- compartment click: book shown true -> false
 -- compartment click again: book shown = true
 -- demo: book shows Jornada 250, page 250 / 250, PRUEBA     ·     20 acontecimientos     ·     DATOS DE PRUEBA (no se guardan)
--- demo: new frames = 14, index mode: ScrollBox
+-- demo: new frames = 28, index mode: ScrollBox
 -- demo: an entry made meanwhile went to the real diary (8 -> 9 entries); the real diary still has 1 jornada(s)
 -- demo off: book shows Jornada 1, page 1 / 1
 -- end of login: chat=all showProfile=true conversations=false typesOff=[DISCOVERY,CHAT]
@@ -472,71 +458,51 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 -- after the second login: chat=off showProfile=false conversations=false typesOff=[DISCOVERY,CHAT]; currentDay = 2
 -- panel controls after the second login: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, mood=off, conversations=off (usable)
 -- jornada 1 with the mood shown (the last entry has no characterProfile):
-|cFF8A5A2417:57:05  ·  Cauteloso|r
-La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
+|cFFFF3333En Valle de los Retos, Durotar|r
+|cFF8A5A2417:57:05  ·  Cauteloso|r  La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
 
-|cFF8A5A2417:57:10  ·  Derrotado|r
-El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.
+|cFF8A5A2417:57:10  ·  Derrotado|r  El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.
 
-|cFF8A5A2417:57:15  ·  Entusiasmado|r
-El camino recompensó mis esfuerzos en Valle de los Retos, Durotar con |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con más ironía que paciencia.
+|cFF8A5A2417:57:15  ·  Entusiasmado|r  El camino recompensó mis esfuerzos en Valle de los Retos, Durotar con |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con más ironía que paciencia.
 
-|cFF8A5A2417:58:20  ·  Melancólico|r
-Un encuentro curioso en Valle de los Retos, Durotar: entablé contacto con Gornek. Sintiendo el cansancio acumulado en las piernas.
+|cFF8A5A2417:58:20  ·  Melancólico|r  Un encuentro curioso en Valle de los Retos, Durotar: entablé contacto con Gornek. Sintiendo el cansancio acumulado en las piernas.
 
-|cFF8A5A2417:58:25  ·  Derrotado|r
-La muerte me alcanzó en Valle de los Retos, Durotar. Sabiendo que cada caída solo me hace más fuerte.
+|cFF8A5A2417:58:25  ·  Derrotado|r  La muerte me alcanzó en Valle de los Retos, Durotar. Sabiendo que cada caída solo me hace más fuerte.
 
-|cFF8A5A2417:58:35  ·  Entusiasmado|r
-La suerte estuvo de mi lado en Valle de los Retos, Durotar al conseguir |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con los nervios despiertos y la mano en la empuñadura.
+|cFF8A5A2417:58:35  ·  Entusiasmado|r  La suerte estuvo de mi lado en Valle de los Retos, Durotar al conseguir |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con los nervios despiertos y la mano en la empuñadura.
 
-|cFF8A5A2417:59:35  ·  Erudito|r
-En pleno Valle de los Retos, Durotar me crucé con un habitante de la zona, quien me ofreció su particular punto de vista. Con la templanza que otorga el hábito de viajar.
+|cFF8A5A2417:59:35  ·  Erudito|r  En pleno Valle de los Retos, Durotar me crucé con un habitante de la zona, quien me ofreció su particular punto de vista. Con la templanza que otorga el hábito de viajar.
 
-|cFF8A5A2417:59:35  ·  Heroico|r
-Un mensaje discreto de alguien me encontró en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
+|cFF8A5A2417:59:35  ·  Heroico|r  Un mensaje discreto de alguien me encontró en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
 
-|cFF8A5A2417:59:40  ·  Derrotado|r
-Las sombras se cerraron sobre mí en Valle de los Retos, Durotar cuando llegó el golpe definitivo. Sabiendo que la muerte es solo un tropiezo en mi camino.
+|cFF8A5A2417:59:40  ·  Derrotado|r  Las sombras se cerraron sobre mí en Valle de los Retos, Durotar cuando llegó el golpe definitivo. Sabiendo que la muerte es solo un tropiezo en mi camino.
 
-|cFF8A5A2417:56:55  ·  Derrotado|r
-Un trágico desenlace me esperaba en Orgrimmar. Sintiendo cómo la rabia aviva las ganas de volver a luchar.
+|cFF8A5A2417:56:55  ·  Derrotado|r  Un trágico desenlace me esperaba en Orgrimmar. Sintiendo cómo la rabia aviva las ganas de volver a luchar.
 
-|cFF8A5A2410:00:00|r
-Una vieja historia, anotada antes de que existiera el ánimo.
+|cFF8A5A2410:00:00|r  Una vieja historia, anotada antes de que existiera el ánimo.
 -- jornada 1 with the mood hidden:
-|cFF8A5A2417:57:05|r
-La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
+|cFFFF3333En Valle de los Retos, Durotar|r
+|cFF8A5A2417:57:05|r  La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
 
-|cFF8A5A2417:57:10|r
-El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.
+|cFF8A5A2417:57:10|r  El camino se tiñó de peligro en Valle de los Retos, Durotar y no salí con vida. Con la fría promesa de un retorno implacable.
 
-|cFF8A5A2417:57:15|r
-El camino recompensó mis esfuerzos en Valle de los Retos, Durotar con |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con más ironía que paciencia.
+|cFF8A5A2417:57:15|r  El camino recompensó mis esfuerzos en Valle de los Retos, Durotar con |cffa335ee|Hitem:5555::::::::1::::::::::|h[Espada épica]|h|r. Con más ironía que paciencia.
 
-|cFF8A5A2417:58:20|r
-Un encuentro curioso en Valle de los Retos, Durotar: entablé contacto con Gornek. Sintiendo el cansancio acumulado en las piernas.
+|cFF8A5A2417:58:20|r  Un encuentro curioso en Valle de los Retos, Durotar: entablé contacto con Gornek. Sintiendo el cansancio acumulado en las piernas.
 
-|cFF8A5A2417:58:25|r
-La muerte me alcanzó en Valle de los Retos, Durotar. Sabiendo que cada caída solo me hace más fuerte.
+|cFF8A5A2417:58:25|r  La muerte me alcanzó en Valle de los Retos, Durotar. Sabiendo que cada caída solo me hace más fuerte.
 
-|cFF8A5A2417:58:35|r
-La suerte estuvo de mi lado en Valle de los Retos, Durotar al conseguir |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con los nervios despiertos y la mano en la empuñadura.
+|cFF8A5A2417:58:35|r  La suerte estuvo de mi lado en Valle de los Retos, Durotar al conseguir |cffa335ee|Hitem:5556::::::::1::::::::::|h[Daga épica]|h|r. Con los nervios despiertos y la mano en la empuñadura.
 
-|cFF8A5A2417:59:35|r
-En pleno Valle de los Retos, Durotar me crucé con un habitante de la zona, quien me ofreció su particular punto de vista. Con la templanza que otorga el hábito de viajar.
+|cFF8A5A2417:59:35|r  En pleno Valle de los Retos, Durotar me crucé con un habitante de la zona, quien me ofreció su particular punto de vista. Con la templanza que otorga el hábito de viajar.
 
-|cFF8A5A2417:59:35|r
-Un mensaje discreto de alguien me encontró en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
+|cFF8A5A2417:59:35|r  Un mensaje discreto de alguien me encontró en Valle de los Retos, Durotar. Con la determinación intacta a pesar de las dificultades.
 
-|cFF8A5A2417:59:40|r
-Las sombras se cerraron sobre mí en Valle de los Retos, Durotar cuando llegó el golpe definitivo. Sabiendo que la muerte es solo un tropiezo en mi camino.
+|cFF8A5A2417:59:40|r  Las sombras se cerraron sobre mí en Valle de los Retos, Durotar cuando llegó el golpe definitivo. Sabiendo que la muerte es solo un tropiezo en mi camino.
 
-|cFF8A5A2417:56:55|r
-Un trágico desenlace me esperaba en Orgrimmar. Sintiendo cómo la rabia aviva las ganas de volver a luchar.
+|cFF8A5A2417:56:55|r  Un trágico desenlace me esperaba en Orgrimmar. Sintiendo cómo la rabia aviva las ganas de volver a luchar.
 
-|cFF8A5A2410:00:00|r
-Una vieja historia, anotada antes de que existiera el ánimo.
+|cFF8A5A2410:00:00|r  Una vieja historia, anotada antes de que existiera el ánimo.
 == events registered
 ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon

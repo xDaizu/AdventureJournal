@@ -161,13 +161,13 @@ if H.mode == "login" then
     assert(not Has(eventsBody, "Hola, ¿qué tal?"), "conversation text in the events view")
     ns.CONVERSATIONS_PER_PAGE = 4
     ns.SetBookView("conversations")
-    note(string.format("paging, 4 per page: %s | prev %s next %s (prev/next shown: %s/%s)", tostring(f.dayMeta.text),
+    note(string.format("paging, 4 per page: %s | prev %s next %s (prev/next shown: %s/%s)", tostring(f.dayMeta.text) .. " [label " .. tostring(f.conversationPageText.text) .. "]",
         tostring(f.conversationPrev.enabled), tostring(f.conversationNext.enabled),
         tostring(f.conversationPrev.shown), tostring(f.conversationNext.shown)))
     f.conversationNext.scripts.OnClick()
-    note("page 2: " .. tostring(f.dayMeta.text) .. " | first line: " .. string.match(BookBody(), "|r  ([^\n]*)"))
+    note("page 2: " .. tostring(f.dayMeta.text) .. " [label " .. tostring(f.conversationPageText.text) .. "]"  .. " | first line: " .. string.match(BookBody(), "|r  ([^\n]*)"))
     f.conversationNext.scripts.OnClick(); f.conversationNext.scripts.OnClick(); f.conversationNext.scripts.OnClick()
-    note("last page: " .. tostring(f.dayMeta.text) .. " | next enabled = " .. tostring(f.conversationNext.enabled))
+    note("last page: " .. tostring(f.dayMeta.text) .. " [label " .. tostring(f.conversationPageText.text) .. "]"  .. " | next enabled = " .. tostring(f.conversationNext.enabled))
     ns.CONVERSATIONS_PER_PAGE = 100
     f.viewButton.scripts.OnClick()
     note("view button toggles back: " .. tostring(f.viewButton.text) .. "; body has conversations = " .. tostring(Has(BookBody(), "Hola, ¿qué tal?")))
