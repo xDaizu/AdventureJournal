@@ -69,8 +69,8 @@ local function PrintDiagnostics()
             if type(t) == "table" then for _ in pairs(t) do n = n + 1 end end
             return n
         end
-        Say(string.format("Perfil: %s. Botín desde calidad %d. Diario de la versión de Chema: %s",
-            tostring(ns.GetSetting("profile")), ns.GetLootQuality(),
+        Say(string.format("Perfil: %s (último aplicado: %s). Botín desde calidad %d. Enemigo en las muertes: %s. Diario de la versión de Chema: %s",
+            ns.ProfileStatus(), tostring(ns.GetSetting("profile")), ns.GetLootQuality(), ns.GetSetting("deathKiller") == true and "sí" or "no",
             DB.origin == "chema" and string.format("sí (%d lugares, %d monturas y %d logros conservados)",
                 Count(DB.visitedZones), Count(DB.knownMounts), Count(DB.knownAchievements)) or "no"))
     end
@@ -252,7 +252,7 @@ local function SetTypes(typeWord, switchWord)
     if typeWord ~= "" and not key then Say("No conozco el tipo «" .. typeWord .. "».") end
     local lines = {}
     for _, info in ipairs(ns.VisibleTypes()) do
-        table.insert(lines, string.format("%s (%s): %s", info.label, info.words[1], YesNo(ns.IsTypeEnabled(info.key))))
+        table.insert(lines, string.format("%s (%s): %s", ns.TypeLabel(info), info.words[1], YesNo(ns.IsTypeEnabled(info.key))))
     end
     Say("Se anota en el diario: " .. table.concat(lines, "; ") .. ".")
     local words = {}
@@ -289,13 +289,129 @@ local function SetConversations(word)
     end
 end
 
+-- T5: profiles, the loot threshold and the enemy in a death ----------------------------------
+
+-- What a profile writes, in one line each, for /diario perfil and the panel's confirmation.
+ns.PROFILE_DESCRIPTIONS = {
+    clasico = "lo que anotaba la versión 1.1.0-Forever de Chema: cada anotación en el chat, botín épico o mejor, "
+        .. "el enemigo en las muertes y los lugares que vuelves a visitar; sin nivel, grupo, reputación, habilidades, hechizos, charlas con PNJ ni susurros",
+    ampliado = "todo lo que anota esta versión: solo lo importante en el chat, botín raro o mejor, "
+        .. "sin el enemigo en las muertes ni los lugares que vuelves a visitar",
+}
+
+local function TypeLabelOf(key)
+    for _, info in ipairs(ns.TYPE_INFO) do
+        if info.key == key then return ns.TypeLabel(info) end
+    end
+    return key
+end
+
+-- Applies a profile and says in the chat what it changed (ns.ApplyProfile's list), so the player can
+-- undo any of it by hand. Used by /diario perfil and by the panel after its confirmation.
+function ns.ApplyProfileAndReport(name)
+    local ok, changes = ns.ApplyProfile(name)
+    if not ok then return false end
+    local settingsChanged, nowOn, nowOff = {}, {}, {}
+    for _, change in ipairs(changes) do
+        local kind, before, after = change[1], change[2], change[3]
+        if kind == "chat" then
+            settingsChanged[#settingsChanged + 1] = string.format("mensajes en el chat: %s (antes %s)",
+                ns.CHAT_MODE_NAMES[after] or tostring(after), ns.CHAT_MODE_NAMES[before] or tostring(before))
+        elseif kind == "lootQuality" then
+            settingsChanged[#settingsChanged + 1] = string.format("botín desde %s (antes %s)",
+                ns.LOOT_QUALITY_NAMES[after] or tostring(after), ns.LOOT_QUALITY_NAMES[before] or tostring(before))
+        elseif kind == "deathKiller" then
+            settingsChanged[#settingsChanged + 1] = "enemigo en las muertes: " .. YesNo(after) .. " (antes " .. YesNo(before) .. ")"
+        elseif after then
+            nowOn[#nowOn + 1] = TypeLabelOf(kind)
+        else
+            nowOff[#nowOff + 1] = TypeLabelOf(kind)
+        end
+    end
+    Say("Perfil " .. ns.PROFILE_NAMES[name] .. " aplicado. Tus jornadas no cambian.")
+    if #changes == 0 then
+        Say("Ya tenías esos ajustes: no ha cambiado nada.")
+        return true
+    end
+    if #settingsChanged > 0 then Say("Cambiado: " .. table.concat(settingsChanged, "; ") .. ".") end
+    if #nowOn > 0 then Say("Ahora se anota: " .. table.concat(nowOn, ", ") .. ".") end
+    if #nowOff > 0 then Say("Ya no se anota: " .. table.concat(nowOff, ", ") .. ".") end
+    return true
+end
+
+local PROFILE_WORDS = {
+    clasico = "clasico", ["clásico"] = "clasico", classic = "clasico",
+    ampliado = "ampliado", extended = "ampliado",
+}
+
+-- /diario perfil [clasico|ampliado]. Typing the name is the confirmation; the panel asks first.
+local function SetProfileByName(word)
+    ns.EnsureDatabase()
+    local name = PROFILE_WORDS[word]
+    if name then
+        ns.ApplyProfileAndReport(name)
+        return
+    end
+    if word ~= "" then Say("No conozco el perfil «" .. word .. "».") end
+    Say("Perfil: " .. ns.ProfileStatus() .. ".")
+    for _, profileName in ipairs(ns.PROFILE_ORDER) do
+        Say(ns.PROFILE_NAMES[profileName] .. ": " .. ns.PROFILE_DESCRIPTIONS[profileName] .. ".")
+    end
+    Say("Cambiar: /diario perfil clasico o /diario perfil ampliado (cambia de una vez los ajustes de arriba; luego puedes tocar cada uno).")
+end
+
+local LOOT_WORDS = {
+    pococomun = 2, ["pococomún"] = 2, comun = 2, ["común"] = 2, poco = 2, verde = 2, ["2"] = 2,
+    raro = 3, azul = 3, ["3"] = 3,
+    epico = 4, ["épico"] = 4, morado = 4, ["4"] = 4,
+    legendario = 5, naranja = 5, ["5"] = 5,
+}
+
+-- /diario botin <poco común|raro|épico|legendario>: the lowest quality logged as LOOT (settings.lootQuality).
+local function SetLootQuality(arg1, arg2)
+    ns.EnsureDatabase()
+    local quality = LOOT_WORDS[arg1 .. arg2] or LOOT_WORDS[arg1]
+    if quality then
+        ns.SetSetting("lootQuality", quality)
+        Say("Botín: se anota desde " .. ns.LOOT_QUALITY_NAMES[quality] .. " (" .. TypeLabelOf("LOOT") .. ").")
+    else
+        Say("Botín: se anota desde " .. ns.LOOT_QUALITY_NAMES[ns.GetLootQuality()]
+            .. ". Usa /diario botin poco común, /diario botin raro, /diario botin épico o /diario botin legendario.")
+    end
+end
+
+-- /diario enemigo on|off: name the last enemy fought in a death entry (settings.deathKiller).
+local function SetDeathKiller(word)
+    ns.EnsureDatabase()
+    local enabled = SWITCH_WORDS[word]
+    if enabled ~= nil then
+        ns.SetSetting("deathKiller", enabled)
+        Say("Enemigo en las muertes: " .. YesNo(enabled) .. ".")
+    else
+        Say("Enemigo en las muertes: " .. YesNo(ns.GetSetting("deathKiller") == true)
+            .. ". Usa /diario enemigo on o /diario enemigo off. Sin registro de combate, es el último enemigo con el que luchaste, no siempre quien te mató.")
+    end
+end
+
+-- Once per diary that came from Chema's version (origin = "chema", T1): say what happened to it and how
+-- to see more. Called at every PLAYER_ENTERING_WORLD; `chemaHintShown` makes it a one-off.
+function ns.ShowChemaHintOnce()
+    local DB = ns.DB
+    if not DB or DB.origin ~= "chema" or DB.chemaHintShown == true then return end
+    DB.chemaHintShown = true
+    Say("Tu diario viene de la versión 1.1.0-Forever: se ha conservado entero y se sigue anotando lo mismo que entonces (perfil Clásico).")
+    Say("Esta versión puede anotar más: subidas de nivel, grupo, reputación, habilidades, hechizos, charlas con PNJ... "
+        .. "Pruébalo con /diario perfil ampliado, o elige cada cosa en Esc > Opciones > AddOns > Diario de Aventuras (/diario opciones). Este aviso no se repite.")
+end
+
 -- /diario opciones: opens the panel, or lists the commands when it cannot.
 local function OpenOptions()
     local ok, reason = ns.OpenOptions()
     if ok then return end
     Say("No he podido abrir el panel de opciones (" .. tostring(reason) .. "). Si no aparece, búscalo en "
         .. "Esc > Opciones > AddOns > Diario de Aventuras. Mientras tanto, todo se puede cambiar con comandos:")
-    Say("/diario chat <todo|importante|nada>  ·  /diario tipos <tipo> <on|off>  ·  /diario animo <on|off>  ·  /diario conversaciones <on|off>")
+    Say("/diario perfil <clasico|ampliado>  ·  /diario chat <todo|importante|nada>  ·  /diario tipos <tipo> <on|off>  ·  /diario botin <raro|épico|...>  ·  "
+        .. "/diario enemigo <on|off>  ·  /diario animo <on|off>  ·  /diario conversaciones <on|off>")
     SetTypes("", "")
 end
 
@@ -327,6 +443,12 @@ SlashCmdList["ADVENTUREJOURNAL"] = function(message)
         SetProfile(arg1)
     elseif word == "conversaciones" or word == "conversations" or word == "conv" then
         SetConversations(arg1)
+    elseif (word == "perfil" or word == "profile") and arg2 == "" then
+        SetProfileByName(arg1)
+    elseif word == "botin" or word == "botín" or word == "loot" then
+        SetLootQuality(arg1, arg2)
+    elseif word == "enemigo" or word == "killer" then
+        SetDeathKiller(arg1)
     elseif (word == "importar" or word == "import") and arg2 == "" then
         if arg1 == "" then
             ns.RunImport(false)
@@ -336,7 +458,7 @@ SlashCmdList["ADVENTUREJOURNAL"] = function(message)
             Say("Usa /diario importar (lee AJProbe y rellena el diario) o /diario importar prueba (solo cuenta, no guarda nada).")
         end
     else
-        Say("Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario chat, /diario tipos, /diario animo, /diario conversaciones, /diario importar, /diario diag o /diario debug.")
+        Say("Usa /diario, /diario hoy, /diario anterior, /diario opciones, /diario perfil, /diario chat, /diario tipos, /diario botin, /diario enemigo, /diario animo, /diario conversaciones, /diario importar, /diario diag o /diario debug.")
     end
 end
 

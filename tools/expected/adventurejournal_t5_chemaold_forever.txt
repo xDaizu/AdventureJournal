@@ -1,0 +1,211 @@
+##### forever: fresh login #####
+== scenario log
+-- login: hint lines printed at the loading screen = 2; chemaHintShown = true; profile=clasico status="Clásico" chat=all lootQuality=4 deathKiller=true typesOff=[NPC,CHAT,LEVEL,GROUP,REPUTATION,SKILL,SPELL]
+-- a later loading screen in the same session: hint lines = 0
+== events registered
+ACHIEVEMENT_EARNED, ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, NEW_MOUNT_ADDED, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 2. Tu historia continúa.
+|cFFFFD700[Diario]|r Tu diario viene de la versión 1.1.0-Forever: se ha conservado entero y se sigue anotando lo mismo que entonces (perfil Clásico).
+|cFFFFD700[Diario]|r Esta versión puede anotar más: subidas de nivel, grupo, reputación, habilidades, hechizos, charlas con PNJ... Pruébalo con /diario perfil ampliado, o elige cada cosa en Esc > Opciones > AddOns > Diario de Aventuras (/diario opciones). Este aviso no se repite.
+== AdventureJournalDB
+{
+  ["chemaHintShown"] = true,
+  ["currentDay"] = 2,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 18:57:25",
+    },
+    [2] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:56:40",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["knownAchievements"] = {},
+  ["knownMounts"] = {
+    ["6"] = true,
+  },
+  ["origin"] = "chema",
+  ["settings"] = {
+    ["chat"] = "all",
+    ["conversations"] = false,
+    ["deathKiller"] = true,
+    ["lootQuality"] = 4,
+    ["profile"] = "clasico",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["ACHIEVEMENT"] = true,
+      ["BOSS"] = true,
+      ["CHAT"] = false,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = false,
+      ["GUILD"] = true,
+      ["LEVEL"] = false,
+      ["LOOT"] = true,
+      ["MOUNT"] = true,
+      ["NPC"] = false,
+      ["QUEST"] = true,
+      ["QUEST_ACCEPT"] = true,
+      ["REPUTATION"] = false,
+      ["REVISIT"] = true,
+      ["SKILL"] = false,
+      ["SPELL"] = false,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["Orgrimmar"] = true,
+  },
+  ["visitedZones"] = {
+    ["Orgrimmar"] = true,
+  },
+}
+
+##### forever: /reload #####
+== scenario log
+-- reload: hint lines printed at the loading screen = 0; chemaHintShown = true; profile=clasico status="Clásico" chat=all lootQuality=4 deathKiller=true typesOff=[NPC,CHAT,LEVEL,GROUP,REPUTATION,SKILL,SPELL]
+-- a later loading screen in the same session: hint lines = 0
+== events registered
+ACHIEVEMENT_EARNED, ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, NEW_MOUNT_ADDED, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Continúas la jornada 2.
+== AdventureJournalDB
+{
+  ["chemaHintShown"] = true,
+  ["currentDay"] = 2,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 18:57:25",
+    },
+    [2] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:56:40",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["knownAchievements"] = {},
+  ["knownMounts"] = {
+    ["6"] = true,
+  },
+  ["origin"] = "chema",
+  ["settings"] = {
+    ["chat"] = "all",
+    ["conversations"] = false,
+    ["deathKiller"] = true,
+    ["lootQuality"] = 4,
+    ["profile"] = "clasico",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["ACHIEVEMENT"] = true,
+      ["BOSS"] = true,
+      ["CHAT"] = false,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = false,
+      ["GUILD"] = true,
+      ["LEVEL"] = false,
+      ["LOOT"] = true,
+      ["MOUNT"] = true,
+      ["NPC"] = false,
+      ["QUEST"] = true,
+      ["QUEST_ACCEPT"] = true,
+      ["REPUTATION"] = false,
+      ["REVISIT"] = true,
+      ["SKILL"] = false,
+      ["SPELL"] = false,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["Orgrimmar"] = true,
+  },
+  ["visitedZones"] = {
+    ["Orgrimmar"] = true,
+  },
+}
+
+##### forever: second login #####
+== scenario log
+-- relogin: hint lines printed at the loading screen = 0; chemaHintShown = true; profile=clasico status="Clásico" chat=all lootQuality=4 deathKiller=true typesOff=[NPC,CHAT,LEVEL,GROUP,REPUTATION,SKILL,SPELL]
+-- a later loading screen in the same session: hint lines = 0
+== events registered
+ACHIEVEMENT_EARNED, ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, NEW_MOUNT_ADDED, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 3. Tu historia continúa.
+== AdventureJournalDB
+{
+  ["chemaHintShown"] = true,
+  ["currentDay"] = 3,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 18:57:25",
+    },
+    [2] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:56:40",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+    [3] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:56:40",
+      ["events"] = {},
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["knownAchievements"] = {},
+  ["knownMounts"] = {
+    ["6"] = true,
+  },
+  ["origin"] = "chema",
+  ["settings"] = {
+    ["chat"] = "all",
+    ["conversations"] = false,
+    ["deathKiller"] = true,
+    ["lootQuality"] = 4,
+    ["profile"] = "clasico",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["ACHIEVEMENT"] = true,
+      ["BOSS"] = true,
+      ["CHAT"] = false,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = false,
+      ["GUILD"] = true,
+      ["LEVEL"] = false,
+      ["LOOT"] = true,
+      ["MOUNT"] = true,
+      ["NPC"] = false,
+      ["QUEST"] = true,
+      ["QUEST_ACCEPT"] = true,
+      ["REPUTATION"] = false,
+      ["REVISIT"] = true,
+      ["SKILL"] = false,
+      ["SPELL"] = false,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["Orgrimmar"] = true,
+  },
+  ["visitedZones"] = {
+    ["Orgrimmar"] = true,
+  },
+}

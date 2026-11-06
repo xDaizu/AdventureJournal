@@ -74,6 +74,11 @@ const SCENARIOS = [
   { name: 'adventurejournal_t4b_secrets', file: 'scenario_t4b.lua', modes: ['login'], variant: 'secrets' },
   { name: 'adventurejournal_t4b_off_without', file: 'scenario_t4b.lua', modes: ['login'], variant: 'off_without' },
   { name: 'adventurejournal_t4b_off_with', file: 'scenario_t4b.lua', modes: ['login'], variant: 'off_with', sameDiaryAs: 'adventurejournal_t4b_off_without' },
+  // T5: the profile UI (panel row with confirmation, /diario perfil, loot threshold, enemy in deaths), the Chema hint.
+  { name: 'adventurejournal_t5', file: 'scenario_t5.lua', modes: ['login', 'reload', 'relogin'], variant: 'panel' },
+  { name: 'adventurejournal_t5_nopopup', file: 'scenario_t5.lua', modes: ['login'], variant: 'panel', stub: 'nopopup' },
+  { name: 'adventurejournal_t5_nosettings', file: 'scenario_t5.lua', modes: ['login'], variant: 'panel', stub: 'nosettings' },
+  { name: 'adventurejournal_t5_chemaold', file: 'scenario_t5.lua', modes: ['login', 'reload', 'relogin'], variant: 'chemaold' },
   // T2: every prose template of every type, both sexes; fails on a leftover placeholder or bad punctuation.
   { name: 'adventurejournal_prose', file: 'scenario_prose.lua', modes: ['login'] },
 ];

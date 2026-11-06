@@ -92,7 +92,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 |cFFFFD700[Diario]|r Base de datos: versión 3, jornada actual 1, 1 jornadas, 13 entradas hoy
 |cFFFFD700[Diario]|r Lugares visitados: 0. Mensajes en el chat: important
 |cFFFFD700[Diario]|r Tipos desactivados: REVISIT. Ánimo en el libro: no
-|cFFFFD700[Diario]|r Perfil: ampliado. Botín desde calidad 3. Diario de la versión de Chema: no
+|cFFFFD700[Diario]|r Perfil: Ampliado (último aplicado: ampliado). Botín desde calidad 3. Enemigo en las muertes: no. Diario de la versión de Chema: no
 |cFFFFD700[Diario]|r Conversaciones: SÍ (se guardan). Eventos de chat registrados: 12 de 12
 |cFFFFD700[Diario]|r AJProbe: no está cargado (/diario importar no tendría de dónde leer)
 |cFFFFD700[Diario]|r Lectura de fechas (time{...}, la usa /diario importar): OK
