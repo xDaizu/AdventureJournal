@@ -1,6 +1,6 @@
 ##### classic: fresh login #####
 == scenario log
--- all new types off, deathKiller off: 11 entries; QUEST=0 BOSS=0 DEATH=8 LOOT=0 DISCOVERY=2 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
+-- all new types off, deathKiller off: 11 entries; QUEST=0 BOSS=0 DEATH=8 LOOT=0 DISCOVERY=2 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 == events registered
 ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon
@@ -185,6 +185,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     ["profile"] = "ampliado",
     ["showProfile"] = false,
     ["types"] = {
+      ["ACHIEVEMENT"] = true,
       ["BOSS"] = true,
       ["CHAT"] = true,
       ["DEATH"] = true,
@@ -193,6 +194,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["GUILD"] = false,
       ["LEVEL"] = true,
       ["LOOT"] = true,
+      ["MOUNT"] = true,
       ["NPC"] = true,
       ["QUEST"] = true,
       ["QUEST_ACCEPT"] = false,

@@ -133,7 +133,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 |cFFFFD700[Diario]|r   plantilla MinimalScrollBar: sí
 |cFFFFD700[Diario]|r   prueba de ScrollBox: OK
 |cFFFFD700[Diario]|r Eventos registrados (25): ADDON_LOADED, PLAYER_ENTERING_WORLD, PLAYER_LOGOUT, QUEST_TURNED_IN, BOSS_KILL, ENCOUNTER_END, PLAYER_DEAD, CHAT_MSG_LOOT, GET_ITEM_INFO_RECEIVED, ITEM_DATA_LOAD_RESULT, ZONE_CHANGED_NEW_AREA, ZONE_CHANGED, ZONE_CHANGED_INDOORS, GOSSIP_SHOW, CHAT_MSG_WHISPER, PLAYER_LEVEL_UP, CHAT_MSG_SYSTEM, GROUP_JOINED, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_SKILL, QUEST_DETAIL, QUEST_ACCEPTED, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, PLAYER_GUILD_UPDATE
-|cFFFFD700[Diario]|r Eventos NO registrados (1): MINIMAP_ZONE_CHANGED (el cliente no conoce este evento)
+|cFFFFD700[Diario]|r Eventos NO registrados (3): MINIMAP_ZONE_CHANGED (el cliente no conoce este evento); NEW_MOUNT_ADDED (el cliente no conoce este evento); ACHIEVEMENT_EARNED (el cliente no conoce este evento)
 |cFFFFD700[Diario]|r Errores en manejadores: ninguno
 |cFFFFD700[Diario]|r Depuración: apagada, secretos simulados: apagados
 == AdventureJournalDB
@@ -467,6 +467,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     ["profile"] = "ampliado",
     ["showProfile"] = false,
     ["types"] = {
+      ["ACHIEVEMENT"] = true,
       ["BOSS"] = true,
       ["CHAT"] = true,
       ["DEATH"] = true,
@@ -475,6 +476,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["GUILD"] = true,
       ["LEVEL"] = true,
       ["LOOT"] = true,
+      ["MOUNT"] = true,
       ["NPC"] = true,
       ["QUEST"] = true,
       ["QUEST_ACCEPT"] = true,

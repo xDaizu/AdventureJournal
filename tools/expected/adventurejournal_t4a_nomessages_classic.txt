@@ -1,8 +1,8 @@
 ##### classic: fresh login #####
 == scenario log
 -- deathKiller default = false, REVISIT default = false, profile = ampliado
--- old events (REVISIT off by default): 4 entries; QUEST=0 BOSS=0 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- with deathKiller off and REVISIT off: 15 entries; QUEST=0 BOSS=0 DEATH=7 LOOT=0 DISCOVERY=2 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=5 REVISIT=0 GUILD=0
+-- old events (REVISIT off by default): 4 entries; QUEST=0 BOSS=0 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- with deathKiller off and REVISIT off: 15 entries; QUEST=0 BOSS=0 DEATH=7 LOOT=0 DISCOVERY=2 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=5 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- QUEST_ACCEPT entries (5):
   QUEST_ACCEPT | Tu lugar en el mundo | questID=4641 npc=Gornek
     Atendí a Gornek en El Cubil, Durotar y acepté hacerme cargo de «Tu lugar en el mundo». Notando el peso de la armadura sobre los hombros.
@@ -20,7 +20,7 @@
   (none)
 -- deaths without deathKiller: 0 named
 -- REVISIT on
--- REVISIT on: 23 entries; QUEST=0 BOSS=0 DEATH=7 LOOT=0 DISCOVERY=3 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=5 REVISIT=7 GUILD=0
+-- REVISIT on: 23 entries; QUEST=0 BOSS=0 DEATH=7 LOOT=0 DISCOVERY=3 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=5 REVISIT=7 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- REVISIT entries (7):
   REVISIT | Valle de los Retos, Durotar | travelMethod=ON_FOOT
     Volví a recorrer a pie las tierras de Valle de los Retos, Durotar. Sintiendo la comodidad de un terreno que no me guarda secretos.
@@ -72,8 +72,8 @@
     Fui rebasado por el peligro en pleno El Cubil, Durotar. Repasando en mi cabeza el segundo en que todo falló.
   DEATH | He caído en combate | 
     Las sombras se cerraron sobre mí en El Cubil, Durotar cuando llegó el golpe definitivo. Sabiendo que la muerte es solo un tropiezo en mi camino.
--- QUEST_ACCEPT off: 29 entries; QUEST=0 BOSS=0 DEATH=13 LOOT=0 DISCOVERY=3 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=5 REVISIT=7 GUILD=0
--- QUEST_ACCEPT on again: 30 entries; QUEST=0 BOSS=0 DEATH=13 LOOT=0 DISCOVERY=3 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=6 REVISIT=7 GUILD=0
+-- QUEST_ACCEPT off: 29 entries; QUEST=0 BOSS=0 DEATH=13 LOOT=0 DISCOVERY=3 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=5 REVISIT=7 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- QUEST_ACCEPT on again: 30 entries; QUEST=0 BOSS=0 DEATH=13 LOOT=0 DISCOVERY=3 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=6 REVISIT=7 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- book body:
 |cFFFF3333Nuevos Horizontes: Valle de los Retos, Durotar|r
 |cFF8A5A2417:56:40|r  Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.
@@ -617,6 +617,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     ["profile"] = "ampliado",
     ["showProfile"] = false,
     ["types"] = {
+      ["ACHIEVEMENT"] = true,
       ["BOSS"] = true,
       ["CHAT"] = true,
       ["DEATH"] = true,
@@ -625,6 +626,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["GUILD"] = true,
       ["LEVEL"] = true,
       ["LOOT"] = true,
+      ["MOUNT"] = true,
       ["NPC"] = true,
       ["QUEST"] = true,
       ["QUEST_ACCEPT"] = true,

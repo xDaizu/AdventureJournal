@@ -151,9 +151,43 @@ handlers.ADDON_LOADED = function(loadedName)
     end
 end
 
+-- T4b: the mounts the player already has are known, so none of them is logged as new. Chema's tables
+-- (`knownMounts`, `knownAchievements`, keys are tostring(id)) are used as they are and only ever
+-- added to. `mountsSeeded` is this line's own flag: his scan never worked (bug), so his table cannot
+-- tell whether the journal was ever read. Nothing is seeded while the journal gives no mounts (not
+-- loaded yet): the next try is later.
+local function KnownTable(name)
+    local DB = ns.DB
+    if type(DB[name]) ~= "table" then DB[name] = {} end
+    return DB[name]
+end
+
+local function SeedKnownMounts()
+    local DB = ns.DB
+    if not DB or DB.mountsSeeded == true then return true end
+    local ids = ns.GetMountIDs()
+    if not ids then return false end
+    local known = KnownTable("knownMounts")
+    for _, mountID in ipairs(ids) do
+        local _, collected = ns.GetMountInfo(mountID)
+        if collected then known[tostring(mountID)] = true end
+    end
+    DB.mountsSeeded = true
+    return true
+end
+
+local function ScheduleMountSeed()
+    if not ns.HasMountJournal() then return end
+    if not (C_Timer and C_Timer.After) then SeedKnownMounts() return end
+    C_Timer.After(5, function()
+        if not SeedKnownMounts() then C_Timer.After(30, SeedKnownMounts) end
+    end)
+end
+
 handlers.PLAYER_ENTERING_WORLD = function(_, isReloadingUi)
     sessionGuild = ns.CurrentGuildName() or sessionGuild
     StartSession(isReloadingUi == true)
+    ScheduleMountSeed()
 end
 
 handlers.PLAYER_LOGOUT = function()
@@ -377,6 +411,39 @@ handlers.PLAYER_GUILD_UPDATE = function()
     sessionGuild = ns.CurrentGuildName() or sessionGuild
 end
 
+-- T4b: NEW_MOUNT_ADDED(mountID). Once per mount ever (knownMounts); the name comes from the journal.
+handlers.NEW_MOUNT_ADDED = function(mountID)
+    if not ns.IsTypeEnabled("MOUNT") then return end   -- off (or no journal): the known tables are not touched
+    if ns.IsSecret(mountID) or type(mountID) ~= "number" then
+        ns.Debug("NEW_MOUNT_ADDED: ID ilegible, se omite")
+        return
+    end
+    local known = KnownTable("knownMounts")
+    local key = tostring(mountID)
+    if known[key] then return end
+    known[key] = true
+    local candidate = ns.MountCandidate(mountID)
+    if candidate then ns.AddEntry("MOUNT", candidate.text, candidate.extra) end
+    SeedKnownMounts()   -- after the entry: the union includes this mount, which is already known
+end
+
+-- T4b: ACHIEVEMENT_EARNED(achievementID, alreadyEarned). Once per achievement ever (knownAchievements).
+-- The payload is from Warcraft Wiki: not observed on Forever (no achievement was earned while AJProbe ran).
+handlers.ACHIEVEMENT_EARNED = function(achievementID, alreadyEarned)
+    if not ns.IsTypeEnabled("ACHIEVEMENT") then return end   -- off (or no achievements): the known tables are not touched
+    if ns.IsSecret(achievementID) or type(achievementID) ~= "number" then
+        ns.Debug("ACHIEVEMENT_EARNED: ID ilegible, se omite")
+        return
+    end
+    local known = KnownTable("knownAchievements")
+    local key = tostring(achievementID)
+    if known[key] then return end
+    known[key] = true
+    if not ns.IsSecret(alreadyEarned) and alreadyEarned == true then return end   -- earned before (an alt, say)
+    local candidate = ns.AchievementCandidate(achievementID)
+    if candidate then ns.AddEntry("ACHIEVEMENT", candidate.text, candidate.extra) end
+end
+
 handlers.GOSSIP_SHOW = function()
     local rawName = ns.UnitNameSafe("npc")
     if ns.IsSecret(rawName) then ns.Debug("GOSSIP_SHOW: nombre del PNJ secreto, se usa el texto neutro") end
@@ -498,6 +565,7 @@ local EVENTS = {
     "PLAYER_LEVEL_UP", "CHAT_MSG_SYSTEM", "GROUP_JOINED",
     "CHAT_MSG_COMBAT_FACTION_CHANGE", "CHAT_MSG_SKILL",
     "QUEST_DETAIL", "QUEST_ACCEPTED", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED", "PLAYER_GUILD_UPDATE",
+    "NEW_MOUNT_ADDED", "ACHIEVEMENT_EARNED",
 }
 ns.EVENTS = EVENTS
 for _, eventName in ipairs(EVENTS) do ns.RegisterEventSafe(eventFrame, eventName) end

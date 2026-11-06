@@ -274,6 +274,35 @@ if not FLAGS.nosocial then
         GetAccountInfoByID = function(id) return S.bnAccounts[id] end,
     }
 end
+-- T4b, Forever only (Classic Era has no mount journal and no achievements). Shapes as observed on Forever
+-- 2026-11-05: GetMountInfoByID returns 13 values, isCollected the 11th; GetMountIDs is a list of IDs.
+-- GetAchievementInfo returns nothing for an ID that is no achievement; the real order of its values
+-- is NOT verified (the stub uses the documented one: id, name, points, completed).
+S.mounts = {}          -- [mountID] = { name = "...", collected = bool }; S.mountIDs = list (nil: use sorted keys)
+S.achievements = {}    -- [achievementID] = "name"
+if not IS_CLASSIC then
+    C_MountJournal = {
+        GetMountIDs = function()
+            local ids = {}
+            for id in pairs(S.mounts) do ids[#ids + 1] = id end
+            table.sort(ids)
+            return ids
+        end,
+        GetMountInfoByID = function(id)
+            local mount = S.mounts[id]
+            if not mount then return nil end
+            return mount.name, 6777, 132248, false, false, 0, false, true, 1, false, mount.collected == true, id, false
+        end,
+    }
+    function GetAchievementInfo(id)
+        local name = S.achievements[id]
+        if not name then return end
+        return id, name, 10, true
+    end
+else
+    S.unknownEvents.NEW_MOUNT_ADDED = true
+    S.unknownEvents.ACHIEVEMENT_EARNED = true
+end
 S.target = nil         -- T4a: { name = "...", hostile = bool, player = bool }; name may be S.SECRET
 S.guildName = nil      -- GetGuildInfo("player"): nil while the player has no guild
 S.onTaxi = false

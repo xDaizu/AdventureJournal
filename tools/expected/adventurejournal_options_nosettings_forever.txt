@@ -8,16 +8,16 @@
 -- panel controls: (no options panel)
 -- after changes: chat=off showProfile=true conversations=false typesOff=[DISCOVERY,NPC,CHAT,REVISIT]
 -- panel controls: (no options panel)
--- entries after events: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
+-- entries after events: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- chat lines printed while chat = nada: 0
 -- the place was still marked visited while DISCOVERY was off: true
--- NPC on again, same NPC 5 s after the one seen while off (dedupe): QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- NPC on again, 30 s later: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
+-- NPC on again, same NPC 5 s after the one seen while off (dedupe): QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- NPC on again, 30 s later: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- panel controls follow the commands: (no options panel)
 -- panel after /diario chat todo: (no options panel)
--- LOOT off, uncached epic, then cached: QUEST=1 BOSS=0 DEATH=2 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0; handler errors = 0
+-- LOOT off, uncached epic, then cached: QUEST=1 BOSS=0 DEATH=2 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0; handler errors = 0
 -- book with the mood shown:
 |cFFFF3333En Valle de los Retos, Durotar|r
 |cFF8A5A2417:57:05  ·  Cauteloso|r  La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
@@ -61,7 +61,7 @@
 -- demo off: book shows Jornada 1, page 1 / 1
 -- end of login: chat=all showProfile=true conversations=false typesOff=[DISCOVERY,CHAT,REVISIT]
 == events registered
-ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+ACHIEVEMENT_EARNED, ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, NEW_MOUNT_ADDED, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon
 AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
 == chat output
@@ -69,21 +69,21 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 |cFFFFD700[Diario]|r Índice con botones (sin ScrollBox) para probar la alternativa. Solo vale si lo escribes ANTES de abrir el libro por primera vez tras /reload; /diario debug off o /reload lo apaga.
 |cFFFFD700[Diario]|r No he podido abrir el panel de opciones (la API Settings no existe en este cliente). Si no aparece, búscalo en Esc > Opciones > AddOns > Diario de Aventuras. Mientras tanto, todo se puede cambiar con comandos:
 |cFFFFD700[Diario]|r /diario chat <todo|importante|nada>  ·  /diario tipos <tipo> <on|off>  ·  /diario animo <on|off>  ·  /diario conversaciones <on|off>
-|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): sí; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): sí; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí.
-|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad> <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): sí; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): sí; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
 |cFFFFD700[Diario]|r Mensajes en el chat: nada.
 |cFFFFD700[Diario]|r DISCOVERY: NO se anota.
 |cFFFFD700[Diario]|r NPC: NO se anota.
 |cFFFFD700[Diario]|r CHAT: NO se anota.
 |cFFFFD700[Diario]|r Ánimo en el libro: sí.
 |cFFFFD700[Diario]|r NPC: se anota.
-|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí.
-|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad> <on|off>
-|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí.
-|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad> <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
 |cFFFFD700[Diario]|r No conozco el tipo «xyz».
-|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí.
-|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad> <on|off>
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): no; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): no; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
 |cFFFFD700[Diario]|r Mensajes en el chat: todo.
 |cFF00FF00[Diario]|r He caído en combate
 |cFFFFD700[Diario]|r Mensajes en el chat: importante.
@@ -249,6 +249,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     ["profile"] = "ampliado",
     ["showProfile"] = true,
     ["types"] = {
+      ["ACHIEVEMENT"] = true,
       ["BOSS"] = true,
       ["CHAT"] = false,
       ["DEATH"] = true,
@@ -257,6 +258,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["GUILD"] = true,
       ["LEVEL"] = true,
       ["LOOT"] = true,
+      ["MOUNT"] = true,
       ["NPC"] = true,
       ["QUEST"] = true,
       ["QUEST_ACCEPT"] = true,

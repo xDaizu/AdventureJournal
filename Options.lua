@@ -30,8 +30,10 @@ function ns.RefreshOptionsPanel()
     if not panel then return end
     ns.EnsureDatabase()
     controls.chat:SetText(ns.CHAT_MODE_NAMES[ns.GetSetting("chat")] or "?")
-    for _, info in ipairs(ns.TYPE_INFO) do
-        controls.types[info.key]:SetChecked(ns.IsTypeEnabled(info.key))
+    for _, info in ipairs(ns.VisibleTypes()) do
+        -- A type that became visible after the panel was built has no checkbox (until the next /reload).
+        local control = controls.types[info.key]
+        if control then control:SetChecked(ns.IsTypeEnabled(info.key)) end
     end
     controls.profile:SetChecked(ns.GetSetting("showProfile") == true)
     controls.conversations:SetChecked(ns.ConversationsEnabled())
@@ -99,9 +101,10 @@ local function BuildPanel()
     -- Which entry types are logged (settings.types).
     AddText(frame, "GameFontNormal", 16, -166, "Qué se anota en el diario")
     -- Two columns, so that the twelve types (M6) do not push the rest of the panel out of view.
-    local rows = math.ceil(#ns.TYPE_INFO / 2)
+    local visibleTypes = ns.VisibleTypes()
+    local rows = math.ceil(#visibleTypes / 2)
     local y = -190
-    for index, info in ipairs(ns.TYPE_INFO) do
+    for index, info in ipairs(visibleTypes) do
         local key = info.key
         local column = index > rows and 1 or 0
         local row = (index - 1) % rows

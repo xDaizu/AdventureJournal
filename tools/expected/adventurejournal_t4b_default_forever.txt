@@ -1,0 +1,93 @@
+##### forever: fresh login #####
+== scenario log
+-- shipped state: MOUNT available = true, ACHIEVEMENT available = false; visible types = 16 of 17
+-- an achievement is earned and a mount learned: 2 entries; MOUNT=1 ACHIEVEMENT=0
+-- known achievements stay untouched: {}
+== events registered
+ACHIEVEMENT_EARNED, ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, NEW_MOUNT_ADDED, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+== globals created by the addon
+AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
+== chat output
+|cFFFFD700[Diario]|r Comienza la jornada 1. Tu historia continúa.
+|cFFFFD700[Diario]|r ACHIEVEMENT: este cliente no tiene lo necesario para anotarlo.
+|cFFFFD700[Diario]|r Se anota en el diario: Misiones completadas (misiones): sí; Jefes derrotados (jefes): sí; Muertes (muertes): sí; Botín raro o mejor (botin): sí; Lugares descubiertos (lugares): sí; Charlas con PNJ (pnj): sí; Susurros recibidos (susurros): sí; Subidas de nivel (nivel): sí; Grupo: quién entra y sale (grupo): sí; Reputación con facciones (reputacion): sí; Habilidades nuevas o mejoradas (habilidades): sí; Hechizos aprendidos (hechizos): sí; Misiones aceptadas (aceptadas): sí; Lugares que vuelves a visitar (revisitas): no; Hermandad: entrar y salir (hermandad): sí; Monturas nuevas (monturas): sí.
+|cFFFFD700[Diario]|r Cambiar: /diario tipos <misiones|jefes|muertes|botin|lugares|pnj|susurros|nivel|grupo|reputacion|habilidades|hechizos|aceptadas|revisitas|hermandad|monturas> <on|off>
+== AdventureJournalDB
+{
+  ["currentDay"] = 1,
+  ["days"] = {
+    [1] = {
+      ["dateLabel"] = "04/11/2026",
+      ["endedAt"] = "2026-11-04 17:57:20",
+      ["events"] = {
+        [1] = {
+          ["characterProfile"] = "Explorador",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Valle de los Retos, Durotar",
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
+          ["seed"] = 1,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Valle de los Retos, Durotar",
+          ["time"] = "17:56:40",
+          ["timestamp"] = 1793815000,
+          ["travelMethod"] = "ON_FOOT",
+          ["type"] = "DISCOVERY",
+          ["zone"] = "Durotar",
+        },
+        [2] = {
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
+          ["mountID"] = 40,
+          ["place"] = "Valle de los Retos, Durotar",
+          ["prose"] = "Sumé a mi colección la montura Corcel espectral durante mi estancia en Valle de los Retos, Durotar.",
+          ["seed"] = 2,
+          ["subZone"] = "Valle de los Retos",
+          ["text"] = "Corcel espectral",
+          ["time"] = "17:57:20",
+          ["timestamp"] = 1793815040,
+          ["type"] = "MOUNT",
+          ["zone"] = "Durotar",
+        },
+      },
+      ["startedAt"] = "2026-11-04 17:56:40",
+    },
+  },
+  ["knownMounts"] = {
+    ["21"] = true,
+    ["35"] = true,
+    ["40"] = true,
+  },
+  ["mountsSeeded"] = true,
+  ["settings"] = {
+    ["chat"] = "important",
+    ["conversations"] = false,
+    ["deathKiller"] = false,
+    ["lootQuality"] = 3,
+    ["profile"] = "ampliado",
+    ["showProfile"] = false,
+    ["types"] = {
+      ["ACHIEVEMENT"] = true,
+      ["BOSS"] = true,
+      ["CHAT"] = true,
+      ["DEATH"] = true,
+      ["DISCOVERY"] = true,
+      ["GROUP"] = true,
+      ["GUILD"] = true,
+      ["LEVEL"] = true,
+      ["LOOT"] = true,
+      ["MOUNT"] = true,
+      ["NPC"] = true,
+      ["QUEST"] = true,
+      ["QUEST_ACCEPT"] = true,
+      ["REPUTATION"] = true,
+      ["REVISIT"] = false,
+      ["SKILL"] = true,
+      ["SPELL"] = true,
+    },
+  },
+  ["version"] = 3,
+  ["visited"] = {
+    ["Valle de los Retos, Durotar"] = true,
+  },
+}

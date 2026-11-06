@@ -86,3 +86,10 @@ Never captured: the sentence for a change of standing ("Eres ahora ... con ...")
 ## QUEST_ACCEPTED on Forever (2026-11-05, AJProbe, T4a)
 
 `a = { questID }`: a single argument, the quest ID (1470, 364), with the title the probe looked up (`title`). It is preceded by a `CHAT_MSG_SYSTEM` record in the same second (the "Misión aceptada" line). Classic Era's `(questLogIndex, questID)` is documented by Warcraft Wiki but has not been seen in a record. No `ERR_GUILD_*` message appears in any recorded file.
+
+## Mounts and achievements on Forever (`/dump`, 2026-11-05, T4b)
+
+- `/dump C_MountJournal and C_MountJournal.GetMountIDs` printed a function.
+- `/dump C_MountJournal.GetMountInfoByID(C_MountJournal.GetMountIDs()[1])` printed 13 values: 1 "Carnero gris" (name), 2 `6777` (spellID), 3 `132248` (icon), 4 `false` (isActive), 5 `false` (isUsable), 6 `0` (sourceType), 7 `false` (isFavorite), 8 `true` (isFactionSpecific), 9 `1` (faction), 10 `false` (shouldHideOnChar), 11 `false` (**isCollected**; the character did not have this mount), 12 `21` (mountID), 13 `false` (isForDragonriding).
+- `/dump GetAchievementInfo(6)` printed `empty result`. The global exists (a missing function would be an error), and 6 is not an achievement on this client. The order of the returns for a real achievement has not been seen.
+- AJProbe's Forever file lists `ACHIEVEMENT_EARNED` as a registered event, with no record of one (no achievement was earned during capture).

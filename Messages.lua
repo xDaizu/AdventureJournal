@@ -13,7 +13,7 @@ local addonName, ns = ...
 
 -- Seconds within which two entries of the same type and subject are the same event. Used by the
 -- live handlers and, for the import, against both the diary and the records of the same run.
-ns.DEDUPE_WINDOW = { LEVEL = 10, GROUP = 3, REPUTATION = 10, SKILL = 30, SPELL = 5, GUILD = 10, QUEST_ACCEPT = 3 }
+ns.DEDUPE_WINDOW = { LEVEL = 10, GROUP = 3, REPUTATION = 10, SKILL = 30, SPELL = 5, GUILD = 10, QUEST_ACCEPT = 3, MOUNT = 5, ACHIEVEMENT = 5 }
 
 -- A skill entry is made for a new skill and every time a skill reaches a multiple of this
 -- (user's choice 2026-11-05: "new + every 25 points"). Stateless on purpose: the live game and the
@@ -39,6 +39,22 @@ function ns.NewTypeSubject(kind, text, source)
         return text
     end
     if kind == "GUILD" then return (source.guildEvent or "") .. "\1" .. text end
+    if kind == "MOUNT" then
+        if type(source.mountID) == "number" then return "mount:" .. source.mountID end
+        return text
+    end
+    if kind == "ACHIEVEMENT" then
+        if type(source.achievementID) == "number" then return "achievement:" .. source.achievementID end
+        return text
+    end
+    if kind == "MOUNT" then
+        if type(source.mountID) == "number" then return "mount:" .. source.mountID end
+        return text
+    end
+    if kind == "ACHIEVEMENT" then
+        if type(source.achievementID) == "number" then return "achievement:" .. source.achievementID end
+        return text
+    end
     if kind == "QUEST_ACCEPT" then
         if type(source.questID) == "number" then return "quest:" .. source.questID end
         return text
@@ -241,6 +257,36 @@ function ns.QuestIDFromAccepted(first, second)
     end
     if not ns.IsSecret(first) and type(first) == "number" then return first end
     return nil
+end
+
+-- MOUNT and ACHIEVEMENT (T4b) ---------------------------------------------------------
+-- A mount learned (NEW_MOUNT_ADDED(mountID)) and an achievement earned (ACHIEVEMENT_EARNED(id, alreadyEarned)).
+-- The names come from the journal / GetAchievementInfo, never from the event. Never called with a secret.
+function ns.MountCandidate(mountID)
+    if type(mountID) ~= "number" then return nil end
+    local name = ns.GetMountInfo(mountID)
+    return { type = "MOUNT", text = name or ns.NEUTRAL_TEXT.MOUNT, extra = { mountID = mountID } }
+end
+
+function ns.AchievementCandidate(achievementID)
+    if type(achievementID) ~= "number" then return nil end
+    local name = ns.GetAchievementName(achievementID)
+    return { type = "ACHIEVEMENT", text = name or ns.NEUTRAL_TEXT.ACHIEVEMENT, extra = { achievementID = achievementID } }
+end
+
+-- MOUNT and ACHIEVEMENT (T4b) ---------------------------------------------------------
+-- A mount learned (NEW_MOUNT_ADDED(mountID)) and an achievement earned (ACHIEVEMENT_EARNED(id, alreadyEarned)).
+-- The names come from the journal / GetAchievementInfo, never from the event. Never called with a secret.
+function ns.MountCandidate(mountID)
+    if type(mountID) ~= "number" then return nil end
+    local name = ns.GetMountInfo(mountID)
+    return { type = "MOUNT", text = name or ns.NEUTRAL_TEXT.MOUNT, extra = { mountID = mountID } }
+end
+
+function ns.AchievementCandidate(achievementID)
+    if type(achievementID) ~= "number" then return nil end
+    local name = ns.GetAchievementName(achievementID)
+    return { type = "ACHIEVEMENT", text = name or ns.NEUTRAL_TEXT.ACHIEVEMENT, extra = { achievementID = achievementID } }
 end
 
 -- GUILD (T4a) --------------------------------------------------------------------------

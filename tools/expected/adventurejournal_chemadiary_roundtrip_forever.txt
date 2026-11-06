@@ -1,7 +1,7 @@
 ##### forever: fresh login #####
 == scenario log
 -- after ADDON_LOADED: version=3 origin=nil profile=ampliado chat=off lootQuality=3 showProfile=true conversations=false
--- after ADDON_LOADED: types off = LOOT, REVISIT; Chema's types (for T4): QUEST_ACCEPT=true, REVISIT=false, MOUNT=nil, ACHIEVEMENT=nil, GUILD=true
+-- after ADDON_LOADED: types off = LOOT, REVISIT; Chema's types (for T4): QUEST_ACCEPT=true, REVISIT=false, MOUNT=true, ACHIEVEMENT=true, GUILD=true
 -- after ADDON_LOADED: visited places = 2
 -- after load: visitedZones, knownMounts, knownAchievements and jornadas 1, 2 are byte-identical to the diary as it was saved before this load
 -- roundtrip: jornada 3 has 1 entries: DISCOVERY «Razor Hill, Durotar»
@@ -18,7 +18,7 @@
 -- hand-edited lootQuality 9 -> 3
 -- end of session: visitedZones, knownMounts, knownAchievements and jornadas 1, 2 are byte-identical to the diary as it was saved before this load
 == events registered
-ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
+ACHIEVEMENT_EARNED, ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, NEW_MOUNT_ADDED, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_GUILD_UPDATE, PLAYER_LEVEL_UP, PLAYER_LOGOUT, PLAYER_REGEN_DISABLED, PLAYER_REGEN_ENABLED, QUEST_ACCEPTED, QUEST_DETAIL, QUEST_TURNED_IN, UNIT_SPELLCAST_SUCCEEDED, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon
 AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJournal_ToggleUI, BINDING_HEADER_ADVENTUREJOURNAL, BINDING_NAME_ADVENTUREJOURNAL_TOGGLE, SLASH_ADVENTUREJOURNAL1, SLASH_ADVENTUREJOURNAL2, SLASH_ADVENTUREJOURNALDIAG1
 == chat output

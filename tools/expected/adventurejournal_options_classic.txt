@@ -10,16 +10,16 @@
 -- panel: chat -> off after 1 click(s), button reads "nada"
 -- after changes: chat=off showProfile=true conversations=false typesOff=[DISCOVERY,NPC,CHAT,REVISIT]
 -- panel controls: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=off, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, mood=on, conversations=off (usable)
--- entries after events: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
+-- entries after events: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- chat lines printed while chat = nada: 0
 -- the place was still marked visited while DISCOVERY was off: true
--- NPC on again, same NPC 5 s after the one seen while off (dedupe): QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- NPC on again, 30 s later: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
+-- NPC on again, same NPC 5 s after the one seen while off (dedupe): QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=0 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- NPC on again, 30 s later: QUEST=1 BOSS=0 DEATH=1 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
 -- panel controls follow the commands: chat button = nada, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, mood=on, conversations=off (usable)
 -- panel after /diario chat todo: chat button = todo, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, mood=on, conversations=off (usable)
--- LOOT off, uncached epic, then cached: QUEST=1 BOSS=0 DEATH=2 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0
--- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0; handler errors = 0
+-- LOOT off, uncached epic, then cached: QUEST=1 BOSS=0 DEATH=2 LOOT=1 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- LOOT on again: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=1 CHAT=0 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0
+-- secret payloads: QUEST=1 BOSS=0 DEATH=2 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0; handler errors = 0
 -- book with the mood shown:
 |cFFFF3333En Valle de los Retos, Durotar|r
 |cFF8A5A2417:57:05  ·  Cauteloso|r  La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Tu lugar en el mundo». Ajustando mis pertrechos para lo que esté por venir.
@@ -234,6 +234,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     ["profile"] = "ampliado",
     ["showProfile"] = true,
     ["types"] = {
+      ["ACHIEVEMENT"] = true,
       ["BOSS"] = true,
       ["CHAT"] = false,
       ["DEATH"] = true,
@@ -242,6 +243,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["GUILD"] = true,
       ["LEVEL"] = true,
       ["LOOT"] = true,
+      ["MOUNT"] = true,
       ["NPC"] = true,
       ["QUEST"] = true,
       ["QUEST_ACCEPT"] = true,
@@ -265,7 +267,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
 -- TOC AddonCompartmentFunc = nil; the global function exists = true
 -- after /reload: chat=all showProfile=true conversations=false typesOff=[DISCOVERY,CHAT,REVISIT]
 -- panel controls after /reload: chat button = todo, QUEST=on, BOSS=on, DEATH=on, LOOT=on, DISCOVERY=off, NPC=on, CHAT=off, LEVEL=on, GROUP=on, REPUTATION=on, SKILL=on, SPELL=on, QUEST_ACCEPT=on, REVISIT=off, GUILD=on, mood=on, conversations=off (usable)
--- entries after /reload events: QUEST=1 BOSS=0 DEATH=4 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0; chat lines printed: 1
+-- entries after /reload events: QUEST=1 BOSS=0 DEATH=4 LOOT=2 DISCOVERY=0 NPC=2 CHAT=1 LEVEL=0 GROUP=0 REPUTATION=0 SKILL=0 SPELL=0 QUEST_ACCEPT=0 REVISIT=0 GUILD=0 MOUNT=0 ACHIEVEMENT=0; chat lines printed: 1
 -- panel: chat -> off after 2 click(s), button reads "nada"
 -- end of reload: chat=off showProfile=false conversations=false typesOff=[DISCOVERY,CHAT,REVISIT]
 == events registered
@@ -432,6 +434,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     ["profile"] = "ampliado",
     ["showProfile"] = false,
     ["types"] = {
+      ["ACHIEVEMENT"] = true,
       ["BOSS"] = true,
       ["CHAT"] = false,
       ["DEATH"] = true,
@@ -440,6 +443,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["GUILD"] = true,
       ["LEVEL"] = true,
       ["LOOT"] = true,
+      ["MOUNT"] = true,
       ["NPC"] = true,
       ["QUEST"] = true,
       ["QUEST_ACCEPT"] = true,
@@ -685,6 +689,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
     ["profile"] = "ampliado",
     ["showProfile"] = false,
     ["types"] = {
+      ["ACHIEVEMENT"] = true,
       ["BOSS"] = true,
       ["CHAT"] = false,
       ["DEATH"] = true,
@@ -693,6 +698,7 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["GUILD"] = true,
       ["LEVEL"] = true,
       ["LOOT"] = true,
+      ["MOUNT"] = true,
       ["NPC"] = true,
       ["QUEST"] = true,
       ["QUEST_ACCEPT"] = true,
