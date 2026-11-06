@@ -102,7 +102,7 @@ One failing handler never stops the others. The first error per event name goes 
 
 ### Prose
 
-`ChooseMood(type)` returns a fixed mood for `DEATH`, `BOSS`, `LOOT` and `DISCOVERY`, and a random one from `MOODS` for the other types. `ComposeEntry(entry)` fills a Spanish template for the entry type. `QUEST` has three variants, chosen with `seed % 3`. The finished prose is stored in the entry, so the text does not change when it is read later.
+`ChooseMood(type)` returns a label (shown with the `showProfile` option) and a mood phrase: from Chema's DISCOVERY, REVISIT or DEATH list for those types, from the GENERAL list for the rest (20 phrases each, stored without a final stop). `ComposeEntry(entry)` returns `prose, header` from Chema's templates (T2): 20 variants for the main types, 10 for the rest, chosen with `(seed % #list) + 1` (the seed is the entry's position in the jornada). Only DISCOVERY and REVISIT return a `header` (Chema's red place headers, one per travel method; every place is ON_FOOT until T4). Words that agree with the player ("victorioso" / "victoriosa") follow `UnitSex`; an unknown sex is masculine. A name that could not be read gets a sentence that names no one. The finished prose and header are stored in the entry, so the text does not change when it is read later.
 
 ### Backfill and conversations (M4b)
 

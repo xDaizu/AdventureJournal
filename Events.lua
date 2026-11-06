@@ -58,7 +58,7 @@ function ns.AddEntry(eventType, description, extra)
             end
         end
     end
-    entry.prose = ns.ComposeEntry(entry)
+    entry.prose, entry.header = ns.ComposeEntry(entry)
     day.events = day.events or {}
     table.insert(day.events, entry)
     ns.RefreshIfVisible()

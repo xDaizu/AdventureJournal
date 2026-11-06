@@ -19,37 +19,37 @@
 -- SPELL on again: 11 entries; QUEST=1 BOSS=1 DEATH=1 LOOT=0 DISCOVERY=2 NPC=1 CHAT=1 LEVEL=3 GROUP=1 REPUTATION=0 SKILL=0 SPELL=0
 -- book body:
 |cFF8A5A2417:56:40|r
-Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.
 
 |cFF8A5A2417:56:50|r
-En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.
+Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Con la mente puesta en la siguiente meta.
 
 |cFF8A5A2417:56:55|r
-Queda atrás una tarea más: «una misión (ID 4641)», completada en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.
+Cerré un asunto pendiente mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.
 
 |cFF8A5A2417:57:00|r
-La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.
+Un descuido en Valle de los Retos, Durotar bastó para acabar conmigo. Guardando un silencio sombrío mientras recupero el aliento.
 
 |cFF8A5A2417:57:05|r
-Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.
+Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Con el mapa en mente y la mirada en el horizonte.
 
 |cFF8A5A2417:57:10|r
-Recibí noticias de Amigo mientras me encontraba en El Cubil, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.
+Anoté que Amigo me buscó con un susurro en El Cubil, Durotar. Con los nervios despiertos y la mano en la empuñadura.
 
 |cFF8A5A2417:57:15|r
-En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.
+El suelo de El Cubil, Durotar se estremeció durante la batalla contra Jefe de prueba, pero mi determinación no cedió. Con la templanza que otorga el hábito de viajar.
 
 |cFF8A5A2417:57:18|r
-Subí al nivel 2 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+Un destello de energía me envolvió en El Cubil, Durotar: ya soy nivel 2. Con la determinación intacta a pesar de las dificultades.
 
 |cFF8A5A2418:04:00|r
-El nivel 3 llegó cuando menos lo esperaba, en El Cubil, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+Con el nivel 3 recién adquirido en El Cubil, Durotar, me preparo para mayores retos. Reflexionando sobre los acontecimientos recientes.
 
 |cFF8A5A2418:06:13|r
 En El Cubil, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.
 
 |cFF8A5A2418:25:08|r
-Subí al nivel 6 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.
+Forjé una mayor resistencia durante mi estancia en El Cubil, Durotar al llegar al nivel 6. Escuchando el rumor del viento entre la vegetación.
 == events registered
 ADDON_LOADED, BOSS_KILL, CHAT_MSG_COMBAT_FACTION_CHANGE, CHAT_MSG_LOOT, CHAT_MSG_SKILL, CHAT_MSG_SYSTEM, CHAT_MSG_WHISPER, ENCOUNTER_END, GET_ITEM_INFO_RECEIVED, GOSSIP_SHOW, GROUP_JOINED, ITEM_DATA_LOAD_RESULT, PLAYER_DEAD, PLAYER_ENTERING_WORLD, PLAYER_LEVEL_UP, PLAYER_LOGOUT, QUEST_TURNED_IN, ZONE_CHANGED, ZONE_CHANGED_INDOORS, ZONE_CHANGED_NEW_AREA
 == globals created by the addon
@@ -89,9 +89,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "observando cada rincón antes de dar el siguiente paso",
+          ["header"] = "Nuevos Horizontes: Valle de los Retos, Durotar",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta Valle de los Retos, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de Valle de los Retos, Durotar a pie de camino. Observando cada rincón antes de dar el siguiente paso.",
           ["seed"] = 1,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Valle de los Retos, Durotar",
@@ -101,10 +102,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [2] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "con la mente puesta en la siguiente meta",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar crucé unas palabras con Gornek. No sé si aquel encuentro tendrá importancia, pero merece quedar anotado.",
+          ["prose"] = "Me detuve a charlar con Gornek en las inmediaciones de Valle de los Retos, Durotar. Con la mente puesta en la siguiente meta.",
           ["seed"] = 2,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "Gornek",
@@ -114,10 +115,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [3] = {
-          ["characterProfile"] = "Salvaje",
-          ["contextualTone"] = "con los nervios despiertos y ganas de resolverlo todo por la fuerza",
+          ["characterProfile"] = "Cínico",
+          ["contextualTone"] = "con más ironía que paciencia",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "Queda atrás una tarea más: «una misión (ID 4641)», completada en Valle de los Retos, Durotar. Con los nervios despiertos y ganas de resolverlo todo por la fuerza.",
+          ["prose"] = "Cerré un asunto pendiente mientras permanecía en Valle de los Retos, Durotar. Con más ironía que paciencia.",
           ["questID"] = 4641,
           ["seed"] = 3,
           ["subZone"] = "Valle de los Retos",
@@ -129,9 +130,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [4] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["contextualTone"] = "guardando un silencio sombrío mientras recupero el aliento",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["prose"] = "Un descuido en Valle de los Retos, Durotar bastó para acabar conmigo. Guardando un silencio sombrío mientras recupero el aliento.",
           ["seed"] = 4,
           ["subZone"] = "Valle de los Retos",
           ["text"] = "He caído en combate",
@@ -142,9 +143,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [5] = {
           ["characterProfile"] = "Explorador",
-          ["contextualTone"] = "con la curiosidad de quien acaba de encontrar un lugar nuevo",
+          ["contextualTone"] = "con el mapa en mente y la mirada en el horizonte",
+          ["header"] = "Explorando El Cubil, Durotar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Mis pasos me condujeron hasta El Cubil, Durotar. Me detuve un momento para observar el lugar; con la curiosidad de quien acaba de encontrar un lugar nuevo.",
+          ["prose"] = "Descubrí por primera vez la región de El Cubil, Durotar a pie de camino. Con el mapa en mente y la mirada en el horizonte.",
           ["seed"] = 5,
           ["subZone"] = "El Cubil",
           ["text"] = "El Cubil, Durotar",
@@ -154,10 +156,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [6] = {
-          ["characterProfile"] = "Erudito",
-          ["contextualTone"] = "atento a los detalles y tratando de comprender lo ocurrido",
+          ["characterProfile"] = "Salvaje",
+          ["contextualTone"] = "con los nervios despiertos y la mano en la empuñadura",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Recibí noticias de Amigo mientras me encontraba en El Cubil, Durotar. Incluso en los caminos más solitarios llegan voces de otros aventureros.",
+          ["prose"] = "Anoté que Amigo me buscó con un susurro en El Cubil, Durotar. Con los nervios despiertos y la mano en la empuñadura.",
           ["seed"] = 6,
           ["subZone"] = "El Cubil",
           ["text"] = "Amigo",
@@ -168,9 +170,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [7] = {
           ["characterProfile"] = "Aliviado",
-          ["contextualTone"] = "con el pulso todavía acelerado y la satisfacción de seguir en pie",
+          ["contextualTone"] = "con la templanza que otorga el hábito de viajar",
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "En El Cubil, Durotar me enfrenté a Jefe de prueba. La lucha fue intensa y, cuando el polvo se asentó, seguía en pie: con el pulso todavía acelerado y la satisfacción de seguir en pie.",
+          ["prose"] = "El suelo de El Cubil, Durotar se estremeció durante la batalla contra Jefe de prueba, pero mi determinación no cedió. Con la templanza que otorga el hábito de viajar.",
           ["seed"] = 7,
           ["subZone"] = "El Cubil",
           ["text"] = "Jefe de prueba",
@@ -181,10 +183,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [8] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "con la determinación intacta a pesar de las dificultades",
           ["level"] = 2,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Subí al nivel 2 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Un destello de energía me envolvió en El Cubil, Durotar: ya soy nivel 2. Con la determinación intacta a pesar de las dificultades.",
           ["seed"] = 8,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 2",
@@ -195,10 +197,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [9] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "reflexionando sobre los acontecimientos recientes",
           ["level"] = 3,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "El nivel 3 llegó cuando menos lo esperaba, en El Cubil, Durotar. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Con el nivel 3 recién adquirido en El Cubil, Durotar, me preparo para mayores retos. Reflexionando sobre los acontecimientos recientes.",
           ["seed"] = 9,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 3",
@@ -208,8 +210,8 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
           ["zone"] = "Durotar",
         },
         [10] = {
-          ["characterProfile"] = "Cauteloso",
-          ["contextualTone"] = "sin bajar la guardia y procurando no confiarme",
+          ["characterProfile"] = "Heroico",
+          ["contextualTone"] = "manteniendo una actitud serena ante la adversidad",
           ["groupEvent"] = "youjoin",
           ["place"] = "El Cubil, Durotar",
           ["prose"] = "En El Cubil, Durotar me uní a un grupo para afrontar una instancia. No sabría decir con quién caminé.",
@@ -223,10 +225,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
         },
         [11] = {
           ["characterProfile"] = "Orgulloso",
-          ["contextualTone"] = "con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí",
+          ["contextualTone"] = "escuchando el rumor del viento entre la vegetación",
           ["level"] = 6,
           ["place"] = "El Cubil, Durotar",
-          ["prose"] = "Subí al nivel 6 en El Cubil, Durotar. No fue gratis, y se nota. Con el orgullo tranquilo de quien sabe cuánto camino cuesta llegar hasta aquí.",
+          ["prose"] = "Forjé una mayor resistencia durante mi estancia en El Cubil, Durotar al llegar al nivel 6. Escuchando el rumor del viento entre la vegetación.",
           ["seed"] = 11,
           ["subZone"] = "El Cubil",
           ["text"] = "He alcanzado el nivel 6",

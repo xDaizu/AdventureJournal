@@ -94,10 +94,10 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["endedAt"] = "2026-11-04 04:08:20",
       ["events"] = {
         [1] = {
-          ["characterProfile"] = "Cínico",
-          ["contextualTone"] = "con más ironía que paciencia y la esperanza puesta en la recompensa",
+          ["characterProfile"] = "Cauteloso",
+          ["contextualTone"] = "ajustando mis pertrechos para lo que esté por venir",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "En Valle de los Retos, Durotar terminé la tarea «Misión sin fecha». Con más ironía que paciencia y la esperanza puesta en la recompensa. No parece que las obligaciones vayan a darme tregua.",
+          ["prose"] = "La jornada dio sus frutos en Valle de los Retos, Durotar tras dar por terminada la tarea «Misión sin fecha». Ajustando mis pertrechos para lo que esté por venir.",
           ["questID"] = 100,
           ["seed"] = 1,
           ["source"] = "ajprobe",
@@ -120,9 +120,9 @@ AdventureJournal_OnAddonCompartmentClick, AdventureJournal_Toggle, AdventureJour
       ["events"] = {
         [1] = {
           ["characterProfile"] = "Derrotado",
-          ["contextualTone"] = "con la amarga certeza de que esta vez el enemigo fue más rápido",
+          ["contextualTone"] = "con la fría promesa de un retorno implacable",
           ["place"] = "Valle de los Retos, Durotar",
-          ["prose"] = "La aventura se detuvo en Valle de los Retos, Durotar. Caí antes de poder continuar; con la amarga certeza de que esta vez el enemigo fue más rápido. Tendré que regresar con más cuidado.",
+          ["prose"] = "Mis fuerzas fallaron en Valle de los Retos, Durotar. Con la fría promesa de un retorno implacable.",
           ["seed"] = 1,
           ["source"] = "ajprobe",
           ["subZone"] = "Valle de los Retos",

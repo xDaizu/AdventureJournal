@@ -135,6 +135,16 @@ function ns.StripRealm(name)
     return string.match(name, "^([^%-]+)") or name
 end
 
+-- T2 (decision D3): the prose has feminine variants, picked by the player's sex.
+-- UnitSex returns 1 (unknown), 2 (male) or 3 (female). Missing, failing or secret: masculine,
+-- the form the prose used before.
+function ns.PlayerIsFemale()
+    if not UnitSex then return false end
+    local ok, sex = pcall(UnitSex, "player")
+    if not ok or ns.IsSecret(sex) or type(sex) ~= "number" then return false end
+    return sex == 3
+end
+
 -- The key AJProbe writes into every record's `c` field: "Name-GetRealmName()" (with the
 -- realm's spaces). Returns nil when the player's name is unreadable.
 function ns.GetPlayerKey()
